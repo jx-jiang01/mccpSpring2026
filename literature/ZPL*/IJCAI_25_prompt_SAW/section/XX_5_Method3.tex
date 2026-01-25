@@ -1,0 +1,93 @@
+\section{Graph Based Prompt Compression} 
+\subsection{The structure of natural language.}
+\warn{What is structure?}\\
+The structure of natural language refers to its systematic organizational form. (\citet{rongyu},\citep{rongyu}) \fixchen{Find some recent research!!!too old} posited that natural language is inherently redundant, thereby allowing for extracting substructures to eliminate redundant content.\\
+
+\warn{What method we used to extract the structure? Why we need to mention syntactic and discourse structure?}\\
+
+The structure of natural language can be specifically divided into syntactic structure and discourse structure. \\
+\textbf{Syntactic structure.} Syntactic structure focuses on the combination of words within a single sentence. Extracting the core substructure of the syntactic structure can help us eliminate the redundancy inherent in natural language expression, such as grammatical modifications and synonymous repetition.\\
+\textbf{Discourse structure.} Discourse structure concentrates on the organization of sentences and the distribution of information within a complete text. Removing redundancy from the discourse structure means identifying the most helpful substructures in answering the question.\\
+\warn{What method we used to extract the structure?}
+
+
+\eat{
+\warn{Why the natural language sequence have graph structure?}\\
+\warn{notation for $<s,r,o>$. Why we use this Notation to extract graph? What it mean?}\\
+\OurMODEL{}
+\warn{Why $<s, r , o>$ is core structure?} 
+}
+
+\subsection{Graph Extraction.}
+Graph Extraction aims to extract the core substructure of the syntactic structure. 
+Knowledge graphs provide a highly structured way of representing information by abstracting information into a network of relationships between entities.
+
+Knowledge Graph can be represented as $\mathcal{KG}=\{(s,r,o)\subseteq\mathcal{E}\times\mathcal{R}\times\mathcal{E}\}$, where $\mathcal{E}$ and $\mathcal{R}$ denote the set of entities and relations.
+
+By extracting knowledge graphs from the original prompts, we can discard non-essential grammatical embellishments and auxiliary details, only retain the entities and relationships that express the core semantics. Knowledge graphs can also ensure standardized language expression, reducing redundancy caused by the diversity of expressions.
+
+The process can
+
+
+\subsection{Further Compression: sub-graph condensation}
+\subsubsection{Deductive Coherence Logic and Multidimensional Knowledge Network}
+Sub-graph condensation aims to extract the core substructure of the discourse structure. Based on the mode of knowledge generation within the discourse structure, it can be classified into two types: Deductive Coherence Logic and Multidimensional Knowledge Network.
+
+\textbf{Deductive Coherence Logic.} Deductive Coherence Logic underscores the logical sequence and coherence among individual information units within a paragraph. The informational density of a single unit is not high, and each unit is closely dependent on its context. Knowledge is constructed through logical reasoning and structural connections between information units. Chain-of-thought is a typical example of deductive Coherence Logic.
+
+\textbf{Multidimensional Knowledge Network.} Different from deductive Coherence Logic, each information unit in the Multidimensional Knowledge Network contains high-density knowledge. In addition to linear order, the information unit in Multidimensional Knowledge Network can also be connected in a more flexible way to form a more complex knowledge network. Question Answering is a typical example of Multidimensional Knowledge Network.
+
+\subsubsection{Sub-graph condensation}
+Each information unit in Deductive Coherence Logic is context-dependent. Any compression may cause the break of the logical chain, so it is not suitable for further compression.\\
+
+Each information unit in the Multidimensional Knowledge Network contains high-density knowledge. Different substructures contain information for different questions, so we can further compress to extract the substructure that is most relevant to the target question.\\
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

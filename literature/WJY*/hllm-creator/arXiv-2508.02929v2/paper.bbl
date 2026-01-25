@@ -1,0 +1,639 @@
+%%% -*-BibTeX-*-
+%%% Do NOT edit. File created by BibTeX with style
+%%% ACM-Reference-Format-Journals [18-Jan-2012].
+
+\begin{thebibliography}{40}
+
+%%% ====================================================================
+%%% NOTE TO THE USER: you can override these defaults by providing
+%%% customized versions of any of these macros before the \bibliography
+%%% command.  Each of them MUST provide its own final punctuation,
+%%% except for \shownote{} and \showURL{}.  The latter two
+%%% do not use final punctuation, in order to avoid confusing it with
+%%% the Web address.
+%%%
+%%% To suppress output of a particular field, define its macro to expand
+%%% to an empty string, or better, \unskip, like this:
+%%%
+%%% \newcommand{\showURL}[1]{\unskip}   % LaTeX syntax
+%%%
+%%% \def \showURL #1{\unskip}           % plain TeX syntax
+%%%
+%%% ====================================================================
+
+\ifx \showCODEN    \undefined \def \showCODEN     #1{\unskip}     \fi
+\ifx \showISBNx    \undefined \def \showISBNx     #1{\unskip}     \fi
+\ifx \showISBNxiii \undefined \def \showISBNxiii  #1{\unskip}     \fi
+\ifx \showISSN     \undefined \def \showISSN      #1{\unskip}     \fi
+\ifx \showLCCN     \undefined \def \showLCCN      #1{\unskip}     \fi
+\ifx \shownote     \undefined \def \shownote      #1{#1}          \fi
+\ifx \showarticletitle \undefined \def \showarticletitle #1{#1}   \fi
+\ifx \showURL      \undefined \def \showURL       {\relax}        \fi
+% The following commands are used for tagged output and should be
+% invisible to TeX
+\providecommand\bibfield[2]{#2}
+\providecommand\bibinfo[2]{#2}
+\providecommand\natexlab[1]{#1}
+\providecommand\showeprint[2][]{arXiv:#2}
+
+\bibitem[Baltescu et~al\mbox{.}(2022)]%
+        {itemsage}
+\bibfield{author}{\bibinfo{person}{Paul Baltescu}, \bibinfo{person}{Haoyu
+  Chen}, \bibinfo{person}{Nikil Pancha}, \bibinfo{person}{Andrew Zhai},
+  \bibinfo{person}{Jure Leskovec}, {and} \bibinfo{person}{Charles Rosenberg}.}
+  \bibinfo{year}{2022}\natexlab{}.
+\newblock \showarticletitle{ItemSage: Learning Product Embeddings for Shopping
+  Recommendations at Pinterest}. In \bibinfo{booktitle}{\emph{Proceedings of
+  the 28th ACM SIGKDD Conference on Knowledge Discovery and Data Mining}}
+  (Washington DC, USA) \emph{(\bibinfo{series}{KDD '22})}.
+  \bibinfo{publisher}{Association for Computing Machinery},
+  \bibinfo{address}{New York, NY, USA}, \bibinfo{pages}{2703–2711}.
+\newblock
+\showISBNx{9781450393850}
+\href{https://doi.org/10.1145/3534678.3539170}{doi:\nolinkurl{10.1145/3534678.3539170}}
+
+
+\bibitem[Beltagy et~al\mbox{.}(2020)]%
+        {beltagy2020longformer}
+\bibfield{author}{\bibinfo{person}{Iz Beltagy}, \bibinfo{person}{Matthew~E
+  Peters}, {and} \bibinfo{person}{Arman Cohan}.}
+  \bibinfo{year}{2020}\natexlab{}.
+\newblock \showarticletitle{Longformer: The long-document transformer}.
+\newblock \bibinfo{journal}{\emph{arXiv preprint arXiv:2004.05150}}
+  (\bibinfo{year}{2020}).
+\newblock
+
+
+\bibitem[Bommasani et~al\mbox{.}(2021)]%
+        {bommasani_opportunities_2021}
+\bibfield{author}{\bibinfo{person}{Rishi Bommasani}, \bibinfo{person}{Drew~A
+  Hudson}, \bibinfo{person}{Ehsan Adeli}, \bibinfo{person}{Russ Altman},
+  \bibinfo{person}{Simran Arora}, \bibinfo{person}{Sydney von Arx},
+  \bibinfo{person}{Michael~S Bernstein}, \bibinfo{person}{Jeannette Bohg},
+  \bibinfo{person}{Antoine Bosselut}, \bibinfo{person}{Emma Brunskill}, {and}
+  \bibinfo{person}{{others}}.} \bibinfo{year}{2021}\natexlab{}.
+\newblock \showarticletitle{On the opportunities and risks of foundation
+  models}.
+\newblock \bibinfo{journal}{\emph{arXiv preprint arXiv:2108.07258}}
+  (\bibinfo{year}{2021}).
+\newblock
+
+
+\bibitem[Brown et~al\mbox{.}(2020)]%
+        {brown_language_2020}
+\bibfield{author}{\bibinfo{person}{Tom Brown}, \bibinfo{person}{Benjamin Mann},
+  \bibinfo{person}{Nick Ryder}, \bibinfo{person}{Melanie Subbiah},
+  \bibinfo{person}{Jared~D Kaplan}, \bibinfo{person}{Prafulla Dhariwal},
+  \bibinfo{person}{Arvind Neelakantan}, \bibinfo{person}{Pranav Shyam},
+  \bibinfo{person}{Girish Sastry}, \bibinfo{person}{Amanda Askell}, {and}
+  \bibinfo{person}{{others}}.} \bibinfo{year}{2020}\natexlab{}.
+\newblock \showarticletitle{Language models are few-shot learners}.
+\newblock \bibinfo{journal}{\emph{Advances in neural information processing
+  systems}}  \bibinfo{volume}{33} (\bibinfo{year}{2020}),
+  \bibinfo{pages}{1877--1901}.
+\newblock
+
+
+\bibitem[Busbridge et~al\mbox{.}(2025)]%
+        {busbridge_distillation_2025}
+\bibfield{author}{\bibinfo{person}{Dan Busbridge}, \bibinfo{person}{Amitis
+  Shidani}, \bibinfo{person}{Floris Weers}, \bibinfo{person}{Jason Ramapuram},
+  \bibinfo{person}{Etai Littwin}, {and} \bibinfo{person}{Russell Webb}.}
+  \bibinfo{year}{2025}\natexlab{}.
+\newblock \showarticletitle{Distillation {Scaling} {Laws}}. In
+  \bibinfo{booktitle}{\emph{Forty-second {International} {Conference} on
+  {Machine} {Learning}}}.
+\newblock
+\urldef\tempurl%
+\url{https://openreview.net/forum?id=1nEBAkpfb9}
+\showURL{%
+\tempurl}
+
+
+\bibitem[Casella and Berger(2001)]%
+        {casella_statistical_2001}
+\bibfield{author}{\bibinfo{person}{George Casella} {and}
+  \bibinfo{person}{Roger~L. Berger}.} \bibinfo{year}{2001}\natexlab{}.
+\newblock \bibinfo{booktitle}{\emph{Statistical {Inference}}
+  (\bibinfo{edition}{2nd ed.} ed.)}.
+\newblock \bibinfo{publisher}{Duxbury Press}, \bibinfo{address}{CA, USA}.
+\newblock
+
+
+\bibitem[Chai et~al\mbox{.}(2025)]%
+        {chai_longer_2025}
+\bibfield{author}{\bibinfo{person}{Zheng Chai}, \bibinfo{person}{Qin Ren},
+  \bibinfo{person}{Xijun Xiao}, \bibinfo{person}{Huizhi Yang},
+  \bibinfo{person}{Bo Han}, \bibinfo{person}{Sijun Zhang}, \bibinfo{person}{Di
+  Chen}, \bibinfo{person}{Hui Lu}, \bibinfo{person}{Wenlin Zhao},
+  \bibinfo{person}{Lele Yu}, {and} \bibinfo{person}{{others}}.}
+  \bibinfo{year}{2025}\natexlab{}.
+\newblock \showarticletitle{{LONGER}: {Scaling} {Up} {Long} {Sequence}
+  {Modeling} in {Industrial} {Recommenders}}.
+\newblock \bibinfo{journal}{\emph{arXiv preprint arXiv:2505.04421}}
+  (\bibinfo{year}{2025}).
+\newblock
+
+
+\bibitem[Chang et~al\mbox{.}(2023)]%
+        {chang2023twin}
+\bibfield{author}{\bibinfo{person}{Jianxin Chang}, \bibinfo{person}{Chenbin
+  Zhang}, \bibinfo{person}{Zhiyi Fu}, \bibinfo{person}{Xiaoxue Zang},
+  \bibinfo{person}{Lin Guan}, \bibinfo{person}{Jing Lu}, \bibinfo{person}{Yiqun
+  Hui}, \bibinfo{person}{Dewei Leng}, \bibinfo{person}{Yanan Niu},
+  \bibinfo{person}{Yang Song}, {et~al\mbox{.}}}
+  \bibinfo{year}{2023}\natexlab{}.
+\newblock \showarticletitle{TWIN: TWo-stage interest network for lifelong user
+  behavior modeling in CTR prediction at kuaishou}. In
+  \bibinfo{booktitle}{\emph{Proceedings of the 29th ACM SIGKDD Conference on
+  Knowledge Discovery and Data Mining}}. \bibinfo{pages}{3785--3794}.
+\newblock
+
+
+\bibitem[Chen et~al\mbox{.}(2025)]%
+        {chen2025pinfm}
+\bibfield{author}{\bibinfo{person}{Xiangyi Chen}, \bibinfo{person}{Kousik
+  Rajesh}, \bibinfo{person}{Matthew Lawhon}, \bibinfo{person}{Zelun Wang},
+  \bibinfo{person}{Hanyu Li}, \bibinfo{person}{Haomiao Li},
+  \bibinfo{person}{Saurabh~Vishwas Joshi}, \bibinfo{person}{Pong Eksombatchai},
+  \bibinfo{person}{Jaewon Yang}, \bibinfo{person}{Yi-Ping Hsu},
+  {et~al\mbox{.}}} \bibinfo{year}{2025}\natexlab{}.
+\newblock \showarticletitle{PinFM: Foundation Model for User Activity Sequences
+  at a Billion-scale Visual Discovery Platform}.
+\newblock \bibinfo{journal}{\emph{arXiv preprint arXiv:2507.12704}}
+  (\bibinfo{year}{2025}).
+\newblock
+
+
+\bibitem[Devlin et~al\mbox{.}(2019)]%
+        {devlin_bert_2019}
+\bibfield{author}{\bibinfo{person}{Jacob Devlin}, \bibinfo{person}{Ming-Wei
+  Chang}, \bibinfo{person}{Kenton Lee}, {and} \bibinfo{person}{Kristina
+  Toutanova}.} \bibinfo{year}{2019}\natexlab{}.
+\newblock \showarticletitle{Bert: {Pre}-training of deep bidirectional
+  transformers for language understanding}. In
+  \bibinfo{booktitle}{\emph{Proceedings of the 2019 conference of the {North}
+  {American} chapter of the association for computational linguistics: human
+  language technologies, volume 1 (long and short papers)}}.
+  \bibinfo{pages}{4171--4186}.
+\newblock
+
+
+\bibitem[El-Kishky et~al\mbox{.}(2022)]%
+        {el2022twhin}
+\bibfield{author}{\bibinfo{person}{Ahmed El-Kishky}, \bibinfo{person}{Thomas
+  Markovich}, \bibinfo{person}{Serim Park}, \bibinfo{person}{Chetan Verma},
+  \bibinfo{person}{Baekjin Kim}, \bibinfo{person}{Ramy Eskander},
+  \bibinfo{person}{Yury Malkov}, \bibinfo{person}{Frank Portman},
+  \bibinfo{person}{Sof{\'\i}a Samaniego}, \bibinfo{person}{Ying Xiao},
+  {et~al\mbox{.}}} \bibinfo{year}{2022}\natexlab{}.
+\newblock \showarticletitle{Twhin: Embedding the twitter heterogeneous
+  information network for personalized recommendation}. In
+  \bibinfo{booktitle}{\emph{Proceedings of the 28th ACM SIGKDD conference on
+  knowledge discovery and data mining}}. \bibinfo{pages}{2842--2850}.
+\newblock
+
+
+\bibitem[Gou et~al\mbox{.}(2021)]%
+        {gou2021knowledge}
+\bibfield{author}{\bibinfo{person}{Jianping Gou}, \bibinfo{person}{Baosheng
+  Yu}, \bibinfo{person}{Stephen~J Maybank}, {and} \bibinfo{person}{Dacheng
+  Tao}.} \bibinfo{year}{2021}\natexlab{}.
+\newblock \showarticletitle{Knowledge distillation: A survey}.
+\newblock \bibinfo{journal}{\emph{International journal of computer vision}}
+  \bibinfo{volume}{129}, \bibinfo{number}{6} (\bibinfo{year}{2021}),
+  \bibinfo{pages}{1789--1819}.
+\newblock
+
+
+\bibitem[Han et~al\mbox{.}(2025)]%
+        {han2025mtgr}
+\bibfield{author}{\bibinfo{person}{Ruidong Han}, \bibinfo{person}{Bin Yin},
+  \bibinfo{person}{Shangyu Chen}, \bibinfo{person}{He Jiang},
+  \bibinfo{person}{Fei Jiang}, \bibinfo{person}{Xiang Li}, \bibinfo{person}{Chi
+  Ma}, \bibinfo{person}{Mincong Huang}, \bibinfo{person}{Xiaoguang Li},
+  \bibinfo{person}{Chunzhen Jing}, {et~al\mbox{.}}}
+  \bibinfo{year}{2025}\natexlab{}.
+\newblock \showarticletitle{MTGR: Industrial-Scale Generative Recommendation
+  Framework in Meituan}.
+\newblock \bibinfo{journal}{\emph{arXiv preprint arXiv:2505.18654}}
+  (\bibinfo{year}{2025}).
+\newblock
+
+
+\bibitem[He et~al\mbox{.}(2014)]%
+        {he2014practical}
+\bibfield{author}{\bibinfo{person}{Xinran He}, \bibinfo{person}{Junfeng Pan},
+  \bibinfo{person}{Ou Jin}, \bibinfo{person}{Tianbing Xu}, \bibinfo{person}{Bo
+  Liu}, \bibinfo{person}{Tao Xu}, \bibinfo{person}{Yanxin Shi},
+  \bibinfo{person}{Antoine Atallah}, \bibinfo{person}{Ralf Herbrich},
+  \bibinfo{person}{Stuart Bowers}, {et~al\mbox{.}}}
+  \bibinfo{year}{2014}\natexlab{}.
+\newblock \showarticletitle{Practical lessons from predicting clicks on ads at
+  facebook}. In \bibinfo{booktitle}{\emph{Proceedings of the eighth
+  international workshop on data mining for online advertising}}.
+  \bibinfo{pages}{1--9}.
+\newblock
+
+
+\bibitem[Hertel et~al\mbox{.}(2024)]%
+        {hertel_efficient_2024}
+\bibfield{author}{\bibinfo{person}{Lars Hertel}, \bibinfo{person}{Neil
+  Daftary}, \bibinfo{person}{Fedor Borisyuk}, \bibinfo{person}{Aman Gupta},
+  {and} \bibinfo{person}{Rahul Mazumder}.} \bibinfo{year}{2024}\natexlab{}.
+\newblock \showarticletitle{Efficient user history modeling with amortized
+  inference for deep learning recommendation models}.
+\newblock \bibinfo{journal}{\emph{arXiv preprint arXiv:2412.06924}}
+  (\bibinfo{year}{2024}).
+\newblock
+
+
+\bibitem[Hinton et~al\mbox{.}(2015)]%
+        {hinton_distilling_2015}
+\bibfield{author}{\bibinfo{person}{Geoffrey Hinton}, \bibinfo{person}{Oriol
+  Vinyals}, {and} \bibinfo{person}{Jeff Dean}.}
+  \bibinfo{year}{2015}\natexlab{}.
+\newblock \showarticletitle{Distilling the knowledge in a neural network}.
+\newblock \bibinfo{journal}{\emph{arXiv preprint arXiv:1503.02531}}
+  (\bibinfo{year}{2015}).
+\newblock
+
+
+\bibitem[Hu et~al\mbox{.}(2022)]%
+        {hu_lora_2022}
+\bibfield{author}{\bibinfo{person}{Edward~J Hu}, \bibinfo{person}{Yelong Shen},
+  \bibinfo{person}{Phillip Wallis}, \bibinfo{person}{Zeyuan Allen-Zhu},
+  \bibinfo{person}{Yuanzhi Li}, \bibinfo{person}{Shean Wang},
+  \bibinfo{person}{Lu Wang}, \bibinfo{person}{Weizhu Chen}, {and}
+  \bibinfo{person}{{others}}.} \bibinfo{year}{2022}\natexlab{}.
+\newblock \showarticletitle{Lora: {Low}-rank adaptation of large language
+  models.}
+\newblock \bibinfo{journal}{\emph{ICLR}} \bibinfo{volume}{1},
+  \bibinfo{number}{2} (\bibinfo{year}{2022}), \bibinfo{pages}{3}.
+\newblock
+
+
+\bibitem[Huang et~al\mbox{.}(2025)]%
+        {huang_towards_2025}
+\bibfield{author}{\bibinfo{person}{Yanhua Huang}, \bibinfo{person}{Yuqi Chen},
+  \bibinfo{person}{Xiong Cao}, \bibinfo{person}{Rui Yang},
+  \bibinfo{person}{Mingliang Qi}, \bibinfo{person}{Yinghao Zhu},
+  \bibinfo{person}{Qingchang Han}, \bibinfo{person}{Yaowei Liu},
+  \bibinfo{person}{Zhaoyu Liu}, \bibinfo{person}{Xuefeng Yao}, {and}
+  \bibinfo{person}{{others}}.} \bibinfo{year}{2025}\natexlab{}.
+\newblock \showarticletitle{Towards {Large}-scale {Generative} {Ranking}}.
+\newblock \bibinfo{journal}{\emph{arXiv preprint arXiv:2505.04180}}
+  (\bibinfo{year}{2025}).
+\newblock
+
+
+\bibitem[Kaplan et~al\mbox{.}(2020)]%
+        {kaplan2020scaling}
+\bibfield{author}{\bibinfo{person}{Jared Kaplan}, \bibinfo{person}{Sam
+  McCandlish}, \bibinfo{person}{Tom Henighan}, \bibinfo{person}{Tom~B Brown},
+  \bibinfo{person}{Benjamin Chess}, \bibinfo{person}{Rewon Child},
+  \bibinfo{person}{Scott Gray}, \bibinfo{person}{Alec Radford},
+  \bibinfo{person}{Jeffrey Wu}, {and} \bibinfo{person}{Dario Amodei}.}
+  \bibinfo{year}{2020}\natexlab{}.
+\newblock \showarticletitle{Scaling laws for neural language models}.
+\newblock \bibinfo{journal}{\emph{arXiv preprint arXiv:2001.08361}}
+  (\bibinfo{year}{2020}).
+\newblock
+
+
+\bibitem[Khani et~al\mbox{.}(2024)]%
+        {kd_google_transfer_ratio}
+\bibfield{author}{\bibinfo{person}{Nikhil Khani}, \bibinfo{person}{Li Wei},
+  \bibinfo{person}{Aniruddh Nath}, \bibinfo{person}{Shawn Andrews},
+  \bibinfo{person}{Shuo Yang}, \bibinfo{person}{Yang Liu},
+  \bibinfo{person}{Pendo Abbo}, \bibinfo{person}{Maciej Kula},
+  \bibinfo{person}{Jarrod Kahn}, \bibinfo{person}{Zhe Zhao},
+  \bibinfo{person}{Lichan Hong}, {and} \bibinfo{person}{Ed Chi}.}
+  \bibinfo{year}{2024}\natexlab{}.
+\newblock \showarticletitle{Bridging the Gap: Unpacking the Hidden Challenges
+  in Knowledge Distillation for Online Ranking Systems}. In
+  \bibinfo{booktitle}{\emph{Proceedings of the 18th ACM Conference on
+  Recommender Systems}} (Bari, Italy) \emph{(\bibinfo{series}{RecSys '24})}.
+  \bibinfo{publisher}{Association for Computing Machinery},
+  \bibinfo{address}{New York, NY, USA}, \bibinfo{pages}{758–761}.
+\newblock
+\showISBNx{9798400705052}
+\href{https://doi.org/10.1145/3640457.3688055}{doi:\nolinkurl{10.1145/3640457.3688055}}
+
+
+\bibitem[Kirillov et~al\mbox{.}(2023)]%
+        {kirillov_segment_2023}
+\bibfield{author}{\bibinfo{person}{Alexander Kirillov}, \bibinfo{person}{Eric
+  Mintun}, \bibinfo{person}{Nikhila Ravi}, \bibinfo{person}{Hanzi Mao},
+  \bibinfo{person}{Chloe Rolland}, \bibinfo{person}{Laura Gustafson},
+  \bibinfo{person}{Tete Xiao}, \bibinfo{person}{Spencer Whitehead},
+  \bibinfo{person}{Alexander~C Berg}, \bibinfo{person}{Wan-Yen Lo}, {and}
+  \bibinfo{person}{{others}}.} \bibinfo{year}{2023}\natexlab{}.
+\newblock \showarticletitle{Segment anything}. In
+  \bibinfo{booktitle}{\emph{Proceedings of the {IEEE}/{CVF} international
+  conference on computer vision}}. \bibinfo{pages}{4015--4026}.
+\newblock
+
+
+\bibitem[Kumar et~al\mbox{.}(2022)]%
+        {kumar_fine-tuning_2022}
+\bibfield{author}{\bibinfo{person}{Ananya Kumar}, \bibinfo{person}{Aditi
+  Raghunathan}, \bibinfo{person}{Robbie~Matthew Jones}, \bibinfo{person}{Tengyu
+  Ma}, {and} \bibinfo{person}{Percy Liang}.} \bibinfo{year}{2022}\natexlab{}.
+\newblock \showarticletitle{Fine-{Tuning} can {Distort} {Pretrained} {Features}
+  and {Underperform} {Out}-of-{Distribution}}. In
+  \bibinfo{booktitle}{\emph{International {Conference} on {Learning}
+  {Representations}}}.
+\newblock
+\urldef\tempurl%
+\url{https://openreview.net/forum?id=UYneFzXSJWh}
+\showURL{%
+\tempurl}
+
+
+\bibitem[Liang et~al\mbox{.}(2025)]%
+        {liang_external_2025}
+\bibfield{author}{\bibinfo{person}{Mingfu Liang}, \bibinfo{person}{Xi Liu},
+  \bibinfo{person}{Rong Jin}, \bibinfo{person}{Boyang Liu},
+  \bibinfo{person}{Qiuling Suo}, \bibinfo{person}{Qinghai Zhou},
+  \bibinfo{person}{Song Zhou}, \bibinfo{person}{Laming Chen},
+  \bibinfo{person}{Hua Zheng}, \bibinfo{person}{Zhiyuan Li}, {and}
+  \bibinfo{person}{{others}}.} \bibinfo{year}{2025}\natexlab{}.
+\newblock \showarticletitle{External large foundation model: {How} to
+  efficiently serve trillions of parameters for online ads recommendation}. In
+  \bibinfo{booktitle}{\emph{Companion {Proceedings} of the {ACM} on {Web}
+  {Conference} 2025}}. \bibinfo{pages}{344--353}.
+\newblock
+
+
+\bibitem[Liang et~al\mbox{.}(2024)]%
+        {liang_foundation_2024}
+\bibfield{author}{\bibinfo{person}{Yuxuan Liang}, \bibinfo{person}{Haomin Wen},
+  \bibinfo{person}{Yuqi Nie}, \bibinfo{person}{Yushan Jiang},
+  \bibinfo{person}{Ming Jin}, \bibinfo{person}{Dongjin Song},
+  \bibinfo{person}{Shirui Pan}, {and} \bibinfo{person}{Qingsong Wen}.}
+  \bibinfo{year}{2024}\natexlab{}.
+\newblock \showarticletitle{Foundation models for time series analysis: {A}
+  tutorial and survey}. In \bibinfo{booktitle}{\emph{Proceedings of the 30th
+  {ACM} {SIGKDD} conference on knowledge discovery and data mining}}.
+  \bibinfo{pages}{6555--6565}.
+\newblock
+
+
+\bibitem[Luo et~al\mbox{.}(2023)]%
+        {luo_empirical_2023}
+\bibfield{author}{\bibinfo{person}{Yun Luo}, \bibinfo{person}{Zhen Yang},
+  \bibinfo{person}{Fandong Meng}, \bibinfo{person}{Yafu Li},
+  \bibinfo{person}{Jie Zhou}, {and} \bibinfo{person}{Yue Zhang}.}
+  \bibinfo{year}{2023}\natexlab{}.
+\newblock \showarticletitle{An empirical study of catastrophic forgetting in
+  large language models during continual fine-tuning}.
+\newblock \bibinfo{journal}{\emph{arXiv preprint arXiv:2308.08747}}
+  (\bibinfo{year}{2023}).
+\newblock
+
+
+\bibitem[Lyu et~al\mbox{.}(2025)]%
+        {dv365}
+\bibfield{author}{\bibinfo{person}{Wenhan Lyu}, \bibinfo{person}{Devashish
+  Tyagi}, \bibinfo{person}{Yihang Yang}, \bibinfo{person}{Ziwei Li},
+  \bibinfo{person}{Ajay Somani}, \bibinfo{person}{Karthikeyan
+  Shanmugasundaram}, \bibinfo{person}{Nikola Andrejevic},
+  \bibinfo{person}{Ferdi Adeputra}, \bibinfo{person}{Curtis Zeng},
+  \bibinfo{person}{Arun~K. Singh}, \bibinfo{person}{Maxime Ransan}, {and}
+  \bibinfo{person}{Sagar Jain}.} \bibinfo{year}{2025}\natexlab{}.
+\newblock \bibinfo{title}{DV365: Extremely Long User History Modeling at
+  Instagram}.
+\newblock
+\showeprint[arxiv]{2506.00450}~[cs.IR]
+\urldef\tempurl%
+\url{https://arxiv.org/abs/2506.00450}
+\showURL{%
+\tempurl}
+
+
+\bibitem[Pfeiffer et~al\mbox{.}(2023)]%
+        {pfeiffer_modular_2023}
+\bibfield{author}{\bibinfo{person}{Jonas Pfeiffer}, \bibinfo{person}{Sebastian
+  Ruder}, \bibinfo{person}{Ivan Vulić}, {and} \bibinfo{person}{Edoardo
+  Ponti}.} \bibinfo{year}{2023}\natexlab{}.
+\newblock \showarticletitle{Modular {Deep} {Learning}}.
+\newblock \bibinfo{journal}{\emph{Transactions on Machine Learning Research}}
+  (\bibinfo{year}{2023}).
+\newblock
+\showISSN{2835-8856}
+\urldef\tempurl%
+\url{https://openreview.net/forum?id=z9EkXfvxta}
+\showURL{%
+\tempurl}
+
+
+\bibitem[Pfeiffer et~al\mbox{.}(2020)]%
+        {pfeiffer_mad-x_2020}
+\bibfield{author}{\bibinfo{person}{Jonas Pfeiffer}, \bibinfo{person}{Ivan
+  Vulić}, \bibinfo{person}{Iryna Gurevych}, {and} \bibinfo{person}{Sebastian
+  Ruder}.} \bibinfo{year}{2020}\natexlab{}.
+\newblock \showarticletitle{{MAD}-{X}: {An} {Adapter}-{Based} {Framework} for
+  {Multi}-{Task} {Cross}-{Lingual} {Transfer}}. In
+  \bibinfo{booktitle}{\emph{Proceedings of the 2020 {Conference} on {Empirical}
+  {Methods} in {Natural} {Language} {Processing} ({EMNLP})}},
+  \bibfield{editor}{\bibinfo{person}{Bonnie Webber}, \bibinfo{person}{Trevor
+  Cohn}, \bibinfo{person}{Yulan He}, {and} \bibinfo{person}{Yang Liu}} (Eds.).
+  \bibinfo{publisher}{Association for Computational Linguistics},
+  \bibinfo{address}{Online}, \bibinfo{pages}{7654--7673}.
+\newblock
+\href{https://doi.org/10.18653/v1/2020.emnlp-main.617}{doi:\nolinkurl{10.18653/v1/2020.emnlp-main.617}}
+
+
+\bibitem[Pi et~al\mbox{.}(2019)]%
+        {ali}
+\bibfield{author}{\bibinfo{person}{Qi Pi}, \bibinfo{person}{Weijie Bian},
+  \bibinfo{person}{Guorui Zhou}, \bibinfo{person}{Xiaoqiang Zhu}, {and}
+  \bibinfo{person}{Kun Gai}.} \bibinfo{year}{2019}\natexlab{}.
+\newblock \showarticletitle{Practice on Long Sequential User Behavior Modeling
+  for Click-Through Rate Prediction}. In \bibinfo{booktitle}{\emph{Proceedings
+  of the 25th ACM SIGKDD International Conference on Knowledge Discovery \&
+  Data Mining}} (Anchorage, AK, USA) \emph{(\bibinfo{series}{KDD '19})}.
+  \bibinfo{publisher}{Association for Computing Machinery},
+  \bibinfo{address}{New York, NY, USA}, \bibinfo{pages}{2671–2679}.
+\newblock
+\showISBNx{9781450362016}
+\href{https://doi.org/10.1145/3292500.3330666}{doi:\nolinkurl{10.1145/3292500.3330666}}
+
+
+\bibitem[Radford et~al\mbox{.}(2021)]%
+        {radford_learning_2021}
+\bibfield{author}{\bibinfo{person}{Alec Radford}, \bibinfo{person}{Jong~Wook
+  Kim}, \bibinfo{person}{Chris Hallacy}, \bibinfo{person}{Aditya Ramesh},
+  \bibinfo{person}{Gabriel Goh}, \bibinfo{person}{Sandhini Agarwal},
+  \bibinfo{person}{Girish Sastry}, \bibinfo{person}{Amanda Askell},
+  \bibinfo{person}{Pamela Mishkin}, \bibinfo{person}{Jack Clark}, {and}
+  \bibinfo{person}{{others}}.} \bibinfo{year}{2021}\natexlab{}.
+\newblock \showarticletitle{Learning transferable visual models from natural
+  language supervision}. In \bibinfo{booktitle}{\emph{International conference
+  on machine learning}}. \bibinfo{publisher}{PmLR},
+  \bibinfo{pages}{8748--8763}.
+\newblock
+
+
+\bibitem[Raffel et~al\mbox{.}(2020)]%
+        {raffel_exploring_2020}
+\bibfield{author}{\bibinfo{person}{Colin Raffel}, \bibinfo{person}{Noam
+  Shazeer}, \bibinfo{person}{Adam Roberts}, \bibinfo{person}{Katherine Lee},
+  \bibinfo{person}{Sharan Narang}, \bibinfo{person}{Michael Matena},
+  \bibinfo{person}{Yanqi Zhou}, \bibinfo{person}{Wei Li}, {and}
+  \bibinfo{person}{Peter~J Liu}.} \bibinfo{year}{2020}\natexlab{}.
+\newblock \showarticletitle{Exploring the limits of transfer learning with a
+  unified text-to-text transformer}.
+\newblock \bibinfo{journal}{\emph{Journal of machine learning research}}
+  \bibinfo{volume}{21}, \bibinfo{number}{140} (\bibinfo{year}{2020}),
+  \bibinfo{pages}{1--67}.
+\newblock
+
+
+\bibitem[Rasul et~al\mbox{.}(2023)]%
+        {rasul_lag-llama_2023}
+\bibfield{author}{\bibinfo{person}{Kashif Rasul}, \bibinfo{person}{Arjun
+  Ashok}, \bibinfo{person}{Andrew~Robert Williams}, \bibinfo{person}{Arian
+  Khorasani}, \bibinfo{person}{George Adamopoulos}, \bibinfo{person}{Rishika
+  Bhagwatkar}, \bibinfo{person}{Marin Biloš}, \bibinfo{person}{Hena Ghonia},
+  \bibinfo{person}{Nadhir Hassen}, \bibinfo{person}{Anderson Schneider}, {and}
+  \bibinfo{person}{{others}}.} \bibinfo{year}{2023}\natexlab{}.
+\newblock \showarticletitle{Lag-llama: {Towards} foundation models for time
+  series forecasting}. In \bibinfo{booktitle}{\emph{R0-{FoMo}: {Robustness} of
+  {Few}-shot and {Zero}-shot {Learning} in {Large} {Foundation} {Models}}}.
+\newblock
+
+
+\bibitem[Rebuffi et~al\mbox{.}(2017)]%
+        {rebuffi_learning_2017}
+\bibfield{author}{\bibinfo{person}{Sylvestre-Alvise Rebuffi},
+  \bibinfo{person}{Hakan Bilen}, {and} \bibinfo{person}{Andrea Vedaldi}.}
+  \bibinfo{year}{2017}\natexlab{}.
+\newblock \showarticletitle{Learning multiple visual domains with residual
+  adapters}. In \bibinfo{booktitle}{\emph{Advances in {Neural} {Information}
+  {Processing} {Systems}}}, \bibfield{editor}{\bibinfo{person}{I.~Guyon},
+  \bibinfo{person}{U.~Von Luxburg}, \bibinfo{person}{S.~Bengio},
+  \bibinfo{person}{H.~Wallach}, \bibinfo{person}{R.~Fergus},
+  \bibinfo{person}{S.~Vishwanathan}, {and} \bibinfo{person}{R.~Garnett}}
+  (Eds.), Vol.~\bibinfo{volume}{30}. \bibinfo{publisher}{Curran Associates,
+  Inc.}
+\newblock
+\urldef\tempurl%
+\url{https://proceedings.neurips.cc/paper_files/paper/2017/file/e7b24b112a44fdd9ee93bdf998c6ca0e-Paper.pdf}
+\showURL{%
+\tempurl}
+
+
+\bibitem[Si et~al\mbox{.}(2024)]%
+        {twinv2}
+\bibfield{author}{\bibinfo{person}{Zihua Si}, \bibinfo{person}{Lin Guan},
+  \bibinfo{person}{Zhongxiang Sun}, \bibinfo{person}{Xiaoxue Zang},
+  \bibinfo{person}{Jing Lu}, \bibinfo{person}{Yiqun Hui},
+  \bibinfo{person}{Xingchao Cao}, \bibinfo{person}{Zeyu Yang},
+  \bibinfo{person}{Yichen Zheng}, \bibinfo{person}{Dewei Leng},
+  \bibinfo{person}{Kai Zheng}, \bibinfo{person}{Chenbin Zhang},
+  \bibinfo{person}{Yanan Niu}, \bibinfo{person}{Yang Song}, {and}
+  \bibinfo{person}{Kun Gai}.} \bibinfo{year}{2024}\natexlab{}.
+\newblock \showarticletitle{TWIN V2: Scaling Ultra-Long User Behavior Sequence
+  Modeling for Enhanced CTR Prediction at Kuaishou}. In
+  \bibinfo{booktitle}{\emph{Proceedings of the 33rd ACM International
+  Conference on Information and Knowledge Management}}
+  \emph{(\bibinfo{series}{CIKM ’24})}. \bibinfo{publisher}{ACM},
+  \bibinfo{pages}{4890–4897}.
+\newblock
+\href{https://doi.org/10.1145/3627673.3680030}{doi:\nolinkurl{10.1145/3627673.3680030}}
+
+
+\bibitem[Wang et~al\mbox{.}(2025)]%
+        {wang_scaling_2025}
+\bibfield{author}{\bibinfo{person}{Chunqi Wang}, \bibinfo{person}{Bingchao Wu},
+  \bibinfo{person}{Zheng Chen}, \bibinfo{person}{Lei Shen},
+  \bibinfo{person}{Bing Wang}, {and} \bibinfo{person}{Xiaoyi Zeng}.}
+  \bibinfo{year}{2025}\natexlab{}.
+\newblock \showarticletitle{Scaling {Transformers} for {Discriminative}
+  {Recommendation} via {Generative} {Pretraining}}.
+\newblock \bibinfo{journal}{\emph{arXiv preprint arXiv:2506.03699}}
+  (\bibinfo{year}{2025}).
+\newblock
+
+
+\bibitem[Ying et~al\mbox{.}(2018)]%
+        {pinsage}
+\bibfield{author}{\bibinfo{person}{Rex Ying}, \bibinfo{person}{Ruining He},
+  \bibinfo{person}{Kaifeng Chen}, \bibinfo{person}{Pong Eksombatchai},
+  \bibinfo{person}{William~L. Hamilton}, {and} \bibinfo{person}{Jure
+  Leskovec}.} \bibinfo{year}{2018}\natexlab{}.
+\newblock \showarticletitle{Graph Convolutional Neural Networks for Web-Scale
+  Recommender Systems}. In \bibinfo{booktitle}{\emph{Proceedings of the 24th
+  ACM SIGKDD International Conference on Knowledge Discovery \& Data Mining}}
+  (London, United Kingdom) \emph{(\bibinfo{series}{KDD '18})}.
+  \bibinfo{publisher}{Association for Computing Machinery},
+  \bibinfo{address}{New York, NY, USA}, \bibinfo{pages}{974–983}.
+\newblock
+\showISBNx{9781450355520}
+\href{https://doi.org/10.1145/3219819.3219890}{doi:\nolinkurl{10.1145/3219819.3219890}}
+
+
+\bibitem[Zhai et~al\mbox{.}(2024)]%
+        {zhai_actions_2024}
+\bibfield{author}{\bibinfo{person}{Jiaqi Zhai}, \bibinfo{person}{Lucy Liao},
+  \bibinfo{person}{Xing Liu}, \bibinfo{person}{Yueming Wang},
+  \bibinfo{person}{Rui Li}, \bibinfo{person}{Xuan Cao}, \bibinfo{person}{Leon
+  Gao}, \bibinfo{person}{Zhaojie Gong}, \bibinfo{person}{Fangda Gu},
+  \bibinfo{person}{Michael He}, {and} \bibinfo{person}{{others}}.}
+  \bibinfo{year}{2024}\natexlab{}.
+\newblock \showarticletitle{Actions speak louder than words:
+  {Trillion}-parameter sequential transducers for generative recommendations}.
+\newblock \bibinfo{journal}{\emph{arXiv preprint arXiv:2402.17152}}
+  (\bibinfo{year}{2024}).
+\newblock
+
+
+\bibitem[Zhang et~al\mbox{.}(2024b)]%
+        {zhang2024wukong}
+\bibfield{author}{\bibinfo{person}{Buyun Zhang}, \bibinfo{person}{Liang Luo},
+  \bibinfo{person}{Yuxin Chen}, \bibinfo{person}{Jade Nie}, \bibinfo{person}{Xi
+  Liu}, \bibinfo{person}{Daifeng Guo}, \bibinfo{person}{Yanli Zhao},
+  \bibinfo{person}{Shen Li}, \bibinfo{person}{Yuchen Hao},
+  \bibinfo{person}{Yantao Yao}, {et~al\mbox{.}}}
+  \bibinfo{year}{2024}\natexlab{b}.
+\newblock \showarticletitle{Wukong: Towards a scaling law for large-scale
+  recommendation}.
+\newblock \bibinfo{journal}{\emph{arXiv preprint arXiv:2403.02545}}
+  (\bibinfo{year}{2024}).
+\newblock
+
+
+\bibitem[Zhang et~al\mbox{.}(2020)]%
+        {tencent}
+\bibfield{author}{\bibinfo{person}{Junqi Zhang}, \bibinfo{person}{Bing Bai},
+  \bibinfo{person}{Ye Lin}, \bibinfo{person}{Jian Liang}, \bibinfo{person}{Kun
+  Bai}, {and} \bibinfo{person}{Fei Wang}.} \bibinfo{year}{2020}\natexlab{}.
+\newblock \showarticletitle{General-Purpose User Embeddings Based on Mobile App
+  Usage}. In \bibinfo{booktitle}{\emph{Proceedings of the 26th ACM SIGKDD
+  International Conference on Knowledge Discovery \& Data Mining}} (Virtual
+  Event, CA, USA) \emph{(\bibinfo{series}{KDD '20})}.
+  \bibinfo{publisher}{Association for Computing Machinery},
+  \bibinfo{address}{New York, NY, USA}, \bibinfo{pages}{2831–2840}.
+\newblock
+\showISBNx{9781450379984}
+\href{https://doi.org/10.1145/3394486.3403334}{doi:\nolinkurl{10.1145/3394486.3403334}}
+
+
+\bibitem[Zhang et~al\mbox{.}(2024a)]%
+        {zhang_scaling_2024}
+\bibfield{author}{\bibinfo{person}{Wei Zhang}, \bibinfo{person}{Dai Li},
+  \bibinfo{person}{Chen Liang}, \bibinfo{person}{Fang Zhou},
+  \bibinfo{person}{Zhongke Zhang}, \bibinfo{person}{Xuewei Wang},
+  \bibinfo{person}{Ru Li}, \bibinfo{person}{Yi Zhou}, \bibinfo{person}{Yaning
+  Huang}, \bibinfo{person}{Dong Liang}, {and} \bibinfo{person}{{others}}.}
+  \bibinfo{year}{2024}\natexlab{a}.
+\newblock \showarticletitle{Scaling {User} {Modeling}: {Large}-scale {Online}
+  {User} {Representations} for {Ads} {Personalization} in {Meta}}. In
+  \bibinfo{booktitle}{\emph{Companion {Proceedings} of the {ACM} {Web}
+  {Conference} 2024}}. \bibinfo{pages}{47--55}.
+\newblock
+
+
+\end{thebibliography}

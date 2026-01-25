@@ -7,6 +7,10 @@ HKBUAPIkey.md
 zai.md
 poe.md
 
+# Ignore LLM folder with API keys
+LLM/
+LLM dummy/
+
 # Ignore OS files
 .DS_Store
 

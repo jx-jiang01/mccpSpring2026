@@ -1,0 +1,33 @@
+\section{Benchmark:xxx}
+We construct the benchmark benchmarkname. Our benchmark is meticulously crafted to concentrate on prompt compression in the few-shot chain-of-thought (CoT) scenarios, given their prevalence as the primary contributors to excessively lengthy prompts. Initially, we outline the data construction process for benchmarkname, providing an overview of the data statistics and evaluation settings thereafter. Finally, we elaborate on the evaluation metrics utilized.
+
+\subsection{Data Construction of bencmarkname}
+Our benchmark comprises two components: \textbf{Prompts} and \textbf{Questions}. Each prompt is methodically paired with every question throughout the evaluation process to create an extensive array of tests, culminating in the final results. The prompts are carefully designed by humans, and the questions are constructed based on GSM8K and BBH datasets.
+\subsubsection{Dataset Introduction}
+\textbf{GSM8K}(\cite{GSM8K}) GSM8K is a widely utilized dataset for evaluating mathematical reasoning, consisting of 8,500 high-quality, human-constructed problems in elementary mathematics. Its primary purpose is to assess the inferential capabilities of generative language models.
+
+\textbf{BIG-Bench Hard}(\cite{BBH}) BIG-Bench Hard is a suite of language and symbolic reasoning tasks, which consisting 6.5k problems and focuses on 23 challenging tasks. The tasks encompassed by the BIG-Bench Hard framework necessitate multi-step reasoning for successful completion, rendering it exceptionally well-suited for evaluating the efficacy of chain-of-thought prompting.
+
+  
+\subsubsection{Data Construction of Prompt}
+Drawing on previous research(\cite{ChainofThoughtHub}), we meticulously designed prompts of varying difficulty levels for a thorough evaluation. The complexity of a prompt is gauged by two criteria: the step in the chain-of-thought (CoT) and the number of shots within the prompt. Each prompt was carefully crafted by hand.
+
+\subsubsection{Data Construction of Question}
+Upon completing the construction of prompts, we identified the most challenging and the simplest prompts for question construction, designated as $P_{hard}$ and $P_{easy}$, respectively. We applied various prompt compression algorithms, generating two distinct sets of prompts: $S_{hard}=\{P_{hard}\}\cup\{p_{hard}^i\mid i\in\mathbb{N},1\leq i\leq N\}$, where $P_{hard}$ signifies the original prompt and $P_{hard}^i$ represents the variants created through the application of prompt compression algorithms. $N$ represents the number of compression algorithms employed. A similar approach was employed to construct $S_{easy}$ based on $P_{easy}$.
+
+We tested all questions using all prompts in the $S_{hard}$ and removed those questions that were incorrectly answered across all prompts, as we believe these questions are inherently too difficult, and incorrect answers do not necessarily indicate poor compression performance.
+
+Following the same procedure, assessments were conducted on the $S_{easy}$, and questions that were correctly answered in all prompts were removed. This is because we believe these questions are inherently too simple, and correctly answering them does not necessarily indicate effective compression.
+
+We conducted a manual screening of the remaining questions, eliminating duplicates to ensure broad coverage. 
+
+
+\subsection{Dataset Summary}
+% 
+\textbf{Dataset format} As shown in Table I, each instance in the benchmark benchmarkname is denoted by tuple d=<P,Q>
+
+\textbf{Data statistics}
+
+\subsection{Evaluation Metrics}
+Following \cite{LostInMiddle} and \cite{llmlingua}, we adopt accuracy as our principal evaluation metric, assessing the presence of correct answers within the predicted output.
+

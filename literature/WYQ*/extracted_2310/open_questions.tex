@@ -1,0 +1,25 @@
+\vspace{-0.15in}
+\section{Conclusion} \label{conclusion}
+\vspace{-0.15in}
+\iffalse
+An interesting open question is whether the assumption of the feasibility of the constraints on every slot can be suitably relaxed and still ensure sublinear regret and constraint violation penalties. Specifically, it would be interesting to extend our results to the $K$-benchmark case \citep{georgios-cautious} where the cumulative constraints hold for any consecutive $K$ intervals where $K$ is a sublinear function of the time-horizon $T$, \emph{i.e.,}
+\begin{eqnarray*}
+	\sum_{\tau \in \mathcal{I}}g_\tau (x^\star) \leq 0
+\end{eqnarray*}
+for all intervals $|\mathcal{I}| =K \leq \alpha(T)$ where $\alpha(\cdot)$ is a sublinear function. Secondly, proving joint lower bounds for static regret and constraint violation penalty would be interesting. Throughout this paper, we use the quadratic potential function to design our online policy. However, our regret decomposition result is general and could be used with any reasonable potential function. It would be interesting to see if improved performance guarantees can be established by choosing a different potential function.
+\fi
+In this paper, we proposed efficient online policies for the COCO problem with optimal performance bounds. We also derived sublinear CCV bounds for the OCS problem under a set of relaxed assumptions. Our analysis is streamlined, leveraging Lyapunov theory and adaptive regret bounds for the standard OCO problem. 
+In the future, exploring dynamic regret bounds and a bandit extension of the COCO problem would be interesting.
+%\iffalse
+\section{Acknowledgement}
+This work was supported by the Department of Atomic Energy, Government of India, under project no. RTI4001 and by a Google India faculty research award. The first author was also partially supported by a US-India NSF-DST collaborative grant coordinated by IDEAS-Technology Innovation Hub (TIH) at the Indian Statistical Institute, Kolkata. The authors gratefully acknowledge comments from the anonymous reviewers, which substantially improved the quality of the presentation. 
+%
+%\fi
+
+
+
+
+
+
+
+

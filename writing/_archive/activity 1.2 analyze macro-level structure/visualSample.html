@@ -1,0 +1,393 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Keller Paper Macro-Level Structure Visualization</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 20px;
+            background-color: #f5f5f5;
+        }
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            background: white;
+            padding: 20px;
+            border-radius: 10px;
+            box-shadow: 0 0 10px rgba(0,0,0,0.1);
+        }
+        h1 {
+            text-align: center;
+            color: #2c3e50;
+            margin-bottom: 30px;
+        }
+        .structure-diagram {
+            display: flex;
+            flex-direction: column;
+            gap: 20px;
+        }
+        .section {
+            border: 2px solid #3498db;
+            border-radius: 8px;
+            padding: 15px;
+            background: #ecf0f1;
+            position: relative;
+        }
+        .section-header {
+            background: #3498db;
+            color: white;
+            padding: 10px;
+            margin: -15px -15px 15px -15px;
+            border-radius: 6px 6px 0 0;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        .section-title {
+            font-weight: bold;
+            font-size: 1.2em;
+        }
+        .word-count {
+            font-size: 0.9em;
+            opacity: 0.9;
+        }
+        .moves {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 10px;
+            margin-top: 10px;
+        }
+        .move {
+            background: white;
+            padding: 10px;
+            border-radius: 5px;
+            border-left: 4px solid #e74c3c;
+        }
+        .move-title {
+            font-weight: bold;
+            color: #e74c3c;
+            margin-bottom: 5px;
+        }
+        .move-content {
+            font-size: 0.9em;
+            color: #555;
+        }
+        .key-excerpt {
+            background: #fff3cd;
+            border: 1px solid #ffeaa7;
+            border-radius: 5px;
+            padding: 10px;
+            margin: 10px 0;
+            font-style: italic;
+        }
+        .analysis {
+            background: #d4edda;
+            border: 1px solid #c3e6cb;
+            border-radius: 5px;
+            padding: 10px;
+            margin: 10px 0;
+            font-size: 0.9em;
+        }
+        .flow-arrow {
+            text-align: center;
+            font-size: 2em;
+            color: #7f8c8d;
+            margin: 10px 0;
+        }
+        .comparison-table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 20px 0;
+            background: white;
+        }
+        .comparison-table th, .comparison-table td {
+            border: 1px solid #ddd;
+            padding: 8px;
+            text-align: left;
+        }
+        .comparison-table th {
+            background-color: #f2f2f2;
+            font-weight: bold;
+        }
+        .highlight {
+            background-color: #fff3cd;
+            font-weight: bold;
+        }
+        .legend {
+            background: #ecf0f1;
+            padding: 15px;
+            border-radius: 5px;
+            margin: 20px 0;
+        }
+        .legend-item {
+            display: inline-block;
+            margin: 5px 15px 5px 0;
+            padding: 5px 10px;
+            border-radius: 3px;
+            font-size: 0.9em;
+        }
+        .cs-convention { background: #3498db; color: white; }
+        .traditional { background: #e74c3c; color: white; }
+        .universal { background: #27ae60; color: white; }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>Keller Paper: Macro-Level Structure Analysis</h1>
+
+        <div class="legend">
+            <h3>Analysis Framework</h3>
+            <div class="legend-item cs-convention">Computer Science Convention</div>
+            <div class="legend-item traditional">Traditional Academic</div>
+            <div class="legend-item universal">Universal Best Practice</div>
+        </div>
+
+        <div class="structure-diagram">
+
+            <!-- Introduction Section -->
+            <div class="section">
+                <div class="section-header">
+                    <span class="section-title">Section 1: Introduction</span>
+                    <span class="word-count">~800 words</span>
+                </div>
+
+                <div class="moves">
+                    <div class="move">
+                        <div class="move-title">Move 1: Establishing Territory</div>
+                        <div class="move-content">
+                            <strong>Centrality Claims:</strong> Personalized anatomical digital twins are "key" in medicine, sports science, biomechanics, computer graphics
+                        </div>
+                        <div class="key-excerpt">
+                            "Creating personalized anatomical digital twins of humans is key in fields such as medicine, sports science, biomechanics, and computer graphics."
+                        </div>
+                        <div class="analysis">
+                            Strong interdisciplinary appeal. Uses present tense for timeless significance.
+                        </div>
+                    </div>
+
+                    <div class="move">
+                        <div class="move-title">Move 2: Establishing Niche</div>
+                        <div class="move-content">
+                            <strong>Gaps Identified:</strong> Expensive medical imaging, time-consuming segmentation, lack of non-invasive methods
+                        </div>
+                        <div class="key-excerpt">
+                            "To the best of our knowledge, the precise 3D prediction of these layers inside the body, given only the outer body surface, is a novel problem that has not been tackled in the literature."
+                        </div>
+                        <div class="analysis">
+                            Specific, researchable gap with academic hedging ("to the best of our knowledge").
+                        </div>
+                    </div>
+
+                    <div class="move">
+                        <div class="move-title">Move 3: Occupying Niche</div>
+                        <div class="move-content">
+                            <strong>Solution:</strong> HIT method addresses three main challenges with implicit tissue modeling
+                        </div>
+                        <div class="key-excerpt">
+                            "Our approach, Human Implicit Tissues (HIT), addresses these challenges."
+                        </div>
+                        <div class="analysis">
+                            Clear positioning with enumerated challenges and acronym introduction.
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="flow-arrow">↓</div>
+
+            <!-- Related Work Section -->
+            <div class="section">
+                <div class="section-header">
+                    <span class="section-title">Section 2: Related Work</span>
+                    <span class="word-count">~600 words</span>
+                </div>
+
+                <div class="moves">
+                    <div class="move">
+                        <div class="move-title">Move 1: Thematic Overview</div>
+                        <div class="move-content">
+                            <strong>Scope:</strong> Body composition prediction from various inputs (scans, silhouettes, images)
+                        </div>
+                        <div class="key-excerpt">
+                            "Motivated by prior work on the prediction of body composition from 3D scans, silhouettes, or images, we go further..."
+                        </div>
+                        <div class="analysis">
+                            Immediate differentiation ("we go further") establishes contribution.
+                        </div>
+                    </div>
+
+                    <div class="move">
+                        <div class="move-title">Move 2: Critical Analysis</div>
+                        <div class="move-content">
+                            <strong>Themes:</strong> Anatomic models, anatomy inference, datasets with systematic critique
+                        </div>
+                        <div class="key-excerpt">
+                            "Several methods create avatars with soft tissue deformation... None of these are validated against clinical data."
+                        </div>
+                        <div class="analysis">
+                            Strong critical analysis identifying validation gaps in existing work.
+                        </div>
+                    </div>
+
+                    <div class="move">
+                        <div class="move-title">Move 3 & 4: Gaps & Synthesis</div>
+                        <div class="move-content">
+                            <strong>Gaps:</strong> Lack of clinical validation, limited tissue types, no volumetric inference
+                        </div>
+                        <div class="analysis">
+                            Gaps established through systematic critique rather than explicit statements.
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="flow-arrow">↓</div>
+
+            <!-- Methods Sections -->
+            <div class="section">
+                <div class="section-header">
+                    <span class="section-title">Sections 3-4: Methods & Data</span>
+                    <span class="word-count">~1500 words</span>
+                </div>
+
+                <div class="moves">
+                    <div class="move">
+                        <div class="move-title">Technical Specificity</div>
+                        <div class="move-content">
+                            <strong>Dataset Creation:</strong> MRI segmentation, SMPL fitting, tissue classification
+                            <br><strong>Method:</strong> Multi-space implicit modeling with deformation fields
+                        </div>
+                        <div class="key-excerpt">
+                            "HIT defines four R³ spaces. A point x_m in the original MRI space corresponds to x_p in the posed space, x_β in the shaped space, and x_c in the canonical space."
+                        </div>
+                        <div class="analysis">
+                            High technical precision with mathematical formalism appropriate for CS audience.
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="flow-arrow">↓</div>
+
+            <!-- Experiments Section -->
+            <div class="section">
+                <div class="section-header">
+                    <span class="section-title">Section 5: Experiments</span>
+                    <span class="word-count">~800 words</span>
+                </div>
+
+                <div class="moves">
+                    <div class="move">
+                        <div class="move-title">Empirical Validation</div>
+                        <div class="move-content">
+                            <strong>Metrics:</strong> Dice scores, volume differences, ablation studies
+                            <br><strong>Generalization:</strong> New shapes and poses testing
+                        </div>
+                        <div class="key-excerpt">
+                            "Table 1 shows that the HIT Dice scores are significantly better than the Chance baseline."
+                        </div>
+                        <div class="analysis">
+                            Rigorous quantitative evaluation with appropriate baselines and ablation studies.
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="flow-arrow">↓</div>
+
+            <!-- Discussion & Conclusion -->
+            <div class="section">
+                <div class="section-header">
+                    <span class="section-title">Section 6: Discussion & Conclusion</span>
+                    <span class="word-count">~400 words</span>
+                </div>
+
+                <div class="moves">
+                    <div class="move">
+                        <div class="move-title">Synthesis & Impact</div>
+                        <div class="move-content">
+                            <strong>Contributions:</strong> Novel problem formulation, dataset, method
+                            <br><strong>Limitations:</strong> Validation scope, tissue specificity
+                            <br><strong>Future Work:</strong> Structural losses, individual features
+                        </div>
+                        <div class="key-excerpt">
+                            "HIT introduces the new problem of inferring the human tissues inside of a body from a surface observation only."
+                        </div>
+                        <div class="analysis">
+                            Balanced discussion with transparent limitations and clear future directions.
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+
+        <h2>Cross-Disciplinary Comparison</h2>
+        <table class="comparison-table">
+            <tr>
+                <th>Aspect</th>
+                <th>Keller Paper (CS/CV)</th>
+                <th>Traditional Academic</th>
+                <th>Key Learning</th>
+            </tr>
+            <tr>
+                <td>Literature Review</td>
+                <td class="highlight">Separate section after introduction</td>
+                <td>Integrated into introduction</td>
+                <td>CS papers often dedicate full sections to related work</td>
+            </tr>
+            <tr>
+                <td>Technical Detail</td>
+                <td class="highlight">High (algorithms, math, architectures)</td>
+                <td>Medium (methods overview)</td>
+                <td>Mathematical formalism crucial for CS credibility</td>
+            </tr>
+            <tr>
+                <td>Evaluation</td>
+                <td class="highlight">Quantitative metrics, ablation studies</td>
+                <td>Theoretical validation, qualitative</td>
+                <td>Empirical rigor through multiple evaluation dimensions</td>
+            </tr>
+            <tr>
+                <td>Contribution Claims</td>
+                <td class="highlight">Technical novelty + open dataset</td>
+                <td>Theoretical advancement + evidence</td>
+                <td>CS emphasizes reproducible, extensible contributions</td>
+            </tr>
+        </table>
+
+        <h2>Imitation Framework for Future Papers</h2>
+        <div class="analysis">
+            <h3>Structural Elements to Adapt:</h3>
+            <ul>
+                <li><strong>Multi-space Formalism:</strong> Clear definition of coordinate systems and transformations</li>
+                <li><strong>Modular Architecture:</strong> Breaking complex systems into understandable components</li>
+                <li><strong>Ablation Studies:</strong> Systematic evaluation of system components</li>
+                <li><strong>Dataset Contributions:</strong> Detailed data creation methodologies</li>
+            </ul>
+
+            <h3>Rhetorical Strategies:</h3>
+            <ul>
+                <li><strong>Problem Novelty:</strong> "To the best of our knowledge" + specific technical gaps</li>
+                <li><strong>Technical Positioning:</strong> Clear differentiation from related work</li>
+                <li><strong>Clinical Relevance:</strong> Connecting technical contributions to real-world applications</li>
+            </ul>
+
+            <h3>Quality Indicators:</h3>
+            <ul>
+                <li><strong>Mathematical Rigor:</strong> Formal definitions and loss functions</li>
+                <li><strong>Empirical Validation:</strong> Multiple evaluation metrics and baselines</li>
+                <li><strong>Transparency:</strong> Open dataset and code availability</li>
+                <li><strong>Scalability:</strong> Generalization to new conditions</li>
+            </ul>
+        </div>
+
+        <div style="text-align: center; margin-top: 30px; color: #7f8c8d; font-size: 0.9em;">
+            <p>Analysis based on macro-level structure framework from academic writing pedagogy</p>
+            <p>Interactive visualization for learning paper organization patterns</p>
+        </div>
+    </div>
+</body>
+</html>

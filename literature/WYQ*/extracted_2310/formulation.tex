@@ -1,0 +1,154 @@
+%\vspace{-0.1in}
+\section{The Constrained OCO (COCO) Problem} \label{gen_oco}
+%\vspace{-0.1in}
+%\edit{Remove all $\psi$ and mention at the end that we can also consider surrogate costs.}
+\iffalse
+In this section, we generalize the $\ocs$  and the usual unconstrained OCO  and consider the COCO where
+ on each round $t, t=1, \dots, T$ an online policy first chooses an admissible action $x_t \in \mathcal{X}$ 
+% from a feasible closed and bounded convex set $\mathcal{X}.$ On the same round, 
+ and then the adversary chooses a convex cost function $f_t: \mathcal{X} \to \mathbb{R}$ and a constraint of the form $g_t(x) \leq 0,$ where $g_t: \mathcal{X} \to \mathbb{R}$ is a convex function.\footnote{For notational simplicity, in this section, we assume that only one constraint function is revealed on each round (\emph{i.e.,} $k=1$). The general case of $k>1$ can be handled similarly as in Section \ref{simul_constr}.} Let $\mathcal{X}^\star$ be the feasible set satisfying all constraints as defined in Assumption \ref{feas-constr}. Then, the objective is to simultaneously minimize the regret and the CCV as defined in \eqref{intro-regret-def} and \eqref{intro-gen-oco-goal} with $k=1$, respectively. 
+ 
+ %Our objective is to design an online policy that achieves a sublinear cumulative violation and a sublinear worst-case regret over the feasible set $\mathcal{X}^\star$. Specifically, we require the following conditions to be satisfied
+% \begin{eqnarray} \label{gen-oco-goal}
+% 	\mathbb{V}(T)\equiv \sum_{t=1}^T (g_t(x_t))^+ = o(T),~\textrm{and}~
+% 	\sup_{x^\star \in \mathcal{X}^\star} \mathcal{R}_T(x^\star)= o(T),~ \forall T \geq 1,
+% \end{eqnarray}
+% where the regret $\mathcal{R}_T(x^\star)$ w.r.t. the fixed action $x^\star\in \mathcal{X}^\star$ has been defined earlier in Eqn.\ \eqref{regret-def}. 
+ \iffalse The COCO  can be motivated by the following offline convex optimization problem where the functions $\{f_t, g_t\}_{t=1}^T$ are known \emph{a priori}: 
+ %and the objective is to solve the following problem:
+ \begin{eqnarray*}
+ 	\min \sum_{t=1}^T f_t(x),
+ \end{eqnarray*}
+subject to the constraints
+ \begin{eqnarray*}
+ 	g_t(x) \leq 0, ~ \forall t \in [T],~ 
+ 	x \in \mathcal{X}.
+ \end{eqnarray*}
+ \fi
+ Since $(g_t(x_t))^+ \geq 0,$  \eqref{intro-gen-oco-goal} uses a stronger definition of CCV compared to the $\ocs$  (c.f.  \eqref{violation-def1}), where the strict feasibility at some round may compensate for infeasibility in other rounds  \citep{guo2022online}. With abuse of notation, from here onwards, we redefine the convex constraint functions as $g_t(x) \gets (g_t(x))^+, \forall x \in \mathcal{X}, t\geq 1$. In other words, the constraints are pre-processed by passing them through the standard ReLU unit, ensuring that $g_t(x) \geq 0, \forall x \in \mathcal{X}, \forall t \geq 1.$
+ \fi
+ 
+ %Having $g_t(x_t) \geq 0,$ allows some technical advantages for establishing tighter regret and CCV by ensuring the monotonicity of the queue lengths as defined in  \eqref{q-ev} below.  %As we will see, this can be attributed to the fact that, unlike Section \ref{simul_constr}, here, we no longer consider strongly convex constraint functions (however, we do consider strongly convex cost functions). 
+ %An upper bound to the above violation metric $\mathbb{V}(T)$ ensures that the constraint violation in one round can not be compensated by a strictly feasible constraint in a different round \citep{guo2022online}.
+%where the function $g_t: \mathcal{X} \to \mathbb{R}$ is also $\alpha$-strongly convex. Both the functions $f_t$ and $g_t$ are assumed to be $L$-Lipschitz. 
+%The policy chooses its action \emph{before} the adversary reveals its choices for $f_t$ and $g_t$ for round $t$. 
+%No non-causal information, including upper bounds to the norm of the gradients, and/or strong-convexity parameters of either the cost function or the constraints is known to the policy.
+%Compared to $\ocs$ that did not require the knowledge of horizon length $T$, with COCO, we assume that $T$ is known and will be used for setting a parameter. 
+%However, this assumption can be dropped using the standard doubling trick \citep{hazan2016introduction}.  
+% We begin the discussion on COCO with a lower bound on CCV and regret, which does not follow from the regret lower bound for the unconstrained OCO. 
+\subsection{Assumptions}  \label{assump}
+%In this section, we list the general assumptions which apply to both the \ocs ~problem and the COCO, described later in Section \ref{gen_oco}. Since the \ocs ~problem does not contain any cost function, the cost functions mentioned below necessarily refer to COCO only.
+We now state the assumptions considered in this paper. These assumptions are standard in literature on the COCO problem \citep{guo2022online, yi2021regret, neely2017online}.
+\begin{assumption}[Convexity] \label{cvx}
+	The cost function $f_t: \mathcal{X} \mapsto \mathbb{R}$ and the constraint function $g_{t,i}: \mathcal{X} \mapsto \mathbb{R}$ are convex for all $t\geq 1, i\in [k]$. The admissible set (\emph{a.k.a.} the decision set or the action set) $\mathcal{X} \subseteq \mathbb{R}^d$ is closed and convex and has a finite Euclidean diameter $D$. 
+ %Moreover, $D$ is known ahead of time.
+\end{assumption}
+%\vspace{-0.18in}
+\begin{assumption}[Lipschitzness] \label{bddness}
+ %We have $\textrm{diam}(\mathcal{X}) \leq D, ||\nabla f_t(x)||_2 \leq G/2, \textrm{and}~ ||\nabla g_t(x))||_2 \leq G/2,~\forall t, \forall x\in \mathcal{X}$ for some finite constants $D$ and $G.$ If the functions are not necessarily differentiable, we require that the maximum magnitude of the subgradients be bounded accordingly.  Each
+All cost functions $\{f_t\}_{t\geq 1}$ and the constraint functions $\{g_{t,i}\}_{i\in [k], t\geq 1}$'s are $G$-Lipschitz. In other words, for any $x, y \in \mathcal{X},$ we have 
+ \begin{eqnarray*}
+ 	|f_t(x)-f_t(y)| \leq G||x-y||,~
+ 	|g_{t,i}(x)-g_{t,i}(y)| \leq G||x-y||, ~\forall t\geq 1, i\in [k].
+ \end{eqnarray*}
+	\end{assumption}
+
+	Unless specified otherwise, the norm $||\cdot||$ will refer to the standard Euclidean norm and $\nabla f$ will refer to an arbitrary subgradient of a convex function $f$. Assumption \ref{bddness} implies that the $\ell_2$-norm of the (sub)gradients of the cost and constraint functions are uniformly upper-bounded by $G$ over the admissible set $\mathcal{X}.$ Finally, we make the following feasibility assumption about the constraint functions.
+\begin{assumption}[Feasibility] \label{feas-constr}
+	There exists a feasible action $x^\star \in \mathcal{X} $ s.t. $g_{t,i}(x^\star) \leq 0, \forall t, i.$ The feasible set $\mathcal{X}^\star$ is defined to be the set of all feasible actions. The feasibility assumption implies that $\mathcal{X}^\star \neq \emptyset.$
+\end{assumption}
+The feasibility assumption distinguishes the cost functions from the constraint functions and is commonly assumed in the literature \citep{guo2022online, neely2017online, yu2016low,yuan2018online,yi2023distributed, georgios-cautious}.  In Section \ref{simul_constr}, we will consider a constraint-only variant of the problem where the feasibility assumption (Assumption \ref{feas-constr}) will be relaxed. 
+See Appendix \ref{app:assumptions} for a brief discussion on the assumptions.
+
+\paragraph{Remarks:} On each round, multiple constraints of the form $g_{t,i}(x) \leq 0, i\in [k]$ can be replaced by a single new constraint $g_t(x) \leq 0$
+%Multiple constraints per round can be reduced to a single constraint by simply clipping each of the constraints and 
+%by replacing them with a new constraint 
+where the constraint function $g_t$ is defined to be the pointwise maximum of the given constraints, \emph{i.e.,} 
+ $g_t(x) \equiv \max_{i=1}^k g_{t,i}(x), x \in \mathcal{X}.$ It is easy to verify that if each of the constraint functions $\{g_{t,i}\}_{i=1}^k$ satisfies the above assumptions, then the constraint function $g_t$ defined above also satisfies the assumptions. Hence,  throughout this section and without loss of generality, we will assume that only one constraint function is revealed on each round. That being said, under the relaxed feasibility assumption in Section \ref{simul_constr}, this trick does not work and there we will need to consider the full set of $k$ constraint functions.  
+ %(\emph{i.e.,} $k=1.$)
+ %\edit{include a table summarizing the known results for this problem}.
+%\begin{framed}
+
+%\paragraph{Note:} 
+%\begin{enumerate}
+	%The regret bounds derived below hold in the general case when, instead of a linear cost function, the adversary chooses any Lipschitz continuous convex cost function $f_t$ and we set $c_t=\nabla f_t(x_t).$ Due to the Lipschitzness assumption, $||c_t||$ is bounded for all $t \geq 1$.
+ 
+ %In the case of multiple constraints, we construct a single constraint by summing up the coefficient vectors and pass this single aggregate constraint to our algorithm. Alternatively, we can also associate each constraint with a separate queueing process (see Section \ref{app} for an example of the latter construction). 
+%\end{enumerate}    
+%\end{framed}
+
+\iffalse
+For any round $t\geq 1,$ let $\mathcal{X}_t$ be the set of all feasible actions satisfying \emph{all} constraints up to and including time $t,$ \emph{i.e.,}
+\[\mathcal{X}_t = \{x \in \mathcal{X} : g_\tau(x) \leq 0,  1\leq \tau\leq T\}.\] 
+The set $\mathcal{X} \equiv \mathcal{X}_T$ is assumed to be non-empty. To maintain consistency in the notations, we set $\mathcal{X}_0=\mathcal{X}.$ The regret of the online policy with respect to a fixed action $x_T^\star \in \mathcal{X}_T$ and its cumulative violation penalty $\mathbb{V}_\mathcal{I}$ over an interval $\mathcal{I}\equiv [a,b] \subseteq [T]$ are respectively defined as 
+\begin{eqnarray}
+\textrm{Regret}_T(x_T^\star) &=& \sum_{t=1}^T \big(f_t(x_t)-f_t(x_T^\star)\big) \label{reg-def} \\
+\mathbb{V}_\mathcal{I} &=& \sum_{t \in \mathcal{I}} g_t(x_t). \label{violation-def}
+\end{eqnarray} 
+\fi
+%\paragraph{Pre-processing the constraint functions by clipping:} 
+%%In this section, we pass pre-processed constraint functions to the meta-learning algorithm, where the pre-processing step simply 
+%In the COCO , we first pre-process each of the constraint functions by clipping them below zero, \emph{i.e.,} we redefine the $t$\textsuperscript{th} constraint function as \footnote{Since, in this section, we work exclusively with the pre-processed constraint functions, by a slight abuse of notations, we use the same symbol $g_t$ for the pre-processed functions.} $g_t(x) \gets (g_t(x))^+, x \in \mathcal{X},~~ \forall t\geq 1. $
+%It immediately follows that the pre-processed constraint functions are also convex and keep the feasible set $\mathcal{X}^\star$ unchanged.
+%%represent the same constraint set as the original constraint $g_t(x)\leq 0.$ 
+%%With this pre-processed constraint functions, the queue-length sequence, defined recursively in Eqn.\ \eqref{q-ev2}, becomes non-decreasing. 
+%The pre-processing step allows us to bound the hard constraint violation $\mathbb{V}(T)$ as defined in \eqref{intro-gen-oco-goal}.  
+%%Hence,
+%%an upper bound on the cumulative violation penalty on the pre-processed constraint functions \eqref{violation-def}, implies the same upper bound on the cumulative violation penalty of the original constraint functions. 
+%Furthermore, the pre-processing step also offers some technical advantages for establishing tighter regret and constraint violation bounds by ensuring the monotonicity of the queue lengths as defined in  \eqref{q-ev} below.
+\iffalse
+\edit{This needs to be rewritten}
+Note that one can redefine $g_t(x) \gets \psi(g_t(x))$,
+where $\psi : \mathbb{R} \to \mathbb{R}$ is a non-decreasing convex \emph{penalty} function with the property that $\psi(z) \leq 0, \forall z\leq 0.$ Examples for the penalty function include $\psi(z)=z, (z)^+, [(z)^+]^2.$ Under the above assumptions, it immediately follows that the pre-processed constraint functions are also convex and encode the same constraint set as the original constraint $g_t(x)\leq 0.$ In the special case when $\psi(z)=(z)^+,$ we have $\psi(g_t(x)) \geq g_t(x).$ In this case, referred to as the \emph{hard constraints} in \citet{guo2022online}, constraint violation in one round can not be compensated by a strictly feasible constraint in some other round. Hence,
+an upper bound on the cumulative violation penalty on the pre-processed constraint functions \eqref{violation-def} implies the same upper bound on the cumulative violation penalty of the original constraint functions. 
+\fi
+%However, the bounds on the gradients and the numerical value of constraint violation may differ depending on the function $\psi(\cdot)$.
+
+%Our objective is to design an online learning policy that achieves a sublinear cumulative violation penalty uniformly over \emph{any} interval   
+%We aim to design an online learning policy $\{x_t\}_{t\geq 1}$ that admits a sublinear maximum violation penalty 
+%$\sup_{\mathcal{I}} \mathbb{V}_{\mathcal{I}}$ and a sublinear regret with respect to any $x^\star \in \mathcal{X}.$
+\iffalse 
+ \subsection{Assumptions} \label{assumps}
+ We now define a set of assumptions of interest. Each of our results will be valid under some subset of the following assumptions. 
+%As standard in the literature, we will assume the feasible set is bounded and that the norm of the gradients of the functions is uniformly bounded. This is made precise in the following assumption.
+\begin{assumption}[(Convexity and Boundedness)] \label{bddness}
+1. 	Each of the cost functions $f_t : \mathcal{X} \mapsto \mathbb{R}$ and the penalty function $\psi \circ g_t : \mathcal{X} \mapsto \mathbb{R}$ are convex for all $t\geq 1$. The feasible set $\mathcal{X} \subset \mathbb{R}^d$ is closed and convex. 
+
+2.  We have $\textrm{diam}(\mathcal{X}) \leq D, ||\nabla f_t(x)||_2 \leq G, \textrm{and}~ 2\psi'(g_t(x))||\nabla \psi(g_t(x))||_2 \leq G,~\forall t, \forall x\in \mathcal{X}$ for some finite constants $D$ and $G.$ If the functions are not necessarily differentiable, we require that the maximum magnitude of the subgradients be bounded accordingly. We emphasize that the values of the parameters $G$ and $D$ are not necessarily known to the policy.
+	\end{assumption}
+%Next we define the notion of the feasibility of an admissible action $x^\star \in \mathcal{X}.$
+%\begin{framed}
+\begin{assumption}[Feasibility] \label{feas}
+	%Let $\eta^\star \geq 0$ be a non-negative constant.
+	 An admissible action $x^\star \in \mathcal{X}$ is called  feasible if $\psi(g_t(x^\star)) \leq 0, \forall t.$ 
+\end{assumption}
+The following condition strengthens Assumption \ref{feas}.
+
+\begin{assumption}[Slater's Condition] \label{slater}
+	Let $\eta^\star > 0$ be a strictly positive constant. An admissible action $x^\star \in \mathcal{X}$ is said to satisfy Slater's condition if  $\psi(g_t(x^\star)) \leq -\eta^\star, \forall t.$ 
+\end{assumption}
+The following regularity assumption pertains to a certain class of worst-case adversaries.
+\begin{assumption}[Non-negativity of Regret] \label{non-neg-regret}
+	The adversary is said to satisfy the uniform non-negativity of regret condition under a policy if for each $t\geq 1,$ we have $\textrm{Regret}_t(x_t^\star) \geq 0$ for some $x_t^\star \in \mathcal{X}_t.$
+	\end{assumption}
+	\fi
+%	We emphasize that our proposed adaptive learning policy does not assume the knowledge of any of the parameters $G,D$ or $x^\star.$
+	
+	
+%\hline
+\iffalse
+\textbf{Remarks} 1. The assumption of the existence of actions satisfying Slater's condition is a strong one which severely limits the practical applicability of the theory. In particular, if the penalty function $\psi(\cdot)$ is non-negative, then clearly, no feasible action satisfying Slater's condition exists. In this paper, we will obtain sublinear regret and constraint violation penalty bounds simultaneously by considering Assumption \ref{bddness} and Assumption \ref{feas} only. 
+ However, we will see that Assumption \ref{slater} or Assumption \ref{non-neg-regret} is sometimes useful for proving improved performance bounds. %Furthermore, in the final section, we will show that neither Assumption \ref{slater} or Assumption \ref{non-neg-regret} is an absolute must - there exist online policies that lead to the same improved regret bound using Assumption \ref{bddness} and Assumption \ref{feas} only.   
+
+2. In Section \ref{uncond}, we will show that Assumption \ref{non-neg-regret} can be dropped from the results by slightly modifying the proposed online policy.
+%\end{framed}
+%\end{framed}
+%\hline
+%\begin{framed}
+%  \textbf{Notes:} 
+\fi
+%5\end{framed}
+%\hline
+%Our main results are summarized in the table below:
+%\textcolor{blue}{Draw a table}
+

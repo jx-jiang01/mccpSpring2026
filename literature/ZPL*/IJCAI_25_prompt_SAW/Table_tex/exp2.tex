@@ -1,0 +1,59 @@
+% Please add the following required packages to your document preamble:
+% \usepackage{multirow}
+% \usepackage[normalem]{ulem}
+% \useunder{\uline}{\ul}{}
+\begin{table*}[t]
+\centering
+\resizebox{0.75\linewidth}{!}{
+\begin{tabular}{ccccccccccccc}
+\hline
+\multicolumn{2}{c}{\multirow{3}{*}{Target LLM}}        & \multicolumn{2}{c}{\multirow{3}{*}{Method}} & \multicolumn{9}{c}{NaturalQuestions}                                                                                                                          \\ \cline{5-13} 
+\multicolumn{2}{c}{}                                   & \multicolumn{2}{c}{}                        & \multicolumn{3}{c}{$\eta^{*}$ = 0.5}                  & \multicolumn{3}{c}{$\eta^{*}$ = 0.3}                  & \multicolumn{3}{c}{$\eta^{*}$ = 0.1}                    \\ \cline{5-13} 
+\multicolumn{2}{c}{}                                   & \multicolumn{2}{c}{}                        & Acc                                & Tokens & 1/$\eta$  & Acc                                & Tokens & 1/$\eta$  & Acc                                & Tokens & 1/$\eta$   \\ 
+\hline
+\multicolumn{2}{c}{\multirow{4}{*}{GPT3.5-turbo}} 
+& \multicolumn{2}{c}{Original}                & 92.18                              & 524    & 1.00 & 92.18                              & 524    & 1.00 & 92.18                              & 524    & 1.00  \\
+\multicolumn{2}{c}{}                                   
+& \multicolumn{2}{c}{Selective-Context}       & 49.23                              & 283    & 1.85 & 45.71                              & 173    & 3.03 & 31.12                              & 68     & 7.69  \\
+\multicolumn{2}{c}{}                                   
+& \multicolumn{2}{c}{LongLLMlingua}           & \underline{59.65(39.0\%)}                        & 270    & 1.94 & \underline{52.02(40.8\%)}                        & 161    & 3.25 & \underline{47.14(14.7\%)}                        & 57     & 9.21  \\
+\multicolumn{2}{c}{}                                   
+& \multicolumn{2}{c}{\OurMODEL{}}                    & \textbf{82.93}                     & 227    & 2.31 & \textbf{73.22}                     & 136    & 3.86 & \textbf{54.07}                     & 33     & 16.08 \\ 
+\hline
+\multicolumn{2}{c}{\multirow{4}{*}{LLaMA2-7B-chat}}    & 
+\multicolumn{2}{c}{Original}                & \multicolumn{1}{c}{71.25}          & 524    & 1.00 & \multicolumn{1}{c}{71.25}          & 524    & 1.00 & \multicolumn{1}{c}{71.25}          & 524    & 1.00  \\
+\multicolumn{2}{c}{}                                   & 
+\multicolumn{2}{c}{Selective-Context}       & \multicolumn{1}{c}{40.87}          & 283    & 1.85 & \multicolumn{1}{c}{34.26}          & 173    & 3.03 & \multicolumn{1}{c}{21.37}          & 68     & 7.69  \\
+\multicolumn{2}{c}{}                                   & 
+\multicolumn{2}{c}{LongLLMlingua}           & \underline{43.56(77.1\%)}   & 270    & 1.94 & \underline{38.87(71.2\%)}    & 161    & 3.25 & \underline{26.12(72.7\%)}    & 57     & 9.21  \\
+\multicolumn{2}{c}{}                                   & 
+\multicolumn{2}{c}{\OurMODEL{}}                    & \multicolumn{1}{c}{\textbf{77.14}} & 227    & 2.31 & \multicolumn{1}{c}{\textbf{66.53}} & 136    & 3.86 & \multicolumn{1}{c}{\textbf{45.11}} & 33     & 16.08 \\ 
+\hline
+\end{tabular}}
+\vspace{-1.7ex}
+\caption{Experimental results on NaturalQuestions. We bold-face overall best scores, and underline the existing state-of-art along with relative \%-age performance improvements.}
+\label{tab:exp2}
+\vspace{-2.7ex}
+\end{table*}
+
+% \begin{table*}[t]
+% % \begin{tabular}{@{}lllllcccccc@{}}
+% \centering
+% \renewcommand{\arraystretch}{1.5} % 设置行高为默认的1.5倍
+% \resizebox{0.80\linewidth}{!}{
+% \begin{tabular}{cccccccccccc}
+% \toprule
+% \multicolumn{2}{c}{\multirow{3}{*}{Method}} & \multicolumn{9}{c}{NaturalQuestions}                                                                   \\ \cline{3-11} 
+% \multicolumn{2}{c}{}                        & \multicolumn{3}{c}{$\eta^{*}$ = 0.5} & \multicolumn{3}{c}{$\eta^{*}$ = 0.3} & \multicolumn{3}{c}{$\eta^{*}$ = 0.1} \\ \cline{3-11} 
+% \multicolumn{2}{c}{}                        & Span-Acc       & Tokens     & 1/$\eta$     & Span-Acc       & Tokens     & 1/$\eta$     & Span-Acc       & Tokens    & 1/$\eta$      \\ \hline
+% \multicolumn{2}{c}{Original}                & 92.18     & 524        & 1.00    & 92.18     & 524        & 1.00    & 92.18     & 524       & 1.00     \\
+% \multicolumn{2}{c}{Selective-Context}       & 49.23     & 283        & 1.85    & 45.71     & 173        & 3.03    & 31.12     & 68        & 7.69     \\
+% \multicolumn{2}{c}{LongLLMlingua}           & 59.65     & 270        & 1.94    & 52.02     & 161        & 3.25    & 47.14     & 57        & 9.21     \\
+% \multicolumn{2}{c}{GPT4-Generation}         & \underline{72.55(14.30\%)}     & 252        & 2.08    & \underline{66.19(10.62\%)}     & 121        & 4.35    & \underline{50.76(6.52\%)}     & 84        & 6.25     \\
+% \multicolumn{2}{c}{\OurMODEL{}(Ours)}                    & \textbf{82.93}     & 227        & 2.31    & \textbf{73.22}     & 136        & 3.86    & \textbf{54.07}     & 33        & 16.08    \\ \hline
+% \end{tabular}}
+% \caption{Experimenal results on NaturalQuestions.}
+% \vspace{-2.7ex}
+% \label{tab:exp2}
+% \end{table*}
+

@@ -1,0 +1,496 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>App-BMao Paper Macro-Level Structure Visualization</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 20px;
+            background-color: #f5f5f5;
+        }
+        .container {
+            max-width: 1400px;
+            margin: 0 auto;
+            background: white;
+            padding: 20px;
+            border-radius: 10px;
+            box-shadow: 0 0 10px rgba(0,0,0,0.1);
+        }
+        h1 {
+            text-align: center;
+            color: #2c3e50;
+            margin-bottom: 10px;
+        }
+        .paper-info {
+            text-align: center;
+            color: #7f8c8d;
+            margin-bottom: 30px;
+            font-size: 0.9em;
+        }
+        .structure-diagram {
+            display: flex;
+            flex-direction: column;
+            gap: 20px;
+        }
+        .section {
+            border: 2px solid #3498db;
+            border-radius: 8px;
+            padding: 15px;
+            background: #ecf0f1;
+            position: relative;
+        }
+        .section.survey {
+            border-color: #9b59b6;
+            background: #f4ecf7;
+        }
+        .section.contribution {
+            border-color: #e74c3c;
+            background: #fadbd8;
+        }
+        .section-header {
+            background: #3498db;
+            color: white;
+            padding: 10px;
+            margin: -15px -15px 15px -15px;
+            border-radius: 6px 6px 0 0;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        .section.survey .section-header {
+            background: #9b59b6;
+        }
+        .section.contribution .section-header {
+            background: #e74c3c;
+        }
+        .section-title {
+            font-weight: bold;
+            font-size: 1.2em;
+        }
+        .word-count {
+            font-size: 0.9em;
+            opacity: 0.9;
+        }
+        .moves {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 10px;
+            margin-top: 10px;
+        }
+        .move {
+            background: white;
+            padding: 10px;
+            border-radius: 5px;
+            border-left: 4px solid #e74c3c;
+        }
+        .move-title {
+            font-weight: bold;
+            color: #e74c3c;
+            margin-bottom: 5px;
+        }
+        .move-content {
+            font-size: 0.9em;
+            color: #555;
+        }
+        .key-excerpt {
+            background: #fff3cd;
+            border: 1px solid #ffeaa7;
+            border-radius: 5px;
+            padding: 10px;
+            margin: 10px 0;
+            font-style: italic;
+            font-size: 0.9em;
+        }
+        .analysis {
+            background: #d4edda;
+            border: 1px solid #c3e6cb;
+            border-radius: 5px;
+            padding: 10px;
+            margin: 10px 0;
+            font-size: 0.9em;
+        }
+        .flow-arrow {
+            text-align: center;
+            font-size: 2em;
+            color: #7f8c8d;
+            margin: 10px 0;
+        }
+        .comparison-table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 20px 0;
+            background: white;
+        }
+        .comparison-table th, .comparison-table td {
+            border: 1px solid #ddd;
+            padding: 8px;
+            text-align: left;
+        }
+        .comparison-table th {
+            background-color: #f2f2f2;
+            font-weight: bold;
+        }
+        .highlight {
+            background-color: #fff3cd;
+            font-weight: bold;
+        }
+        .legend {
+            background: #ecf0f1;
+            padding: 15px;
+            border-radius: 5px;
+            margin: 20px 0;
+        }
+        .legend-item {
+            display: inline-block;
+            margin: 5px 15px 5px 0;
+            padding: 5px 10px;
+            border-radius: 3px;
+            font-size: 0.9em;
+        }
+        .intro { background: #3498db; color: white; }
+        .survey-section { background: #9b59b6; color: white; }
+        .contribution-section { background: #e74c3c; color: white; }
+        .experiments { background: #27ae60; color: white; }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>App-BMao Paper: Macro-Level Structure Analysis</h1>
+        <div class="paper-info">
+            <strong>Graph Edit Distance Estimation: A New Heuristic and A Holistic Evaluation of Learning-based Methods</strong><br>
+            Mouyi Xu, Lijun Chang | SIGMOD 2025 | 24 pages
+        </div>
+
+        <div class="legend">
+            <h3>Paper Structure Framework</h3>
+            <div class="legend-item intro">Introduction (CARS)</div>
+            <div class="legend-item survey-section">Survey Component</div>
+            <div class="legend-item contribution-section">Core Contribution</div>
+            <div class="legend-item experiments">Empirical Validation</div>
+        </div>
+
+        <div class="structure-diagram">
+
+            <!-- Introduction Section -->
+            <div class="section">
+                <div class="section-header">
+                    <span class="section-title">Section 1: Introduction</span>
+                    <span class="word-count">~3 pages</span>
+                </div>
+
+                <div class="moves">
+                    <div class="move">
+                        <div class="move-title">Move 1: Establishing Territory</div>
+                        <div class="move-content">
+                            <strong>Centrality Claims:</strong> GED is "fundamental metric" with wide applications
+                        </div>
+                        <div class="key-excerpt">
+                            "Graph edit distance (GED) is a fundamental metric for measuring the distance or similarity between two graphs. It has been widely used in various applications including molecular chemistry, pattern recognition, graph database, computer vision and biology."
+                        </div>
+                        <div class="analysis">
+                            Strong opening with "fundamental" + diverse application domains. Establishes NP-hardness as key challenge.
+                        </div>
+                    </div>
+
+                    <div class="move">
+                        <div class="move-title">Move 2: Establishing Niche</div>
+                        <div class="move-content">
+                            <strong>Two Significant Limitations:</strong> (1) Limited cross-field evaluation, (2) Weak baseline comparisons
+                        </div>
+                        <div class="key-excerpt">
+                            "The existing studies on learning-based methods for GED prediction have two significant limitations. (1) The development of deep learning models... has been explored in various research fields... yet cross-field evaluations have been quite limited. (2) More importantly, all these advancements have been evaluated against a simple combinatorial heuristic baseline..."
+                        </div>
+                        <div class="analysis">
+                            Highly specific gap identification with enumeration. Figure 1 provides visual evidence of cross-field gaps. "More importantly" creates hierarchy.
+                        </div>
+                    </div>
+
+                    <div class="move">
+                        <div class="move-title">Move 3: Occupying Niche</div>
+                        <div class="move-content">
+                            <strong>Dual Contribution:</strong> (1) Holistic survey with taxonomy, (2) New heuristic App-BMao
+                        </div>
+                        <div class="key-excerpt">
+                            "We first conduct a holistic review of the existing learning-based methods, categorizing them into non-interpretable and interpretable GED prediction approaches... Secondly, we present a simple yet effective combinatorial heuristic algorithm App-BMao for GED estimation..."
+                        </div>
+                        <div class="analysis">
+                            Clear two-pronged contribution. Complexity analysis provided: O(t × (|V(q)| + |V(g)|)³). Three enumerated key findings and three main contributions.
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="flow-arrow">↓</div>
+
+            <!-- Preliminaries Section -->
+            <div class="section">
+                <div class="section-header">
+                    <span class="section-title">Section 2: Preliminaries</span>
+                    <span class="word-count">~2 pages</span>
+                </div>
+
+                <div class="moves">
+                    <div class="move">
+                        <div class="move-title">Formal Definitions</div>
+                        <div class="move-content">
+                            <strong>Mathematical Foundation:</strong> Graph definition, isomorphism, edit path, GED
+                        </div>
+                        <div class="key-excerpt">
+                            "Definition 2.3. Given two graphs q and g, the graph edit distance (abbreviated as GED) between q and g is defined as the minimum length among all possible edit paths between q and g"
+                        </div>
+                        <div class="analysis">
+                            Rigorous mathematical formulation with running example (Figure 2). Clear progression from basic to complex concepts.
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="flow-arrow">↓</div>
+
+            <!-- Background Section -->
+            <div class="section">
+                <div class="section-header">
+                    <span class="section-title">Section 3: Exact GED Computation</span>
+                    <span class="word-count">~2 pages</span>
+                </div>
+
+                <div class="moves">
+                    <div class="move">
+                        <div class="move-title">State-of-the-Art Review</div>
+                        <div class="move-content">
+                            <strong>Foundation:</strong> Reviews exact algorithms (A*GED, DF-GED, AStar-LSa, AStar-BMao)
+                        </div>
+                        <div class="key-excerpt">
+                            "The state-of-the-art algorithms, AStar-LSa [11] and AStar-BMao [12], again used best-first search, but proposed much tighter lower bounds than the previous ones by formulating the idea of anchor-aware lower bounds."
+                        </div>
+                        <div class="analysis">
+                            Establishes algorithmic framework (search tree, node mappings) that learning-based methods will adapt. Sets up comparison baseline.
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="flow-arrow">↓</div>
+
+            <!-- Survey Section -->
+            <div class="section survey">
+                <div class="section-header">
+                    <span class="section-title">Section 4: Learning-based Approaches for GED Prediction (SURVEY)</span>
+                    <span class="word-count">~8 pages</span>
+                </div>
+
+                <div class="moves">
+                    <div class="move">
+                        <div class="move-title">4.1 Graph Neural Networks</div>
+                        <div class="move-content">
+                            <strong>Foundation:</strong> GNN basics - message passing, node embeddings, graph pooling
+                        </div>
+                        <div class="analysis">
+                            Pedagogical introduction to GNN for readers unfamiliar with deep learning.
+                        </div>
+                    </div>
+
+                    <div class="move">
+                        <div class="move-title">4.2 Non-interpretable GED Prediction</div>
+                        <div class="move-content">
+                            <strong>Framework Identification:</strong> Three-module framework (Siamese GNN → Embedding Fusion → Prediction Head)
+                            <br><strong>Models:</strong> SimGNN, GraphSim, GENN, H2MN, TaGSim, EGSC, ERIC, OMC, GREED
+                        </div>
+                        <div class="key-excerpt">
+                            "We show that these approaches share a general three-module framework... Module-I is a Siamese GNN that separately maps the two input graphs into both node-level embeddings and graph-level embeddings. Module-II fuses together those embeddings... Module-III... making the final GED prediction."
+                        </div>
+                        <div class="analysis">
+                            Major contribution: abstracts common design pattern across different models. Table 1 systematically compares all approaches. Shows deep understanding through framework identification.
+                        </div>
+                    </div>
+
+                    <div class="move">
+                        <div class="move-title">4.3 Interpretable GED Prediction</div>
+                        <div class="move-content">
+                            <strong>Two Categories:</strong> (1) Tree traversal-based (GENN-A*, Noah), (2) Cost matrix-based (GOTSim, GEDGNN)
+                        </div>
+                        <div class="key-excerpt">
+                            "Learning-based approaches for interpretable GED prediction outputs an edit path (more precisely, a node mapping) along with its cost as the estimated GED value. The outputted edit path serves as an evidence of the estimated GED value, and thus makes the prediction interpretable."
+                        </div>
+                        <div class="analysis">
+                            Further taxonomy within interpretable methods. Connects back to exact algorithms (Section 3) showing how interpretable methods bridge learning and traditional approaches.
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="flow-arrow">↓</div>
+
+            <!-- Core Contribution Section -->
+            <div class="section contribution">
+                <div class="section-header">
+                    <span class="section-title">Section 5: App-BMao Algorithm (CORE CONTRIBUTION)</span>
+                    <span class="word-count">~3 pages</span>
+                </div>
+
+                <div class="moves">
+                    <div class="move">
+                        <div class="move-title">New Heuristic Algorithm</div>
+                        <div class="move-content">
+                            <strong>Key Innovation:</strong> Adapts exact algorithm AStar-BMao for estimation
+                            <br><strong>Controllable Complexity:</strong> Parameter t controls time/space trade-off
+                            <br><strong>Guarantees:</strong> Accuracy improves with increasing t
+                        </div>
+                        <div class="key-excerpt">
+                            "We present a simple yet effective combinatorial heuristic algorithm App-BMao for interpretable GED estimation, which is adapted from the existing exact GED computation algorithm of [12]. App-BMao takes an input parameter t for controlling the time and space complexity. The time complexity of App-BMao... is O(t × (|V(q)| + |V(g)|)³), and its space complexity is O(t + |V(q)| × |V(g)|)"
+                        </div>
+                        <div class="analysis">
+                            Clear algorithmic contribution with explicit complexity bounds. Emphasis on "interpretable" and "controlled complexity" as advantages over learning-based methods.
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="flow-arrow">↓</div>
+
+            <!-- Experiments Section -->
+            <div class="section">
+                <div class="section-header">
+                    <span class="section-title">Section 6: Experiments</span>
+                    <span class="word-count">~4 pages</span>
+                </div>
+
+                <div class="moves">
+                    <div class="move">
+                        <div class="move-title">Comprehensive Evaluation</div>
+                        <div class="move-content">
+                            <strong>Scope:</strong> Against ALL surveyed learning-based methods
+                            <br><strong>Datasets:</strong> Three widely used datasets
+                            <br><strong>Metrics:</strong> Estimation accuracy, running time, memory consumption
+                            <br><strong>Key Finding:</strong> App-BMao outperforms all learning-based approaches
+                        </div>
+                        <div class="key-excerpt">
+                            "Extensive empirical evaluations on three widely used datasets show that the new heuristic algorithm App-BMao outperforms all existing learning-based approaches for both interpretable and non-interpretable GED prediction."
+                        </div>
+                        <div class="analysis">
+                            Rigorous evaluation validates survey's critical observations. Experiments structured to answer research questions from introduction. Compares against EVERY method surveyed, not just selected baselines.
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="flow-arrow">↓</div>
+
+            <!-- Related Work Section -->
+            <div class="section">
+                <div class="section-header">
+                    <span class="section-title">Section 7: Related Work</span>
+                    <span class="word-count">~1 page</span>
+                </div>
+
+                <div class="moves">
+                    <div class="move">
+                        <div class="move-title">Broader Context</div>
+                        <div class="move-content">
+                            <strong>Coverage:</strong> Other GED-related work not covered in Section 4 survey
+                        </div>
+                        <div class="analysis">
+                            Positioned late because Section 4 already comprehensively covered learning-based methods. This section covers approximate algorithms, other similarity measures, etc.
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="flow-arrow">↓</div>
+
+            <!-- Conclusion Section -->
+            <div class="section">
+                <div class="section-header">
+                    <span class="section-title">Section 8: Conclusion</span>
+                    <span class="word-count">~0.5 pages</span>
+                </div>
+
+                <div class="moves">
+                    <div class="move">
+                        <div class="move-title">Synthesis & Impact</div>
+                        <div class="move-content">
+                            <strong>Key Message:</strong> Simple heuristics can outperform complex learning-based methods
+                            <br><strong>Contributions:</strong> Survey + algorithm + comprehensive evaluation
+                        </div>
+                        <div class="analysis">
+                            Strong conclusion reinforcing counter-narrative: sometimes traditional approaches outperform deep learning when properly designed.
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+
+        <h2>Cross-Disciplinary Comparison</h2>
+        <table class="comparison-table">
+            <tr>
+                <th>Aspect</th>
+                <th>App-BMao Paper (DB/Algorithms)</th>
+                <th>Typical ML Paper</th>
+                <th>Key Learning</th>
+            </tr>
+            <tr>
+                <td>Literature Review</td>
+                <td class="highlight">Comprehensive survey as main contribution (~8 pages)</td>
+                <td>Brief related work (~1-2 pages)</td>
+                <td>Survey can be primary contribution, not just background</td>
+            </tr>
+            <tr>
+                <td>Taxonomy</td>
+                <td class="highlight">Original categorization (interpretable vs. non-interpretable)</td>
+                <td>Often follows existing categories</td>
+                <td>Creating new taxonomy adds significant value</td>
+            </tr>
+            <tr>
+                <td>Evaluation Scope</td>
+                <td class="highlight">Against ALL surveyed methods</td>
+                <td>Against selected baselines</td>
+                <td>Comprehensive comparison strengthens claims</td>
+            </tr>
+            <tr>
+                <td>Framework Identification</td>
+                <td class="highlight">Abstracts three-module pattern</td>
+                <td>Describes individual architectures</td>
+                <td>Pattern recognition shows deep understanding</td>
+            </tr>
+        </table>
+
+        <h2>Imitation Framework for Future Papers</h2>
+        <div class="analysis">
+            <h3>Structural Elements to Adapt:</h3>
+            <ul>
+                <li><strong>Survey-as-Contribution:</strong> Make comprehensive literature review a primary contribution</li>
+                <li><strong>Taxonomy Development:</strong> Create original categorization schemes for existing work</li>
+                <li><strong>Framework Abstraction:</strong> Identify common design patterns across different approaches</li>
+                <li><strong>Dual Contribution:</strong> Combine survey with new method for stronger paper</li>
+                <li><strong>Late Related Work:</strong> Place broader related work after experiments if comprehensive survey earlier</li>
+            </ul>
+
+            <h3>Rhetorical Strategies:</h3>
+            <ul>
+                <li><strong>Enumerated Gaps:</strong> "(1)... (2)..." creates clear, specific limitations</li>
+                <li><strong>Visual Argumentation:</strong> Use figures to support claims (Figure 1 shows cross-field gaps)</li>
+                <li><strong>Critical Survey:</strong> Don't just describe - analyze and critique existing work</li>
+                <li><strong>Counter-Narrative:</strong> Challenge conventional wisdom (heuristic beats deep learning)</li>
+                <li><strong>Hierarchy Creation:</strong> "More importantly..." to prioritize among multiple points</li>
+            </ul>
+
+            <h3>Quality Indicators:</h3>
+            <ul>
+                <li><strong>Cross-Community Synthesis:</strong> Covers DB, ML, IR, CV communities</li>
+                <li><strong>Systematic Comparison:</strong> Table 1 compares all approaches systematically</li>
+                <li><strong>Comprehensive Evaluation:</strong> Tests against every surveyed method</li>
+                <li><strong>Complexity Analysis:</strong> Explicit time and space complexity bounds</li>
+                <li><strong>Balanced Perspective:</strong> Acknowledges when learning methods work well vs. when heuristic wins</li>
+            </ul>
+        </div>
+
+        <div style="text-align: center; margin-top: 30px; color: #7f8c8d; font-size: 0.9em;">
+            <p>Analysis based on macro-level structure framework from academic writing pedagogy</p>
+            <p>Interactive visualization for learning paper organization patterns in database/algorithms research</p>
+        </div>
+    </div>
+</body>
+</html>

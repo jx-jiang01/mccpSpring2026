@@ -1,0 +1,62 @@
+\subsection{Preliminaries on Online Convex Optimization (OCO)} \label{prelims}
+ The standard OCO problem can be described as a repeated game between an online policy and an adversary \citep{hazan2022introduction}.
+Let $\mathcal{X} \subseteq \mathbb{R}^d$ be a convex decision set, which we refer to as the \emph{admissible} set.
+In each round $t\geq 1,$ an online policy selects an action $x_t \in \mathcal{X}.$ After the action $x_t$ is chosen, the adversary reveals a convex cost function $f_t : \mathcal{X} \mapsto \mathbb{R}$. 
+%Since any convex function could be non-differentiable on a set of measures at most zero, without affecting the regret bounds, wherever convenient, we will assume the cost functions to be differentiable everywhere and replace gradients by subgradients at any point of non-differentiability \citep{hazan2007adaptive}. 
+The goal of the online policy is to choose an admissible action sequence $\{x_t\}_{t\geq 1}$ so that its total cost over a horizon of length $T$ is not significantly larger than the total cost incurred by any fixed admissible action $x^\star \in \mathcal{X}$. More precisely, the objective is to 
+minimize the static regret, defined as:
+\begin{eqnarray} \label{regret-def}
+	\textrm{Regret}_T \equiv \sup_{x^\star \in \mathcal{X}} \textrm{Regret}_T(x^\star), ~\textrm{where~}\textrm{Regret}_T(x^\star) \equiv \sum_{t=1}^T f_t(x_t) - \sum_{t=1}^T f_t(x^\star).
+\end{eqnarray}
+
+
+\begin{algorithm} 
+\caption{Online Gradient Descent (OGD)}
+\label{ogd-policy}
+\begin{algorithmic}[1]
+\State \algorithmicrequire{ Non-empty closed convex set $\mathcal{X} \subseteq \mathbb{R}^d$, sequence of convex cost functions $\{f_t\}_{t\geq 1},$ step sizes $\eta_1, \eta_2, \ldots, \eta_T >0,$ Euclidean projection operator $\mathcal{P}_\mathcal{X}(\cdot)$ onto the set $\mathcal{X}$}
+\State{\textbf{Initialization}:} Set $x_1 \in \mathcal{X}$ arbitrarily
+\ForEach {round $t\geq 1$}
+\State Play $x_t$, observe $f_t$, incur a cost of $f_t(x_t)$.
+\State Compute a (sub)gradient $\nabla_t \equiv \nabla f_t(x_t)$. %Define $G_t=||\nabla_t||_2.$
+\State Update $x_{t+1}=\mathcal{P}_{\mathcal{X}}(x_t-\eta_t \nabla_t).$
+\EndForEach 
+\end{algorithmic}
+\end{algorithm}
+
+
+In a seminal paper, \citet{zinkevich2003online} showed that the online gradient descent policy, outlined in Algorithm \ref{ogd-policy}, run with an appropriately chosen constant step size sequence, achieves a sublinear regret bound $\textrm{Regret}_T = O(\sqrt{T})$ for Lipschitz-continuous convex cost functions. 
+%In this paper, we are interested in stronger adaptive regret bounds where the bound is given in terms of the norm of the gradients and the strong-convexity parameters of the online cost functions. 
+In Theorem \ref{data-dep-regret}, we recall two standard results on further refined data-dependent adaptive regret bounds achieved by the OGD policy with appropriately chosen adaptive step size sequences. 
+%We will use the OGD policy with an appropriate step size sequence as a subroutine in our proposed online algorithm. 
+%\edit{Take a look at \cite{yang2014regret} for variational bounds. Also, take a look at the case of exp-concave losses given in \cite{zhang2022simple}}.
+\begin{theorem} \label{data-dep-regret}
+Consider the generic OGD policy outlined in Algorithm \ref{ogd-policy}. 
+%Depending on the step-size sequence, the OGD policy achieves the following data-dependent adaptive regret bounds. 
+\begin{enumerate}
+	%\item {\cite[Theorem 4.14]{orabona2019modern}} 
+	\item {\citep{duchi2011adaptive}, \cite[Theorem 4.14]{orabona2019modern}} Let the cost functions $\{f_t\}_{t \geq 1}$ be convex and the step size sequence be adaptively chosen as $\eta_t= \frac{\sqrt{2}D}{2\sqrt{\sum_{\tau=1}^{t} G_\tau^2}}, t \geq 1,$ where $D$ is the Euclidean diameter of the admissible set $\mathcal{X}$ and $G_t=||\nabla f_t(x_t)||_2, t\geq 1.$ Then Algorithm \ref{ogd-policy} achieves the following regret bound: 
+	\begin{eqnarray} \label{cvx-reg-bd}
+			 \textrm{Regret}_T \leq \sqrt{2}D \sqrt{\sum_{t=1}^T G_t^2}.
+	\end{eqnarray}
+	The OGD policy with the above adaptive step-size sequence is known as (a variant of) the AdaGrad policy in the literature \citep{duchi2011adaptive}. 
+
+	\item {\cite[Theorem 2.1]{hazan2007adaptive}} Let the cost functions $\{f_t\}_{t\geq 1}$ be strongly convex and let $H_t>0$ be the strong convexity parameter\footnote {The strong convexity of $f_t$ implies that $f_t(y)\geq f_t(x) + \langle \nabla f_t(x), y-x\rangle + \frac{H_t}{2}||x-y||^2, \forall x, y \in \mathcal{X}, \forall t.$} for the cost function $f_t$. Let the step size sequence be adaptively chosen as $\eta_t = \frac{1}{\sum_{s=1}^{t} H_s}, t \geq 1.$ Then Algorithm \ref{ogd-policy} achieves the following regret bound:
+	\begin{eqnarray} \label{str-cvx-reg-bd}
+		\textrm{Regret}_T \leq \frac{1}{2}\sum_{t=1}^T \frac{G_t^2}{\sum_{s=1}^t H_s}.
+	\end{eqnarray} 
+	\iffalse
+	\item {\cite[Theorem 4.25]{orabona2019modern}, \cite[Theorem 2]{zhang2019adaptive}} Let the cost functions $\{f_t\}_{t \geq 1}$ be convex, non-negative, and $M$-smooth \footnote{$H$-smoothness means that $|| \nabla f_t(x)- \nabla f_t(y)||_2 \leq M||x-y||_2, \forall x,y\in \mathcal{X}, \forall t.$ }. Then the OGD policy with the same step-size sequence as in part 1 achieves the following regret bound:
+	\begin{eqnarray*}
+		\mathcal{R}_T(x^\star) \leq 4MD^2 + 4D\sqrt{M\sum_{t=1}^T f_t(x^\star)},
+	\end{eqnarray*}
+	where $x^\star \in \mathcal{X}$ is the static benchmark used in the definition of regret \eqref{regret-def}.
+	\fi
+	\end{enumerate}
+\end{theorem}
+%Note that the above adaptive bounds are mentioned for the simplicity of the regret expressions and the corresponding policy and for no other particular reason. 
+Similar adaptive regret bounds are known for various other online learning policies as well. For structured domains, one can use other algorithms such as AdaFTRL \citep{orabona2018scale} which gives better regret bounds for high-dimensional problems. Furthermore, for problems with combinatorial structures, adaptive oracle-efficient algorithms, \emph{e.g.,} Follow-the-Perturbed-Leader (FTPL)-based policies, can be employed \citep[Theorem 11]{abernethy2014online}. 
+Our proposed policies are agnostic to the specific online learning subroutine used for the surrogate OCO problem - what matters is that the subroutine provides adaptive regret bounds similar to \eqref{cvx-reg-bd} and \eqref{str-cvx-reg-bd}. This flexibility allows for an immediate extension of our algorithm to a wide range of settings, such as delayed feedback \citep{joulani2016delay} or combinatorial actions.  
+
+
+%In the following sections, we propose an online learning policy for the \texttt{OCS} and \texttt{constrained OCO} problems which may use any OCO subroutine with an adaptive regret bound, such as the bounds given in Theorem \ref{data-dep-regret}. Interestingly, our analysis is oblivious to the OCO policy and only depends on the adaptive regret bound guaranteed by the particular OCO policy. This property can be exploited to immediately extend the scope of our proposed algorithm to various other non-standard settings, \emph{e.g.,} delayed feedback \citep{joulani2016delay}. 

@@ -1,0 +1,43 @@
+\section{Application to a canonical network switching problem} \label{app}
+As an interesting application of the machinery developed in this paper, we revisit the classic problem of packet scheduling in an $N \times N$ input-queued switch in an internet router with \emph{adversarial} arrival and service processes. This problem has been extensively studied in the networking literature in the stochastic setting; however, to the best of our knowledge, no provable result is known for the problem in the adversarial context. In the stochastic setting with independent arrivals and constant service rates, the celebrated Max-Weight policy is known to achieve the full capacity region \citep{mckeown1999achieving, tassiulas1990stability}. However, this result immediately breaks down when the arrival and service processes are decided by an adversary. In this section, we demonstrate that the proposed \ocs ~meta-policy, described in Algorithm \ref{ocs-policy}, can achieve a sublinear queue length in the adversarial setting as well.
+\begin{figure}
+\centering
+	\includegraphics[scale=0.7]{./figures/input-q-sw}
+	\caption{A $4 \times 4$ input-queued switch used in a router. Figure taken from \citet{hajek2015random}.}
+	\label{ipq}
+\end{figure}
+
+\textbf{Problem description:} An $N\times N$ input-queued switch has $N$ input ports and $N$ output ports. Each of the $N$ input ports maintains a separate FIFO queue for each output port. The input and output ports are connected in the form of a bipartite network using a high-speed switch fabric (see Figure \ref{ipq} for a simplified schematic). At any round (also called \emph{slots}), each input port can be connected to at most one output port for transmitting the packets. The objective of a switching policy is to choose an input-output matching at each round to route the packets from the input queues to their destinations so that the input queue lengths grow sub-linearly with time (\emph{i.e.,} they remain \emph{rate-stable} \citep{neely2010stochastic}). Please refer to the standard references \emph{e.g.,} \citet{hajek2015random} and the original papers \citep{tassiulas1990stability, mckeown1999achieving} for a more detailed description of the input-queued switch architectures and constraints. 
+\paragraph{Admissible actions and the queueing process:}
+Let $\Omega$ be the set of all $N \times N$ doubly stochastic matrices (\emph{a.k.a.} the Birkhoff polytope). The set $\Omega$ is known to coincide with the convex hull of all incidence vectors corresponding to the perfect matchings of the $N\times N$ bipartite graph \citep{hajek2015random}. At each round, the policy chooses a feasible action $x(t)\equiv \big(x_{ij}(t), 1\leq i,j\leq N\big)$ from the admissible set $\Omega.$ It then randomly samples a matching $z(t)\equiv \big(z_{ij}(t) \in \{0,1\}, 1\leq i,j\leq N\big)$ using the Birkhoff-Von-Neumann decomposition, such that $\mathbb{E}z(t)=x(t)$. 
+At the same time, the adversary reveals a packet arrival vector $\bm{b}(t)$ and a service rate vector $\bm{s}(t)$. The arrival and service processes could be binary-valued or could assume any non-negative integers from a bounded range. As a result, the $i$\textsuperscript{th} input queue length corresponding to the $j$\textsuperscript{th} output port evolves as follows:
+\begin{eqnarray} \label{Q-ev-iqs}
+	Q_{ij}(t)=\big(Q_{ij}(t-1)+b_{ij}(t)- s_{ij}(t) z_{ij}(t))^+, Q_{ij}(0)=0.
+\end{eqnarray} 
+\paragraph{$S$-Feasibility:}
+We assume that the adversary is $S$-feasible, \emph{i.e.,} $\exists x^\star \in \mathcal{X}$ such that
+\[\sum_{t \in \mathcal{I}}(b_{ij}(t)-s_{ij}(t)x^\star_{ij}) \leq 0, \forall i,j, \forall \textrm{sub-intervals}~ \mathcal{I}, |\mathcal{I}|=S.\] The fixed admissible action $x^\star$ is unknown to the switching policy. Since we do not assume Slater's condition, the queue-length bounds derived in \cite{neely2017online} do not apply here. 
+\paragraph{Reduction to the \ocs ~problem:} The above scheduling problem can be straightforwardly reduced to the \ocs ~problem where we consider $k=N^2$ linear constraints, where the $(i,j)$\textsuperscript{th} constraint function is defined as 
+\[ g_{t, (ij)}(x)\equiv b_{ij}(t)-s_{ij}x_{ij}, ~1\leq i,j \leq N. \] 
+It follows that the auxiliary queueing variables in the \ocs ~meta-policy in Algorithm \ref{ocs-policy} evolve similarly to Eqn.\ \eqref{Q-ev-iqs}. Hence, taking expectation over the randomness of the policy and using arguments exactly similar to the proof of Theorem \ref{S-benchmark}, it follows that under Algorithm \ref{ocs-policy}, each of the $N^2$ input queues grows sublinearly as $\mathbb{E}Q_{ij}(t) = O(\max(\sqrt{St}, S)),$ where the expectation is taken over the randomness of the policy. Hence, as long as $S$ is a constant, the queues remain rate stable. To exploit the combinatorial structure of the problem, it is computationally advantageous to use the FTPL sub-routine \citep[Theorem 11]{abernethy2014online} as the base OCO policy in Algorithm \ref{ocs-policy}, which can be implemented efficiently by a maximum-weight matching oracle and leads to the same queue length bounds.  
+%Since we are only interested in the stability of the queues, we set the cost functions $f_t=0, \forall t$. 
+\iffalse
+\paragraph{Derivation of an Online Policy:} Note that there are $N^2$ queueing processes $\{Q_{ij}(t)\}_{i,j}$, unlike in Section \ref{policy} where we defined only a single process. Nevertheless, using the quadratic Lyapunov function  
+\[\Phi(t) \equiv \sum_i Q_{ij}^2(t), \]
+and using similar steps, we now define a sequence of linear surrogate cost functions: 
+\begin{eqnarray*}
+	f_t'(x) \equiv -\sum_{i,j} Q_{ij}(t) g_{ij}(t)x_{ij} 
+\end{eqnarray*}
+which we feed to an OGD policy with adaptive step sizes \cite{orabona2019modern}.
+\fi
+\iffalse
+\paragraph{Experimental Setup} We consider $N=4.$ In our simulations, we take $x^\star$ to be a specific convex combination of $k$ matchings $\{\mathcal{M}_i\}_{i=1}^k.$
+\begin{eqnarray*}
+	x^\star = \sum_{i=1}^k \alpha_i \mathcal{M}_i.
+\end{eqnarray*}
+The coefficients and the matchings are kept hidden from the algorithm. Next, we choose the service rates for the current round in some adversarial fashion. Upon choosing the service rates, we set the arrival vector as follows
+\begin{eqnarray*}
+	b_{ij}(t) = g_{ij}(t)x^\star_{ij}.
+\end{eqnarray*}
+The above choice ensures that the adversary is admissible however, the Slater's condition does not necessarily hold.  
+\fi

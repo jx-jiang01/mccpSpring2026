@@ -1,0 +1,1459 @@
+%File: formatting-instructions-latex-2025.tex
+%release 2025.0
+\documentclass[letterpaper]{article} % DO NOT CHANGE THIS
+\usepackage{aaai25}  % DO NOT CHANGE THIS
+\usepackage{times}  % DO NOT CHANGE THIS
+\usepackage{helvet}  % DO NOT CHANGE THIS
+\usepackage{courier}  % DO NOT CHANGE THIS
+\usepackage[hyphens]{url}  % DO NOT CHANGE THIS
+\usepackage{graphicx} % DO NOT CHANGE THIS
+\urlstyle{rm} % DO NOT CHANGE THIS
+\def\UrlFont{\rm}  % DO NOT CHANGE THIS
+\usepackage{natbib}  % DO NOT CHANGE THIS AND DO NOT ADD ANY OPTIONS TO IT
+\usepackage{caption} % DO NOT CHANGE THIS AND DO NOT ADD ANY OPTIONS TO IT
+\frenchspacing  % DO NOT CHANGE THIS
+\setlength{\pdfpagewidth}{8.5in}  % DO NOT CHANGE THIS
+\setlength{\pdfpageheight}{11in}  % DO NOT CHANGE THIS
+%
+% These are recommended to typeset algorithms but not required. See the subsubsection on algorithms. Remove them if you don't have algorithms in your paper.
+\usepackage{algorithm}
+\usepackage{algorithmic}
+\usepackage{multirow}
+% \usepackage{hyperref}
+\newcommand{\fixma}[1]{\footnote{\textcolor{red}{\textbf{FIX-MA!!!} #1}}}
+\usepackage[dvipsnames]{xcolor}
+
+
+
+%
+% These are are recommended to typeset listings but not required. See the subsubsection on listing. Remove this block if you don't have listings in your paper.
+\usepackage{newfloat}
+\usepackage{listings}
+\DeclareCaptionStyle{ruled}{labelfont=normalfont,labelsep=colon,strut=off} % DO NOT CHANGE THIS
+\lstset{%
+	basicstyle={\footnotesize\ttfamily},% footnotesize acceptable for monospace
+	numbers=left,numberstyle=\footnotesize,xleftmargin=2em,% show line numbers, remove this entire line if you don't want the numbers.
+	aboveskip=0pt,belowskip=0pt,%
+	showstringspaces=false,tabsize=2,breaklines=true}
+\floatstyle{ruled}
+\newfloat{listing}{tb}{lst}{}
+\floatname{listing}{Listing}
+%
+% Keep the \pdfinfo as shown here. There's no need
+% for you to add the /Title and /Author tags.
+\pdfinfo{
+/TemplateVersion (2025.1)
+}
+
+% DISALLOWED PACKAGES
+% \usepackage{authblk} -- This package is specifically forbidden
+% \usepackage{balance} -- This package is specifically forbidden
+% \usepackage{color (if used in text)
+% \usepackage{CJK} -- This package is specifically forbidden
+% \usepackage{float} -- This package is specifically forbidden
+% \usepackage{flushend} -- This package is specifically forbidden
+% \usepackage{fontenc} -- This package is specifically forbidden
+% \usepackage{fullpage} -- This package is specifically forbidden
+% \usepackage{geometry} -- This package is specifically forbidden
+% \usepackage{grffile} -- This package is specifically forbidden
+% \usepackage{hyperref} -- This package is specifically forbidden
+% \usepackage{navigator} -- This package is specifically forbidden
+% (or any other package that embeds links such as navigator or hyperref)
+% \indentfirst} -- This package is specifically forbidden
+% \layout} -- This package is specifically forbidden
+% \multicol} -- This package is specifically forbidden
+% \nameref} -- This package is specifically forbidden
+% \usepackage{savetrees} -- This package is specifically forbidden
+% \usepackage{setspace} -- This package is specifically forbidden
+% \usepackage{stfloats} -- This package is specifically forbidden
+% \usepackage{tabu} -- This package is specifically forbidden
+% \usepackage{titlesec} -- This package is specifically forbidden
+% \usepackage{tocbibind} -- This package is specifically forbidden
+% \usepackage{ulem} -- This package is specifically forbidden
+% \usepackage{wrapfig} -- This package is specifically forbidden
+% DISALLOWED COMMANDS
+% \nocopyright -- Your paper will not be published if you use this command
+% \addtolength -- This command may not be used
+% \balance -- This command may not be used
+% \baselinestretch -- Your paper will not be published if you use this command
+% \clearpage -- No page breaks of any kind may be used for the final version of your paper
+% \columnsep -- This command may not be used
+% \newpage -- No page breaks of any kind may be used for the final version of your paper
+% \pagebreak -- No page breaks of any kind may be used for the final version of your paperr
+% \pagestyle -- This command may not be used
+% \tiny -- This is not an acceptable font size.
+% \vspace{- -- No negative value may be used in proximity of a caption, figure, table, section, subsection, subsubsection, or reference
+% \vskip{- -- No negative value may be used to alter spacing above or below a caption, figure, table, section, subsection, subsubsection, or reference
+
+\setcounter{secnumdepth}{0} %May be changed to 1 or 2 if section numbers are desired.
+
+% The file aaai25.sty is the style file for AAAI Press
+% proceedings, working notes, and technical reports.
+%
+
+% Title
+
+% Your title must be in mixed case, not sentence case.
+% That means all verbs (including short verbs like be, is, using,and go),
+% nouns, adverbs, adjectives should be capitalized, including both words in hyphenated terms, while
+% articles, conjunctions, and prepositions are lower case unless they
+% directly follow a colon or long dash
+\title{FedSum: Data-Efficient Federated Learning under Data Scarcity Scenario for Text Summarization}
+\author{
+    %Authors
+    % All authors must be in the same font size and format.
+    Zhiyong Ma$^{1}$\equalcontrib,
+    Zhengping Li$^{1}$\equalcontrib,
+    Yuanjie Shi$^2$,
+    Jian Chen${^1}$\thanks{~~Corresponding Author.}
+}
+
+\affiliations{
+    %Afiliations
+    \textsuperscript{\rm 1}South China University of Technology\\
+    \textsuperscript{\rm 2}Washington State University\\
+        
+    seallen97@mail.scut.edu.cn \quad
+    lievan20022@gmail.com \quad 
+    yuanjie.shi@wsu.edu \quad
+    ellachen@scut.edu.cn\\
+%
+% See more examples next
+}
+
+%Example, Single Author, ->> remove \iffalse,\fi and place them surrounding AAAI title to use it
+\iffalse
+\title{My Publication Title --- Single Author}
+\author {
+    Author Name
+}
+\affiliations{
+    Affiliation\\
+    Affiliation Line 2\\
+    name@example.com
+}
+\fi
+
+\iffalse
+%Example, Multiple Authors, ->> remove \iffalse,\fi and place them surrounding AAAI title to use it
+\title{My Publication Title --- Multiple Authors}
+\author {
+    % Authors
+    First Author Name\textsuperscript{\rm 1,\rm 2},
+    Second Author Name\textsuperscript{\rm 2},
+    Third Author Name\textsuperscript{\rm 1}
+}
+\affiliations {
+    % Affiliations
+    \textsuperscript{\rm 1}Affiliation 1\\
+    \textsuperscript{\rm 2}Affiliation 2\\
+    firstAuthor@affiliation1.com, secondAuthor@affilation2.com, thirdAuthor@affiliation1.com
+}
+\fi
+
+
+% REMOVE THIS: bibentry
+% This is only needed to show inline citations in the guidelines document. You should not need it and can safely delete it.
+\usepackage{bibentry}
+% END REMOVE bibentry
+
+
+
+% 取一函数的宏包，acl模版不带
+\usepackage{dsfont} 
+% 分段函数大括号的宏包，acl模版不带
+\usepackage{amsmath}
+% 定义指示函数的命令 
+%\newcommand{命令}[<参数个数>][<首参数默认值>]{<具体的定义>}
+\newcommand{\indicator}[1]{\mathds{1}{#1}}
+% \setlength{\parindent}{0pt}  % 设置段落缩进为0
+
+\begin{document}
+
+\maketitle
+
+\begin{abstract}
+Text summarization task extracts salient information from a large amount of text for productivity enhancement.
+However, most existing methods heavily rely on training models from ample and centrally stored data which is infeasible to collect in practice, due to privacy concerns and data scarcity nature under several settings (e.g., edge computing or cold starting).
+The main challenge lies in constructing the privacy-preserving and well-behaved summarization model under the data scarcity scenario, where the data scarcity nature will lead to the knowledge shortage of the model while magnifying the impact of data bias, causing performance degeneration.
+To tackle this challenge, previous studies attempt to complement samples or improve the efficiency of data.
+The former is usually associated with high computing costs or has a large dependence on empirical settings, while the latter might not effective due to the lack of consideration of data bias.
+In this work, we propose FedSum which extends the standard FL framework from depth and breadth to further extract prime and diversified knowledge from limited resources for text summarization.
+For depth extension, we introduce a Data Partition method to cooperatively recognize the prime samples that are more significant and unbiased, and the Data skip mechanism is introduced to help the model further focus on those prime samples during the local training process.
+For breadth extension, FedSum extends the source of knowledge and develops the summarization model by extracting knowledge from the data samples, hidden spaces, and globally received parameters.
+Extensive experiments on four benchmark datasets verify the promising improvement of FedSum compared to baselines, and show its generalizability, scalability, and robustness\footnote{Code is available at \url{https://github.com/Li-Evan/FedSum}}.
+\end{abstract}
+
+% Uncomment the following to link to your code, datasets, an extended version or similar.
+%
+% \begin{links}
+%     \link{Code}{https://aaai.org/example/code}
+%     \link{Datasets}{https://aaai.org/example/datasets}
+%     \link{Extended version}{https://aaai.org/example/extended-version}
+% \end{links}
+
+\section{Introduction}
+    % 1、做ExtSum的意义（略）
+    % 2、做ExtSum需要较多的数据资源
+    % 3、当在数据敏感的领域中进行ExtSum时，难以收集相关数据，导致集中式的方法难以取得较好效果
+    % 4、FL可以在保护隐私的前提下利用资源，因此我们提出在FL里面做ExtSum
+    % 5、考虑到做ExtSum时会受到Data Bias，如Leading Bias，的负面影响，降低模型的泛化能力进而导致性能退化
+    % 6、当数据充足时，模型容易获取足够知识，使泛化能力有所提升，降低Bias的负面影响。
+    % 7、然而当FL系统处于数据稀缺或显著数量异构（数据异构）的场景时，联邦模型将难以获取足够的知识来提高性能以及应对带偏数据。
+    % 8、因此，一个自然的问题就是：“How to derive a well-behaved summarizer in data scarcity FL？”
+    % Summarization背景
+    The amount of text data has grown explosively in various domains, such as journalism, medicine, and entertainment. 
+    % Summarization是做什么的,有什么意义    
+    For productivity enhancement, the summarization model, namely summarizer, compresses textual content into shorter versions while retaining key concepts from input content.
+    % 训练Summarizer需要大量数据，数据难以获取
+    To construct a summarizer, most existing literature focused on the centralized manner with ample data.    
+    However, the data from individuals or institutions are generally private and sensitive, prohibiting access from the public.
+    This makes the collection of text data in a central location infeasible.
+    % 联邦在保护隐私的同时聚合数据资源
+    Federated Learning (FL) \citep{mcmahan2017communication} provides a paradigm to utilize information and construct a shared model securely.
+    % Nevertheless, when the FL system is plagued by data scarcity (e.g., edge computing or cold starting, where the data quantity of clients over system is less than 500), it is intractable for the summarizer to get adequate knowledge \cite{lin2022fednlp}, making it vulnerable to data bias, such as Leading Bias \cite{zhong2019closer, xing2021demoting,ko2021look} and resulting in performance degradation.
+    Nevertheless, when the FL system is plagued by data scarcity (e.g., under edge computing or cold starting settings, where each FL client trains a common and basic summarization model with over 10M parameters with less than 500 samples), it is intractable for the summarizer to get adequate knowledge \cite{lin2022fednlp} and vulnerable to data bias, such as Leading Bias \cite{zhong2019closer,ko2021look}, resulting in performance degradation.
+    Then a natural question is: {\it How to derive a well-behaved summarizer in data scarcity FL?}
+    
+    
+    % Besides, in specific scenarios (e.g., edge computing and cold start) the data is highly scarce and difficult to collect in practice, which will magnify the negative impact of data bias.
+    
+    % To close the above gaps, we try to study the text summarization task in the Federated Learning (FL) \citep{mcmahan2017communication}paradigm which aggregates data resources from different clients and constructs a shared model under privacy constraints.
+    
+    % % 联邦在保护隐私的同时聚合数据资源
+    % Federated Learning (FL) \citep{mcmahan2017communication} provides a paradigm for 
+    % FL encourages participants to safely exchange information and cooperatively construct a shared model under privacy constraints.  
+    
+    % % 考虑到做ExtSum时会受到Data Bias，如Leading Bias，的负面影响，降低模型的泛化能力进而导致性能退化
+    % During the establishment of the ExtSum model, the influence of data bias, such as Leading Bias \cite{ko2021look}, will seriously affect the performance of the summarizer.
+    % % 当数据充足时，模型容易获取足够知识，使泛化能力有所提升，降低bias的负面影响。
+    % When sufficient data is available,
+    % the model can acquire more general knowledge through training to mitigate the negative effect of data bias \cite{zhong2019closer, xing2021demoting}.
+    % % 引出FL的同时也表明FL也难以解决数据稀缺的问题
+    % However, when the system is plagued by data scarcity, it is intractable for the summarizer to get adequate knowledge \cite{lin2022fednlp,Few_shot_Federated_NLP}.
+    % Such models are not only difficult to capture the general patterns of the summarization task, but also vulnerable to data bias, resulting in performance degradation \cite{zhong2019closer,Few_shot_Mobile_NLP}.
+    % % 引出要解决的问题：我们如何利用有限的资源训练一个表现满意的抽取式摘要模型
+    % Then a natural question is: {\it How to derive a well-behaved summarizer efficiently in data scarcity FL?}
+    % \begin{figure}[htpb]
+    %     \centering
+    %     \includegraphics[width=0.48\textwidth, height=0.3\textwidth]{latex/fig/Logo.png}
+    %     \caption{No idea.
+    %     }
+    %     \label{fig:Logo}
+    % \end{figure}
+
+    % 数据稀缺引起了知识匮乏的问题
+    Generally, data scarcity leads to the knowledge shortage of the summarizer, which is the main reason for degeneration \cite{Few_shot_Federated_NLP}.
+    % 补充知识可以从通过补充数据和提高利用率
+    To tackle this challenge, complementing samples \cite{zhang2018mixup,cubuk2019autoaugment} or improving the efficiency of data \cite{zhuang2020comprehensive,li2021prototypical} are two common-used strategies.
+    % 数据增强可以对数据进行补充，但是对于超参数较为敏感。
+    The former creates samples by applying various transformations to the original data \cite{FedMix, FedFA}, which generally is computation-costed and heavily relies on the hyperparameters setting \cite{FedBEAL, FedTDA}.
+    The latter focuses on exploiting limited resources \cite{FedRep, FedCLIP}, such as utilizing the distance between measured prototypes and exploring parameters.
+    Although these methods further explore the limited data, the improvement is not remarkable in the practice, due to the neglect of data bias.
+    % However, their performance degrades under strict data-scarce settings that are closer to real-world scenarios.
+    % 因此，我们尝试通过improving data efficiency降低负面影响 
+    
+    To find an effective solution for the degeneration, we propose to maximize the data efficiency in model training.
+    We study the strategy of sample weighting, and mining hidden knowledge from different aspects.
+    % 引出我们通过挖掘从不同角度挖掘隐藏知识，提高知识利用率来缓解数据稀缺的负面影响
+    We propose FedSum which extends the standard FL framework from depth and breadth to further extract prime and diversified knowledge for constructing the summarizer, as illustrated in Fig. \ref{fig:FedSum}.
+    
+    
+
+    % 对于深度拓展，FedSum结合困难样本挖掘的设计，改变不同数据的监督效果，促进模型的泛化性。
+    For depth extension, inspired by hard sample mining and bias elimination \cite{ chen2023bias}, we introduce the Data Partition method to recognize the prime samples, and adjust the weight of data by the proposed Data skip mechanism, to further mining prime knowledge.
+    % , prompting the generalization of the summarizer.
+    % % 训练前先分割
+    % Before local training, each data batch will be partitioned according to their significance.
+    % % 我们提出了数据分割方法，并把具有领先偏置且具有较低损失值的样本称为常规样本，把更为无偏且更有价值的数据称为重点样本。
+    Specifically, we refer to the samples with more unbiased and higher loss samples as prime samples, while pronounced data bias and low supervised loss as normal samples. 
+    % 而在常用的训练数据集中，具有领先偏置且具有较低损失值的样本占较大的比例，这使得模型容易忽略更为无偏或更有价值的数据，从而使模型泛化性退化。
+    Since normal samples account for a large proportion in the dataset \cite{zhong2019closer}, the summarizer will easily ignore the prime sample, degrading the generalization \cite{xing2021demoting}, especially under data scarcity.
+    % Focal Loss相当于是一种soft sampling，因为它是给每个样本不同的loss weight。
+    % OHEM相当于是一个hard sampling，它的weight相当于是0和1。
+    % Order SGD其实也是一个hard sampling，它的weight相当于是0和1。
+    % 为了减缓degradation，常见方法是在训练过程中为不同样本分配不同的采样权重。
+    % To improve the generalization, a common solution is to discard the normal samples \cite{shrivastava2016trainingregionbasedobjectdetectors, lin2018focallossdenseobject}.
+    % 为了在数据稀缺的条件下，我们并不会直接丢弃或略过这些简单的数据，而是动态地调整这些数据的监督效果(梯度)，保障模型的性能下限。
+    % Under data scarcity FL, FedSum does not discard all normal samples at once to prevent rapid degradation \cite{zhong-etal-2020-extractive}, but dynamically discards specific samples based on the training progress.
+    To address it, FedSum dynamically discards part of normal samples based on the training progress, but not all normal samples like the common solutions \cite{ lin2018focallossdenseobject}, preventing further degradation.
+    
+    % FedSum中的每个联邦客户先根据本地判别难易程度和全局难易程度，对本地数据样本进行动态划分，随后在本地训练过程中依样本略过机制改变不同数据的监督效果。
+    % In FedSum, FL clients partition private data by the Data Partition method firstly according to local and global prime levels, then discard some normal data by the Data skip mechanism.
+
+    % 对于广度拓展，我们从数据、隐空间以及参数空间中挖掘知识。
+    For breadth extension, inspired by Multi-Task learning \cite{NEURIPS2021_82599a4e,Fed-CO2}, we extend the source of knowledge in training.
+    FedSum not only learns from data but also from hidden spaces and parameters.
+    % 原型通常被视作为隐空间的语义信息载体。
+    % 一方面，利用局部和全局层面的原型差异约束，FedSum构建正则项，注入语义监督信息到模型中。
+    Since the prototype is generally regarded as the carrier of semantic information in hidden space \cite{Prototypical2}, we leverage different prototypes to build prototype loss, improving the generalization and discrimination of features.
+    % 另一方面，我们以用户画像之间的差别作为引导，挖掘隐藏于多个联邦模型参数中的知识，以解决本地由于数据稀缺所导致的语义知识缺失。
+    Then, FedSum constructs the semantic portraits for FL clients by their specific prototypes, and measures the semantic distances between them to maintain the Portrait Distance Table (PDT) on the server.
+    Take the PDT as a guideline, each client can supplement the insufficient semantic knowledge of their representation model by training with the globally received classification heads.
+
+    Finally, we evaluate our method on benchmark datasets, showing that FedSum provides a promising total improvement over baselines in ROUGE metrics (0.15\% at least and 29.9\% at most) and exhibits generalization under various heterogeneity (fluctuation in ROUGE metrics $\leq$ 2.6\% on CNNDM and $\leq$ 0.3\% on PubMed), scalability about data quantity over FL system, and robustness to leading bias (that the position distribution of FedSum's prediction is more even and closer to the Oracle).
+    % 总结贡献点
+    Our main contributions are concluded as follows:
+    \begin{itemize}
+        % 框架
+        \item We propose FedSum, a privacy-preserved text summarization framework that maximizes the data efficiency by mining knowledge from samples, hidden spaces, and received parameters for the challenge of data scarcity.
+
+        % 对于数据的利用
+        \item 
+        To mitigate the negative effect of data bias magnified by data scarcity, we propose the Data Partition method and the Data skip mechanism for further mining the prime knowledge in model training.
+        
+        % 实验结果不俗和并具有可拓展性
+        \item Extensive experimental results on benchmark datasets verify the improvement of FedSum and verify its generalization for various heterogeneous conditions, its scalability in data quantity, and its robustness to leading bias.
+
+
+    \end{itemize}
+
+\begin{figure*}[htbp]
+    \centering
+    \includegraphics[width=0.9\textwidth,height=0.48\textwidth]{latex/fig/FedSum_v2.pdf}
+    \caption{
+    % The overview and learning process of FedSum. 
+    % To mitigate the performance degradation caused by data scarcity and data bias, FedSum tries to maximize the efficiency of data in both breadth and depth.
+    To mitigate the degradation caused by data scarcity, FedSum extends the standard FL framework from depth and breadth.
+    For depth extension, FedSum distinguishes the prime and normal data by the Data Partition method and adjusts the weight of normal samples through the Data skip mechanism, promoting the summarizer to further focus on the more significant and general pattern.
+    For breadth extension, FedSum tries to maximize the efficiency of data by extending the source of knowledge through Multi-knowledge Local Training, which learns from data, hidden space, and globally received parameters.
+    % Before local training, the private data will be partitioned according to their significance by the Data Partition method.
+    % During Multi-knowledge Local Training, FedSum extracts knowledge from three aspects.
+    } 
+    \label{fig:FedSum}
+\end{figure*}
+
+\section{Background}
+    \subsection{Extractive Text Summarization.}
+        \label{Extractive summarization.}
+        Since extracting the key idea from abounding information is valuable in various scenes, many works have been proposed in this track \cite{zhang2023diffusum,Park_2024}. 
+        Inspired by the success of BERT, a summarizer with an enlightening pattern has been proposed \cite{liu-lapata-2019-text}, namely BERTSUM.
+        It leverages BERT to represent the input content and then recognizes the most salient sentences by classification modules.
+        Following this pattern, a series of works modify the model architecture to further explore the semantic and structural information \cite{specter2020cohan, bi-etal-2021-aredsum}.
+        % The illustration of training the extractive summarization model is presented in Fig.(\ref{fig:ExtSum}) in the Appendix.
+        Another branch of work builds contrastive frameworks to reinforce BERTSUM by re-ranking the model result \cite{zhong-etal-2020-extractive} or modifying the learning object \cite{liu2021simcls}.
+        % The above works have shown great potential with sufficient data.
+        % When data are scarce, their performance degrades.
+        
+        
+    \subsection{Federated Learning}
+        Federated Learning is a rising paradigm in privacy-preserving.
+        A surge of works explore diverse FL applications in NLP \cite{liu2021federated_NLP_Survey,du2023federated}.
+        Although FL has strength in protecting privacy, it suffers from degradation problems, caused by heterogeneity and data scarcity.
+        % 解决统计异构问题
+        % FedProx
+        To alleviate the degradation due to heterogeneity, FedProx \cite{FedProx} introduces a proximal term to restrain the local drift. 
+        % SCAFFOLD
+        % To handle the same problem, 
+        SCAFFOLD \cite{SCAFFOLD} learns personalized control variates referring directions of global updates to guide the local training.
+        % FedNova
+        FedNova \cite{FedNova} introduces a normalizing weight to eliminate the objective inconsistency and stabilize convergence. 
+        % % 利用预训练模型作为初始化模型
+        % Injecting the pre-training process \cite{Wang2023FedBFPTAE} or universal knowledge \cite{FedBERT,FedCLIP} into the FL model demonstrates satisfactory performance in resisting the negative effects of data heterogeneity \cite{nguyen2023where} 
+        % 解释这些方法可以解决异构问题，但是不一定能在数据稀缺时表现得好。
+        % These methods mitigate the negative effects of data heterogeneity.
+        In the data scarcity scenario, like the cold start scenario, models trained by these methods might have difficulty acquiring sufficient knowledge.
+        % 捕获隐藏空间里面的知识
+        One intuitive idea is extracting knowledge from hidden space \cite{FPL,FedTGP}.
+        % FedProto
+        FedProto \cite{FedProto} extends the concept of prototype learning to FL, reaching feature-wise local alignment with the global prototype.
+        % 捕获参数空间里面的知识
+        Another branch of methods tries to leverage the extensive knowledge from parameters.
+        % FedDC
+        FedDC \cite{FedDC} interleaving model aggregation and permutation steps. 
+        During a permutation step, it redistributes local models across clients through the server.
+        These above methods mitigate the negative effects of data heterogeneity and scarcity, but not always behave outstanding in the summarization task, due to the neglect of data bias. 
+
+    % \subsection{Federated Learning for Summarization}
+    %     In light of the significant potential of federated learning in data privacy protection, several works have applied federated learning to text summarization. AdaFedSelecKD~\cite{FedSum1} develops a federated selective knowledge distillation framework to effectively derive both global and local knowledge in heterogeneity scenario, which is based on the entropy of knowledge. FedSumm~\cite{FedSum2} introduces a dynamic gradient adapter to address the unbalanced optimization problem caused by context and semantic distribution deviation under data heterogeneity. The methods above make efforts to deal data heterogeneity problem, but face performance degradation in data-scarce scenarios.
+
+          
+\section{Task Definition and Notations}
+    Given a document (data sample) $d=\{u_1,\cdots,u_S\}$ with $S$ sentences from dataset $D=\{d_1,\cdots,d_n\}$, each sentence is assigned a result $\hat{\phi} \in [0, 1]$ through the model (summarizer), representing the probability that the sentence should be extracted. 
+    General extractive summarizer $f(\Omega, \cdot)$ parametered by $\Omega=\{\theta, \omega\}$ can be divided into the representation model $r(\theta, \cdot) $ and the classification head $h(\omega, \cdot)$, where $f(\Omega, \cdot) = h(\omega, r(\theta, \cdot))$.
+    Define $\ell(\widehat y_{\Omega}, y)=CE(\widehat y_{\Omega}, y)$ as the cross entropy loss function measured on the inference $\widehat y_{\Omega}= f(\Omega, d)=[\hat\phi_1,\cdots,\hat\phi_S]$ of document $d$ and ground-true label sequence $y=[\phi_1,\cdots,\phi_S]$, where $\phi_{(\cdot)} \in \{0,1\}$.
+    
+    Given a client id $k$, we denote $\widehat Y_{\Omega_k}$ and $Y_k$ as its prediction set and ground-true set, respectively.
+    $D_{(k, F)}$ and $\pi_k$ are full dataset and its distribution.
+    $D_{(k, \gamma)}$ denotes the $\gamma$ subset of $D_{(k, F)}$.
+    In FL literature, it is a heterogeneous setting if $\mathcal \pi_p \neq \pi_q$ for $p \neq q$.
+    $C$ and $K$ stand for the whole client set and its size, $\alpha$ is the active ratio. 
+    % $C_{\alpha} \subset C$ and $\{C_{\alpha}\}$ denote the subset of active clients and its indexes, where $|\{C_{\alpha}\}|=\alpha\cdot K$.
+    $C_{\alpha}$ and $\{C_{\alpha}\}$ denote the subset of active clients and its indexes.
+    $T$ and $E$ are the number of communications and local epochs. 
+    $\mathcal B$ denotes data batch.
+    $B$ and $\eta$ are the batch size and the learning rate.
+    $n_k$ and $\tau_k=\lceil n_{k}/B \rceil$ stand for the number of local data samples from $k$-th client and its number of local updates.
+    The total number of samples is $n = \sum_{k=1}^K n_k$.
+    In FL, one aims to learn a model that minimizes the empirical loss $\widehat L(\Omega)$ as follows:
+    % \begin{align}
+    %     \label{eq:FL_population_objective}
+    %     \min_{\Omega} L (\Omega) 
+    %     = \sum_{k=1}^K \frac{n_k}{n} \mathds{E}_{D_{(k,F)}} [L_k(\Omega_k, D_{(k,F)})]
+    % \end{align}
+    % Since $L(\Omega, D_{(k,F)})$ is defined on population and not accessible, an empirical version of FL objective is defined as
+    \begin{align}
+        \label{eq:FL_empirical_objective}
+        \min_\Omega \widehat L(\Omega) 
+        := 
+        \sum_{k=1}^K \frac{n_k}{n}  \widehat L_k(\Omega_k, D_{(k,F)}).
+    \end{align}
+    where $\hat L_k(\Omega_k, D_{(k,F)}) := \sum_{d_i}^{D_{(k,F)}} 
+         \frac{1}{n_k} \ell(f(\Omega_k,d_i), y_{i}). $
+
+        
+
+
+\section{Method}
+    % Overview
+    % 再次阐述动机
+    % FL系统的数据稀缺导致了知识匮乏问题，这一问题引起了模型的性能退化。
+    The data scarcity leads to the knowledge shortage problem, affecting the performance of the summarizer.
+    % 为了解决知识匮乏问题，同时避免对超参数过于敏感，我们尝试提高数据的利用效率。
+    % 我们提出了FedSum框架，从数据空间，隐空间，参数空间挖掘知识，如图1所示。
+    To address this problem by maximizing the data efficiency, we propose FedSum with two innovative modules: Data Partition and Multi-knowledge Local Training, for depth and breadth extensions, as concluded in Alg.\ref{alg:FedSum} and Alg. \ref{alg:FedSum Client}. 
+    % The details workflow is presented below.
+    The workflow is below.
+    
+    % 补充一段对于框架的流程概述
+    % 首先，每个客户根据本地与全局的样本偏差程度和监督价值进行Data Partition。
+    Firstly, the server initializes the parameter.
+    During the iteration of communication,
+    the server obtains the communication list and broadcasts the parameter to each active client (see line \ref{line: server preparation begin} to \ref{line: server preparation end} in Alg. \ref{alg:FedSum}).
+    After that, each client performs the Data Partition based on the deviation of samples' bias level and supervised significance between local and global (see line \ref{line: Data Partition Begin} to \ref{line: Data Partition End} in Alg. \ref{alg:FedSum Client}). 
+    % 随后联邦客户们将进行Multi-knowledge Local Training，挖掘Data, Prototype and Parameters中的知识。
+    Then each client performs Multi-knowledge Local Training.
+    % 在挖掘数据知识的过程中，Data skip mechanism修改了部分Normal样本的损失，促使模型动态地调整对于不同样本的关注程度。
+    During the exploration of data, the Data skip mechanism discards partial normal samples (see line \ref{line: Data skip mechanism begin} to \ref{line: Data skip mechanism end} in Alg. \ref{alg:FedSum Client}).
+    % 以用户之间的语义画像距离为基准，FedSum还从参数中捕获本地缺乏的语义信息，提高模型的表征能力。
+    After the first communication round, based on the semantic portrait distance between users, FedSum also extracted semantic knowledge from parameters to update the representation model (see line \ref{line: Parameters knowledge begin} to \ref{line: Parameters knowledge end} in Alg. \ref{alg:FedSum Client}).
+    % 通过构建基于不同原型的正则化约束，FedSum提高特征表示的泛化性和区分度。
+    When local training epoch is done, FedSum tries to optimize the feature representations in generalization and discrimination by measuring different prototypes and proto loss (see line \ref{line: Proto. knowledge begin} to \ref{line: Proto. knowledge end} in Alg. \ref{alg:FedSum Client}).
+    % 结束Multi-knowledge Local Training后，服务器根据收集到语义画像更新PDT。
+    After Multi-knowledge Local Training, the server updates the PDT and corresponding parameters according to the uploaded resources (see line \ref{line: Multi-knowledge Local Training begin} to \ref{line: PDT update end} in Alg. \ref{alg:FedSum}).
+    % 最后，服务器对各种收集回来的信息进行聚合后完成一次算法的迭代。
+    Finally, the server aggregates different resources to complete one iteration (see line \ref{line: Aggregation begin} to \ref{line: Aggregation end} in Alg. \ref{alg:FedSum}).
+    In short, FedSum optimizes the representation module by minimizing $L_{data}+L_{po}+L_{pm}$, while optimizing the classification head by minimizing $L_{data}$.
+    \begin{algorithm}[htbp]
+        \caption{FedSum Server.}
+        \begin{algorithmic}[1] %[1] enables line numbers
+        \REQUIRE  $T$, $K$, $\alpha$, $\eta$, $\gamma$ %输入条件
+        \STATE Initialize $\theta_g^{(0)}, \omega_g^{(0)}$, set $\bar\epsilon^{(0)}$ and $\bar Q^{(0)}$ as 0
+        \label{line: server preparation begin}
+        \STATE \textbf{for} $t = 1$ to $T$ \textbf{do}
+        \STATE \quad $C_\alpha \leftarrow $ Client Selection($K$, $\alpha$)
+        \STATE \quad Sever Broadcast($C_\alpha$, $\theta^{(t-1)}$, $\omega^{(t-1)}$, $\bar\epsilon^{(t-1)}$, $\bar Q^{(t-1)}$)
+        \label{line: server preparation end}
+        \STATE \quad \textbf{for} $i \in \{C_\alpha\}$ \textbf{in parallel do}
+        \label{line: Multi-knowledge Local Training begin}
+        \STATE \quad\quad  
+        $Q_{(i,j)}^{(e,t)}$, $\epsilon_{(i,j)}^{(e,t)}$, $\theta_i^{(t-1)}$, $\omega_i^{(t-1)}$, $P_{(i,c)}^{(\xi,t-1)}$, $SP_i \leftarrow$
+        \\ \quad\quad
+        FedSum Client
+        ($\bar\epsilon^{(t-1)}$, $\bar Q^{(t-1)}$, $t$, $PK_i$, $\bar P_{c}^{(\xi,t)}$)
+        \label{line: Multi-knowledge Local Training end}
+        \STATE \quad \textbf{end for}
+        % 上传
+        \STATE \quad Client Upload($C_\alpha$)
+        % \STATE \quad \textbf{for} $i \in \{C_\alpha\}$ \textbf{do}
+        \label{line: PDT update begin}
+        % PDT
+        % \\
+        % \textcolor[rgb]{0.25, 0.5, 0.75}{\textit{\textit{\quad \# Update PDT by $\Vert\cdot\Vert_2$ and tanh($\cdot$)}}} 
+        % \\
+        \STATE \quad \textbf{for} $i \in \{C_\alpha\}$ \textbf{do} \textcolor[rgb]{0.25, 0.5, 0.75}{\textit{\textit{~ \# Update PDT by $\Vert\cdot\Vert_2$ and tanh($\cdot$)}}} 
+        \STATE \quad\quad  $PDT[i][p] = tanh(\Vert SP_i - SP_p \Vert_2)$
+        % \\
+        % \textcolor[rgb]{0.25, 0.5, 0.75}{\textit{\textit{\quad\quad \# Perturbate Param. by Bernoulli Noise}}} 
+        % \\
+        % The dropout rate of Bernoulli perturbation $\gamma$ is 0.1.
+        \STATE \quad \quad $\tilde \omega_i^{(t-1)}$ = Dropout($\omega_i^{(t-1)}$, $\gamma$)
+        \textcolor[rgb]{0.25, 0.5, 0.75}{\textit{\textit{~ \# Bernoulli Noise}}}
+        \label{line: perturbation}
+        % \\
+        % \textcolor[rgb]{0.25, 0.5, 0.75}{\textit{\textit{\quad\quad \# Update the Param. knowledge set $PK_i$}}} 
+        % \\
+        \STATE \quad\quad $PK_i$ = \{(PDT[i][p], $\tilde\omega$_i^{(t-1)}) $ \mid p \in \{C_\alpha \} \setminus \{i\} \}$
+        \STATE \quad \textbf{end for}
+        \label{line: PDT update end}
+        % 聚合
+        % \\
+        % \textcolor[rgb]{0.25, 0.5, 0.75}{\textit{\textit{\quad \# Global aggregation}}} 
+        % \\
+        \STATE \quad $\theta_g^{(t)} = \sum_i^{\{C_\alpha\}} \frac{n_i}{n} \cdot \theta_i^{(t-1)}, \omega_g^{(t)} = \sum_i^{\{C_\alpha\}} \frac{n_i}{n} \cdot \omega_i^{(t-1)}$
+        \label{line: Aggregation begin}
+        \STATE \quad $\bar \epsilon^{(t)}$,~$\bar Q^{(t)} \leftarrow$ Eq. \ref{eq: Q},~ $\bar P_{c}^{(\xi,t)}= \sum_{i}^{\{C_{\alpha}\}}  \frac{n_i}{n} \cdot P_{(i,c)}^{(\xi,t)}$
+        \STATE \textbf{end for}
+        \label{line: Aggregation end}
+        \RETURN $\theta_g^{(T)} ,  \omega^{(T)}$
+        \end{algorithmic}
+        \label{alg:FedSum}
+    \end{algorithm}
+    \begin{algorithm}[htbp]
+        \caption{FedSum Client ($i$-th client).}
+        \begin{algorithmic}[1] %[1] enables line numbers
+        \REQUIRE $t$, $PK_i$, $\bar P_{c}^{(\xi,t)}$ %输入条件
+        \STATE \textbf{for} $e = 1$ to $E$ \textbf{do}
+        % \STATE \quad\quad\quad \textbf{for} $\mathcal B_j \in D_{(i,F)}$ \textbf{do}
+        \STATE \quad \textbf{for} $j=1$ to $\tau_i$ \textbf{do}
+        \STATE \quad\quad $\mathcal B_j \leftarrow$ Sampling ($D_{(i,F)}$) 
+        % \\
+        % \textcolor[rgb]{0.25, 0.5, 0.75}{\textit{\textit{\quad\quad Sentences' Label Distribution, Hidden represen-
+        % \\ \quad\quad
+        % tation, and Loss Matrix }}} 
+        % \\
+        ,~ $LD \leftarrow$ Label($\mathcal B_j$)
+        \STATE \quad\quad $H_j = r(\theta^{(t-1)}_i, \mathcal B_j)$,~ $LM$ = 
+        $\ell( h(\omega^{(t-1)}_i, H_j), LD)$ 
+        \label{line: Data Partition Begin}
+        % \STATE \quad\quad\quad\quad $LD \leftarrow$ Label Distribution($\mathcal B_j$) 
+        % \STATE \quad\quad\quad\quad $LM = \ell(f(\Omega_i, \mathcal B_j), LD)$ 
+        % Data Partition 
+        % Alg. \ref{alg:DataPartition}
+        \STATE \quad\quad $Q_{(i,j)}^{(e,t)}$, $\epsilon_{(i,j)}^{(e,t)}$, $ D_{(i,N)}$, $ D_{(i,P)}$ $\leftarrow$ Data Partition(
+        \\ \quad\quad
+        $LD$, $LM$, 
+        % $\mathcal B_j$, $\Omega_i$, 
+        $m$, $\lambda$, $\bar\epsilon^{(t-1)}$, $\bar Q^{(t-1)}$, $D_{(i,N)}$, $D_{(i,P)}$
+        ) 
+        \label{line: Data Partition End}
+        % \\
+        % \textcolor[rgb]{0.25, 0.5, 0.75}{\textit{\textit{\quad\quad \# Data skip mechanism}}} 
+        % \\
+        
+        % Data Loss
+        % Data skip probability
+        \STATE  \quad\quad $\hat\rho \leftarrow$ Sampling ($U(0,1)$)
+        ,~ $\rho_{(i,j)} = \frac{t}{T} \cdot \frac{e}{E} \cdot \frac{j}{\tau_i}$
+        \label{line: Data skip mechanism begin}
+        \STATE \quad\quad $L_{data} = \sum_{b}^{B}\sum_{c}^{m}\frac{LM[b][c]}{B} $ \textcolor[rgb]{0.25, 0.5, 0.75}{\textit{\textit{~ \# Data knowledge}}} 
+        \STATE \quad\quad \textbf{if} $\mathcal B_j \in D_{(i,N)}$ and $\hat\rho \leq \rho_{(i,j)}$ \textbf{then}
+        \STATE \quad\quad\quad $L_{data} = 0$ ~ \textcolor[rgb]{0.25, 0.5, 0.75}{\textit{\textit{\quad\quad \# Data skip mechanism}}} 
+        \STATE \quad\quad \textbf{end if}
+        % \STATE \quad\quad\textbf{else}
+        % \\
+        % \textcolor[rgb]{0.75, 0.25, 0.25}{\textit{\quad\quad\quad \# $\mathcal B_{j}$ be retained}}
+        % \\
+        % \STATE \quad\quad\quad $L_{data} = L^{(e,t)}_{(i,j)}$
+        % \\
+        % \textcolor[rgb]{0.25, 0.5, 0.75}{\textit{\textit{\quad\quad \# Data knowledge}}} 
+        % \\
+        \STATE \quad\quad $L_{\theta} := L_{\theta} + L_{data},~ L_{\omega} := L_{\omega} + L_{data}$
+        \label{line: Data skip mechanism end}
+        
+        % Parameters Loss
+        \STATE \quad\quad \textbf{if} $t \neq 1$ \textbf{then} \textcolor[rgb]{0.25, 0.5, 0.75}{\textit{\textit{~\# Param. knowledge}}}
+        \label{line: Parameters knowledge begin}
+        \STATE \quad\quad\quad \textbf{for} $(PDT[i][p], ~\tilde\omega_i^{(t-1)})$ in $PK_i$ \textbf{do}
+        % \\
+        % \textcolor[rgb]{0.25, 0.5, 0.75}{\textit{\textit{\quad\quad\quad\quad \# Param. knowledge}}} 
+        % \\
+        \STATE \quad\quad\quad\quad
+        $\zeta_{p} = PDT[i][p]$
+        \STATE \quad\quad\quad\quad 
+        $L_{pm} = \zeta_{p} \cdot \sum_{b}^{B}\sum_{c}^{m}\frac{\ell( h(\tilde\omega^{(t-1)}_p, H_j), LD)[b][c]}{B}
+        $
+        \STATE \quad\quad\quad\quad $L_{\theta} := L_{\theta} +  L_{pm}$
+        \STATE \quad\quad\quad \textbf{end for}
+        \STATE \quad\quad \textbf{end if}
+        \STATE \quad\quad $\theta_i^{(t-1)} := \theta_i^{(t-1)} - \eta\nabla L_\theta, $
+        \\ \quad\quad $\omega_i^{(t-1)} := \omega_i^{(t-1)} - \eta\nabla L_\omega$
+        \STATE \quad \textbf{end for}
+        \STATE \textbf{end for}
+        \label{line: Parameters knowledge end}
+        % 构建原型
+        \STATE $ P_{(i,c)}^{(\xi,t-1)}\leftarrow$ Eq. \ref{eq: class prototype},~ $P_{(i,p)}^{(\xi,t-1)} \leftarrow$ Eq.\ref{eq: prediction prototype},~ $SP_i \leftarrow$ Eq. \ref{eq:Semantic Portrait}.
+        \label{line: Proto. knowledge begin}
+        % Construct Semantic Portrait 
+        % 语义画像 =【超原型，标签0原型，标签1原型】
+        \STATE \textbf{if} $t \neq 1$ \textbf{then} \textcolor[rgb]{0.25, 0.5, 0.75}{\textit{\textit{~ \# Proto. knowledge}}} 
+        % Prototype Loss
+        % \\
+        % \textcolor[rgb]{0.25, 0.5, 0.75}{\textit{\textit{\quad \# Proto. knowledge}}} 
+        % \\
+        \STATE \quad $L_{po} \leftarrow$ Eq. \ref{eq: po_loss},~ $L_{\theta} = L_{po}$,~ $\theta_i^{(t-1)} := \theta_i^{(t-1)} - \eta\nabla L_{\theta}$
+        \label{line: Proto. knowledge end}
+        \STATE \textbf{end if}
+        \RETURN $Q_{(i,j)}^{(e,t)}$, $\epsilon_{(i,j)}^{(e,t)}$, $\theta_i^{(t-1)}$, $\omega_i^{(t-1)}$, 
+        $P_{(i,c)}^{(\xi,t-1)}$,
+        $SP_i$ 
+        \end{algorithmic}
+        \label{alg:FedSum Client}
+    \end{algorithm}
+    
+   \subsection{Data Partition}
+        
+        
+        
+        % % 再简单提一下动机：
+        % To dive into data, the Data Partition lays the foundation for training with different effects.
+        % 与噪声样本过滤类似，数据可以根据其重要程度划分到困难和简单子集
+        Similar to recognizing noisy samples \cite{FedDiv}, data can be allocated to normal and prime subsets according to their significance for better exploration.
+        % ML里面损失大就是困难样本
+        In ML, the sample with large training loss is generally considered as a prime sample \cite{wang2023hard}, which can reflect more guidance about the task.
+        % 结合任务特点，我们认为困难样本的划分需要更细的评价标准
+        Considering the characteristics of ExtSum, that the extractive summarization can be decomposed to the classification of multiple sentences \cite{0A}, we propose that the criterion for the prime sample should be detailed down to the sentence level. 
+        % 我们结合任务特点，分析出标记为1的句子损失能反馈更准确的信息
+        % In ExtSum and other similar extraction tasks, 
+        Since the amount of key sentences is much less than the ordinary, the loss of sentences labeled with ``1'' is more valuable, which can precisely reflect the dilemma in classification.
+        % 同时，标签分布直观地反映出数据是否存在明显的头部偏差。 因此，我们可以依据来自标签分布和损失矩阵的信息对数据进行划分。
+        Meanwhile, the label distribution can intuitively reflect the degree of leading bias in the data batch.
+        Thus we refer to the samples with pronounced leading bias and low supervised loss as normal samples, while more unbiased and higher loss samples as prime samples. 
+        We can recognize the prime samples based on the measurements from the label distribution and loss matrix. 
+        % 另外，为了保护数据安全，数据分割过程应该在本地进行。 
+        For privacy constrain, the data partition should be carried out locally. 
+        % 但是由于每个客户的本地数据是有限且可能有偏，客户对于数据的重要性评价可能不准确。 
+        However, since the private samples for each client are limited, the judgment only based on local information might be biased \cite{Tang2021FedCorCA}.
+        % 因此我们提出了结合了全局信息和任务特点的数据分割算法。
+        Thus, we propose a collaborative Data Partition algorithm in 
+        % Alg.\ref{alg:DataPartition}
+        Alg. 3
+        , which partitions local data regarding the globally bias and significant level, as Fig. \ref{fig:DataPartition} shown. 
+        Due to limit about page of main manuscript, the detail of 
+        % Alg. \ref{alg:DataPartition} 
+        Alg. 3 
+        can be found in the appendix.
+        \begin{figure}[htpb]
+            \centering
+            \includegraphics[width=\columnwidth]{latex/fig/DataPartition.pdf}
+            \caption{The workflow of Data Partition method.
+            $m$ is the max sentence index in data batch.
+            % $\lambda$ stands for the percentage of key sentences in label distribution.
+            More unbiased and higher-loss samples will be allocated to the prime subsets.
+            }
+            \label{fig:DataPartition}
+        \end{figure}
+        
+        % 描述图2的具体操作
+        Specifically, $Q^{(e,t)}_{(i,j)}$ index the position where the percentage of key sentences in $j$-th data batch $\mathcal B_j$ over $\lambda$,  reflecting the degree of leading bias in the sentences' Label Distribution $LD$.        
+        The $LD$ and sentences' Loss Matrix $LM$, measured by $i$-th model $\Phi_i$ and $\mathcal B_j$, are utilized to construct the Masked Matrix $MM$ by Hadamard product.
+        The average loss  $\epsilon^{(e,t)}_{(i,j)}$ over $MM$ at $e$-th epoch in $t$-th communication round reflects the significance of $\mathcal B_j$. 
+        % 补充一个描述：一个样本如果既具有较强的偏差也具有较低损失，那么就应该被认为是普通样本
+        Comparing the local statistics, $Q^{(e,t)}_{(i,j)}$ and $\epsilon^{(e,t)}_{(i,j)}$, with the global thresholds $\bar \epsilon^{(t-1)}$ and $\bar Q^{(t-1)}$ from the last communication, the data partition method can divide $\mathcal B_j$ into either normal $D_{(i,N)}$ or prime subset $D_{(i,P)}$, where:   
+        \begin{equation}
+            \bar \epsilon^{(t)} 
+            % = \sum_{i}^{\{C_{\alpha}\}} \frac{n_i}{n}\cdot\mathds{E}_{D_{(i,F)}}[\epsilon_{i}^{(t)}]
+            = \sum_{i }^{\{C_{\alpha}\}}\sum_e^{E}\sum^{\tau_{i}}_j \frac{n_i}{n}\cdot \frac{\epsilon_{(i,j)}^{(e,t)}}{E\cdot\tau_i},
+            \bar Q^{(t)} 
+            % = \sum_{i}^{\{C_{\alpha}\}} \frac{n_i}{n}\cdot\mathds{E}_{D_{(i,F)}}[Q_{i}^{(t)}]
+            = \sum_{i}^{\{C_{\alpha}\}}\sum_e^{E}\sum^{\tau_{i}}_j \frac{n_i}{n}\cdot \frac{Q_{(i,j)}^{(e,t)}}{E\cdot\tau_i}. 
+            \label{eq: Q}
+        \end{equation}
+        
+        
+    \subsection{Multi-knowledge Local Training}
+        % \paragraph{Learning knowledge from multi-aspect.}
+        % 解释我们的观点，知识藏在三个不同的空间。
+        % Generally, knowledge is stored in three aspects: data, hidden space, and parameters.
+        % FedSum致力于充分挖掘这三个空间中的知识，提高数据的利用率，从而解决由于数据匮乏所导致的知识缺失问题，以提高模型性能。
+        For the lack of knowledge problem caused by data scarcity, 
+        FedSum maximizes data efficiency by mining diversified knowledge from three aspects: data, hidden space, and received parameters. 
+        For better-exploring data, FedSum extends the standard local training with the Data skip mechanism to discard partial normal samples, promoting the model further focus on the prime samples. To extract knowledge from hidden space, FedSum takes the divergence between local and global prototypes as regularization constraints to promote the generalization and discrimination of feature representation. Mining the missing semantic knowledge from globally received parameters, FedSum takes the semantic portrait distances as a guideline to train the representation model with perturbed classification heads.
+        % To sum up, the locally empirical optimization target can rewrite as:
+        % \begin{align}
+        %     \hat L_k(\Omega_k, D_{(k,F)}) := L_{data} + L_{po} + L_{pm}.
+        %  \end{align}
+        
+        % \begin{itemize}
+        %     % 简单介绍每个空间的策略
+        %     % 对于数据空间的知识，我们基于数据分割使用数据略过机制拓展了标准的本地训练框架，促使模型捕获无偏的模式。
+        %     \item For better-exploring data, FedSum extends the standard local training with the Data skip mechanism to discard partial normal samples, promoting the model further focus on the prime samples.
+            
+            
+        %     \item To extract knowledge from hidden space, FedSum takes the divergence between local and global prototypes as regularization constraints to promote the generalization and discrimination of feature representation.
+            
+ 
+        %     \item Mining the missing semantic knowledge from globally received parameters, FedSum takes the semantic portrait distances as a guideline to train the representation model with perturbed classification heads.
+
+        % \end{itemize}
+        
+        \paragraph{Data knowledge and Data skip mechanism.}
+            % 通常来说，数据可以从是否具有偏置或对于监督是否重要进行划分。
+            % In general, the data sample can be divided according to whether it is biased, or whether it is significant for supervised learning.
+            % 对于具有领先偏置的数据，它们可以保障性能的下限，但同时也会提高损失方差，危害模型的泛化性。
+            % For samples with leading bias, it can improve the lower bound of model performance \cite{zhong2019closer, zhong-etal-2020-extractive}, but also increase the variance of loss, which threatens the generalization \cite{xing2021demoting}.
+            % 而对于具有重要监督价值的数据，即具有较高有监督损失的数据，它们更直接地反馈了模型当前的难以辨别的模式。    
+            % For samples with significant feedback (with higher supervised losses), it can reflect the current difficulties about data patterns, which are difficult to discern by model. 
+            % For samples with higher supervised losses, it can reflect difficulties of the model about data patterns.
+            % 提高对于具有较高损失值的数据的关注，可以降低模型预测结果与实际分布的偏差，但同时也容易导致过拟合现象，影响模型的泛化性。
+            % Paying more attention to these samples can reduce the bias between the predicted results and the ground-true distribution.
+            % However, it is also easy to lead to overfitting and increased variance of loss, affecting the generalization.
+            % The summarizer pays more attention to these samples can reduce the bias between the prediction and the ground-true, but also easily lead to overfitting (increased loss variance), affecting the generalization.
+    
+            % 由于简单样本的数量远多于困难样本的数量，而且容易被模型掌握其模式，因此模型容易过度关注这些样本，忽视了那些真正具有挑战性的难分样本（hard examples），从而降低模型预测结果与实际分布的偏差。
+            % 但同时也会提高损失方差，危害模型泛化性。
+            Since the proportion of normal samples is more than the proportion of prime, it's common for the model to ignore those prime data, threatening the generalization \cite{kawaguchi2020orderedsgdnewstochastic,xing2021demoting}.
+            To improve performance, a common solution in ML studies is to discard normal data \cite{mindermann2022prioritized,kaddour2024no}.
+            % 由于数据稀缺，我们不能简单地把所有简单的样本都舍弃，以避免加剧性能退化。
+            Due to data scarcity, FedSum does not discard all normal samples to avoid exacerbating degradation.    
+            % 为了更好地利用数据，我们提出了一个数据略过机制，这个机制依概率动态地跳过简单样本，使模型在训练过程中更关注困难样本，提高模型性能。
+            Instead, we propose the Data skip mechanism to skip normal samples according to the skipping probability $\rho_{(i,j)}$ which increases with training progress. 
+            % % 以随训练进程逐步增大为原则并结合全局困难水平
+            % The skipping probability $\rho_{(i,j)}$ considers the global loss level and increases with local training progress.
+            % 解释一下为什么这样设计：随着训练过程推进，模型学到的知识也有所增多。
+            % 由于常规样本占据较大的比例，模型所学的常规知识占比也多于重要的模式。
+            As the training progresses, the summarizer will tend to learn more normal patterns than the prime.
+            % 为了进一步提高模型的表现，我们可以在训练的后期过滤部分常规的样本，使得模型专注于指导价值更大的样本中。
+            To enhance the generalization, we skip partial normal samples at the later stage, so that the summarizer can more focus on the samples with greater guidance value.
+            % 具体解释跳过概率
+            Given $j$-th batch $\mathcal B_j$ from $i$-th client belongs to normal subset $D_{(i,N)}$,  the skipping probability $\rho_{(i,j)} = \frac{t}{T} \cdot \frac{e}{E} \cdot \frac{j}{\tau_i}$ is determined by the progress in communication, epoch, and local update. 
+            % $\rho_{L}$ and global deviation (loss deviation between local and global levels) $\rho_{G}$, 
+            % where $tanh(\cdot)$ and $sgn(\cdot)$ denote hyperbolic tangent and sign function, and :
+            % \begin{equation}
+            %     \rho_{L} = \frac{t}{T} \cdot \frac{e}{E} \cdot \frac{j}{\tau_i},
+            %     \label{eq: local progress}
+            % \end{equation}
+            % \begin{equation}
+            %     \rho_{G} = \frac{1}{2} \cdot (1+tanh(\bar L^{(t-1)}-L^{(e,t)}_{(i,j)})) ^ {sgn(t-1)},
+            %     \label{eq: global deviation}
+            % \end{equation}
+            % \begin{equation}
+            %     \bar L^{(t)} 
+            %     % = \sum_{i}^{C_{\alpha}}  \frac{n_i}{n} \cdot
+            %     % \mathds{E}_{D_{(i,F)}}[L_{(i,j)}^{(e,t)}]
+            %     =\sum_{i}^{\{C_{\alpha}\}} \sum^{E}_e\sum^{\tau_{i}}_{j} \frac{n_i}{n} \cdot \frac{L_{(i,j)}^{(e,t)}}{E\cdot\tau_i},
+            % \end{equation}    
+            % \begin{equation}
+            %     L^{(e,t)}_{(i,j)} = \sum_{b}^{B}\sum_{c}^{m}\frac{LM[b][c]}{B} = \sum_{(d,y)}^{\mathcal B_{(j)}}\sum_c^{m}\frac{\ell(f(\Omega_i,d)[c],y)}{B}
+            %     \label{eq: data_loss}
+            % \end{equation} 
+            Randomly sampling $\hat \rho$ from uniform distribution $U(0,1)$, if $\hat \rho \leq \rho_{(i,j)}$,  the $\mathcal B_{j}$ be skipped and $L_{data} = 0$.
+            % Otherwise $L_{data} = L^{(e,t)}_{(i,j)} = \sum_{b}^{B}\sum_{c}^{m}\frac{LM[b][c]}{B} = \sum_{(d,y)}^{\mathcal B_{(j)}}\sum_c^{m}\frac{1}{B}\cdot \ell(f(\Omega_i,d)[c],y)$.
+            Otherwise, the $\mathcal B_{j}$ be retained and $L_{data} = \sum_{(d,y)}^{\mathcal B_{(j)}}\sum_c^{m}\frac{\ell(f(\Omega_i,d)[c],y)}{B}$.
+            % , as concluded in Alg. \ref{alg:Data skip mechanism}.
+            % \begin{equation}
+            %     \rho_{L} = \frac{t}{T} \cdot \frac{e}{E} \cdot \frac{j}{\tau_i}
+            %     \label{eq: local skip prob}
+            % \end{equation}
+            
+            % \begin{equation}
+            %     \label{eq:rho}
+            %     \rho_{G}
+            %     =
+            %     \left\{
+            %     \begin{aligned}
+            %         & 
+            %         1, ~ t=1
+            %         \\
+            %         & 
+            %         \frac{1}{2}(1+tanh(\bar L^{(t-1)}-L^{(e,t)}_{(i,j)}),  ~ t\neq1
+            %         \end{aligned}
+            %     \right.
+            %     \label{eq: global skip prob}
+            % \end{equation}
+    
+            % \begin{equation}
+            %     \label{eq:rho}
+            %     \rho_{G}
+            %     = \frac{1}{2} \cdot (1+tanh(\bar L^{(t-1)}-L^{(e,t)}_{(i,j)})) ^ {sgn(t-1)}
+            %     \label{eq: global skip prob}
+            % \end{equation}
+        
+        % 在隐藏空间挖掘用户数据在语义空间的知识
+        \paragraph{Proto. knowledge.}      
+        % 为了挖掘隐空间的知识，我们从本地和全局两个层次构造类原型。
+        To extract knowledge from hidden space, we take the prototype as the carrier.       
+        % 额外需要的符号
+        Following the definition of the class prototype presented in literature \cite{FedProto,FedCluster,chen2023evolvingsemanticprototypeimproves},
+        we denote the class $\xi$ prototype of $D_{(i,F)}$ in $t$-th communication round as $P_{(i,c)}^{(\xi,t)}$, which take the average over hidden representation of sentences belong to class $\xi \in \{0,1\}$:
+        \begin{equation}
+            P_{(i,c)}^{(\xi,t)} =\sum_{\{d,[\phi_1, \cdot, \phi_S]\}}^{D_{(i,F)}}\sum_{s=1}^{S} \frac{r(\theta_i^t,d)[s] \cdot \indicator({\phi_s=\xi})}{n_{(i,c)}^\xi},
+            \label{eq: class prototype}
+        \end{equation}
+        where $n_{(i,c)}^\xi=\sum_{d}^{D_{(i,F)}}\sum_{s=1}^S \indicator({\phi_s=\xi}) $, and $\indicator({\cdot})$ denote the indicator function.
+        Extending the concept of class prototype, we measure the prediction prototype $P_{(i,p)}^{(\xi,t)}$ by the average over the hidden representation, in which the soft predictions of these representations are predicted as class $\xi$:
+        \begin{equation}
+            P_{(i,p)}^{(\xi,t)} =\sum_{d}^{D_{(i,F)}}\sum_{s=1}^{S} \frac{r(\theta_i^t,d)[s] \cdot \indicator({\hat \phi_s=\xi})}{\hat n_{(i,p)}^\xi}, 
+            \label{eq: prediction prototype}
+        \end{equation}
+        where $ \hat n_{(i,p)}^\xi=\sum_{d}^{D_{(i,F)}}\sum_{s=1}^S \indicator({\hat\phi_s=\xi})$.
+        Leveraging these prototypes, we build the prototype loss $L_{po}$ with two terms.
+        One term aims to mitigate representation differences between the local and global prototypes, improving the generalization of features.
+        Another aims to discriminate features, promoting the model to fit better decision boundaries:
+        \begin{align}
+            \begin{aligned}
+                L_{po}
+                % &= L_{gen} + L_{dis} \\
+                &= \underbrace{\sum^{\xi\in\{0,1\}} \Vert\bar P_{c}^{(\xi,t-1)}- P_{(i,c)}^{(\xi,t)}\Vert_2 }_{Generalizable} \underbrace{-\Vert P_{(i,p)}^{(1,t)}- P_{(i,p)}^{(0,t)}\Vert_2 }_{Discriminative},
+            \end{aligned}
+            \label{eq: po_loss}
+        \end{align} 
+    %     \begin{table*}[htpb]
+    %     \centering
+    %     \resizebox{1\textwidth}{!}{
+    %         \begin{tabular}{|ccccccccc|}
+    %         \hline
+    %         \multicolumn{1}{|c|}{\textbf{$Dir=0.1$}} &
+    %           \multicolumn{1}{c|}{\textbf{Separate}} &
+    %           \multicolumn{1}{c|}{\textbf{FedAvg}} &
+    %           \multicolumn{1}{c|}{\textbf{FedProx}} &
+    %           \multicolumn{1}{c|}{\textbf{Scaffold}} &
+    %           \multicolumn{1}{c|}{\textbf{FedDC}} &
+    %           \multicolumn{1}{c|}{\textbf{FedNova}} &
+    %           \multicolumn{1}{c|}{\textbf{FedProto}} &
+    %           \textbf{FedSum} \\ \hline
+    %         \multicolumn{9}{|c|}{\textbf{CNNDM}} \\ \hline
+    %         \multicolumn{1}{|c|}{\textbf{R-F(1/2/L)}} &
+    %           \multicolumn{1}{c|}{32.21/11.52/25.38} &
+    %           \multicolumn{1}{c|}{34.11/12.87/27.17} &
+    %           \multicolumn{1}{c|}{35.32/13.85/28.44} &
+    %           \multicolumn{1}{c|}{30.96/10.33/24.13} &
+    %           \multicolumn{1}{c|}{32.91/11.87/25.98} &
+    %           \multicolumn{1}{c|}{33.39/12.47/26.48} &
+    %           \multicolumn{1}{c|}{31.04/10.54/24.18} &
+    %           \textbf{35.71/14.18/28.69} \\ \hline
+    %         \multicolumn{1}{|c|}{\textbf{R-R(1/2/L)}} &
+    %           \multicolumn{1}{c|}{39.7/14.8/31.35} &
+    %           \multicolumn{1}{c|}{42.8/16.92/34.15} &
+    %           \multicolumn{1}{c|}{44.64/18.38/35.99} &
+    %           \multicolumn{1}{c|}{37.76/13.13/29.5} &
+    %           \multicolumn{1}{c|}{40.82/15.43/32.29} &
+    %           \multicolumn{1}{c|}{41.23/16.07/32.77} &
+    %           \multicolumn{1}{c|}{37.72/13.34/29.47} &
+    %           \textbf{44.98/18.74/36.2} \\ \hline
+    %         \multicolumn{9}{|c|}{\textbf{PubMed}} \\ \hline
+    %         \multicolumn{1}{|c|}{\textbf{R-F(1/2/L)}} &
+    %           \multicolumn{1}{c|}{31.01/10.76/27.8} &
+    %           \multicolumn{1}{c|}{31.1/10.81/27.9} &
+    %           \multicolumn{1}{c|}{31.29/11.0/28.07} &
+    %           \multicolumn{1}{c|}{31.08/10.79/27.87} &
+    %           \multicolumn{1}{c|}{31.08/10.79/27.87} &
+    %           \multicolumn{1}{c|}{30.76/10.51/27.55} &
+    %           \multicolumn{1}{c|}{30.72/10.41/27.51} &
+    %           \textbf{31.48/11.2/28.26} \\ \hline
+    %         \multicolumn{1}{|c|}{\textbf{R-R(1/2/L)}} &
+    %           \multicolumn{1}{c|}{32.73/11.13/29.32} &
+    %           \multicolumn{1}{c|}{32.85/11.18/29.44} &
+    %           \multicolumn{1}{c|}{33.05/11.38/29.63} &
+    %           \multicolumn{1}{c|}{32.83/11.19/29.42} &
+    %           \multicolumn{1}{c|}{32.83/11.19/29.42} &
+    %           \multicolumn{1}{c|}{32.43/10.86/29.01} &
+    %           \multicolumn{1}{c|}{32.41/10.75/28.99} &
+    %           \textbf{33.3/11.62/29.86} \\ \hline
+    %         \multicolumn{9}{|c|}{\textbf{WikiHow}} \\ \hline
+    %         \multicolumn{1}{|c|}{\textbf{R-F(1/2/L)}} &
+    %           \multicolumn{1}{c|}{22.41/4.85/20.79} &
+    %           \multicolumn{1}{c|}{22.21/4.77/20.61} &
+    %           \multicolumn{1}{c|}{22.29/4.81/20.69} &
+    %           \multicolumn{1}{c|}{22.02/4.7/20.44} &
+    %           \multicolumn{1}{c|}{22.14/4.75/20.54} &
+    %           \multicolumn{1}{c|}{22.11/4.73/20.55} &
+    %           \multicolumn{1}{c|}{22.16/4.73/20.6} &
+    %           \textbf{22.32/4.83/20.7} \\ \hline
+    %         \multicolumn{1}{|c|}{\textbf{R-R(1/2/L)}} &
+    %           \multicolumn{1}{c|}{33.22/7.97/30.96} &
+    %           \multicolumn{1}{c|}{33.03/7.88/30.79} &
+    %           \multicolumn{1}{c|}{33.14/7.95/30.9} &
+    %           \multicolumn{1}{c|}{32.78/7.77/30.58} &
+    %           \multicolumn{1}{c|}{32.72/7.76/30.52} &
+    %           \multicolumn{1}{c|}{32.58/7.69/30.43} &
+    %           \multicolumn{1}{c|}{32.68/7.71/30.53} &
+    %           \textbf{33.18/7.97/30.93} \\ \hline
+    %         \multicolumn{9}{|c|}{\textbf{Reddit}} \\ \hline
+    %         \multicolumn{1}{|c|}{\textbf{R-F(1/2/L)}} &
+    %           \multicolumn{1}{c|}{17.88/3.17/15.1} &
+    %           \multicolumn{1}{c|}{17.87/3.19/15.11} &
+    %           \multicolumn{1}{c|}{17.86/3.19/15.08} &
+    %           \multicolumn{1}{c|}{17.86/3.17/15.09} &
+    %           \multicolumn{1}{c|}{17.91/3.2/15.15} &
+    %           \multicolumn{1}{c|}{17.86/3.17/15.13} &
+    %           \multicolumn{1}{c|}{17.84/3.17/15.09} &
+    %           \textbf{17.95/3.21/15.17} \\ \hline
+    %         \multicolumn{1}{|c|}{\textbf{R-R(1/2/L)}} &
+    %           \multicolumn{1}{c|}{41.57/9.02/35.73} &
+    %           \multicolumn{1}{c|}{41.66/9.1/35.81} &
+    %           \multicolumn{1}{c|}{41.59/9.09/35.71} &
+    %           \multicolumn{1}{c|}{41.58/9.07/35.74} &
+    %           \multicolumn{1}{c|}{41.77/9.13/35.94} &
+    %           \multicolumn{1}{c|}{41.56/9.03/35.81} &
+    %           \multicolumn{1}{c|}{41.66/9.07/35.83} &
+    %           \textbf{41.78/9.13/35.92} \\ \hline
+    %         \end{tabular}
+    %     }
+        
+    %     \resizebox{1\textwidth}{!}{
+    %       \begin{tabular}{|ccccccccc|}
+    %       \hline
+    %       \multicolumn{1}{|c|}{\textbf{$Dir=+\infty$}} &
+    %         \multicolumn{1}{c|}{\textbf{Separate}} &
+    %         \multicolumn{1}{c|}{\textbf{FedAvg}} &
+    %         \multicolumn{1}{c|}{\textbf{FedProx}} &
+    %         \multicolumn{1}{c|}{\textbf{Scaffold}} &
+    %         \multicolumn{1}{c|}{\textbf{FedDC}} &
+    %         \multicolumn{1}{c|}{\textbf{FedNova}} &
+    %         \multicolumn{1}{c|}{\textbf{FedProto}} &
+    %         \textbf{FedSum} \\ \hline
+    %       \multicolumn{9}{|c|}{\textbf{CNNDM}} \\ \hline
+    %       \multicolumn{1}{|c|}{\textbf{R-F(1/2/L)}} &
+    %         \multicolumn{1}{c|}{31.59/10.87/24.72} &
+    %         \multicolumn{1}{c|}{\textbf{33.3/12.32/26.44}} &
+    %         \multicolumn{1}{c|}{30.71/10.3/23.9} &
+    %         \multicolumn{1}{c|}{32.97/12.06/26.1} &
+    %         \multicolumn{1}{c|}{33.1/12.14/26.21} &
+    %         \multicolumn{1}{c|}{33.36/12.42/26.45} &
+    %         \multicolumn{1}{c|}{31.23/10.68/24.35} &
+    %         32.73/11.59/25.77 \\ \hline
+    %       \multicolumn{1}{|c|}{\textbf{R-R(1/2/L)}} &
+    %         \multicolumn{1}{c|}{38.77/13.92/30.41} &
+    %         \multicolumn{1}{c|}{\textbf{41.46/16.05/32.99}} &
+    %         \multicolumn{1}{c|}{37.26/13.0/29.09} &
+    %         \multicolumn{1}{c|}{40.96/15.65/32.49} &
+    %         \multicolumn{1}{c|}{40.98/15.71/32.52} &
+    %         \multicolumn{1}{c|}{41.2/16.03/32.74} &
+    %         \multicolumn{1}{c|}{38.01/13.53/29.72} &
+    %         40.49/15.02/31.96 \\ \hline
+    %       \multicolumn{9}{|c|}{\textbf{PubMed}} \\ \hline
+    %       \multicolumn{1}{|c|}{\textbf{R-F(1/2/L)}} &
+    %         \multicolumn{1}{c|}{31.16/10.9/27.96} &
+    %         \multicolumn{1}{c|}{30.95/10.68/27.75} &
+    %         \multicolumn{1}{c|}{31.0/10.74/27.8} &
+    %         \multicolumn{1}{c|}{30.99/10.75/27.79} &
+    %         \multicolumn{1}{c|}{31.29/11.06/28.09} &
+    %         \multicolumn{1}{c|}{30.78/10.55/27.59} &
+    %         \multicolumn{1}{c|}{30.74/10.44/27.54} &
+    %         \textbf{31.12/10.85/27.91} \\ \hline
+    %       \multicolumn{1}{|c|}{\textbf{R-R(1/2/L)}} &
+    %         \multicolumn{1}{c|}{32.89/11.25/29.48} &
+    %         \multicolumn{1}{c|}{32.72/11.08/29.31} &
+    %         \multicolumn{1}{c|}{32.76/11.12/29.36} &
+    %         \multicolumn{1}{c|}{32.76/11.14/29.34} &
+    %         \multicolumn{1}{c|}{33.1/11.49/29.69} &
+    %         \multicolumn{1}{c|}{32.46/10.91/29.05} &
+    %         \multicolumn{1}{c|}{32.43/10.77/29.02} &
+    %         \textbf{32.76/11.12/29.45} \\ \hline
+    %       \multicolumn{9}{|c|}{\textbf{WikiHow}} \\ \hline
+    %       \multicolumn{1}{|c|}{\textbf{R-F(1/2/L)}} &
+    %         \multicolumn{1}{c|}{22.2/4.75/20.59} &
+    %         \multicolumn{1}{c|}{22.36/4.82/20.75} &
+    %         \multicolumn{1}{c|}{22.28/4.8/20.67} &
+    %         \multicolumn{1}{c|}{22.37/4.82/20.76} &
+    %         \multicolumn{1}{c|}{22.42/4.83/20.8} &
+    %         \multicolumn{1}{c|}{22.05/4.71/20.48} &
+    %         \multicolumn{1}{c|}{22.2/4.75/20.63} &
+    %         \textbf{22.2/4.78/20.64} \\ \hline
+    %       \multicolumn{1}{|c|}{\textbf{R-R(1/2/L)}} &
+    %         \multicolumn{1}{c|}{32.99/7.8/30.75} &
+    %         \multicolumn{1}{c|}{33.07/7.88/30.84} &
+    %         \multicolumn{1}{c|}{33.08/7.91/30.85} &
+    %         \multicolumn{1}{c|}{33.1/7.9/30.87} &
+    %         \multicolumn{1}{c|}{33.2/7.92/30.94} &
+    %         \multicolumn{1}{c|}{32.53/7.7/30.36} &
+    %         \multicolumn{1}{c|}{32.77/7.75/30.61} &
+    %         \textbf{33.11/7.91/30.86} \\ \hline
+    %       \multicolumn{9}{|c|}{\textbf{Reddit}} \\ \hline
+    %       \multicolumn{1}{|c|}{\textbf{R-F(1/2/L)}} &
+    %         \multicolumn{1}{c|}{17.84/3.18/15.09} &
+    %         \multicolumn{1}{c|}{17.86/3.18/15.1} &
+    %         \multicolumn{1}{c|}{17.88/3.19/15.12} &
+    %         \multicolumn{1}{c|}{17.86/3.19/15.1} &
+    %         \multicolumn{1}{c|}{17.91/3.19/15.13} &
+    %         \multicolumn{1}{c|}{17.87/3.17/15.14} &
+    %         \multicolumn{1}{c|}{17.88/3.19/15.12} &
+    %         \textbf{17.91/3.19/15.15} \\ \hline
+    %       \multicolumn{1}{|c|}{\textbf{R-R(1/2/L)}} &
+    %         \multicolumn{1}{c|}{41.52/9.07/35.76} &
+    %         \multicolumn{1}{c|}{41.63/9.1/35.82} &
+    %         \multicolumn{1}{c|}{41.62/9.1/35.81} &
+    %         \multicolumn{1}{c|}{41.63/9.1/35.8} &
+    %         \multicolumn{1}{c|}{41.76/9.14/35.94} &
+    %         \multicolumn{1}{c|}{41.54/8.99/35.8} &
+    %         \multicolumn{1}{c|}{41.56/9.09/35.77} &
+    %         \textbf{41.79/9.12/35.91} \\ \hline
+    %       \end{tabular}
+    %     }
+
+    %     \caption{Experimental results of different algorithms under the heterogeneous and uniform settings.
+    %     % The average over 3 optimal results for each method are presented.
+    %     Overall, FedSum obtain significant improvement over baselines. 
+    %     % The most obvious improvements compared to FedAvg are $1.6\%/1.31\%/1.52\%$ in R-F and $2.18\%/1.82\%/2.05\%$ in R-R.
+    %     % Under data heterogeneity, comparing FedSum with the optimal baseline, there exist at least $0.03\%/0.02\%/0.01\%$ and $0.04\%/0.02\%/0.03\%$ improvements of R-F and R-R respectively over four datasets.
+    %     Under data heterogeneity, comparing FedSum with the optimal baseline, there exist 0.15\% total improvement at least, and 29.9\% total improvement at most over two ROUGE metrics on four datasets.
+    %     In uniform settings, FedSum outperforms all baselines in three datasets, while slightly inferior to the optimal method in the CNNDM.
+    %     }
+    %     \label{Table:  result summary}
+    % \end{table*} 
+        where $\bar P_{c}^{(\xi,t-1)}$ is aggregated as $\bar P_{c}^{(\xi,t)} = \sum_{i}^{\{C_{\alpha}\}}  \frac{n_i}{n} \cdot P_{(i,c)}^{(\xi,t)}$.
+        % \begin{equation}
+        %     \bar P_{c}^{(\xi,t)} = \sum_{i}^{\{C_{\alpha}\}}  \frac{n_i}{n} \cdot P_{(i,c)}^{(\xi,t)}.
+        %     \label{eq:Proto aggregation}
+        % \end{equation}
+        % 语义画像
+        After prototype measurement, each client can construct their semantic portrait $SP_i$ by concatenating class prototypes: 
+        \begin{equation}
+            SP_i = Concat(P_{(i,c)}^{(0,t-1)}, P_{(i,c)}^{(1,t-1)}).
+        \label{eq:Semantic Portrait}
+        \end{equation}
+        The semantic portrait of each participant will be uploaded under privacy constrain, and utilized to maintain the Portrait Distance Table (PDT) by measuring the L2 distance between each portrait and scaling by $tanh$ function in the FL server, where the PDT can be initialized randomly or according to the initial semantic portrait provided by clients.
+        % 在参数空间挖掘用户数据在语义空间的知识 
+        \paragraph{Param. knowledge.}
+            % 在FL系统中，客户模型的语义知识与其数据的分布特点有关。不同的客户模型可能拥有着不同的语义知识。
+            The semantic knowledge contained in the local model is closely related to the client's data distribution. Different models might have different semantic knowledge deficiencies in practice. 
+            % 为了补充本地模型欠缺的语义知识，我们尝试以客户之间的语义差异为指导，在参数空间中挖掘知识。
+            To fix the semantic deficiencies in the local model, FedSum extract knowledge from received parameters. 
+            % 由于PDT直观地反映出不同客户之间的语义差异程度，因此FedSum利用PDT指导知识挖掘的侧重点。
+            FedSum uses PDT to guide the mining process about received parameters and build the parameter lost $L_{pm}$, due to nature of PDT in intuitively reflecting the degree of semantic gap between different clients.
+            Besides, to avoid catastrophic forgetting and protect privacy, the received classification modules are perturbated by Bernoulli noise controlled by hyperparameter $\gamma$ in advance on server.
+            % 具体
+            For measuring $L_{pm}$, we feed the representation of data batch $H_j$ to the received $p$-th client's classification modules $\tilde \omega_p^{(t-1)}$, then weights the training loss with $\zeta_p = PDT[i][p]$:
+            % 为了避免知识遗忘现象的产生，上传的分类模组需进行加噪后再分发到下一轮的客户，
+            \begin{equation}
+               L_{pm} = \zeta_{p} \cdot \sum_{b}^{B}\sum_{c}^{m}\frac{\ell( h(\tilde\omega^{(t-1)}_p, H_j), LD)[b][c]}{B}
+            \end{equation}
+        
+        
+        
+\section{Experiments}
+    \label{Experiment}
+        % To validate the advantage of FedSum, we conduct several experiments to answer the following research questions:
+        % \begin{itemize}
+        %     % 异构
+        %     \item RQ1: Does FedSum exhibit advantages in performance under data scarcity with different heterogeneity levels?
+        %     % 数据稀缺程度不同
+        %     \item RQ2: Is FedSum XXXXX XXX XXXXX XXX XXX XXXXX XXXXX XXX XXX XXXXX?
+        %     % 是否能有效消除偏差
+        %     \item RQ3: How effective is FedSum in mitigating the negative impact of biased data on model performance?
+        %     % \item RQ3: Is FedSum easy to integrate with other FL methods such as client selection strategies?
+        %     % \item RQ3: 
+            
+    
+        % \end{itemize}
+        % In the following content, we describe various implementation details such as baselines and distributions. 
+        % We then analyze experimental results to answer the aforementioned research questions.
+        % More details are given in the Appendix.
+
+    \subsection{Experimental Setup}  
+        \paragraph{Baselines and Measurement.} 
+            We investigate the milestone model, BERTSUM, in FL experiments.
+            Several representative algorithms are adopted as baselines: FedAvg \cite{mcmahan2017communication}, FedProx \cite{FedProx}, SCAFFOLD \cite{SCAFFOLD}, FedNova \cite{FedNova}, FedProto \cite{FedProto}, and FedDC \cite{FedDC}.
+            To observe the effect of global aggregation, we also adopt the Separate method, where each client only trains their model locally.
+            To measure the quality of the output summary, we apply the commonly used overlap metric ROUGE \cite{lin-2004-rouge}.
+            The ROUGE-F1 and ROUGE-Recall metrics are uniformly denoted as R-F(1/2/L) and R-R(1/2/L) respectively. 
+            % Since each client can test their model during each communication round, 
+            We report the most optimal testing records (with better R-R-1 values) among different communication rounds for each algorithm.
+            Since the performance fluctuation caused by various random factors is inevitable, we report the average of the results over 3 repeated experiments to avoid unfair comparison in practice.
+        \paragraph{Datasets and Distributions.} 
+            We built different test beds on common benchmark datasets, such as CNN/DailyMail \cite{nallapati2017summarunner}, WikiHow\cite{wikihow}, Reddit\cite{kim2019abstractive}, and PubMed\cite{cohan-etal-2018-discourse}.
+            To simulate the data scarcity scenarios, only 2K training samples can be accessed by the FL system.
+            To simulate the non-IID setting, we construct the quantity skew following \cite{li2022federated,cai2023efficient} and control the heterogeneity levels through $Dir$.
+            Smaller $Dir$ indicates a more imbalanced scenario about clients' data quantity, and $Dir=+\infty$ represents the uniform case.
+            
+            % We present detailed experimental settings in the Appendix for reliability.
+            
+
+      
+        
+    \subsection{Experiment Result}
+        We summarize the main experimental results in Tables \ref{Table: CNNDM} to \ref{Table: PubMed}.
+        Due to the limitation of pages, we report the experimental results of two datasets in the main body.
+        More detailed results about four datasets are supplemented in the Appendix.
+        
+        Overall, FedSum obtains significant improvement in performance over baselines. 
+        The most obvious improvements compared to FedAvg are $1.6\%/1.31\%/1.52\%$ in R-F and $2.18\%/1.82\%/2.05\%$ in R-R on CNNM.
+        Under data heterogeneity, comparing FedSum with the optimal baseline, there exists 0.15\% total improvement at least, and 29.9\% total improvement at most over ROUGE metrics on two datasets.
+        These results demonstrate the effectiveness of FedSum. 
+        \begin{table}[htpb]
+            \setlength{\tabcolsep}{1mm}
+            \centering
+            \begin{tabular}{|c|cc|}
+            \hline
+            \multirow{2}{*}{\textbf{CNNDM}} & \multicolumn{2}{c|}{\textbf{Data Heterogeneity}}                                     \\ \cline{2-3} 
+                     & \multicolumn{1}{c|}{\textbf{R-F(1/2/L)}} & \textbf{R-R(1/2/L)} \\ \hline
+            Separate & \multicolumn{1}{c|}{32.21/11.52/25.38}   & 39.7/14.8/31.35     \\ \hline
+            FedAvg   & \multicolumn{1}{c|}{34.11/12.87/27.17}   & 42.8/16.92/34.15    \\ \hline
+            FedProx  & \multicolumn{1}{c|}{35.32/13.85/28.44}   & 44.64/18.38/35.99   \\ \hline
+            Scaffold & \multicolumn{1}{c|}{30.96/10.33/24.13}   & 37.76/13.13/29.5    \\ \hline
+            FedDC    & \multicolumn{1}{c|}{32.91/11.87/25.98}   & 40.82/15.43/32.29   \\ \hline
+            FedNova  & \multicolumn{1}{c|}{33.39/12.47/26.48}   & 41.23/16.07/32.77   \\ \hline
+            FedProto & \multicolumn{1}{c|}{31.04/10.54/24.18}   & 37.72/13.34/29.47   \\ \hline
+            \textbf{FedSum}                 & \multicolumn{1}{c|}{\textbf{35.71/14.18/28.69}} & \textbf{44.98/18.74/36.2} \\ \hline
+            \end{tabular}
+            \caption{Experimental results of different algorithms under the data heterogeneous setting ($Dir=0.1$) on CNNDM.
+            % The average over 3 optimal results for each method are presented.
+        %     
+            }
+            \label{Table: CNNDM}
+        \end{table}
+        \begin{table}[htpb]
+            \setlength{\tabcolsep}{1mm}
+            \centering
+            \begin{tabular}{|c|cc|}
+            \hline
+           \multirow{2}{*}{\textbf{PubMed}} & \multicolumn{2}{c|}{\centering\textbf{Data Heterogeneity}}  \\ \cline{2-3}  
+                     & \multicolumn{1}{c|}{\textbf{R-F(1/2/L)}} & \textbf{R-R(1/2/L)} \\ \hline
+            Separate & \multicolumn{1}{c|}{31.01/10.76/27.8}    & 32.73/11.13/29.32   \\ \hline
+            FedAvg   & \multicolumn{1}{c|}{31.1/10.81/27.9}     & 32.85/11.18/29.44   \\ \hline
+            FedProx  & \multicolumn{1}{c|}{31.29/11.0/28.07}    & 33.05/11.38/29.63   \\ \hline
+            Scaffold & \multicolumn{1}{c|}{31.08/10.79/27.87}   & 32.83/11.19/29.42   \\ \hline
+            FedDC    & \multicolumn{1}{c|}{31.08/10.79/27.87}   & 32.83/11.19/29.42   \\ \hline
+            FedNova  & \multicolumn{1}{c|}{30.76/10.51/27.55}   & 32.43/10.86/29.01   \\ \hline
+            FedProto & \multicolumn{1}{c|}{30.72/10.41/27.51}   & 32.41/10.75/28.99   \\ \hline
+            \textbf{FedSum}                  & \multicolumn{1}{c|}{\textbf{31.48/11.2/28.26}} & \textbf{33.3/11.62/29.86} \\ \hline
+            \end{tabular}
+            \caption{Experimental results of different algorithms under the data heterogeneous setting ($Dir=0.1$) on PubMed.}
+            \label{Table: PubMed}
+        \end{table}
+        % \begin{table}[htpb]
+        %     \setlength{\tabcolsep}{1mm}
+        %     \centering
+        %     \begin{tabular}{|c|cc|}
+        %     \hline
+        %     \multirow{2}{*}{\textbf{WikiHow}} & \multicolumn{2}{c|}{\textbf{$Dir=0.1$}}                                   \\ \cline{2-3} 
+        %              & \multicolumn{1}{c|}{\textbf{R-F(1/2/L)}} & \textbf{R-R(1/2/L)} \\ \hline
+        %     Separate & \multicolumn{1}{c|}{22.41/4.85/20.79}    & 33.22/7.97/30.96    \\ \hline
+        %     FedAvg   & \multicolumn{1}{c|}{22.21/4.77/20.61}    & 33.03/7.88/30.79    \\ \hline
+        %     FedProx  & \multicolumn{1}{c|}{22.29/4.81/20.69}    & 33.14/7.95/30.9     \\ \hline
+        %     Scaffold & \multicolumn{1}{c|}{22.02/4.7/20.44}     & 32.78/7.77/30.58    \\ \hline
+        %     FedDC    & \multicolumn{1}{c|}{22.14/4.75/20.54}    & 32.72/7.76/30.52    \\ \hline
+        %     FedNova  & \multicolumn{1}{c|}{22.11/4.73/20.55}    & 32.58/7.69/30.43    \\ \hline
+        %     FedProto & \multicolumn{1}{c|}{22.16/4.73/20.6}     & 32.68/7.71/30.53    \\ \hline
+        %     \textbf{FedSum}                   & \multicolumn{1}{c|}{\textbf{22.32/4.83/20.7}} & \textbf{33.18/7.97/30.93} \\ \hline
+        %     \end{tabular}
+        %     \caption{Experimental results of different algorithms under the data heterogeneous setting on WikiHow.}
+        %     \label{Table: WikHow}
+        % \end{table}
+        % \begin{table}[htbp]
+        % \setlength{\tabcolsep}{1mm}
+        % \centering
+        % \begin{tabular}{|c|cc|}
+        % \hline
+        % \multirow{2}{*}{\textbf{Reddit}} & \multicolumn{2}{c|}{\textbf{$Dir=0.1$}}                                    \\ \cline{2-3} 
+        %          & \multicolumn{1}{c|}{\textbf{R-F(1/2/L)}} & \textbf{R-R(1/2/L)} \\ \hline
+        % Separate & \multicolumn{1}{c|}{17.88/3.17/15.1}     & 41.57/9.02/35.73    \\ \hline
+        % FedAvg   & \multicolumn{1}{c|}{17.87/3.19/15.11}    & 41.66/9.1/35.81     \\ \hline
+        % FedProx  & \multicolumn{1}{c|}{17.86/3.19/15.08}    & 41.59/9.09/35.71    \\ \hline
+        % Scaffold & \multicolumn{1}{c|}{17.86/3.17/15.09}    & 41.58/9.07/35.74    \\ \hline
+        % FedDC    & \multicolumn{1}{c|}{17.91/3.2/15.15}     & 41.77/9.13/35.94    \\ \hline
+        % FedNova  & \multicolumn{1}{c|}{17.86/3.17/15.13}    & 41.56/9.03/35.81    \\ \hline
+        % FedProto & \multicolumn{1}{c|}{17.84/3.17/15.09}    & 41.66/9.07/35.83    \\ \hline
+        % \textbf{FedSum}                  & \multicolumn{1}{c|}{\textbf{17.95/3.21/15.17}} & \textbf{41.78/9.13/35.92} \\ \hline
+        % \end{tabular}
+        % \caption{Reddit}
+        %     \label{Table: Reddit}
+        % \end{table}
+
+        
+        \paragraph{Generalization for heterogeneous condition.}
+        % \begin{table}[htbp]
+        %   
+        %   \resizebox{0.46\textwidth}{!}{   
+        %     \begin{tabular}{|c|cccc|}
+        %     \hline
+        %     \multirow{2}{*}{\textbf{CNNDM}} &
+        %       \multicolumn{4}{c|}{\textbf{ROUGE-Recall(1/2/L)}} \\ \cline{2-5} 
+        %      &
+        %       \multicolumn{1}{c|}{\textbf{$Dir=0.1$}} &
+        %       \multicolumn{1}{c|}{\textbf{$Dir=0.5$}} &
+        %       \multicolumn{1}{c|}{\textbf{$Dir=1$}} &
+        %       \textbf{$Dir=8$} \\ \hline
+        %     Separate &
+        %       \multicolumn{1}{c|}{39.7/14.8/31.35} &
+        %       \multicolumn{1}{c|}{41.56/16.05/33.02} &
+        %       \multicolumn{1}{c|}{39.34/14.43/31.0} &
+        %       37.53/12.99/29.23 \\ \hline
+        %     FedAvg &
+        %       \multicolumn{1}{c|}{42.8/16.92/34.15} &
+        %       \multicolumn{1}{c|}{40.81/15.75/32.39} &
+        %       \multicolumn{1}{c|}{41.62/16.15/33.07} &
+        %       42.66/17.07/34.17 \\ \hline
+        %     FedProx &
+        %       \multicolumn{1}{c|}{44.64/18.38/35.99} &
+        %       \multicolumn{1}{c|}{38.36/13.33/29.96} &
+        %       \multicolumn{1}{c|}{42.3/16.5/33.7} &
+        %       42.95/17.13/34.35 \\ \hline
+        %     Scaffold &
+        %       \multicolumn{1}{c|}{37.76/13.13/29.5} &
+        %       \multicolumn{1}{c|}{39.76/14.85/31.4} &
+        %       \multicolumn{1}{c|}{39.47/14.64/31.21} &
+        %       41.93/16.5/33.51 \\ \hline
+        %     FedDC &
+        %       \multicolumn{1}{c|}{40.82/15.43/32.29} &
+        %       \multicolumn{1}{c|}{38.17/13.3/29.82} &
+        %       \multicolumn{1}{c|}{42.61/16.94/33.99} &
+        %       \textbf{45.63/19.17/36.86} \\ \hline
+        %     FedNova &
+        %       \multicolumn{1}{c|}{41.23/16.07/32.77} &
+        %       \multicolumn{1}{c|}{38.48/13.34/29.92} &
+        %       \multicolumn{1}{c|}{40.57/15.53/32.13} &
+        %       41.41/16.19/32.93 \\ \hline
+        %     FedProto &
+        %       \multicolumn{1}{c|}{37.72/13.34/29.47} &
+        %       \multicolumn{1}{c|}{37.8/13.38/29.53} &
+        %       \multicolumn{1}{c|}{37.62/13.22/29.37} &
+        %       37.84/13.42/29.59 \\ \hline
+        %     \textbf{FedSum} &
+        %       \multicolumn{1}{c|}{\textbf{44.98/18.74/36.2}} &
+        %       \multicolumn{1}{c|}{\textbf{42.3/16.59/33.71}} &
+        %       \multicolumn{1}{c|}{\textbf{44.68/18.4/35.96}} &
+        %       44.42/18.01/35.62 \\ \hline
+        %     \multirow{2}{*}{\textbf{PubMed}} &
+        %       \multicolumn{4}{c|}{\textbf{ROUGE-Recall(1/2/L)}} \\ \cline{2-5} 
+        %      &
+        %       \multicolumn{1}{c|}{\textbf{$Dir=0.1$}} &
+        %       \multicolumn{1}{c|}{\textbf{$Dir=0.5$}} &
+        %       \multicolumn{1}{c|}{\textbf{$Dir=1$}} &
+        %       \textbf{$Dir=8$} \\ \hline
+        %     Separate &
+        %       \multicolumn{1}{c|}{32.73/11.13/29.32} &
+        %       \multicolumn{1}{c|}{32.33/10.58/28.89} &
+        %       \multicolumn{1}{c|}{32.39/10.73/28.98} &
+        %       32.94/11.24/29.53 \\ \hline
+        %     FedAvg &
+        %       \multicolumn{1}{c|}{32.85/11.18/29.44} &
+        %       \multicolumn{1}{c|}{32.96/11.32/29.54} &
+        %       \multicolumn{1}{c|}{33.0/11.36/29.58} &
+        %       32.87/11.21/29.44 \\ \hline
+        %     FedProx &
+        %       \multicolumn{1}{c|}{33.05/11.38/29.63} &
+        %       \multicolumn{1}{c|}{32.78/11.19/29.39} &
+        %       \multicolumn{1}{c|}{32.88/11.26/29.49} &
+        %       32.93/11.28/29.52 \\ \hline
+        %     Scaffold &
+        %       \multicolumn{1}{c|}{32.83/11.19/29.42} &
+        %       \multicolumn{1}{c|}{32.7/11.06/29.28} &
+        %       \multicolumn{1}{c|}{32.8/11.14/29.38} &
+        %       32.67/11.0/29.26 \\ \hline
+        %     FedDC &
+        %       \multicolumn{1}{c|}{33.2/11.52/29.77} &
+        %       \multicolumn{1}{c|}{33.02/11.43/29.63} &
+        %       \multicolumn{1}{c|}{32.99/11.37/29.58} &
+        %       \textbf{33.15/11.47/29.73} \\ \hline
+        %     FedNova &
+        %       \multicolumn{1}{c|}{32.43/10.86/29.01} &
+        %       \multicolumn{1}{c|}{32.6/10.92/29.18} &
+        %       \multicolumn{1}{c|}{32.48/10.88/29.07} &
+        %       32.44/10.89/29.03 \\ \hline
+        %     FedProto &
+        %       \multicolumn{1}{c|}{32.41/10.75/28.99} &
+        %       \multicolumn{1}{c|}{32.42/10.75/29.0} &
+        %       \multicolumn{1}{c|}{32.39/10.73/28.97} &
+        %       32.42/10.75/29.0 \\ \hline
+        %     \textbf{FedSum} &
+        %       \multicolumn{1}{c|}{\textbf{33.3/11.62/29.86}} &
+        %       \multicolumn{1}{c|}{\textbf{33.32/11.67/29.9}} &
+        %       \multicolumn{1}{c|}{\textbf{33.18/11.53/29.78}} &
+        %       33.01/11.38/29.61 \\ \hline
+        %     \end{tabular}
+        %     }
+        %     \caption{Experimental results with different heterogeneous settings on CNNDM and PubMed.
+        %     The performance of FedSum outperforms baselines in most cases.
+        %     }
+        %     \label{Table: heterogeneous level}
+        % \end{table}
+        
+        A ROUGE comparison under different heterogeneous levels is summarized in Table \ref{Table: heterogeneous level}.
+        % More comparisons on four datasets are supplemented in the Appendix.
+        % The performance of FedSum fluctuates slightly ($\leq 2.6 \%$ in CNNDM and $\leq 0.3\%$ in PubMed) as $Dir$ increases.
+        The performance of FedSum fluctuates slightly ($\leq 2.6 \%$ on CNNDM) as $Dir$ increases.
+        When $Dir$ is 8, the FedSum ranks second with small gaps from
+        the highest ($\leq 1.5\%$), verifying the generalization of FedSum under different heterogeneous.
+        % The result concluded in Table \ref{Table:  result summary}-\ref{Table: heterogeneous level} answers the  in RQ1.
+        
+        
+        
+        \paragraph{Scalability in data quantity.}
+            To explore the scalability of FedSum under varying degrees of data scarcity over the FL system, the performance trends of FedSum and FedAvg with different data quantities are illustrated in Fig. \ref{fig :scalability}.
+            Generally, the performance of FedSum becomes better as the data quantity enlarges, demonstrating the scalability in data quantity.
+
+            \begin{figure}[htpb]
+            \centering
+            \includegraphics[width=0.44\textwidth]{latex/fig/scalability.pdf}
+            \caption{
+            The performance of two methods with different data quantities.
+            In the heterogeneous setting, three solid lines (FedSum) behave better than the dotted lines with the same colors (FedAvg). 
+            Under uniform, FedSum is inferior to FedAvg when the quantity is less than 4K, but the gaps between two methods become narrowed as the quantity increases.
+            % The ROUGE performances of FedSum increase with system data quantity.
+            }
+            \label{fig :scalability}
+        \end{figure}
+            
+        \paragraph{Robustness to leading bias.}
+        % In addition to the evaluation based on ROUGE, 
+        To verify the efficacy of tackling the degeneration caused by leading bias, we compare the position of the exacted sentences in the summaries generated between FedSum, FedAvg, and Oracle, following the setting of \citet{liu-lapata-2019-text}, where the Oracle stands for the ground-true summaries.
+        As shown in Fig.~\ref{fig:labeldistribution}, the distribution of the extracted proportion about FedSum is more similar to the same of Oracle than FedAvg.
+        The extracted result of FedAvg contains more leading bias than FedSum, shown by a more right-skewed histogram for FedSum. 
+        \begin{figure}[htpb]
+            \centering
+            \includegraphics[width=\columnwidth]{latex/fig/LabelDistribution.png}
+            \caption{
+             The proportion of extracted sentences according to their position in the original document on two datasets.
+             Measuring FedSum and FedAvg in the total absolute deviation to Oracle, the deviation of FedAvg is around $69.31\%$ higher than FedSum in CNNDM.
+            }
+            \label{fig:labeldistribution}
+        \end{figure}
+        
+    \paragraph{Effect of $\lambda$.}
+        Hyperparameter $\lambda$ controls how tolerable the Data Partition method is to data leading bias. 
+        Smaller $\lambda$ leads to smaller $Q_{(i,j)}^{(e,t)}$ for looser restrictions. 
+        We adjust $\lambda$ in heterogeneity and uniform scenarios on CNNDM, as shown in Fig. $\ref{fig:hyperparamer_lambda}$. 
+        As $\lambda$ increases from $0.3$ to $0.6$, the restrictions on leading bias become stronger, and ROUGE go better.
+        When $\lambda$ over $0.6$, the restrictions of leading bias in dataset are too strict and cause degeneration.
+        The above results demonstrate the efficacy in mitigating the negative effect of leading bias.
+        
+
+        \begin{figure}[htpb]
+            \centering
+            \includegraphics[width=0.40\textwidth]{latex/fig/hyperparameter_λ.png}
+            \caption{
+             ROUGE scores of FedSum with different $\lambda$ in CNNDM.
+             The ROUGE is optimal when $\lambda$ equals around $0.5$.
+            }
+            \label{fig:hyperparamer_lambda}
+        \end{figure}
+        
+        
+    \paragraph{Ablation.}
+        To evaluate the effect of two extensions, we take FedAvg as the reference and measure the improvement of our methods, as shown in Table \ref{Table: Abl. Experiment result}.
+        For depth extensions, our method obtains at least $1.01\%$ improvement in all metrics.
+        With depth and breadth extension, FedSum exhibits a more obvious improvement, which shows $1.31\%$ at least and $2.18\%$ at most, showing the superiority of two extensions.
+        \begin{table}[htbp]
+            \centering
+            \setlength{\tabcolsep}{1mm}
+            \begin{tabular}{|c|c|c|c|}
+            \hline
+            \textbf{CNNDM} &
+              % \textbf{} &
+              % \textbf{Data Heterogeneity} &
+    
+              \multicolumn{2}{c|}{\textbf{Data Heterogeneity}} &
+              
+              \textbf{Improvement} \\ \hline
+            \multirow{2}{*}{FedAvg} &
+              R-F &
+              34.11/12.87/27.17 &
+              -/-/- \\ \cline{2-4} 
+             &
+              R-R &
+              42.8/16.92/34.15 &
+              -/-/- \\ \hline
+            % \multirow{2}{*}{\begin{tabular}[c]{@{}c@{}}FedAvg \\      + Data Skip\end{tabular}} &
+            \multirow{2}{*}{\begin{tabular}[c]{@{}c@{}}+ Depth \\       Extension\end{tabular}} &
+              R-F &
+              35.21/13.88/28.4 &
+              +1.1/+1.01/+1.23 \\ \cline{2-4} 
+             &
+              R-R &
+              44.42/18.35/35.86 &
+              +1.62/+1.43/+1.71 \\ \hline
+            % \multirow{2}{*}{\begin{tabular}[c]{@{}c@{}}FedAvg + Data Skip \\      + Proto. Kno.\end{tabular}} & R-F(1/2/L) & 30.89/10.32/24.06 & -3.22/-2.55/-3.11 \\ \cline{2-4} 
+            %  &
+            %   R-R(1/2/L) &
+            %   37.77/13.23/29.51 &
+            %   -5.03/-3.69/-4.64 \\ \hline
+            % \multirow{2}{*}{\begin{tabular}[c]{@{}c@{}}FedAvg + Data Skip \\      + Param Kno.\end{tabular}} &
+            %   R-F(1/2/L) &
+            %   33.48/12.52/26.59 &
+            %   -2.41/-1.85/-2.36 \\ \cline{2-4} 
+            %  &
+            %   R-R(1/2/L) &
+            %   41.28/16.15/32.86 &
+            %   -3.99/-2.75/-3.68 \\ \hline
+            % \multirow{2}{*}{\begin{tabular}[c]{@{}c@{}}FedAvg + Proto Kno. \\      + Param Kno.\end{tabular}} &
+            %   R-F(1/2/L) &
+            %   31.7/11.02/24.81 &
+            %   -2.41/-1.85/-2.36 \\ \cline{2-4} 
+            %  &
+            %   R-R(1/2/L) &
+            %   38.81/14.17/30.47 &
+            %   -3.99/-2.75/-3.68 \\ \hline
+            % \multirow{2}{*}{\textbf{FedSum}} &
+            \multirow{2}{*}{\begin{tabular}[c]{@{}c@{}}
+            \textbf{+ Two} \\       \textbf{Extensions}
+            \end{tabular}} &
+              \textbf{R-F} &
+              \textbf{35.71/14.18/28.69} &
+              \textbf{+1.6/+1.31/+1.52} \\ \cline{2-4} 
+             &
+              \textbf{R-R} &
+              \textbf{44.98/18.74/36.2} &
+              \textbf{+2.18/+1.82/+2.05} \\ \hline
+            \end{tabular}
+            \caption{Performances of FedAvg with depth and breadth extensions in heterogeneity setting ($Dir=0.1$) on CNNDM.
+            % The Kno. abbreviation for knowledge.
+            }
+            \label{Table: Abl. Experiment result}
+        \end{table}
+        % The FedAvg + Data Skip means extending the original FL framework with the Data Skip mechanism.
+        % While the method containing Proto. Kno. and Param Kno. standing for the breadth extension with Proto. knowledge and Param knowledge respectively.                      
+        
+        \begin{table}[htbp]
+          \centering
+          % \setlength{\tabcolsep}{1mm} 
+            \begin{tabular}{|c|cc|}
+            \hline
+            \multirow{2}{*}{\textbf{CNNDM}} & \multicolumn{2}{c|}{\textbf{R-R(1/2/L)}}                             \\ \cline{2-3} 
+                                            & \multicolumn{1}{c|}{\textbf{$Dir=0.1$}} & \textbf{$Dir=0.5$}         \\ \hline
+            Separate                        & \multicolumn{1}{c|}{39.7/14.8/31.35}    & 41.56/16.05/33.02          \\ \hline
+            FedAvg                          & \multicolumn{1}{c|}{42.8/16.92/34.15}   & 40.81/15.75/32.39          \\ \hline
+            FedProx                         & \multicolumn{1}{c|}{44.64/18.38/35.99}  & 38.36/13.33/29.96          \\ \hline
+            Scaffold                        & \multicolumn{1}{c|}{37.76/13.13/29.5}   & 39.76/14.85/31.4           \\ \hline
+            FedDC                           & \multicolumn{1}{c|}{40.82/15.43/32.29}  & 38.17/13.3/29.82           \\ \hline
+            FedNova                         & \multicolumn{1}{c|}{41.23/16.07/32.77}  & 38.48/13.34/29.92          \\ \hline
+            FedProto                        & \multicolumn{1}{c|}{37.72/13.34/29.47}  & 37.8/13.38/29.53           \\ \hline
+            \textbf{FedSum} & \multicolumn{1}{c|}{\textbf{44.98/18.74/36.2}} & \textbf{42.3/16.59/33.71} \\ \hline
+            \textbf{}                       & \multicolumn{1}{c|}{\textbf{$Dir=1$}}   & \textbf{$Dir=8$}           \\ \hline
+            Separate                        & \multicolumn{1}{c|}{39.34/14.43/31.0}   & 37.53/12.99/29.23          \\ \hline
+            FedAvg                          & \multicolumn{1}{c|}{41.62/16.15/33.07}  & 42.66/17.07/34.17          \\ \hline
+            FedProx                         & \multicolumn{1}{c|}{42.3/16.5/33.7}     & 42.95/17.13/34.35          \\ \hline
+            Scaffold                        & \multicolumn{1}{c|}{39.47/14.64/31.21}  & 41.93/16.5/33.51           \\ \hline
+            FedDC                           & \multicolumn{1}{c|}{42.61/16.94/33.99}  & \textbf{45.63/19.17/36.86} \\ \hline
+            FedNova                         & \multicolumn{1}{c|}{40.57/15.53/32.13}  & 41.41/16.19/32.93          \\ \hline
+            FedProto                        & \multicolumn{1}{c|}{37.62/13.22/29.37}  & 37.84/13.42/29.59          \\ \hline
+            \textbf{FedSum} & \multicolumn{1}{c|}{\textbf{44.68/18.4/35.96}} & 44.42/18.01/35.62         \\ \hline
+            \end{tabular}
+            \caption{
+            % Experimental results with different heterogeneous settings on CNNDM and PubMed.
+            Experimental results with different heterogeneous settings on CNNDM.
+            In general, the performance of FedSum outperforms baselines in most heterogeneous cases.
+            }
+            \label{Table: heterogeneous level}
+        \end{table}
+\section{Conclusion}   
+    In this paper, we explore the text summarization task in FL, which is more realistic and private than related methods built upon the centralized storage.
+    Besides, data scarcity generally arouses performance degeneration and magnifies the negative effect of leading bias.
+    To address these challenges, we propose FedSum to maximize the data efficiency and construct the summarizer.
+    FedSum demonstrates its promising improvement over baselines on benchmark datasets, while exhibiting its generalization in tackling the intricacies of data heterogeneity.
+    We further verify the scalability of FedSum with various data quantities and the efficacy in mitigating the negative effect of data bias.
+    Future investigations can build from this foundation to examine other capabilities of the model under data scarcity FL, like stability and fairness.
+
+\section{Limitation}
+In this work, we employ a depth and breadth expansion mechanism to utilize data, and conduct experiments on multiple text summarization datasets. However, further experiments are needed to verify the adaptability of our framework for other NLP tasks(e.g. machine translation and sentiment analysis). Besides, our evaluation methodology is based on averages across three experimental runs, which could be enhanced through more rigorous statistical analysis. We leave these jobs for our future work.
+
+\section*{Acknowledgements}
+This work is supported by the National Natural Science Foundation of China (Grant No. 62376099) and Natural Science Foundation of Guangdong Province (Grant No. 2024A1515010989).
+
+\cleardoublepage
+
+
+\bibliography{aaai25}
+
+\section*{Reproducibility Checklist}
+
+
+This paper:
+\begin{itemize}
+    \item Includes a conceptual outline and/or pseudocode description of AI methods introduced -- yes
+    \item Clearly delineates statements that are opinions, hypothesis, and speculation from objective facts and results -- yes
+    \item Provides well marked pedagogical references for less-familiare readers to gain background necessary to replicate the paper -- yes
+\end{itemize}
+Does this paper make theoretical contributions? -- no\\
+Does this paper rely on one or more datasets? -- no\\
+Does this paper include computational experiments?  -- yes
+\begin{itemize}
+    \item Any code required for pre-processing data is included in the appendix. -- yes
+    \item All source code required for conducting and analyzing the experiments is included in a code appendix. -- yes
+    \item All source code required for conducting and analyzing the experiments will be made publicly available upon publication of the paper with a license that allows free usage for research purposes. -- yes
+    \item All source code implementing new methods have comments detailing the implementation, with references to the paper where each step comes from. -- yes
+    \item If an algorithm depends on randomness, then the method used for setting seeds is described in a way sufficient to allow replication of results. -- yes
+    \item  This paper specifies the computing infrastructure used for running experiments (hardware and software), including GPU/CPU models; amount of memory; operating system; names and versions of relevant software libraries and frameworks. -- yes
+    \item This paper formally describes evaluation metrics used and explains the motivation for choosing these metrics. -- yes
+    \item This paper states the number of algorithm runs used to compute each reported result. -- yes
+    \item Analysis of experiments goes beyond single-dimensional summaries of performance (e.g., average; median) to include measures of variation, confidence, or other distributional information. -- yes
+    \item The significance of any improvement or decrease in performance is judged using appropriate statistical tests (e.g., Wilcoxon signed-rank). -- no
+    \item This paper lists all final (hyper-)parameters used for each model/algorithm in the paper’s experiments. -- yes
+    \item This paper states the number and range of values tried per (hyper-) parameter during development of the paper, along with the criterion used for selecting the final parameter setting. -- yes
+\end{itemize}
+\appendix
+\onecolumn
+\input{appendix}
+
+\end{document}

@@ -1,0 +1,54 @@
+\subsection{Proof of Theorem \ref{thm:lbcoco}}\label{app:lbcoco}
+%\begin{proof}
+    We prove the Theorem via constructing an explicit input sequence for which no online policy can have better than $\Omega(\sqrt{T})$ regret and CCV.
+%\edit{We are proving only the violation bound and not the regret bound, right?}
+\paragraph{Action space $\mathcal{X}$:} 
+Let $d=T$. Let  $\mathcal{X}$  be the $d$-dimensional cuboid $0\le x_i \le \frac{1}{\sqrt{d}}, \ 1\le i\le d$. Clearly, the Euclidean diameter of $\mathcal{X}$ is $1$. 
+
+
+\paragraph{Input:} For each round we will only consider the case when only one constraint is revealed, \emph{i.e.}, $k=1$. On round $t=1, \dots, d$, choose the constraint $g_t$ to be $x_{t} \le \frac{1}{4\sqrt{d}}$ or $x_{t} \ge \frac{3}{4\sqrt{d}}$ with equal probability of $\frac{1}{2}$ for ${\bf x} = (x_1, \dots, x_d) \in \mathcal{X}$. Thus, at round $t$, only the $t\textsuperscript{th}$ dimension has an effective constraint.
+If the chosen $g_t$ is $x_{t} \le \frac{1}{4\sqrt{d}}$ then pick $f_t= |x-\frac{1}{4\sqrt{d}}| $, otherwise pick  $f_t= |x-\frac{3}{4\sqrt{d}}|$.
+
+
+
+
+For any online policy ${\cal A}$, the expected constraint violation at round $t$ is at least 
+$\frac{1}{8\sqrt{d}}$. Thus, the overall expected constraint violation over rounds $t=1, \dots, d$ is at least 
+$\frac{\sqrt{d}}{8}$. Moreover, the expected cost ${\mathbb E}[ f_t(x_t)]$ of ${\cal A}$ is at least $\frac{1}{8\sqrt{d}}$ for each $t=1, \dots, d$, and the overall cost ${\mathbb E}\big[\sum_{t=1}^T f_t(x_t)\big]$ is at least $\frac{\sqrt{d}}{8}$. 
+
+
+Recall that the choice of input has to satisfy Assumption \ref{feas-constr}, i.e., $\mathcal{X}^\star \neq \emptyset.$ We next demonstrate that for  the prescribed input $\exists \ {\bf x}^\star\in \mathcal{X}^\star$.
+\paragraph{Choosing a feasible ${\bf x}^\star$:} When $g_t$ is such that the constraint is $x_{t} \le \frac{1}{4\sqrt{d}}$ choose ${\bf x}^\star \in \mathcal{X}$ such that $x^\star_t = \frac{1}{4\sqrt{d}}$ for $t=1,2,\dots, d$,  while if $g_t$ is such that $x_{t} \ge \frac{3}{4\sqrt{d}}$, then choose $x^\star_t = \frac{3}{4\sqrt{d}}$ for $t=1,2,\dots, d$. 
+Thus, a single vector ${\bf x}^\star$ satisfies all the revealed constraints. Moreover, with this choice of ${\bf x}^\star$, the  overall cost of  ${\bf x}$,  $\sum_t f_t({\bf x}^\star)$, is $0$.
+
+
+Since $d=T$, we get that for any online policy ${\cal A}$ its regret is at least $\Omega(\sqrt{T})$ and the cumulative constraint violation is $\Omega(\sqrt{T})$.$~~~~\blacksquare$
+
+
+%\end{proof}
+
+
+
+%\subsection{Proof of Theorem \ref{thm:lbcoco}}\label{app:lbcoco}
+%%\begin{proof}
+%Let $d'=\min\{d, T\}$.
+%    We prove the Theorem via constructing an explicit input sequence for which no online policy can have better than $\Omega(\sqrt{d'})$ regret and CCV.
+%%\edit{We are proving only the violation bound and not the regret bound, right?}
+%\paragraph{Action space $\mathcal{X}$:} 
+%Let us choose $\mathcal{X}$ to be the $d'$-dimensional cuboid $0\le x_i \le \frac{1}{\sqrt{d'}}, \ 1\le i\le d'$. Clearly, the Euclidean diameter of $\mathcal{X}$ is $1$. 
+%
+%\paragraph{Input:} For each round we will only consider the case when only one constraint is revealed, i.e. $k=1$. On round $t=1, \dots, d'$, choose the constraint $g_t$ to be $x_{t} \le \frac{1}{4\sqrt{d'}}$ or $x_{t} \ge \frac{3}{4\sqrt{d'}}$ with equal probability of $\frac{1}{2}$ for ${\bf x} = (x_1, \dots, x_{d'}) \in \mathcal{X}$. Thus, at time $t$, only the $t\textsuperscript{th}$ dimension has an effective constraint.
+%If the chosen $g_t$ is $x_{t} \le \frac{1}{4\sqrt{d'}}$ then pick $f_t(x)= |x-\frac{1}{4\sqrt{d'}}| $, otherwise pick  $f_t(x)= |x-\frac{3}{4\sqrt{d'}}|$.
+%For round $t=d'+1, \dots, T$, $g_t(x)=0, f_t(x)=0, \ \forall \ x $.
+%
+%For any online policy ${\cal A}$, the expected constraint violation at time $t\le d'$ is at least 
+%$\frac{1}{8\sqrt{d'}}$. Thus, the overall expected constraint violation over time slots $t=1, \dots, d'$ is at least 
+%$\frac{\sqrt{d'}}{8}$. Moreover, the expected cost ${\mathbb E}[ f_t(x_t)]$ of ${\cal A}$ is at least $\frac{1}{8\sqrt{d'}}$ for each $t=1, \dots, d'$, and the overall cost ${\mathbb E}\big[\sum_{t=1}^T f_t(x_t)\big]$ is at least $\frac{\sqrt{d'}}{8}$. 
+%
+%Recall that the choice of input has to satisfy Assumption \ref{feas-constr}, i.e., $\mathcal{X}^\star \neq \emptyset.$ We next demonstrate that for  the prescribed input $\exists \ {\bf x}^\star\in \mathcal{X}^\star$.
+%\paragraph{Choosing a feasible ${\bf x}^\star$:} When $g_t$ is such that the constraint is $x_{t} \le \frac{1}{4\sqrt{d'}}$ choose ${\bf x}^\star \in \mathcal{X}$ such that $x^\star_t = \frac{1}{4\sqrt{d'}}$ for $t=1,2,\dots, d'$,  while if $g_t$ is such that $x_{t} \ge \frac{3}{4\sqrt{d'}}$, then choose $x^\star_t = \frac{3}{4\sqrt{d'}}$ for $t=1,2,\dots, d'$. 
+%Thus, a single vector ${\bf x}^\star$ satisfies all the revealed constraints. Moreover, with this choice of ${\bf x}^\star$, the  overall cost of  ${\bf x}$,  $\sum_t f_t({\bf x}^\star)$, is $0$.
+%
+%%Choosing $d=T$, thus we get that for any online policy ${\cal A}$ its regret is at least $\Omega(\sqrt{T})$ and the cumulative constraint violation is $\Omega(\sqrt{T})$.$~~~~\blacksquare$
+%
+%%\end{proof}

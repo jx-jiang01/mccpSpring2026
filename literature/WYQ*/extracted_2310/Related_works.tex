@@ -1,0 +1,136 @@
+\vspace{-0.1in}
+\subsection{Related Work} \label{related}
+%The general problem has remained open for a long time. It was conjectured that designing a policy with both sublinear regret and sublinear constraint violations is impossible without additional assumptions \cite{neely2017online}. 
+%In fact, the authors in  \cite{mannor2009online} even commented that ``\ldots it is unlikely that such a reduction is possible.''
+\paragraph{Unconstrained OCO:}
+In a seminal paper, \citet{zinkevich2003online} showed that for solving \eqref{intro-regret-def}, the ubiquitous projected online gradient descent (OGD) policy achieves an $O(\sqrt{T})$ regret for convex cost functions with uniformly bounded sub-gradients. A number of follow-up papers proposed adaptive and parameter-free versions of OGD 
+%that do not need to know any non-causal information 
+\citep{hazan2007adaptive, orabona2018scale}. See \citet{orabona2019modern, hazan2022introduction} for textbook treatments of the OCO framework and associated algorithms.
+
+%However, these lines of work do not consider additional constraints - a problem which has been systematically explored only recently (see Table \ref{gen-oco-review-table} for a brief summary). The constraint functions could either be known \emph{a priori} or revealed sequentially along with the cost functions. 
+%\paragraph{Constrained OCO (COCO):} 
+ {\bf Constrained OCO (COCO): (A) Time-invariant constraints:} A number of papers considered COCO with time-invariant constraints, \emph{i.e.,} $g_{t,i} = g_i, \forall \ t$ \citep{yuan2018online, jenatton2016adaptive, mahdavi2012trading, yi2021regret}.  These works assume that the functions $g_i$'s are known to the policy \emph{a priori}. However, they allowed the policy to remain infeasible on any round to avoid the costly projection step of the vanilla projected OGD  policy. Their main objective was to design an \emph{efficient} policy (avoiding the explicit projection step) with a small regret and CCV. 
+
+{\bf (B) Time-varying constraints:} Solving the COCO problem when the constraint functions, \emph{i.e.}, $g_{t,i}$'s, change arbitrarily with time $t$ is more challenging. In this case,  except for 
+ \cite{neely2017online} and \cite{georgios-cautious}, most of the prior works 
+ %assumes that the policy has access to some non-causal information, \emph{e.g.,} a uniform upper bound to the norm of the future gradients of $f_t,g_{t,i}$. This non-causal information is used by their proposed policies to 
+ construct some Lagrangian function and then update the primal and dual variables \citep{yu2017online, pmlr-v70-sun17a, yi2023distributed}. However, the performance bounds obtained with this approach remain suboptimal.
+   Both \citet{neely2017online} and \cite{georgios-cautious} use the drift-plus-penalty (DPP) framework introduced by \citet{neely2010stochastic} to solve the constrained problem under various assumptions. In particular,
+  \citet{neely2017online} proposed a DPP-based policy for COCO  upon assuming the Slater's condition, \emph{i.e.,} $g_{t,i}(x^\star) < -\eta$, for some $\eta>0$ $\forall i,t$. Clearly, this condition precludes the important case of non-negative constraint functions (\emph{e.g.,} constraint functions of the form $\max(0, g_t(x))$). Furthermore, the bounds obtained upon assuming Slater's condition depend inversely with the Slater's constant $\eta$ (usually hidden under the big-Oh notation). Since $\eta$ could be arbitrarily small, these bounds could be arbitrarily loose. 
+  %Furthermore, a sublinear violation bound obtained upon assuming Slater's condition is loose by a quantity that increases \emph{linearly} with the horizon-length $T$ compared to a sublinear violation bound obtained without this assumption.    
+%(which arises, e.g., upon a $\max(0,\cdot)$ operation with a given constraint). 
+%Moreover, the regret bound presented in \cite{neely2017online} diverges to infinity as $\eta \searrow 0.$ 
+ \cite{georgios-cautious} extended \cite{neely2017online}'s result by considering a weaker form of the feasibility assumption without assuming Slater's condition. 
+% they show that a DPP-based policy achieves a regret $\mathcal{R}_T = O(ST/V + \sqrt{T})$ and CCV ${\mathbb V}(T) = O(\sqrt{VT})$. Here, $V$ is an adjustable parameter that can take any value in $[S, T).$ Hence, \emph{a priori}, their algorithm needs to know the value of the parameter $S,$ which, unfortunately, depends on the online constraints.
+%It can be seen that the violation penalty bound achieved by their policy is at least $O(T^{3/4}),$ which is suboptimal. 
+Furthermore, although these DPP-based results are interesting, they have not been able to provide improved regret or CVV bounds 
+when the cost functions $f_t$'s are strongly convex because of the linearization step inherent in this approach. 
+
+
+In a recent paper, \citet{guo2022online} considered COCO and obtained the best-known prior results without assuming Slater's condition. However, in addition to yielding sub-optimal bounds, their policy is quite computationally intensive since it requires solving a convex optimization problem on each round. Compared to this, all policies proposed in this paper take only a single gradient-descent step and perform only one Euclidean projection on each round. 
+%Moreover, it is unclear how to extend \citet{guo2022online}'s policy to the more general $S$-feasible benchmark, where it is necessary to compensate for constraint violations at some rounds with strictly satisfying constraints on some other rounds. 
+Please refer to Table \ref{gen-oco-review-table} for a brief summary of the results and Section \ref{app:comparisonpolicies} in the Appendix for a qualitative comparison.
+%inefficient as, instead of performing a single gradient-descent step per round (as in our and most of the previous algorithms), their algorithm needs to solve a general convex optimization problem at every round. Moreover, their algorithm needs access to the full description of the constraint function $g_t(\cdot)$ for the optimization step, whereas ours and most of the previous algorithms need to know only the gradient and the value of the constraint function for the current action $x_t$. 
+%In a recent paper, \cite{yi2023distributed} consider the same problem in a distributed setup and derive tighter bounds upon assuming Slater's condition.
+The COCO problem has been considered in the {\it dynamic} setting as well  \citep{chen2018bandit, cao2018online, vazecocowiopt2022, liu2022simultaneously} where the benchmark $x^\star$ in \eqref{intro-regret-def} is replaced by $x_t^\star$ that is also allowed to change its actions over time. However, we focus our attention on achieving the optimal performance bounds for the static version.
+%\paragraph{The Online Constraint Satisfaction (\textsc{OCS}) Problem:} %In addition to studying the above problem, we also introduce a new but related problem, 
+A special case of COCO is the 
+\textsc{Online Constraint Satisfaction} (\ocs) problem that does not involve any cost function, \emph{i.e.,} $f_t=0, \ \forall t,$ and the only object of interest is the CCV. The \ocs ~problem becomes especially interesting in the setting where the feasible set may be empty.
+%To the best of our knowledge, the \ocs ~problem has not been previously studied in the setting where the feasible set $\mathcal{X}^\star$ might be empty. 
+%However, results derived for COCO when specialized to the case of $f_t=0$ are summarized in Table \ref{gen-oco-review-table}.
+
+%In this problem, on every round $t$, $k$ constraints of the form $g_{t,i}(x) \leq 0$ are revealed to the policy in an online fashion, where the function $g_{t,i}$ comes from the $i$\textsuperscript{th} stream. The constraint functions could be unrestricted in sign - they may potentially take both positive and negative values within their admissible domain. The objective is to control the cumulative violation of each separate stream by choosing a common action sequence $\{x_t\}_{t \geq 1}$.  
+%%Although the \ocs ~problem can be reduced to the previous problem with dynamic constraints upon setting the cost function $f_t \equiv 0, \forall t$, this reduction turns out to be provably sub-optimal. 
+%Without making any assumption, the best-known bound for the cumulative violation for a single convex constraint is known to be $O(T^{3/4})$ and no violation penalty bound is known for strongly convex constraints (see Table \ref{review-table}). For the first time, we show that it is possible to achieve a cumulative violation bound of $O(\sqrt{ST})$ for convex constraints with the general $S$-benchmark and $O(\log T)$ for strongly convex constraints with the usual $1$-benchmark. Section \ref{non-trivial} in the Appendix briefly outlines the difficulty of the problem and discusses why simple approaches fail. 
+%We begin our discourse with the \ocs ~problem, which clearly illustrates the new ideas and analytical techniques. These are then suitably extended in Section \ref{gen_oco}, which considers the OCO problem with dynamic constraints.     
+ 
+%To the best of our knowledge, the problem of designing a parameter-free, fully adaptive online policy for this problem has been open for a long time. 
+
+
+\iffalse
+In this paper, we propose an online learning policy without making any extraneous assumptions. We begin with considering the non-trivial special case of the \textsc{Online Constraint Satisfaction} (\texttt{OCS}) problem in Section \ref{simul_constr} where all cost functions are zero and a set of $k$ constraints are presented on every round. This section clearly illustrates the main ideas and analytical techniques, which are then suitably extended in Section \ref{gen_oco}, which considers the general problem. 
+\fi
+%\edit{Include a table comparing the results.}
+
+%Our analysis technique is new, which reduces the problem of bounding regret and violation penalty to solving difference inequalities for which a wealth of analytical techniques are known, \emph{e.g.,} Gr\"onwall's inequality.   
+
+
+%\hspace{-30pt}
+
+%\begin{table*}[t]
+%\hspace{-30pt}
+  %\caption{Summary of the results for the Online Constraint Satisfaction (\texttt{OCS}) problem}
+  %\centering
+  \begin{table*}[t]
+%\hspace{-30pt}
+  \title{Summary of the results for the constrained OCO problem}
+  %\centering
+  \hspace{-40pt}
+  \begin{tabular}{llllll}
+    \toprule
+    %\multicolumn{2}{c}{Part}                   \\
+   % \cmidrule(r){1-2}
+   \small { Reference}  & \small {Regret} & \small {CCV} & \small {Complexity per round}& \small {Assumptions} \\
+    \midrule
+  %  a & b& c& d & e  \\
+      \small {\citet{mahdavi2012trading}}  & \small {$O(\sqrt{T})$} & \small {$O(T^{\nicefrac{3}{4}})$} & \small {Projection} & \small{Time-invariant constraints} \\
+    \small {\citet{jenatton2016adaptive}}  & \small {$O(T^{\max(\beta, 1-\beta)})$} & \small {$O(T^{1-\beta/2})$} & \small {Projection} & \small{Time-invariant constraints} \\
+    \small {\citet{pmlr-v70-sun17a}}  & \small {$O(\sqrt{T})$} & \small {$O(T^{\nicefrac{3}{4}})$}& \small {Bregman Projection} & \small -  \\
+    \small {\citet{neely2017online}}  & \small {$O(\sqrt{T})$} & \small {$O(\sqrt{T})$} & \small {Conv-OPT} & \small {Slater condition} \\
+    %    \small {\citet{yu2017online}}  & \small {$O(\sqrt{T})$} & \small {$O(\sqrt{T})$} & \small {Conv-OPT} & \small {Slater condition} \\
+  \small {\citet{yuan2018online}} & \small {$O(T^{\max(\beta, 1-\beta)})$} & \small {$O(T^{1-\beta/2})$ }  & \small {Projection} & \small{Time-invariant constraints} \\
+      \small {\citet{yu2020low}}  & \small {$O(\sqrt{T})$} & \small {$O(1)$} & \small {Conv-OPT} & \small {Slater \& Time-invariant constraints} \\
+ % \citet{yu2017online} & Stochastic & $O(\sqrt{T})$ & $O(\sqrt{T})$& OGD+drift+penalty & Slater condition \\
+  \small {\citet{yi2021regret}} & \small {$O(T^{\max(\beta, 1-\beta)})$} & \small {$O(T^{(1-\beta)/2})$} & \small {Conv-OPT} & \small{Time-invariant constraints} \\ 
+  \small {\citet{yi2022regret}}  & \small {$O(T^{\beta})$} & \small {$O(T^{1-\beta/2})$} & \small {Projection} & \small {Strongly convex cost} \\
+    \small {\citet{guo2022online}}  & \small {$O(\sqrt{T})$} & \small {$O(T^{\nicefrac{3}{4}})$} & \small {Conv-OPT} & - \\
+        \small {\citet{guo2022online}}  & \small {$O(\log T)$} & \small {$O(\sqrt{T \log T})$} & \small {Conv-OPT} & \small {Strongly convex cost} \\ 
+  \small {\citet{yi2023distributed}}  & \small {$O(T^{\max(\beta, 1-\beta)})$} & \small {$O(T^{1-\beta/2})$} & \small {Conv-OPT} & - \\
+    \small {\citet{yi2023distributed}} & \small {$O(\log(T))$} & \small {$O(\sqrt{T \log T})$} & \small {Conv-OPT} & \small {Strongly convex cost} \\
+    %\citet{georgios-cautious} & Adversarial, convex & $S$ & $O(\sqrt{ST})$ & OGD & Known $S$ \\
+               %\citet{guo2022online} & Adversarial, strongly-convex & $1$ & $O(\sqrt{T \log T})$ & Convex opt. each round & -do-, Known $\alpha$ \\
+   %      \small {\citet{georgios-cautious}}  & &\ \textcolor{red}{($S$,$O(\sqrt{ST})$)}& \small {OGD} & \small {Known $S$} \\
+  %\small {\textbf{This paper}}  & \small {$O(\sqrt{T})$} & \small {$O(T^{3/4})$} & \small {Ad-OCO} & - \\
+     \small {\textbf{This paper}} & \small {$O(\sqrt{T})$} & \small {$O(\sqrt{T}\log T)$} & \small {Projection} & -\\
+ \small {\textbf{This paper}} &   \small {$O(\log T)$} & \small {$O(\sqrt{T\log T})$} &\small {Projection} & \small{Strongly convex cost} \\
+ \small {\textbf{This paper}} & \small {$O(\log T)$} & \small {$O(\frac{\log T}{\alpha})$} &\small {Projection} & \small {Strongly convex cost, $\textrm{Regret}_T \geq 0,$} \\
+       \bottomrule
+  \end{tabular}
+  \vspace{5pt}
+  \caption{\small{Summary of the results on COCO. Unless stated otherwise, we assume arbitrary time-varying convex constraints and convex cost functions. In the above table, $0\leq \beta \leq 1$ is an adjustable parameter, $\alpha$ is the strong convexity parameter of the strongly convex cost functions. Conv-OPT refers to solving a constrained convex optimization problem on each round. Projection refers to the Euclidean projection operation on the convex set $\mathcal{X}$. For typical convex sets (\emph{e.g.,} Euclidean box, probability simplex), projection operations are substantially more efficient than solving a constrained convex optimization problem.}}
+    \label{gen-oco-review-table}
+\end{table*}
+%\footnotetext[1]{Bounds on the cumulative violation over the entire horizon, which is weaker than \eqref{violation-def1}.}
+%\footnotetext[1]{Cumulative violation defined as $\sum_{t}([g(x_t)]_+)^2.$}
+%  \footnotetext[1]{Upon optimally setting $V=S.$}
+%\footnotetext{Third footnote}
+
+%\subsection{Why is the problem non-trivial?}
+%%We first argue that the \ocs ~problem is non-trivial to solve.
+%Let us consider the \ocs ~problem.
+%A first attempt to solve the \ocs ~problem could be to scalarize it by taking a  \emph{fixed} linear combination (\emph{e.g.,} the sum) of the constraint functions and then running a standard OCO policy on the scalarized cost functions \editr{(see \cite[Section 5.3.3]{boyd} for an offline version of the above problem, where the coefficients of the linear combination are taken to be the optimal solution to the dual problem}). The above strategy immediately yields a sublinear regret guarantee on the same linear combination (\emph{i.e.,} the sum) of the constraint functions. However, since the constraint functions could take both positive and negative values, the constraint violation component of some streams could still be arbitrarily large even when the overall sum is small. Hence, this strategy does not yield individual cumulative violation bounds, where we need to control the more stringent $\ell_\infty$-norm of the cumulative violation vector. 
+%%In the particular case of the online constraint satisfaction (\texttt{OCS}) problem 
+%%if only one constraint function is revealed on each round, by simply running an OCO policy on the given constraint function yields a sublinear regret and hence, a sublinear constraint violation penalty. However, 
+%%with two or more constraint functions (see Section \ref{simul_constr}), 
+%\editr{Hence, to meet the objective with this scalarization strategy, the ``correct'' coefficients of the linear combination} must be learned adaptively in an online fashion. This is exactly what our online meta-policy, which we \editr{describe} in Section \ref{meta-policy-ocs}, does.
+%
+%To get around the above issue, one may alternatively attempt to scalarize the \ocs ~problem by considering a non-negative \emph{surrogate} cost function, \emph{e.g.,} the hinge loss function, defined as $\hat{g}_{t,i}(x)=\max(0, g_{t,i}(x)),$ for each constraint $i \in [k]$. However, it can be easily seen that this transformation does not preserve the strong convexity as the function $\hat{g}_{t,i}$ is \emph{not} strongly convex even when the original constraint function $g_{t,i}$ is strongly convex. Furthermore, the above strategy does not work even for convex functions for $S$-feasible benchmarks with $S\geq 2.$ This is because, due to the impossibility of cancellation of positive violations by strictly feasible constraints on different rounds, an $S$-feasible benchmark for the original constraints does not remain feasible for the transformed non-negative surrogate constraints (see Section \ref{ext}). Finally, the above transformation fails in the case of stochastic constraints where the constraint is satisfied only in expectation, i.e., $\mathbb{E} g_t(x) \leq 0, \forall t\geq 1$ \citep{yu2017online}.
+%%Finally, since we are interested in bounding the maximum violation penalty over any sub-interval in the entire time horizon \eqref{violation-def1}, it is natural to turn to the strongly adaptive algorithms as a subroutine, which are inefficient as they need to run $O(\log T)$ number of experts algorithms on each round \citep{orabona2018scale}. 
+%The above discussion shows why designing an efficient and universal policy for the \texttt{OCS} problem, and consequently, for the constrained OCO problem - which generalizes \ocs, is highly non-trivial. 
+%
+%
+%
+%
+
+
+
+
+
+ 
+
+
+
+
+
+
+

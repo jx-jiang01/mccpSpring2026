@@ -1,0 +1,408 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>OpenSearch-SQL Paper Macro-Level Structure Visualization</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 20px;
+            background-color: #f5f5f5;
+        }
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            background: white;
+            padding: 20px;
+            border-radius: 10px;
+            box-shadow: 0 0 10px rgba(0,0,0,0.1);
+        }
+        h1 {
+            text-align: center;
+            color: #2c3e50;
+            margin-bottom: 30px;
+        }
+        .structure-diagram {
+            display: flex;
+            flex-direction: column;
+            gap: 20px;
+        }
+        .section {
+            border: 2px solid #3498db;
+            border-radius: 8px;
+            padding: 15px;
+            background: #ecf0f1;
+            position: relative;
+        }
+        .section-header {
+            background: #3498db;
+            color: white;
+            padding: 10px;
+            margin: -15px -15px 15px -15px;
+            border-radius: 6px 6px 0 0;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        .section-title {
+            font-weight: bold;
+            font-size: 1.2em;
+        }
+        .word-count {
+            font-size: 0.9em;
+            opacity: 0.9;
+        }
+        .moves {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 10px;
+            margin-top: 10px;
+        }
+        .move {
+            background: white;
+            padding: 10px;
+            border-radius: 5px;
+            border-left: 4px solid #e74c3c;
+        }
+        .move-title {
+            font-weight: bold;
+            color: #e74c3c;
+            margin-bottom: 5px;
+        }
+        .move-content {
+            font-size: 0.9em;
+            color: #555;
+        }
+        .key-excerpt {
+            background: #fff3cd;
+            border: 1px solid #ffeaa7;
+            border-radius: 5px;
+            padding: 10px;
+            margin: 10px 0;
+            font-style: italic;
+        }
+        .analysis {
+            background: #d4edda;
+            border: 1px solid #c3e6cb;
+            border-radius: 5px;
+            padding: 10px;
+            margin: 10px 0;
+            font-size: 0.9em;
+        }
+        .flow-arrow {
+            text-align: center;
+            font-size: 2em;
+            color: #7f8c8d;
+            margin: 10px 0;
+        }
+        .comparison-table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 20px 0;
+            background: white;
+        }
+        .comparison-table th, .comparison-table td {
+            border: 1px solid #ddd;
+            padding: 8px;
+            text-align: left;
+        }
+        .comparison-table th {
+            background-color: #f2f2f2;
+            font-weight: bold;
+        }
+        .highlight {
+            background-color: #fff3cd;
+            font-weight: bold;
+        }
+        .legend {
+            background: #ecf0f1;
+            padding: 15px;
+            border-radius: 5px;
+            margin: 20px 0;
+        }
+        .legend-item {
+            display: inline-block;
+            margin: 5px 15px 5px 0;
+            padding: 5px 10px;
+            border-radius: 3px;
+            font-size: 0.9em;
+        }
+        .cs-convention { background: #3498db; color: white; }
+        .traditional { background: #e74c3c; color: white; }
+        .universal { background: #27ae60; color: white; }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>OpenSearch-SQL Paper: Macro-Level Structure Analysis</h1>
+
+        <div class="legend">
+            <h3>Analysis Framework</h3>
+            <div class="legend-item cs-convention">Computer Science Convention</div>
+            <div class="legend-item traditional">Traditional Academic</div>
+            <div class="legend-item universal">Universal Best Practice</div>
+        </div>
+
+        <div class="structure-diagram">
+
+            <!-- Introduction Section -->
+            <div class="section">
+                <div class="section-header">
+                    <span class="section-title">Section 1: Introduction</span>
+                    <span class="word-count">~1200 words</span>
+                </div>
+
+                <div class="moves">
+                    <div class="move">
+                        <div class="move-title">Move 1: Establishing Territory</div>
+                        <div class="move-content">
+                            <strong>Centrality Claims:</strong> Text-to-SQL is "holy grail" of database community, crucial for database access
+                        </div>
+                        <div class="key-excerpt">
+                            "As the text-to-SQL problem is notoriously hard, these systems have been the holy grail of the database community for several decades."
+                        </div>
+                        <div class="analysis">
+                            Excellent use of metaphor ("holy grail") to emphasize importance and difficulty. Temporal perspective ("several decades") establishes historical significance.
+                        </div>
+                    </div>
+
+                    <div class="move">
+                        <div class="move-title">Move 2: Establishing Niche (L1, L2, L3)</div>
+                        <div class="move-content">
+                            <strong>Limitations:</strong> L1: Framework ambiguity, L2: Multi-agent hallucination, L3: Instruction construction insufficiency
+                        </div>
+                        <div class="key-excerpt">
+                            "Limitation. Although the methods driven by LLMs have significantly raised the upper limits of the Text-to-SQL task capabilities, our analysis of previous work reveals that: L1 Due to the ambiguity of the overarching framework, there are some gaps at the methodological level."
+                        </div>
+                        <div class="analysis">
+                            Excellent systematic approach - uses "Limitation" as section header, then enumerates three specific gaps. Uses hedging ("Although...significantly raised") followed by clear problem identification.
+                        </div>
+                    </div>
+
+                    <div class="move">
+                        <div class="move-title">Move 3: Occupying Niche</div>
+                        <div class="move-content">
+                            <strong>Solution:</strong> OpenSearch-SQL framework with four stages, consistency alignment, dynamic few-shot
+                        </div>
+                        <div class="key-excerpt">
+                            "Framework. To address L1, our research defines a Standard Text-to-SQL framework based on the process humans use to complete SQL construction. We believe that a complete Text-to-SQL task framework should include four steps: Preprocessing, Extraction, Generation, Refine."
+                        </div>
+                        <div class="analysis">
+                            Excellent systematic approach - explicitly connects to L1 ("To address L1"), provides rationale ("based on the process humans use"), then enumerates four steps.
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="flow-arrow">↓</div>
+
+            <!-- Preliminary Section -->
+            <div class="section">
+                <div class="section-header">
+                    <span class="section-title">Section 2: Preliminary</span>
+                    <span class="word-count">~500 words</span>
+                </div>
+
+                <div class="moves">
+                    <div class="move">
+                        <div class="move-title">2.1 Large Language Models</div>
+                        <div class="move-content">
+                            <strong>Background:</strong> LLM development, pre-training, fine-tuning, impact on Text-to-SQL
+                        </div>
+                        <div class="analysis">
+                            Strong technical background with clear definitions. Uses examples for clarity.
+                        </div>
+                    </div>
+
+                    <div class="move">
+                        <div class="move-title">2.2 Text-to-SQL</div>
+                        <div class="move-content">
+                            <strong>Definition:</strong> Formal definition: Y = F(Q, S, P|θ), framework categorization
+                        </div>
+                        <div class="key-excerpt">
+                            "The Text-to-SQL task can be defined as: a task that translates a NLQ Q into an SQL query Y based on database information S, a specific model F(·|θ), and a particular prompt P."
+                        </div>
+                        <div class="analysis">
+                            Clear formal definition with mathematical notation. Systematic approach - defines components explicitly.
+                        </div>
+                    </div>
+
+                    <div class="move">
+                        <div class="move-title">2.3 Hallucination</div>
+                        <div class="move-content">
+                            <strong>Problem:</strong> Hallucination in LLMs, cumulative errors in multi-agent collaboration
+                        </div>
+                        <div class="analysis">
+                            Clear problem motivation with specific mechanism description.
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="flow-arrow">↓</div>
+
+            <!-- Methodology Section -->
+            <div class="section">
+                <div class="section-header">
+                    <span class="section-title">Section 3: Methodology</span>
+                    <span class="word-count">~3500 words</span>
+                </div>
+
+                <div class="moves">
+                    <div class="move">
+                        <div class="move-title">3.1 Alignments</div>
+                        <div class="move-content">
+                            <strong>Mechanism:</strong> Consistency alignment agent: A_Alignment(x + A'(x)) = A(x) - A'(x)
+                        </div>
+                        <div class="key-excerpt">
+                            "Based on this phenomenon, we define the Alignment Agent as: A_Alignment(x + A'(x)) = A(x) - A'(x), The input for the agent is the input x for the agent to be aligned, along with A'(x)."
+                        </div>
+                        <div class="analysis">
+                            Clear mathematical formulation with formal notation. Systematic definition of inputs and outputs.
+                        </div>
+                    </div>
+
+                    <div class="move">
+                        <div class="move-title">3.2 Self-Taught Fewshot</div>
+                        <div class="move-content">
+                            <strong>Approach:</strong> Dynamic few-shot with Query-CoT-SQL pairs, Masked Question Similarity
+                        </div>
+                        <div class="key-excerpt">
+                            "Inspired by this, we attempted to use dynamic few-shots to enhance the efficiency of agents in the Text-to-SQL task. Then, we upgraded the few-shots in the Query-SQL format by self-taught."
+                        </div>
+                        <div class="analysis">
+                            Clear positioning with specific differentiation ("upgraded the few-shots...by self-taught"). Systematic approach.
+                        </div>
+                    </div>
+
+                    <div class="move">
+                        <div class="move-title">3.3-3.6 Framework Components</div>
+                        <div class="move-content">
+                            <strong>Stages:</strong> Preprocessing, Extraction, Generation, Refinement with alignment integration
+                        </div>
+                        <div class="key-excerpt">
+                            "Preprocessing. Processing and constructing all auxiliary information that is insensitive to the NLQs, including database schema information, embedding databases, few-shot libraries, etc."
+                        </div>
+                        <div class="analysis">
+                            Clear definition with specific examples. Emphasis on "insensitive to the NLQs" shows design consideration.
+                        </div>
+                    </div>
+
+                    <div class="move">
+                        <div class="move-title">3.7 Algorithm</div>
+                        <div class="move-content">
+                            <strong>Specification:</strong> Complete algorithm (Algorithm 1) with clear input/output and process flow
+                        </div>
+                        <div class="analysis">
+                            Clear algorithmic presentation with comprehensive coverage. Systematic approach.
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="flow-arrow">↓</div>
+
+            <!-- Experiments Section -->
+            <div class="section">
+                <div class="section-header">
+                    <span class="section-title">Section 4: Experiments</span>
+                    <span class="word-count">~2000 words</span>
+                </div>
+
+                <div class="moves">
+                    <div class="move">
+                        <div class="move-title">4.1 Experimental Setup</div>
+                        <div class="move-content">
+                            <strong>Datasets:</strong> BIRD dataset, 12,751 question-SQL pairs, 95 databases, 33.4 GB
+                        </div>
+                        <div class="analysis">
+                            Strong dataset description emphasizing scale and realism.
+                        </div>
+                    </div>
+
+                    <div class="move">
+                        <div class="move-title">4.2 Main Results</div>
+                        <div class="move-content">
+                            <strong>Results:</strong> 69.3% EX (dev), 72.28% EX (test), 69.36% R-VES, all ranking first
+                        </div>
+                        <div class="key-excerpt">
+                            "Our experimental results indicate that we achieved 69.3% EX on the Dev set, 72.28% EX on the Test set, and an R-VES score of 69.3%. All three metrics ranked first on the leaderboard at the time of submission."
+                        </div>
+                        <div class="analysis">
+                            Strong empirical validation with specific quantitative results. Dual emphasis on accuracy and efficiency. Temporal qualification shows careful positioning.
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+
+        <h2>Cross-Disciplinary Comparison</h2>
+        <table class="comparison-table">
+            <tr>
+                <th>Aspect</th>
+                <th>OpenSearch-SQL Paper (CS/NLP)</th>
+                <th>Traditional Academic</th>
+                <th>Key Learning</th>
+            </tr>
+            <tr>
+                <td>Literature Review</td>
+                <td class="highlight">Separate section (Section 5)</td>
+                <td>Separate section after introduction</td>
+                <td>CS papers may place related work later in the paper</td>
+            </tr>
+            <tr>
+                <td>Technical Detail</td>
+                <td class="highlight">Very high (algorithms, math, frameworks)</td>
+                <td>Medium (methods overview)</td>
+                <td>Mathematical formalism and framework descriptions crucial for CS credibility</td>
+            </tr>
+            <tr>
+                <td>Evaluation</td>
+                <td class="highlight">Quantitative metrics, ablation studies, benchmarks</td>
+                <td>Theoretical validation, qualitative</td>
+                <td>Empirical rigor through multiple evaluation dimensions and benchmark comparisons</td>
+            </tr>
+            <tr>
+                <td>Contribution Claims</td>
+                <td class="highlight">Technical novelty + framework design + state-of-the-art</td>
+                <td>Theoretical advancement + evidence</td>
+                <td>CS emphasizes framework contributions and benchmark rankings</td>
+            </tr>
+        </table>
+
+        <h2>Imitation Framework for Future Papers</h2>
+        <div class="analysis">
+            <h3>Structural Elements to Adapt:</h3>
+            <ul>
+                <li><strong>Systematic Framework Organization:</strong> Breaking complex systems into well-defined stages (Preprocessing → Extraction → Generation → Refinement)</li>
+                <li><strong>Mathematical Formulation:</strong> Formal definitions of key concepts (Alignment Agent equation, Text-to-SQL task definition)</li>
+                <li><strong>Algorithmic Descriptions:</strong> Complete algorithm specifications (Algorithm 1) with clear input/output</li>
+                <li><strong>Limitation Enumeration:</strong> Clear numbering and categorization of identified problems (L1, L2, L3)</li>
+            </ul>
+
+            <h3>Rhetorical Strategies:</h3>
+            <ul>
+                <li><strong>Problem-Solution Mapping:</strong> Explicitly connecting solutions to identified limitations ("To address L1," "For L2," "For L3")</li>
+                <li><strong>Human-Centered Motivation:</strong> Using human workflow as inspiration for technical design</li>
+                <li><strong>Transferability Emphasis:</strong> Highlighting methods that don't require fine-tuning or specialized datasets</li>
+                <li><strong>Contribution Enumeration:</strong> Clear listing of contributions with specific technical descriptions</li>
+            </ul>
+
+            <h3>Quality Indicators:</h3>
+            <ul>
+                <li><strong>Mathematical Rigor:</strong> Formal notation, algorithmic descriptions, mathematical formulations</li>
+                <li><strong>Empirical Validation:</strong> Multiple evaluation metrics, ablation studies, comprehensive comparisons</li>
+                <li><strong>Framework Design:</strong> Clear component separation with systematic integration</li>
+                <li><strong>Transferability:</strong> Emphasis on methods applicable without fine-tuning</li>
+            </ul>
+        </div>
+
+        <div style="text-align: center; margin-top: 30px; color: #7f8c8d; font-size: 0.9em;">
+            <p>Analysis based on macro-level structure framework from academic writing pedagogy</p>
+            <p>Interactive visualization for learning paper organization patterns</p>
+        </div>
+    </div>
+</body>
+</html>

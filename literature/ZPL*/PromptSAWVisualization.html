@@ -1,0 +1,434 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Prompt-SAW Paper Macro-Level Structure Visualization</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 20px;
+            background-color: #f5f5f5;
+        }
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            background: white;
+            padding: 20px;
+            border-radius: 10px;
+            box-shadow: 0 0 10px rgba(0,0,0,0.1);
+        }
+        h1 {
+            text-align: center;
+            color: #2c3e50;
+            margin-bottom: 30px;
+        }
+        .structure-diagram {
+            display: flex;
+            flex-direction: column;
+            gap: 20px;
+        }
+        .section {
+            border: 2px solid #9b59b6;
+            border-radius: 8px;
+            padding: 15px;
+            background: #f4ecf7;
+            position: relative;
+        }
+        .section-header {
+            background: #9b59b6;
+            color: white;
+            padding: 10px;
+            margin: -15px -15px 15px -15px;
+            border-radius: 6px 6px 0 0;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        .section-title {
+            font-weight: bold;
+            font-size: 1.2em;
+        }
+        .moves {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 10px;
+            margin-top: 10px;
+        }
+        .move {
+            background: white;
+            padding: 10px;
+            border-radius: 5px;
+            border-left: 4px solid #e74c3c;
+        }
+        .move-title {
+            font-weight: bold;
+            color: #e74c3c;
+            margin-bottom: 5px;
+        }
+        .move-content {
+            font-size: 0.9em;
+            color: #555;
+        }
+        .key-excerpt {
+            background: #fff3cd;
+            border: 1px solid #ffeaa7;
+            border-radius: 5px;
+            padding: 10px;
+            margin: 10px 0;
+            font-style: italic;
+            font-size: 0.9em;
+        }
+        .analysis {
+            background: #d4edda;
+            border: 1px solid #c3e6cb;
+            border-radius: 5px;
+            padding: 10px;
+            margin: 10px 0;
+            font-size: 0.9em;
+        }
+        .flow-arrow {
+            text-align: center;
+            font-size: 2em;
+            color: #7f8c8d;
+            margin: 10px 0;
+        }
+        .comparison-table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 20px 0;
+            background: white;
+        }
+        .comparison-table th, .comparison-table td {
+            border: 1px solid #ddd;
+            padding: 8px;
+            text-align: left;
+        }
+        .comparison-table th {
+            background-color: #f2f2f2;
+            font-weight: bold;
+        }
+        .highlight {
+            background-color: #fff3cd;
+            font-weight: bold;
+        }
+        .example-box {
+            background: #e8f4f8;
+            border-left: 4px solid #3498db;
+            padding: 10px;
+            margin: 10px 0;
+            font-family: monospace;
+            font-size: 0.85em;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>Prompt-SAW Paper: Macro-Level Structure Analysis</h1>
+
+        <div class="structure-diagram">
+
+            <!-- Introduction Section -->
+            <div class="section">
+                <div class="section-header">
+                    <span class="section-title">Section 1: Introduction</span>
+                </div>
+
+                <div class="moves">
+                    <div class="move">
+                        <div class="move-title">Move 1: Establishing Territory</div>
+                        <div class="move-content">
+                            <strong>Centrality Claims:</strong> LLMs show exceptional abilities; prompts play crucial role (ICL, CoT, RAG, Agents)
+                        </div>
+                        <div class="key-excerpt">
+                            "LLMs have attracted considerable attention for their superior performance across a wide range of applications. For this, instructions (aka. prompts) play a crucial role in extending the capabilities of LLMs for multiple different tasks."
+                        </div>
+                        <div class="analysis">
+                            Comprehensive list of techniques establishes importance of prompting.
+                        </div>
+                    </div>
+
+                    <div class="move">
+                        <div class="move-title">Move 2: Establishing Niche</div>
+                        <div class="move-content">
+                            <strong>Gaps Identified:</strong> Lengthy prompts (thousands of tokens), lack grammatical coherence, token-level compression neglects structure
+                        </div>
+                        <div class="key-excerpt">
+                            "While existing approaches could enhance the ability to deal with lengthy prompts for LLMs, they lack grammatical coherence, i.e., existing approaches neglect the syntactic and semantic structure of the compressed prompt."
+                        </div>
+                        <div class="example-box">
+                            Original: "Two women have won the prize: Curie and Maria Goeppert-Mayer"<br>
+                            Compressed (LongLLMlingua): "won twoes forg01 theate women prize:ertMayer"
+                        </div>
+                        <div class="analysis">
+                            Concrete example vividly illustrates the problem. Explicit critique: "lack grammatical coherence" becomes key contribution.
+                        </div>
+                    </div>
+
+                    <div class="move">
+                        <div class="move-title">Move 3: Occupying Niche</div>
+                        <div class="move-content">
+                            <strong>Solution:</strong> Prompt-SAW uses Knowledge Graph structures to extract entities and relations, supports task-aware and task-agnostic scenarios
+                        </div>
+                        <div class="key-excerpt">
+                            "We propose Prompt-SAW, i.e., Prompt compresSion via Relation-Aware graphs, a novel method designed to cut down unnecessary information in the prompt text by using Knowledge Graph (KG) structures to exploit the small-scale information elements in the prompts, i.e., information units comprising entities and their underlying relations."
+                        </div>
+                        <div class="key-excerpt">
+                            "To retain the syntactic and semantics of the prompt structure, Prompt-SAW finally reinstates the information contained in the sub-graph resulting in an optimized and compressed prompt."
+                        </div>
+                        <div class="analysis">
+                            Emphasis on "syntactic and semantics" directly addresses identified gap. Two-scenario approach (task-aware vs. task-agnostic) provides comprehensive solution.
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="flow-arrow">↓</div>
+
+            <!-- Related Work Section -->
+            <div class="section">
+                <div class="section-header">
+                    <span class="section-title">Section 2: Related Work</span>
+                </div>
+
+                <div class="moves">
+                    <div class="move">
+                        <div class="move-title">Prompt Compression Overview</div>
+                        <div class="move-content">
+                            <strong>Categories:</strong> Soft prompt compression (trainable parameters) vs. Discrete prompt compression (token-level strategies)
+                        </div>
+                        <div class="key-excerpt">
+                            "Compared to soft prompt compression, discrete prompt compression seeks to optimize the effectiveness of prompts via token-level search strategies."
+                        </div>
+                    </div>
+
+                    <div class="move">
+                        <div class="move-title">Critical Gap</div>
+                        <div class="move-content">
+                            <strong>Limitation:</strong> "Their primary focus lies on token-level compression, neglecting the comprehensive graph structure information"
+                        </div>
+                        <div class="key-excerpt">
+                            "Despite the significant advancements achieved by these studies, their primary focus lies on token-level compression, neglecting the comprehensive graph structure information inherent in the prompt."
+                        </div>
+                    </div>
+
+                    <div class="move">
+                        <div class="move-title">Knowledge Graphs for LLM</div>
+                        <div class="move-content">
+                            <strong>Novelty Claim:</strong> "To the best of our knowledge, Prompt-SAW is the first to make an attempt to leverage knowledge graph structure for prompt compression"
+                        </div>
+                        <div class="key-excerpt">
+                            "To the best of our knowledge, Prompt-SAW is the first to make an attempt to leverage knowledge graph structure for prompt compression."
+                        </div>
+                        <div class="analysis">
+                            Establishes KGs as valid in LLM context, then claims novelty for prompt compression application.
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="flow-arrow">↓</div>
+
+            <!-- Methods Section -->
+            <div class="section">
+                <div class="section-header">
+                    <span class="section-title">Section 4: Method</span>
+                </div>
+
+                <div class="moves">
+                    <div class="move">
+                        <div class="move-title">Graph Construction</div>
+                        <div class="move-content">
+                            <strong>Approach:</strong> OpenIE toolkit (primary) + LLM-based extraction (auxiliary) for constructing graph G from prompt P
+                        </div>
+                        <div class="key-excerpt">
+                            "For graph construction from the text data, we primarily rely traditional knowledge extraction approaches, i.e., OpenIE, to construct a graph G, as follows: G = IE(P)"
+                        </div>
+                    </div>
+
+                    <div class="move">
+                        <div class="move-title">Task-aware Prompts</div>
+                        <div class="move-content">
+                            <strong>Strategy:</strong> Similarity-based ranking between question embeddings and graph elements; extract high-similarity subgraph
+                        </div>
+                        <div class="key-excerpt">
+                            "For task-aware prompts, Prompt-SAW looks for small-scale information elements in the graph to only retain task-specific information as a sub-graph."
+                        </div>
+                        <div class="key-excerpt">
+                            "Then, it computes the pair-wise similarity between the Emb_p^que and information elements in G: Sim_G = {E(g_i) · Emb_p^que | ∀ g_i ∈ G}"
+                        </div>
+                    </div>
+
+                    <div class="move">
+                        <div class="move-title">Task-agnostic Prompts</div>
+                        <div class="move-content">
+                            <strong>Strategy:</strong> Sequential traversal with similarity threshold; binary search for optimal threshold δ meeting target compression rate
+                        </div>
+                        <div class="key-excerpt">
+                            "For task-agnostic prompts, Prompt-SAW measures similarity scores between successive information elements in the graph to remove the redundant elements to obtain required sub-graph."
+                        </div>
+                        <div class="key-excerpt">
+                            "Our underlying intuition is that highly similar information elements will carry repeated information. Thus, we could avoid redundant information in P by selecting only dissimilar elements."
+                        </div>
+                    </div>
+
+                    <div class="move">
+                        <div class="move-title">Prompt Restoration</div>
+                        <div class="move-content">
+                            <strong>Output:</strong> C = e₁⊕r₁⊕e'₁ ; ... ; eₙ⊕rₙ⊕e'ₙ (reinstates graph elements as compressed prompt)
+                        </div>
+                        <div class="key-excerpt">
+                            "Finally, we restore/reconstruct the information elements in G_subset to come up with our compressed prompt C: C = e₁⊕r₁⊕e'₁ ; ... ; eₙ⊕rₙ⊕e'ₙ"
+                        </div>
+                        <div class="analysis">
+                            Restoration step ensures grammatical coherence - directly addresses main contribution.
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="flow-arrow">↓</div>
+
+            <!-- Experiments Section -->
+            <div class="section">
+                <div class="section-header">
+                    <span class="section-title">Section 5: Experiments</span>
+                </div>
+
+                <div class="moves">
+                    <div class="move">
+                        <div class="move-title">Task-agnostic Results (GSM8K-aug)</div>
+                        <div class="move-content">
+                            <strong>Improvements:</strong> 7.3%, 10.1%, 5.5%, 4.2% EM improvement for 1-shot, 2-shot, 4-shot, 8-shot; 32.3%-34.9% compression
+                        </div>
+                        <div class="key-excerpt">
+                            "Compared to the best performing baselines, Prompt-SAW improves the EM score by up to 7.3%, 10.1%, 5.5% and 4.2% under 1-shot, 2-shot, 4-shot and 8-shot settings, respectively. Correspondingly reduction in the prompt size is 32.3%, 34.9%, 33.0% and 32.9%."
+                        </div>
+                    </div>
+
+                    <div class="move">
+                        <div class="move-title">Task-aware Results (NaturalQuestions)</div>
+                        <div class="move-content">
+                            <strong>Improvements:</strong> 39.0%, 40.8%, 14.7% for GPT3.5-turbo; 77.1%, 71.2%, 72.7% for LLaMA2-7B-chat; up to 93.7% compression
+                        </div>
+                        <div class="key-excerpt">
+                            "Prompt-SAW improves the Span Accuracy by 39.0%, 40.8% and 14.7% for GPT3.5-turbo, and 77.1%, 71.2%, 72.7% for LLaMA2-7B-chat, respectively, for different values of the target compression rates η* = {0.5, 0.3, 0.1}."
+                        </div>
+                        <div class="key-excerpt">
+                            "Correspondingly, the reduction in the prompt size is 56.7%, 74.0%, and 93.7% respectively."
+                        </div>
+                    </div>
+
+                    <div class="move">
+                        <div class="move-title">Readability Evaluation</div>
+                        <div class="move-content">
+                            <strong>Findings:</strong> Higher fluency scores; concrete examples show grammatical coherence vs. baseline incoherence
+                        </div>
+                        <div class="example-box">
+                            LLMLingua output: "List of Nobelates in The first Prize1 Wilhelmrad, of who received82 in en prize"<br>
+                            Prompt-SAW: Consistent grammatical sentence structure
+                        </div>
+                        <div class="key-excerpt">
+                            "These results show that Prompt-SAW yields relatively higher fluency scores than the baseline models. A lower score for baseline models, e.g., LLMLingua, is attributable to loss of intrinsic semantic relationship between the tokens for the compressed prompt."
+                        </div>
+                        <div class="analysis">
+                            Excellent evaluation directly addressing main contribution (readability). Combination of examples and metrics provides strong evidence.
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="flow-arrow">↓</div>
+
+            <!-- Conclusion Section -->
+            <div class="section">
+                <div class="section-header">
+                    <span class="section-title">Section 6: Conclusion</span>
+                </div>
+
+                <div class="moves">
+                    <div class="move">
+                        <div class="move-title">Key Contribution</div>
+                        <div class="move-content">
+                            <strong>Achievement:</strong> Graph-based compression with superior performance and readability
+                        </div>
+                        <div class="key-excerpt">
+                            "In this work, we proposed Prompt-SAW that leverages graph structures to infer key information in the prompt in order to come up with a compressed prompt. Experimental evaluation showed that Prompt-SAW outperforms the existing research on by a significant margin."
+                        </div>
+                        <div class="key-excerpt">
+                            "Moreover, Prompt-SAW addressed a key limitation of existing prompt compression approaches, i.e., the compressed prompts are easy to read and understand for end-readers."
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+
+        <h2>Cross-Disciplinary Comparison</h2>
+        <table class="comparison-table">
+            <tr>
+                <th>Aspect</th>
+                <th>Prompt-SAW Paper (CS/NLP)</th>
+                <th>Traditional Academic</th>
+                <th>Key Learning</th>
+            </tr>
+            <tr>
+                <td>Literature Review</td>
+                <td class="highlight">Separate section with categorical organization</td>
+                <td>Integrated into introduction</td>
+                <td>CS papers organize related work by categories/themes</td>
+            </tr>
+            <tr>
+                <td>Technical Detail</td>
+                <td class="highlight">Very High (graph algorithms, embeddings, similarity functions)</td>
+                <td>Medium (methods overview)</td>
+                <td>Mathematical formalism with graph notation crucial</td>
+            </tr>
+            <tr>
+                <td>Evaluation</td>
+                <td class="highlight">Multiple metrics (EM, Span-Acc, Rouge, Fluency) + qualitative examples</td>
+                <td>Theoretical validation, qualitative</td>
+                <td>Human-centered metrics alongside performance metrics</td>
+            </tr>
+            <tr>
+                <td>Contribution Claims</td>
+                <td class="highlight">Technical novelty + benchmark contribution (GSM8K-aug)</td>
+                <td>Theoretical advancement + evidence</td>
+                <td>CS values both algorithmic and dataset contributions</td>
+            </tr>
+        </table>
+
+        <h2>Imitation Framework for Future Papers</h2>
+        <div class="analysis">
+            <h3>Structural Elements to Adapt:</h3>
+            <ul>
+                <li><strong>Graph-Based Methodology:</strong> Transformation from text to graph structure as key innovation</li>
+                <li><strong>Scenario-Based Organization:</strong> Different approaches for different scenarios (task-aware vs. task-agnostic)</li>
+                <li><strong>Benchmark Creation:</strong> Extended datasets (GSM8K-aug) for comprehensive evaluation</li>
+                <li><strong>Readability Evaluation:</strong> Human-centered metrics alongside performance metrics</li>
+            </ul>
+
+            <h3>Rhetorical Strategies:</h3>
+            <ul>
+                <li><strong>Concrete Examples:</strong> Before/after comparisons to illustrate problems and solutions vividly</li>
+                <li><strong>Gap Emphasis:</strong> Explicit identification of specific limitations ("lack grammatical coherence")</li>
+                <li><strong>Novelty Claims:</strong> "First to leverage knowledge graph structure" type statements with hedging</li>
+                <li><strong>Practical Impact:</strong> Emphasis on real-world benefits (readability, computational cost)</li>
+            </ul>
+
+            <h3>Quality Indicators:</h3>
+            <ul>
+                <li><strong>Mathematical Rigor:</strong> Formal definitions with graph notation (G, g_i, e_i, r_i)</li>
+                <li><strong>Empirical Validation:</strong> Multiple evaluation dimensions (performance, compression, readability)</li>
+                <li><strong>Benchmark Contributions:</strong> New datasets or extended versions for evaluation</li>
+                <li><strong>Algorithmic Sophistication:</strong> Binary search, similarity-based ranking, threshold optimization</li>
+            </ul>
+        </div>
+
+        <div style="text-align: center; margin-top: 30px; color: #7f8c8d; font-size: 0.9em;">
+            <p>Analysis based on macro-level structure framework from academic writing pedagogy</p>
+            <p>Interactive visualization for learning paper organization patterns</p>
+        </div>
+    </div>
+</body>
+</html>

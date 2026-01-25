@@ -1,0 +1,375 @@
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\section{Background}
+\label{Appendix:Background}
+
+\subsection{Knowledge Graph}
+\label{sec:BCKGD_KG}
+Knowledge Graph (KG) can be represented as $\mathcal{G}=\{(s,r,o)\subseteq\mathcal{E}\times\mathcal{R}\times\mathcal{E}\}$, 
+where $\mathcal{E}$ and $\mathcal{R}$ denote the set of entities
+and relations. Here entities are represented as nodes in $\mathcal{G}$,
+while relations $\mathcal{R}$ form up edges between the nodes.
+
+\subsection{Task-aware Prompts}
+\label{Appendix:aware-prompts}
+Task-aware prompts refer to the ones that are strongly related to the task and need to be re-compressed while changing the question. These prompts usually contain the specific information needed to solve the task, and some redundant parts can be removed. For example, the task can be the question, {\em "Who are the first people to win the Nobel Prize?"} and the prompt may contain a document that includes all the information about people who won the Nobel Prize. \eat{Prompts with external documentation are also an example of task-aware prompts.}
+
+\subsection{Task-agnostic Prompts}
+\label{Appendix:agnositic-prompts}
+Opposite to task-aware prompts, task-agnostic prompts are weakly related to the task. This kind of prompt usually just provides LLMs with an example of what to do, such as how to solve the problem step by step. For example, the prompt may be "The weather is really nice today, emotion: positive." The model then follows this format and judges the emotion of the input sentence. \eat{Chain-of-thought Prompts are task-agnostic.}
+
+
+\subsection{Chain-of-thought Prompt}
+\label{Appendix:CoT}
+This is a type of task-agnostic prompt. 
+Chain-of-thought Prompt aims to improve performance on tasks requiring logic and calculation by mimicking human reasoning. That is $x^{info}$ include several demonstrations with detailed reasoning $p^{info}=\{p^{demo}_1,p^{demo}_2,\cdots\}$. We research how to compress chain-of-thought prompts on mathematical reasoning tasks.
+
+\eat{\textbf{Mathematical Reasoning.} In mathematical reasoning, all questions can be solved by following the same reasoning examples. That is, $p^{info}$ is the same for all questions. We only need to compress the prompt once, regardless of the number of questions.}
+
+
+\subsection{Prompt with external documentation}
+\label{Appendix:EXTdoc}
+This is a type of task-aware prompt. 
+Prompt with external documentation implies that the prompt contains 
+some additional information, such as external knowledge, that the model may refer to to answer the question. That external knowledge 
+$x^{info}$ may include several external documents $p^{info}=\{p^{doc}_1,p^{doc}_2,\cdots\}$. 
+Question Answering is a specific scenario for prompts with 
+external knowledge.
+
+\eat{\textbf{Question Answering} requires understanding the natural language question and then querying the external document to capture the most appropriate answer. Different questions require querying different external documents. In question answering, different questions refer to different external documents. That is, $p^{info}$ is distinct from questions. We need to perform $n$ compression on $n$ questions.}
+
+\subsection{Token-level Prompt compression} 
+In this section, we introduce the previous token-level compression method, e.g., LLMlingua~\citep{llmlingua}, 
+and LongLLMlingua~\citep{longllmlingua}. 
+
+{\bf LLMLingua} is a token-level prompt compression method that
+performs compression based on perplexity. It includes a budget controller to calculate the compression ratio of demonstrations and the further compression ratio of each demonstration based on given parameters. LLMLingua uses the LLAMA-2~\cite{llama} to calculate the perplexity of each token. Finally, LLMLingua compresses the prompt based on the perplexity and compression ratio.
+
+{\bf LongLLMlingua} is a token-level prompt compression method that aims at task-aware prompt compression. It changes the perplexity measure method and relates it to the specific question.
+
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\eat{\section{Additional Approaches for Graph Construction}
+\label{Appendix:graph-construct}
+We also OpenIE~\citep{OpenIE} for graph construction. 
+% 简单介绍OpenIE
+OpenIE is a tool proposed by Stanford University for extracting open-domain relation triples.
+% 使用OpenIE进行构建的流程步骤
+We use the following steps to construct the graph using OpenIE:
+(i) We segment the original prompt into sentences.
+(ii) We use OpenIE to extract relation triples for each sentence. Specifically, we extract $(\mathcal{E}, \mathcal{R}, \mathcal{E})$, 
+where $\mathcal{E}$ represents entities, and $\mathcal{R}$ represents relations between entities.
+(iii) We integrate the relation triples obtained in step (ii) 
+into the form of a graph. We consider $\mathcal{E}$ as 
+nodes in the graph and $\mathcal{R}$ as the edges in the graph.
+Formally, it may be represented as:
+\begin{equation}
+    \mathcal{G} = {OpenIE}(Parser(P))
+   \label{eq:Stage1}
+\end{equation}
+where $(P)$ is the prompt text, $Parser$ is the function that parse the prompt into sentences. OpenIE is the tool we mentioned above.
+}
+
+
+
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\section{Prompts}
+\label{Appendix:prompts}
+\subsection{Prompts for Graph Construction}
+\label{Appendix:prompt_Graph}
+\begin{tcolorbox}[colback=gray!5!white,colframe=black!75!black,title=Prompts for Graph Construction:]
+\textbf{Example:}\\ 
+    \textbf{Input:}\\ 
+    Deadpool 2 is scheduled to be released in the United States on May 18, 2018.  A sequel, Deadpool 3, is in development.\\
+    \textbf{Output:}\\
+    $<$Deadpool 2; is scheduled to be released in; the United States on May 18, 2018$>$\\
+$<$Deadpool 3; is in; development$>$\\
+\textbf{Hint:}
+\begin{itemize}
+    \item You should only respond the knowledge graph triplet and not contain other word.
+    \item The knowledge graph triplet is formulated as $<s, r, o>$, $s$ and $o$ should not be too long.
+    \item Please keep all the relations atomic and indivisible.
+\end{itemize}
+Please generate the entity and relation triplets of the Input:\\
+Input:{}
+\end{tcolorbox}
+
+
+
+\subsection{Instructions used for GPT-4 response Generation}
+\label{Appendix:prompt_GPT4}
+The instructions we used in the GPT-4 Generation are shown below:
+\begin{tcolorbox}[colback=gray!5!white,colframe=black!75!black,title=Instructions used for GPT-4 response Generation:]
+\textbf{Instruction1. } Condense the given paragraph to just 50\% of its original size, focusing on the core message.\\
+\textbf{Instruction2. } Reduce the length of the specified paragraph to 50\%, keeping only the most essential information.\\
+\textbf{Instruction3. } Compress the paragraph to 50\% of its length, ensuring the main idea is intact. Let’s do it step by step.\\
+\textbf{Instruction4. } You are a prompt compression expert. Please compress the following prompt to 50\% of its original length. Let’s do it step by step.\\
+\textbf{Instruction5. } You are a prompt compression expert. Please compress the following prompt with the following steps: (1) Find the key information of the document (2) Compress the prompt to 50\% of its original length without damaging key information. Let’s do it step by step.
+\end{tcolorbox}
+
+
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%\section{Additional Implementation details}
+%\label{Appendix:implementation}
+
+
+
+
+
+\eat{
+\begin{algorithm}[H]
+    \caption{\scshape Task-agnostic Compress}
+    \label{alg:alg3}
+    \begin{algorithmic}[1]
+    \Require
+        \item[] { \#$\delta:$ {The compress threshold}}
+        \item[] { \#$\mathcal{G}:$ Graph structure of prompt}
+        \item[] { \#$E:$ encoder}
+        \item[] { \#$sim():$ function used to calculate similarity}
+    \Ensure subgraph $\mathcal{G}_{subset}$
+        \State $\mathcal{G}^\prime=\{\}$
+        \For{$g_i \in \mathcal{G}$}
+            \State $Sim_{max}=0$
+            \For{$g \in \mathcal{G}^\prime$}
+                \State $sim_{max}=max(sim_{max},sim(E(g),E(g_i)))$
+            \EndFor
+            \If{$sim_{max}<=\delta$}
+            \State $\mathcal{G^\prime}.insert(g_i)$
+            \EndIf
+        \EndFor
+        \State \Return $\mathcal{G}_{subset}$
+    \end{algorithmic}
+\end{algorithm}
+}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\section{Experimental Details}
+\label{Appendix:EXP}
+
+\subsection{Dataset}
+\label{Appendix:data}
+We provide a detailed description of the evaluation data sets below.
+The statistics of the dataset are given in Table~\ref{tab:DataStat}.
+
+\input{Table_tex/data-stat}
+
+
+\noindent{\bf (i) \OurDATA{}.} 
+we use~\OurDATA{}, an extended version 
+of original GSM8k data set allowing computations for under 
+i-shot settings, \emph{i.e.,} i = \{1, 2, 4 and 8\}-shots.
+Its process-flow is explained in Section~\ref{sec:data_aug}.
+The statistics of the data set is shown in Table~\ref{tab:DataStat}.
+
+\noindent{\bf (ii) NaturalQuestions.} 
+It is a QA dataset that is comprised of real-world queries collected by individuals~\cite{LostInMiddle}. 
+Each question of this dataset has 20 related documents, one of which 
+contains the correct answer. We select documents containing answers 
+as compression targets to examine better the compression performance of 
+different methods on a single document.
+\eat{10th, 15th, and 20th
+Each example comprises query google.com query and responses derived from Wikipedia pages.
+\fixchen{Cheng, plz fix the information in this para.}}
+
+
+\noindent{\bf (iii) ShareGPT.} 
+It is a conversation dataset encompassing users' 
+conversation with ChatGPT\footnote{\url{ShareGPT.com}}.
+Each data sample is a complete conversation between 
+the user and ChatGPT, covering multiple languages across 
+different scenarios.
+Following~\citet{selectiveContext} and~\citet{llmlingua}, 
+we use a subset of 575 samples provide 
+by~\citet{selectiveContext} for evaluation.
+We use all dialogues except the final round as the 
+prompt, and the human's question in the last round 
+as the question.
+
+
+
+
+
+
+
+\subsection{Baseline Models}
+\label{Appendix:Baseline}
+{\bf (i) Selective-Context.}
+Selective-Context by~\citet{selectiveContext} uses a small language model 
+to calculate the self-information in the prompt and then filter out on 
+token-level based on the self-information of each token.
+
+\noindent{\bf (ii) LLMLingua.}
+LLMLingua by~\citet{llmlingua} perform token-level prompt compression 
+based on the perplexity calculated by the small language model.
+
+\noindent{\bf (iii) LongLLMLingua.} Based on LLMLingua, LongLLMlingua by~\citet{longllmlingua} further adds a coarse-grained filtering module, which is more suitable for long document compression.
+ 
+ 
+We followed their original experimental setting, uses  LLMLlingua on GSM8K and  
+LongLLMlingua on NaturalQuestions. 
+ 
+\noindent\textbf{(iv) GPT-4.} We designed five sets of prompts for 
+GPT-4~\citep{GPT4} to inspire its ability on prompt compression 
+and reported the best scores. Appendix~\ref{Appendix:prompts} 
+displays the prompts we employed. 
+ 
+
+\subsection{Evaluation Metrics} 
+\label{Appendix:Eval} 
+Detailed description and mathematical formulation of the evaluation metrics  
+is provided as follows: 
+
+\noindent{\bf Exact Match (EM).} 
+In EM, when the model output answer is completely consistent with the golden answer, the answer is considered correct. It is shown below.
+\begin{equation}
+\mathbbm{1}\left[\bigvee_{q \in \mathcal{Q}} [f(compress(q)) = q^*]\right]
+\end{equation}
+Where $f(\cdot)$ represents the model used to answer the question, $\mathcal{Q}$ and $q^*$ represent the question, and $q^*$ indicate the answer for question, and $compress$ indicate the prompt compression method.\\
+
+\noindent{\bf Span Accuracy (SAcc).} We follow previous work and use SAcc to measure the performance of QA datasets. SAcc determines whether the standard answer is part of the response answer of the GPT model, as shown below.
+\begin{equation}
+\mathbbm{1}\left[\bigvee_{q \in \mathcal{Q}} [ q^* \in f(compress(q))]\right]
+\end{equation}
+
+\noindent{\bf Rouge.}
+To measure the similarity between the output of the 
+original prompt and the compressed prompt, we apply 
+commonly used overlap metric ROUGE~\citep{rouge_2004}.
+We report uni-gram and bi-gram overlap as the metric 
+of assessing informativeness (Rouge-1 and Rouge-2), 
+and the longest common sub-sequence as the metric 
+of assessing ﬂuency (Rouge-L). 
+
+% \begin{equation}
+%     \text{ROUGE-N}\\=\frac{S\in\{ReferemceSummaries\}gram_n\in S}{\sum_{S\in\{ReferenceSummaries\}}Count(gram_n)}
+% \end{equation}}
+
+
+
+\noindent{\bf Fluency (FL).}
+We use fluency as a metric to measure the readability and grammatical coherence 
+of the compressed prompt. Following~\citet{Fluency}, we use the following formula to 
+compute the fluency.
+
+\begin{equation}
+    \text{FL}=-\sum_{k}f(k)\log_{2}f(k)
+\end{equation}
+where ${f(\cdot)}$ means the $n$-gram frequency distribution.
+
+
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\section{Additional Results}
+\label{Appendix:Analyses}
+
+%\subsection{Different target LLMs}
+%\label{Appendix:targetLLMs}
+
+%\subsection{Fluency of compressed prompts}
+% \label{Appendix:Fluency}
+
+\subsection{Interpretability of Compressed prompts (Examples)}
+\label{Appendix:exp-readability}
+In this section, we report some examples prompts 
+along with prompts compressed by~\OurMODEL{} and LLMLingua~\citep{llmlingua} for a quick 
+comparison in terms of readability and/or interpretability of the compressed prompt.
+As an example, for the compressed prompt text compressed using LLMLingua in Table~\ref{Appendix:ex1}, 
+the text {"\em won twoes forg01 theate women prize:ertMayer" } is hard to interpret for humans.
+On the contrary, the prompt compressed by~\OurMODEL{} yields comprehensive
+information units helpful that are not only easy to interpret but are also \eat{. And we can easily know that {"\em Wilhelm Conrad R  ̈ontgen awarded first Nobel Prize in Physics 1901"} is }highly relevant to the question.
+
+\onecolumn
+
+
+% example1 
+\begin{tcolorbox}[colback=gray!5!white,colframe=black!75!black,title=Example 1.]
+\label{Appendix:ex1}
+\textbf{Original Prompt:}\\
+Write a high-quality answer for the given question using only the provided search results.\\Document [1](Title: List of Nobel laureates in Physics) The first Nobel Prize in Physics was awarded in 1901 to Wilhelm Conrad Röntgen, of Germany, who received 150,782 SEK, which is equal to 7,731,004 SEK in December 2007.  John Bardeen is the only laureate to win the prize twice—in 1956 and 1972. Maria Skłodowska-Curie also won two Nobel Prizes, for physics in 1903 and chemistry in 1911. William Lawrence Bragg was, until October 2014, the youngest ever Nobel laureate; he won the prize in 1915 at the age of 25. Two women have won the prize: Curie and Maria Goeppert-Mayer (1963). As of 2017, the prize has been awarded\\Question: who got the first nobel prize in physics.\\Answer:\\
+
+\textbf{Compressed Prompt by LLMLingua:}\\
+Write a high-quality answer for the given question using only the provided search results.\\1Title: List of Nobelates in The first Prize1 Wilhelmrad, of who received82 in en prize. won twoes forg01 theate women prize:ertMayer (1963). As of 2017, the prize has been awarded\\Question: who got the first nobel prize in physics.\\Answer:\\
+
+\textbf{Compressed Prompt by \OurMODEL{}:}\\
+Write a high-quality answer for the given question using only the provided search results.\\Wilhelm Conrad Röntgen awarded first Nobel Prize in Physics 1901.William Lawrence Bragg won Nobel Prize in Physics 1915.Maria Goeppert-Mayer won Nobel Prize in Physics 1963\\Question: who got the first nobel prize in physics.\\Answer:
+\end{tcolorbox}
+\clearpage
+
+
+% example2
+\begin{tcolorbox}[colback=gray!5!white,colframe=black!75!black,title=Example 2.]
+\label{Appendix:ex2}
+\textbf{Original Prompt:}\\
+Write a high-quality answer for the given question using only the provided search results.\\Document [1](Title: Distilled beverage) The term \"spirit\" in reference to alcohol stems from Middle Eastern alchemy.  These alchemists were more concerned with medical elixirs than with transmuting lead into gold. The vapor given off and collected during an alchemical process (as with distillation of alcohol) was called a spirit of the original material.\\Question: where did the term spirits for alcohol come from\\Answer:\\
+
+\textbf{Compressed Prompt by LLMLingua:}\\
+Write a high-quality answer for the given question using only the provided search results.\\) was called a spirit of the original material.\\Question: where did the term spirits for alcohol come from\\Answer:\\
+
+\textbf{Compressed Prompt by \OurMODEL{}:}\\
+Write a high-quality answer for the given question using only the provided search results .\\Alchemical process involves distillation of alcohol.Spirit stems from Middle Eastern alchemy\\Question: where did the term spirits for alcohol come from\\Answer:
+
+
+\end{tcolorbox}
+
+% example3
+\begin{tcolorbox}
+[colback=gray!5!white,colframe=black!75!black,title=Example 3.]
+\label{Appendix:ex3}
+\textbf{Original Prompt:}\\
+Write a high-quality answer for the given question using only the provided search results.\\
+Document [1](Title: OPEC) Organization of the Petroleum Exporting Countries 
+(OPEC, OH-pek, or OPEP in several other languages) is an intergovernmental organization of 14 nations as of February 2018, founded in 1960 in Baghdad by the first five members (Iran, Iraq, Kuwait, Saudi Arabia, and Venezuela), and headquartered since 1965 in Vienna, Austria. As of 2016, the 14 countries accounted for an estimated 44 percent of global oil production and 73 percent of the world's \"proven\" oil reserves, giving OPEC a major influence on global oil prices that were previously determined by American-dominated multinational oil companies.\\
+Question: how many countries are a part of opec\\
+Answer:\\
+
+\textbf{Compressed Prompt by LLMLingua:}\\
+Write a high-quality answer for the given question using only the provided search results.\\
+Title: OPE ofC, /\u02c8kkPEP in otheral1 nations as1 in by Venezuela. of the4  on by Americanatedinational oil companies.\\
+Question: how many countries are a part of opec\\
+Answer:\\
+
+\textbf{Compressed Prompt by \OurMODEL{}:}\\
+Write a high-quality answer for the given question using only the provided search results.\\Organization of the Petroleum Exporting Countries abbreviation OPEC.Organization of the Petroleum Exporting Countries nations involved 14.Organization of the Petroleum Exporting Countries founded in 1960\\Question: how many countries are a part of opec\\Answer:\\
+\end{tcolorbox}
+
+
+% example4
+\begin{tcolorbox}
+[colback=gray!5!white,colframe=black!75!black,title=Example 4.]
+\label{Appendix:ex4}
+\textbf{Original Prompt:}\\
+Write a high-quality answer for the given question using only the provided search results.\\Document [1](Title: Subcutaneous injection) A subcutaneous injection is administered as a bolus into the subcutis, the layer of skin directly below the dermis and epidermis, collectively referred to as the cutis.  Subcutaneous injections are highly effective in administering vaccines and medications such as insulin, morphine, diacetylmorphine and goserelin. Subcutaneous, as opposed to intravenous, injection of recreational drugs is referred to as \"skin popping\". Subcutaneous administration may be abbreviated as SC, SQ, sub-cu, sub-Q, SubQ, or subcut. Subcut is the preferred abbreviation for patient safety.\\Question: where would a subcutaneous injection be made in the skin\\Answer:\\
+
+\textbf{Compressed Prompt by LLMLingua:}\\
+Write a high-quality answer for the given question using only the provided search results.\\Document [1](Title: Subcutaneous injection) A subcutaneous injection is administered as a bolus into the subcutis, the layer of skin directly below the dermis and epidermis, collectively referred to as the cutis.  Subcutaneous injections are highly effective in administering vaccines and medications such as insulin, morphine, diacetylmorphine and goserelin. Subcutaneous, as opposed to intravenous, injection of recreational drugs is referred to as \"skin popping\". Subcut SubQ, or subcut. Subcut is the preferred abbreviation for patient safety\\Question: where would a subcutaneous injection be made in the skin\\Answer:\\
+
+
+\textbf{Compressed Prompt by \OurMODEL{}:}\\
+Write a high-quality answer for the given question using only the provided search results.\\Subcutaneous injection administered as bolus into the subcutis.Subcutaneous injection administered for vaccines and medications.Subcutaneous injection referred to as \"skin popping\"\\Question: where would a subcutaneous injection be made in the skin\\Answer:\\
+\end{tcolorbox}
+
+
+\eat{
+\eat{\subsection{\OurMODEL{} Results via Graph construction in~\ref{Appendix:graph-construct}}
+\label{Appendix:exp-varyGraph}
+\fixchen{Add some results for different graph construction approaches here..!}} 
+\begin{tcolorbox}
+[colback=gray!5!white,colframe=black!75!black,title=Example 1.]
+Write a high-quality answer for the given question using only the provided search results.\\Gallbladder is a small hollow organ.Bile is stored in Gallbladder.Gallbladder lies beneath liver.Gallbladder is in vertebrates.Bile is concentrated in Gallbladder.Gallbladder releases bile via common bile duct.\\Question: where is gall bladder situated in human body\\Answer:
+\end{tcolorbox}
+\begin{tcolorbox}
+[colback=gray!5!white,colframe=black!75!black,title=Example 2.]
+Write a high-quality answer for the given question using only the provided search results.\\Patriots met Eagles in Super Bowl LII.Eagles won against Patriots\\Question: when's the last time the philadelphia eagles played the new england patriots\\Answer:
+\end{tcolorbox}}
+
+
+
+%\clearpage
+%\section{Computational Overhead of \OurMODEL{}}
+
+%\fixchen{Fill details here}
+%\fixevan{Fill details here}
+
+
+

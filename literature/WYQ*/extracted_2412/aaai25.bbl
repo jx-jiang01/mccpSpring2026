@@ -1,0 +1,194 @@
+\begin{thebibliography}{30}
+\providecommand{\natexlab}[1]{#1}
+
+\bibitem[{Balseiro, Lu, and Mirrokni(2020)}]{APP:Balseiro-ICML'20}
+Balseiro, S.; Lu, H.; and Mirrokni, V. 2020.
+\newblock Dual mirror descent for online allocation problems.
+\newblock In \emph{Proceedings of the 37th International Conference on Machine
+  Learning (ICML)}, 613--628.
+
+\bibitem[{Besbes, Gur, and Zeevi(2015)}]{OT:B.Omar-OR'15}
+Besbes, O.; Gur, Y.; and Zeevi, A. 2015.
+\newblock Non-stationary stochastic optimization.
+\newblock \emph{Operations Research}, 63(5): 1227--1244.
+
+\bibitem[{Cao and Liu(2019)}]{DLTC:X.Cao-TAC'19}
+Cao, X.; and Liu, K. J.~R. 2019.
+\newblock Online convex optimization with time-varying constraints and bandit
+  feedback.
+\newblock \emph{IEEE Transactions on Automatic Control}, 64(7): 2665--2680.
+
+\bibitem[{Cao, Zhang, and Poor(2021)}]{DLTC:X.Cao-TAC'21}
+Cao, X.; Zhang, J.; and Poor, H.~V. 2021.
+\newblock Constrained online convex optimization with feedback delays.
+\newblock \emph{IEEE Transactions on Automatic Control}, 66(11): 5049--5064.
+
+\bibitem[{Chen, Ling, and Giannakis(2017)}]{DLTC:T.Chen-TSP'17}
+Chen, T.; Ling, Q.; and Giannakis, G.~B. 2017.
+\newblock An online convex optimization approach to proactive network resource
+  allocation.
+\newblock \emph{IEEE Transactions on Signal Processing}, 65(24): 6350--6364.
+
+\bibitem[{Eshraghi and Liang(2020)}]{DReg:Nima-ICML'20}
+Eshraghi, N.; and Liang, B. 2020.
+\newblock Distributed online optimization over a heterogeneous network with
+  any-batch mirror descent.
+\newblock In \emph{Proceedings of the 37th International Conference on Machine
+  Learning (ICML)}, 2933--2942.
+
+\bibitem[{Guo et~al.(2022)Guo, Liu, Wei, and Ying}]{CLTC:H.Guo-NIPS'22}
+Guo, H.; Liu, X.; Wei, H.; and Ying, L. 2022.
+\newblock Online convex optimization with hard constraints: Towards the best of
+  two worlds and beyond.
+\newblock In \emph{Advances in Neural Information Processing Systems
+  (NeurIPS)}, 36426–36439.
+
+\bibitem[{Hall and Willett(2015)}]{DReg:E.C.Hall-JSTSP'15}
+Hall, E.~C.; and Willett, R.~M. 2015.
+\newblock Online convex optimization in dynamic environments.
+\newblock \emph{IEEE Journal of Selected Topics in Signal Processing}, 9(4):
+  647--662.
+
+\bibitem[{Hazan(2016)}]{BK-E.Hazan'16}
+Hazan, E. 2016.
+\newblock Introduction to online convex optimization.
+\newblock \emph{Foundations and Trends in Optimization}, 2(3-4): 157--325.
+
+\bibitem[{{Hazan}, {Agarwal}, and {Kale}(2007)}]{OCO-STC:E.Hazan-ML'2007}
+{Hazan}, E.; {Agarwal}, A.; and {Kale}, S. 2007.
+\newblock Logarithmic regret algorithms for online convex optimization.
+\newblock \emph{Machine Learning}, 69(2): 169--192.
+
+\bibitem[{Hsu et~al.(2021)Hsu, Xu, Lin, and Bell}]{APP:Hsu-OR'21}
+Hsu, W.-K.; Xu, J.; Lin, X.~L.; and Bell, M.~R. 2021.
+\newblock Integrated online learning and adaptive control in queueing systems
+  with uncertain payoffs.
+\newblock \emph{Operations Research}, 70(2): 1166--1181.
+
+\bibitem[{Jadbabaie et~al.(2015)Jadbabaie, Rakhlin, Shahrampour, and
+  Sridharan}]{DReg:Jadbabaie-AISTATS'15}
+Jadbabaie, A.; Rakhlin, A.; Shahrampour, S.; and Sridharan, K. 2015.
+\newblock Online optimization: Competing with dynamic comparators.
+\newblock In \emph{Proceedings of the 18th International Conference on
+  Artificial Intelligence and Statistics (AISTATS)}, 398--406.
+
+\bibitem[{Jenatton, Huang, and Archambeau(2016)}]{SLTC:R.Jenatton-ICML'16}
+Jenatton, R.; Huang, J.; and Archambeau, C. 2016.
+\newblock Adaptive algorithms for online convex optimization with long-term
+  constraints.
+\newblock In \emph{Proceedings of the 33rd International Conference on Machine
+  Learning (ICML)}, 402--411.
+
+\bibitem[{Liu et~al.(2022)Liu, Wu, Huang, and Fang}]{DLTC:Q.Liu-SIGMETRICS'22}
+Liu, Q.; Wu, W.; Huang, L.; and Fang, Z. 2022.
+\newblock Simultaneously achieving sublinear regret and constraint violations
+  for online convex optimization with time-varying constraints.
+\newblock \emph{ACM SIGMETRICS Performance Evaluation Review}, 49(3): 4--5.
+
+\bibitem[{Mahdavi, Jin, and Yang(2012)}]{SLTC:M.Mahdavi-JMLR'12}
+Mahdavi, M.; Jin, R.; and Yang, T. 2012.
+\newblock Trading regret for efficiency: Online convex optimization with long
+  term constraints.
+\newblock \emph{The Journal of Machine Learning Research}, 13(1): 2503--2528.
+
+\bibitem[{Mokhtari et~al.(2016)Mokhtari, Shahrampour, Jadbabaie, and
+  Ribeiro}]{DReg:A.Mokhatari-CDC'16}
+Mokhtari, A.; Shahrampour, S.; Jadbabaie, A.; and Ribeiro, A. 2016.
+\newblock Online optimization in dynamic environments: Improved regret rates
+  for strongly convex problems.
+\newblock In \emph{Proceedings of the 55th IEEE Conference on Decision and
+  Control (CDC)}, 7195--7201.
+
+\bibitem[{Shalev-Shwartz(2012)}]{BK-S.Shwartz'12}
+Shalev-Shwartz, S. 2012.
+\newblock Online learning and online convex optimization.
+\newblock \emph{Foundations and Trends in Machine Learning}, 4(2): 107--194.
+
+\bibitem[{Shi, Lin, and Fahmy(2021)}]{APP:M.Shi-TON'21}
+Shi, M.; Lin, X.; and Fahmy, S. 2021.
+\newblock Competitive online convex optimization with switching costs and ramp
+  constraints.
+\newblock \emph{IEEE/ACM Transactions on Networking}, 29(2): 876--889.
+
+\bibitem[{Sinha and Vaze(2024)}]{CLTC:A.Sinha-NIPS'24}
+Sinha, A.; and Vaze, R. 2024.
+\newblock Optimal algorithms for online convex optimization with adversarial
+  constraints.
+\newblock In \emph{Advances in Neural Information Processing Systems
+  (NeurIPS)}.
+
+\bibitem[{Wang et~al.(2023)Wang, Dong, Liang, Boudreau, and
+  Abou-Zeid}]{DTCOCO-TON}
+Wang, J.; Dong, M.; Liang, B.; Boudreau, G.; and Abou-Zeid, H. 2023.
+\newblock Delay-tolerant {OCO} with long-term constraints: Algorithm and its
+  application to network resource allocation.
+\newblock \emph{IEEE/ACM Transactions on Networking}, 31(1): 147--163.
+
+\bibitem[{Wei, Yu, and Neely(2020)}]{SLTC:X.Wei-SIGMETRICS'20}
+Wei, X.; Yu, H.; and Neely, M.~J. 2020.
+\newblock Online primal-dual mirror descent under stochastic constraints.
+\newblock \emph{Proceedings of the ACM on Measurement and Analysis of Computing
+  Systems (POMACS)}, 4(2): 1--36.
+
+\bibitem[{Yi et~al.(2021)Yi, Li, Yang, Xie, Chai, and
+  Johansson}]{CLTC:X.Yi-ICML'21}
+Yi, X.; Li, X.; Yang, T.; Xie, L.; Chai, T.; and Johansson, K. 2021.
+\newblock Regret and cumulative constraint violation analysis for online convex
+  optimization with long term constraints.
+\newblock In \emph{Proceedings of the 38th International Conference on Machine
+  Learning (ICML)}, 11998--12008.
+
+\bibitem[{Yi et~al.(2023)Yi, Li, Yang, Xie, Chai, and
+  Johansson}]{DCLTC:X.Yi-TAC'23}
+Yi, X.; Li, X.; Yang, T.; Xie, L.; Chai, T.; and Johansson, K.~H. 2023.
+\newblock Regret and cumulative constraint violation analysis for distributed
+  online constrained convex optimization.
+\newblock \emph{IEEE Transactions on Automatic Control}, 68(5): 2875--2890.
+
+\bibitem[{Yu, Neely, and Wei(2017)}]{SLTC:H.Yu-NIPS'17}
+Yu, H.; Neely, M.; and Wei, X. 2017.
+\newblock Online convex optimization with stochastic constraints.
+\newblock In \emph{Advances in Neural Information Processing Systems
+  (NeurIPS)}, 1428--1438.
+
+\bibitem[{Yu and Neely(2020)}]{SLTC:H.Yu-JMLR'20}
+Yu, H.; and Neely, M.~J. 2020.
+\newblock A low complexity algorithm with $O (\sqrt{T})$ regret and $O (1)$
+  constraint violations for online convex optimization with long term
+  constraints.
+\newblock \emph{Journal of Machine Learning Research}, 21(1): 1--24.
+
+\bibitem[{Yuan and Lamperski(2018)}]{CLTC:J.Yuan-NIPS'18}
+Yuan, J.; and Lamperski, A. 2018.
+\newblock Online convex optimization for cumulative constraints.
+\newblock In \emph{Advances in Neural Information Processing Systems
+  (NeurIPS)}, 6140--6149.
+
+\bibitem[{Zhang, Lu, and Zhou(2018)}]{DReg:L.Zhang-NeurIPS'18}
+Zhang, L.; Lu, S.; and Zhou, Z.-H. 2018.
+\newblock Adaptive online learning in dynamic environments.
+\newblock In \emph{Advances in Neural Information Processing Systems
+  (NeurIPS)}, 1330--1340.
+
+\bibitem[{Zhang et~al.(2017)Zhang, Yang, Yi, Jin, and
+  Zhou}]{DReg:L.Zhang-NeurIPS'17}
+Zhang, L.; Yang, T.; Yi, J.; Jin, R.~J.; and Zhou, Z.-H. 2017.
+\newblock Improved dynamic regret for non-degenerate functions.
+\newblock In \emph{Advances in Neural Information Processing Systems
+  (NeurIPS)}, 732--741.
+
+\bibitem[{Zhao and Zhang(2021)}]{DReg:L.Zhang-L4DC'21}
+Zhao, P.; and Zhang, L. 2021.
+\newblock Improved analysis for dynamic regret of strongly convex and smooth
+  functions.
+\newblock In \emph{Proceedings of the 3rd Conference on Learning for Dynamics
+  and Control (L4DC)}, 48--59.
+
+\bibitem[{Zinkevich(2003)}]{OCO-STC:M.Zinkevich-ICML'2003}
+Zinkevich, M. 2003.
+\newblock Online convex programming and generalized infinitesimal gradient
+  ascent.
+\newblock In \emph{Proceedings of the 20th International Conference on Machine
+  Learning (ICML)}, 928--936.
+
+\end{thebibliography}

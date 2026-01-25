@@ -1,0 +1,40 @@
+           
+
+% Please add the following required packages to your document preamble:
+% \usepackage{multirow}
+% \begin{table*}[h]
+% % \begin{tabular}{@{}lllllcccccc@{}}
+% \centering
+% \scalebox{0.85}{
+% \begin{tabular}{cccc}
+% \toprule
+% \multirow{2}{*}{statistics}    & \multirow{2}{*}{\OurDATA{}} & \multirow{2}{*}{NaturalQuestions} & \multirow{2}{*}{ShareGPT} \\
+%                                &                            &                                   &                           \\ \hline
+% Average token number of prompt & 306                        & 3040                              & 562                       \\
+% Number of questions            & 1319                       & 2654                              & 575                       \\ 
+% \bottomrule
+% \end{tabular}
+% }
+% \caption{The statistics of the dataset}
+% \label{tab:DataStat}
+% \end{table*}
+
+
+% Please add the following required packages to your document preamble:
+% \usepackage{multirow}
+\begin{table*}[h]
+% \begin{tabular}{@{}lllllcccccc@{}}
+\centering
+\scalebox{0.85}{
+\begin{tabular}{ccccccc}
+\toprule
+\multirow{2}{*}{Statistics} & \multicolumn{4}{c}{\OurDATA{}}     & \multirow{2}{*}{NaturalQuestions} & \multirow{2}{*}{ShareGPT} \\ \cline{2-5}
+                            & 1shot & 2shot & 4shot & 8shot &                                   &                           \\ \hline
+Token number of prompt      & 306   & 612   & 1224  & 2365  & 3040                              & 562                       \\ \hline
+Number of questions         & \multicolumn{4}{c}{1319}      & 2654                              & 575                       \\ 
+\bottomrule
+\end{tabular}
+}
+\caption{The statistics of the dataset}
+\label{tab:DataStat}
+\end{table*}

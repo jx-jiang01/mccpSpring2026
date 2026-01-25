@@ -1,0 +1,1461 @@
+    %%
+%% This is file `sample-sigconf.tex',
+%% generated with the docstrip utility.
+%%
+%% The original source files were:
+%%
+%% samples.dtx  (with options: `all,proceedings,bibtex,sigconf')
+%% 
+%% IMPORTANT NOTICE:
+%% 
+%% For the copyright see the source file.
+%% 
+%% Any modified versions of this file must be renamed
+%% with new filenames distinct from sample-sigconf.tex.
+%% 
+%% For distribution of the original source see the terms
+%% for copying and modification in the file samples.dtx.
+%% 
+%% This generated file may be distributed as long as the
+%% original source files, as listed above, are part of the
+%% same distribution. (The sources need not necessarily be
+%% in the same archive or directory.)
+%%
+%%
+%% Commands for TeXCount
+%TC:macro \cite [option:text,text]
+%TC:macro \citep [option:text,text]
+%TC:macro \citet [option:text,text]
+%TC:envir table 0 1
+%TC:envir table* 0 1
+%TC:envir tabular [ignore] word
+%TC:envir displaymath 0 word
+%TC:envir math 0 word
+%TC:envir comment 0 0
+%%
+%% The first command in your LaTeX source must be the \documentclass
+%% command.
+%%
+%% For submission and review of your manuscript please change the
+%% command to \documentclass[manuscript, screen, review]{acmart}.
+%%
+%% When submitting camera ready or to TAPS, please change the command
+%% to \documentclass[sigconf]{acmart} or whichever template is required
+%% for your publication.
+%%
+%%
+% \documentclass[sigconf,review]{acmart}
+\documentclass[sigconf]{acmart}
+% \newcommand{\tocheckJH}[1]{{\color{cyan} #1}}
+% \newcommand{\tocheckJH}[1]{{ #1}} % remvoing color as we try to push for completion
+% \newcommand{\jh}[1]{\footnote{\color{cyan}{\bf Jie: #1}}}
+% \newcommand{\dl}[1]{\textcolor{pink}{#1}}
+% \newcommand{\wl}[1]{\textcolor{green}{#1}}
+% \newcommand{\kc}[1]{\textcolor{red}{#1}}
+
+
+\usepackage{xcolor}
+%%
+%% \BibTeX command to typeset BibTeX logo in the docs
+\AtBeginDocument{%
+  \providecommand\BibTeX{{%
+    Bib\TeX}}}
+\usepackage[normalem]{ulem}
+%% Rights management information.  This information is sent to you
+%% when you complete the rights form.  These commands have SAMPLE
+%% values in them; it is your responsibility as an author to replace
+%% the commands and values with those provided to you when you
+% complete the rights form.
+\setcopyright{rightsretained}
+% \copyrightyear{2025}
+% \acmYear{2025}
+% \acmDOI{XXXXXXX.XXXXXXX}
+
+%% These commands are for a PROCEEDINGS abstract or paper.
+% \acmConference[KDD '26]{32nd SIGKDD Conference on Knowledge Discovery and Data Mining}{August 09--13,
+%   2026}{Jeju, Korea}
+% \acmConference[Conference acronym 'XX]{Make sure to enter the correct
+%   conference title from your rights confirmation email}{June 03--05,
+%   2018}{Woodstock, NY}
+\acmConference[]{Preprint}{revised July 31 2025}{under review}
+%%
+%%  Uncomment \acmBooktitle if the title of the proceedings is different
+%%  from ``Proceedings of ...''!
+%%
+%%\acmBooktitle{Woodstock '18: ACM Symposium on Neural Gaze Detection,
+%%  June 03--05, 2018, Woodstock, NY}
+% \acmISBN{978-1-4503-XXXX-X/2018/06}
+
+
+%%
+%% Submission ID.
+%% Use this when submitting an article to a sponsored event. You'll
+%% receive a unique submission ID from the organizers
+%% of the event, and this ID should be used as the parameter to this command.
+%%\acmSubmissionID{123-A56-BU3}
+
+%%
+%% For managing citations, it is recommended to use bibliography
+%% files in BibTeX format.
+%%
+%% You can then either use BibTeX with the ACM-Reference-Format style,
+%% or BibLaTeX with the acmnumeric or acmauthoryear sytles, that include
+%% support for advanced citation of software artefact from the
+%% biblatex-software package, also separately available on CTAN.
+%%
+%% Look at the sample-*-biblatex.tex files for templates showcasing
+%% the biblatex styles.
+%%
+
+%%
+%% The majority of ACM publications use numbered citations and
+%% references.  The command \citestyle{authoryear} switches to the
+%% "author year" style.
+%%
+%% If you are preparing content for an event
+%% sponsored by ACM SIGGRAPH, you must use the "author year" style of
+%% citations and references.
+%% Uncommenting
+%% the next command will enable that style.
+%%\citestyle{acmauthoryear}
+
+
+%%
+%% end of the preamble, start of the body of the document source.
+\begin{document}
+
+%%
+%% The "title" command has an optional parameter,
+%% allowing the author to define a "short title" to be used in page headers.
+\title{Realizing Scaling Laws in Recommender Systems: A Foundation–Expert Paradigm for Hyperscale Model Deployment}
+
+%%
+%% The "author" command and its associated commands are used to define
+%% the authors and their affiliations.
+%% Of note is the shared affiliation of the first two authors, and the
+%% "authornote" and "authornotemark" commands
+%% used to denote shared contribution to the research.
+% \author{Ben A}
+% \authornote{Both authors contributed equally to this research.}
+% \email{trovato@corporation.com}
+% \orcid{1234-5678-9012}
+% \author{G.K.M. Tobin}
+% \authornotemark[1]
+% \email{webmaster@marysville-ohio.com}
+% \affiliation{%
+%   \institution{Institute for Clarity in Documentation}
+%   \city{Dublin}
+%   \state{Ohio}
+%   \country{USA}
+% }
+
+% \author{Lars Th{\o}rv{\"a}ld}
+% \affiliation{%
+%   \institution{The Th{\o}rv{\"a}ld Group}
+%   \city{Hekla}
+%   \country{Iceland}}
+% \email{larst@affiliation.org}
+
+% \author{Valerie B\'eranger}
+% \affiliation{%
+%   \institution{Inria Paris-Rocquencourt}
+%   \city{Rocquencourt}
+%   \country{France}
+% }
+
+% \author{Aparna Patel}
+% \affiliation{%
+%  \institution{Rajiv Gandhi University}
+%  \city{Doimukh}
+%  \state{Arunachal Pradesh}
+%  \country{India}}
+
+% \author{Huifen Chan}
+% \affiliation{%
+%   \institution{Tsinghua University}
+%   \city{Haidian Qu}
+%   \state{Beijing Shi}
+%   \country{China}}
+
+% \author{Charles Palmer}
+% \affiliation{%
+%   \institution{Palmer Research Laboratories}
+%   \city{San Antonio}
+%   \state{Texas}
+%   \country{USA}}
+% \email{cpalmer@prl.com}
+
+% \author{John Smith}
+% \affiliation{%
+%   \institution{The Th{\o}rv{\"a}ld Group}
+%   \city{Hekla}
+%   \country{Iceland}}
+% \email{jsmith@affiliation.org}
+
+% \author{Julius P. Kumquat}
+% \affiliation{%
+%   \institution{The Kumquat Consortium}
+%   \city{New York}
+%   \country{USA}}
+% \email{jpkumquat@consortium.net}
+
+% add equal contribution list
+% double check the email (from profile page)
+
+% Intro. make the KD limitations more clear 
+% need to explain more about the background
+% add a bit of analysis 
+% - small transfer ratio
+% - data bias 
+% - freshness (from the paper shared -- daily / hours / publish 
+% every few minutes
+
+% \author{Dai Li}
+% \authornote{Both authors contributed equally to this paper.}
+% \email{daili1@meta.com}
+% \affiliation{%
+%   \institution{Meta Platforms, Inc.}
+%   \city{Menlo Park}
+%   \state{California}
+%   \country{USA}
+% }
+
+% \author{Kevin Course}
+% \authornotemark[1]
+% \email{kcourse@meta.com}
+% \affiliation{%
+%   \institution{Meta Platforms, Inc.}
+%   \city{Menlo Park}
+%   \state{California}
+%   \country{USA}
+% }
+
+% \author{Wei Li}
+% \email{weilisjtu@meta.com}
+% \affiliation{%
+%   \institution{Meta Platforms, Inc.}
+%   \city{Menlo Park}
+%   \state{California}
+%   \country{USA}
+% }
+
+% \author{Hongwei Li}
+% \email{lihw@meta.com}
+% \affiliation{%
+%   \institution{Meta Platforms, Inc.}
+%   \city{Menlo Park}
+%   \state{California}
+%   \country{USA}
+% }
+
+% \author{Jie Hua}
+% \email{mich94hj@meta.com}
+% \affiliation{%
+%   \institution{Meta Platforms, Inc.}
+%   \city{Menlo Park}
+%   \state{California}
+%   \country{USA}
+% }
+
+% \author{Yiqi Chen}
+% \email{yiqic@meta.com}
+% \affiliation{%
+%   \institution{Meta Platforms, Inc.}
+%   \city{menlo park}
+%   \state{california}
+%   \country{usa}
+% }
+
+% \author{Zhao Zhu}
+% \email{zhaozhu@meta.com}
+% \affiliation{%
+%   \institution{Meta Platforms, Inc.}
+%   \city{Menlo Park}
+%   \state{California}
+%   \country{USA}
+% }
+
+% \author{Rui Jian}
+% \email{rjian@meta.com}
+% \affiliation{%
+%   \institution{Meta Platforms, Inc.}
+%   \city{Menlo Park}
+%   \state{California}
+%   \country{USA}
+% }
+
+% \author{Xuan Cao}
+% \email{xuancao@meta.com}
+% \affiliation{%
+%   \institution{Meta Platforms, Inc.}
+%   \city{Menlo Park}
+%   \state{California}
+%   \country{USA}
+% }
+
+% \author{Bi Xue}
+% \email{bixue@meta.com}
+% \affiliation{%
+%   \institution{Meta Platforms, Inc.}
+%   \city{Menlo Park}
+%   \state{California}
+%   \country{USA}
+% }
+
+% \author{Yu Shi}
+% \email{yushi2@meta.com}
+% \affiliation{%
+%   \institution{Meta Platforms, Inc.}
+%   \city{Menlo Park}
+%   \state{California}
+%   \country{USA}
+% }
+
+% \author{Jing Qian}
+% \email{jingqian@meta.com}
+% \affiliation{%
+%   \institution{Meta Platforms, Inc.}
+%   \city{Menlo Park}
+%   \state{California}
+%   \country{USA}
+% }
+
+% \author{Matt Ma}
+% \email{zhenma@meta.com}
+% \affiliation{%
+%   \institution{Meta Platforms, Inc.}
+%   \city{Menlo Park}
+%   \state{California}
+%   \country{USA}
+% }
+
+% \author{Qunshu Zhang}
+% \email{qunshuzhang@meta.com}
+% \affiliation{%
+%   \institution{Meta Platforms, Inc.}
+%   \city{Menlo Park}
+%   \state{California}
+%   \country{USA}
+% }
+
+% \author{Rui Li}
+% \email{ruili@meta.com}
+% \affiliation{%
+%   \institution{Meta Platforms, Inc.}
+%   \city{Menlo Park}
+%   \state{California}
+%   \country{USA}
+% }
+
+
+\makeatletter
+\def\@affiliationfont{\large\normalsize}
+\makeatother
+
+\author{Dai Li*, Kevin Course*, Wei Li, Hongwei Li, Jie Hua, Yiqi Chen, Zhao Zhu, Rui Jian, Xuan Cao, Bi~Xue, Yu Shi, Jing Qian, Kai Ren, Matt Ma, Qunshu Zhang, Rui Li}
+\thanks{\textsuperscript{*}Both authors contributed equally to this paper.}
+\email{{daili1, kcourse, weilisjtu, lihw, mich94hj, yiqic, zhaozhu, rjian, xuancao, bixue, yushi2, jingqian, kren, zhenma, qunshuzhang, ruili}@meta.com}
+\affiliation{%
+  \institution{Meta Platforms, Inc.}
+  \city{Menlo Park}
+  \state{California}
+  \country{USA}
+}
+
+
+
+
+% \author{Dai Li\footnotemark, Kevin Course\footnotemark[1], Wei Li, Hongwei Li, Jie Hua, Yiqi Chen, Zhao Zhu, Rui Jian, Xuan Cao, Bi Xue, Yu Shi, Jing Qian, Matt Ma, Qunshu Zhang, Rui Li}
+% \affiliation{%
+%   \institution{Meta Platforms, Inc}
+%   \city{Menlo Park}
+%   \state{California}
+%   \country{USA}
+% }
+
+% \email{daili@meta.com, kcourse@meta.com, weili@meta.com, hongweili@meta.com, jiehua@meta.com, yiqichen@meta.com, zhaozhu@meta.com, ruijian@meta.com, xuancao@meta.com, bixue@meta.com, yushi@meta.com, jingqian@meta.com, mattma@meta.com, qunshuzhang@meta.com, ruili@meta.com}
+%%
+%% By default, the full list of authors will be used in the page
+%% headers. Often, this list is too long, and will overlap
+%% other information printed in the page headers. This command allows
+%% the author to define a more concise list
+%% of authors' names for this purpose.
+\renewcommand{\shortauthors}{Li et al.}
+
+%%
+%% The abstract is a short summary of the work to be presented in the
+%% article.
+
+%% experiment section
+%% schematic -- wei will make it 
+%% 
+
+%% work with Yiqi (estimate the capacity savings)
+%% latency trade-off with online user experience 
+% (this can be a theoretic computation -- scaling factor number of 
+% experts 
+
+%% offline wise it should be ok to list the 
+
+%% connect with Zimeng regarding their IFU 
+
+%% THIS IS WAY BETTER!!!
+\begin{abstract}
+While scaling laws promise significant performance gains for recommender systems, efficiently deploying hyperscale models remains a major unsolved challenge.
+In contrast to fields where FMs are already
+widely adopted such as natural language processing and computer vision,
+progress in recommender systems is hindered by unique challenges 
+including the need to learn from online streaming data under 
+shifting data distributions,
+the need to adapt to different recommendation surfaces 
+with a wide diversity in their downstream tasks and their 
+input distributions,
+and stringent latency and computational constraints.
+To bridge this gap, we propose to leverage the Foundation-Expert Paradigm: a framework designed for the development and deployment of hyperscale recommendation FMs. 
+In our approach, a central FM is trained on lifelong, cross-surface, multi-modal user data to learn generalizable knowledge. 
+This knowledge is then efficiently transferred to various lightweight, surface-specific "expert" models via target-aware embeddings, allowing them to adapt to local data distributions and optimization goals with minimal overhead. 
+To meet our training, inference and development needs, we built HyperCast, a production-grade infrastructure system that re-engineers training, serving, logging and iteration to power this decoupled paradigm.
+Our approach is now deployed at Meta serving tens of billions of user requests daily, 
+demonstrating online metric improvements over our previous one-stage production system while 
+improving developer velocity and maintaining infrastructure efficiency.
+To the best of our knowledge, this work represents the first successful deployment of a Foundation-Expert paradigm at this scale, offering a proven, compute-efficient, and developer-friendly blueprint to realize the promise of scaling laws in recommender systems.
+\end{abstract}
+
+%%
+%% The code below is generated by the tool at http://dl.acm.org/ccs.cfm.
+%% Please copy and paste the code instead of the example below.
+%%
+% \begin{CCSXML}
+% <ccs2012>
+%  <concept>
+%   <concept_id>00000000.0000000.0000000</concept_id>
+%   <concept_desc>Do Not Use This Code, Generate the Correct Terms for Your Paper</concept_desc>
+%   <concept_significance>500</concept_significance>
+%  </concept>
+%  <concept>
+%   <concept_id>00000000.00000000.00000000</concept_id>
+%   <concept_desc>Do Not Use This Code, Generate the Correct Terms for Your Paper</concept_desc>
+%   <concept_significance>300</concept_significance>
+%  </concept>
+%  <concept>
+%   <concept_id>00000000.00000000.00000000</concept_id>
+%   <concept_desc>Do Not Use This Code, Generate the Correct Terms for Your Paper</concept_desc>
+%   <concept_significance>100</concept_significance>
+%  </concept>
+%  <concept>
+%   <concept_id>00000000.00000000.00000000</concept_id>
+%   <concept_desc>Do Not Use This Code, Generate the Correct Terms for Your Paper</concept_desc>
+%   <concept_significance>100</concept_significance>
+%  </concept>
+% </ccs2012>
+% \end{CCSXML}
+
+% \ccsdesc[500]{Do Not Use This Code~Generate the Correct Terms for Your Paper}
+% \ccsdesc[300]{Do Not Use This Code~Generate the Correct Terms for Your Paper}
+% \ccsdesc{Do Not Use This Code~Generate the Correct Terms for Your Paper}
+% \ccsdesc[100]{Do Not Use This Code~Generate the Correct Terms for Your Paper}
+% \begin{CCSXML}
+% <ccs2012>
+%    <concept>
+%        <concept_id>10002951</concept_id>
+%        <concept_desc>Information systems</concept_desc>
+%        <concept_significance>500</concept_significance>
+%        </concept>
+%    <concept>
+%        <concept_id>10002951.10003317.10003338</concept_id>
+%        <concept_desc>Information systems~Retrieval models and ranking</concept_desc>
+%        <concept_significance>500</concept_significance>
+%        </concept>
+%  </ccs2012>
+% \end{CCSXML}
+
+% \ccsdesc[500]{Information systems}
+% \ccsdesc[500]{Information systems~Retrieval models and ranking}
+\begin{CCSXML}
+<ccs2012>
+   <concept>
+       <concept_id>10002951.10003317.10003347.10003350</concept_id>
+       <concept_desc>Information systems~Recommender systems</concept_desc>
+       <concept_significance>500</concept_significance>
+       </concept>
+ </ccs2012>
+\end{CCSXML}
+
+\ccsdesc[500]{Information systems~Recommender systems}
+
+%%
+%% Keywords. The author(s) should pick words that accurately describe
+%% the work being presented. Separate the keywords with commas.
+\keywords{foundation model, scaling law, 
+recommender system}
+%% A "teaser" image appears between the author and affiliation
+%% information and the body of the document, and typically spans the
+%% page.
+% \begin{teaserfigure}
+%   \includegraphics[width=\textwidth]{figures/arch-diagram}
+%   \caption{FM architecture diagram. \textcolor{red}{Need a better
+%   teaser image here -- maybe can just add some more interesting imagry 
+%   to this arhc diagram}}
+%   \Description{FM arch diagram}
+%   \label{fig:teaser}
+% \end{teaserfigure}
+
+\received{31 July 2025}
+% \received[revised]{12 March 2009}
+% \received[accepted]{5 June 2009}
+
+%%
+%% This command processes the author and affiliation and title
+%% information and builds the first part of the formatted document.
+\maketitle
+
+% \footnote{Both authors contributed equally to this paper.}
+
+\begin{figure}
+    \centering
+    \includegraphics[width=\linewidth]{figures/comp_2.pdf}
+    \caption{An illustration of the traditional one-stage scaling paradigm versus our proposed two-stage Foundation-Expert paradigm. The one-stage approach (left) demonstrates how each surface requires a monolithic model for scaling, resulting in significant redundancy in computational resources and engineering effort. In contrast, our two-stage paradigm (right) centralizes general, meta knowledge acquisition in a compute-heavy Foundation Model (FM). This knowledge is then effectively transferred via target-aware embeddings to lightweight Experts that focus on surface-specific optimizations, thereby significantly improving efficiency.}
+    \label{fig:overview}
+\end{figure}
+
+\section{Introduction}
+% \textbf{Scaling law shows the potential of recommendation systems}
+The identification and systematic characterization of scaling laws in deep learning models has fundamentally transformed 
+industrial practice~\cite{kaplan2020scaling}.
+While these principles originated in the study of large language models,
+they have since been validated and applied to the study recommender systems ~\cite{zhai_actions_2024,zhang2024wukong,han2025mtgr}. 
+Scale now plays a fundamental role in driving recommender system performance toward 
+the end of goal 
+of delivering delightful and engaging user experiences.
+
+% \textbf{it is expensive to production large recommendation models}
+Despite the potential offered by scaling recommender models, their deployment 
+in large-scale production environments presents a significant challenge.
+First, training large recommendation models often requires hundreds or even thousands of high-performance GPUs, making efficient iteration challenging for researchers and developers. Second, recommendation systems typically consist of multiple applications and surfaces, each requiring dedicated development and tuning, making scaling and maintaining of dedicated large models for each impractical.
+
+% Deploying large-scale foundation models in production environments, particularly for recommendation systems, presents significant challenges despite their potential as indicated by scaling laws. Training and serving these models require substantial computational resources often between 100 to 1000 high-performance cards, which limits the ability for researchers and developers to iterate effectively. Additionally, recommendation systems typically involve multiple scenarios and surfaces, such as the four distinct models used in our video recommendation product, making it impractical to maintain dedicated large models for each.
+
+% \textbf{ Our proposal is FM + Expert}
+% (more bold) This work demonstrates how we overcome these challenges by leveraging a new paradigm 
+% for training foundation models (FMs) enabling us to deploy hyper-scale recommendation models in production systems efficiently, laying the groundwork for realizing the full potential of scaling laws in recommendation systems.
+% (more conservative) In the present work, we demonstrate how to overcome these challenges 
+% by leveraging advances in training and 
+% (conservative) 
+In the present work, we demonstrate how to overcome these challenges 
+by leveraging an adapter/expert paradigm~\cite{rebuffi_learning_2017, pfeiffer_mad-x_2020,pfeiffer_modular_2023} 
+for training foundation models (FMs) coupled with  our novel serving and deployment stack. 
+Together these innovations allow us to deploy hyper-scale recommendation models in production systems
+efficiently; thereby laying the groundwork for realizing the full potential of scaling laws
+in recommendation systems.
+% As we will show, this perspective allows us to 
+% deploy hyper-scale recommendation models to our production 
+% system serving tens of billions of user requests daily.
+% Ultimately this paradigm lays the groundwork for
+% realizing the ceiling of scaling laws in recommendation systems.
+% To understand how this approach works, we first provide context on the FMs and their
+% key principles.
+
+% This FM perspective that we leverage builds upon the past five years of transformative advances in FMs across industries. 
+
+% The past five years have seen the rise of FMs as a
+% transformative paradigm for solving complex machine learning challenges
+% across industries. 
+% solving complex machine learning challenges across industries
+% A FM is usually a hyperscale deep learning model trained on a massive, diverse dataset to learn broad, general knowledge and patterns. Instead of training a new model from scratch for every specific problem, developers can adapt a single FM using a smaller amount of task-specific data.
+FMs have emerged as a transformative paradigm for solving challenges in machine learning over the past years. 
+In fields such as computer vision~\citep{radford_learning_2021,kirillov_segment_2023},
+time-series forecasting~\citep{rasul_lag-llama_2023,liang_foundation_2024},
+and natural language processing~\citep{devlin_bert_2019,brown_language_2020},
+FMs have eclipsed performance benchmarks through their ability to generalize 
+from pretraining on massive datasets.
+In the broadest terms, a FM can be defined as a deep learning based model which 
+takes advantage of {\em transfer learning at scale}~\citep{bommasani_opportunities_2021}. 
+% In practice, this often takes the form of a
+% two step training procedure. 
+% In the first stage, a FM is pre-trained on a vast, often unlabeled, dataset. 
+% In the second stage, the FM is used to train a fine-tuned~[], distilled~[], or expert model~[] leveraging a smaller 
+% curated dataset that is tailored towards the final application.
+% In practice, they undergo a two-step training
+% process: pre-training on an extensive, often unlabeled dataset, followed by fine-tuning,
+% distillation, or adaptation using a smaller, curated dataset tailored to specific
+% aIn practice,pplications.
+In practice, leveraging FMs to solve problems typically involves a two-phase training process:
+
+\begin{enumerate}
+\item {\bf Pretraining:} Learning broad, general knowledge and patterns from vast, diverse data.
+% -- 
+% notably, recommendation systems have extensive labeled data, eliminating the need for self-supervised learning;
+% This means we do not have to rely solely on self-supervised learning in these cases.
+    \item {\bf Adaptation:} 
+    Adapting the FM using a smaller amount of application or surface specific data via techniques such as supervised fine-turning and knowledge distillation. 
+   % Specializing the model via fine-tuning, distillation, or lightweight experts using domain-specific data. 
+%     After pretraining, we specialize the model via fine-tuning, distillation, or
+% lightweight experts using domain-specific data.
+\end{enumerate}
+
+
+% Despite their success in wide variety of domains, the application of foundation models 
+% in large-scale recommendation systems is still a developing field. 
+% Perhaps the largest barrier to the wider adoption of foundation models 
+% in recommendation systems is their reliance on the teacher-student paradigm~\citep{zhang_scaling_2024}.
+% While the teacher-student paradigm is valuable in that the teacher does not need  
+% to serve production traffic, the low metric transfer ratio of about 0.3\% -- see 
+% Section~\ref{sec:transfer-ratio-experiment} below for details -- provides a significant 
+% challenge to their ongoing improvement.
+
+% In this work we explore a fundamentally different approach wherein we couple a large foundation model
+% with smaller, surface-specific expert models (FM-expert).
+% We show that this strategy enhances the metric 
+% transfer ratio between the foundation model and the expert models by~XX\% as compared to an approach based on 
+% knowledge distillation
+% % while remaining computationally 
+% % feasible for real-world deployment. 
+% These expert models are computationally feasible for real-world deployment while providing 
+% downstream performance improvements to content freshness by focusing on only the 
+% most relevant data.
+% Finally, we demonstrate our approach improves on downstream metric performance versus a state-of-the-art live 
+% in production recommendation system serving billions of users each day.
+
+% \textbf{Why FM is hard for recommendation}
+Despite their success across a variety of domains, 
+the application of FMs in large-scale recommendation systems
+remains nascent due, in large part, to two challenges: (i) that traditional supervised 
+fine-tuning (SFT) is not well-suited to the streaming data setting
+and (ii) that teacher-student paradigms often results 
+in a low percentage of gains transferring from the teacher to the student.
+% in a low 
+% metric transfer ratio from the teacher to the student. 
+
+% Our work applies the FM paradigm to address the deployment challenges 
+% outlined earlier. Specifically, we propose using a single, continuously-trained 
+% foundation model to capture complex user-item interactions across all application 
+% surfaces, while lightweight expert models handle surface-specific adaptations. 
+% This architecture promises to reduce computational overhead through model sharing 
+% while maintaining the rapid iteration capabilities required for production systems. 
+% However, as we discuss next, applying FMs to recommendation systems introduces 
+% unique challenges not encountered in other domains.
+
+% \textbf{Challenge 1 SFT can not be directly work with streaming data}
+While SFT is well-suited to problem settings where the 
+FM can be trained using mostly static data~\cite{devlin_bert_2019,raffel_exploring_2020,hu_lora_2022}, 
+% it faces significant challenges in learning from streaming data.  
+most industrial scale recommendation engines are trained with online one-epoch streaming data based on sparse IDs. 
+In the streaming data setting,
+SFT suffers from significant challenges including
+catastrophic forgetting during fine-tuning~\cite{luo_empirical_2023},
+difficulty maintaining performance when fine-tuning on 
+shifting data distributions~\cite{kumar_fine-tuning_2022}, 
+and suboptimal strategies for coordinating updates between the foundation model and task-specific layers.
+% It is for this reason that 
+
+
+% in the dynamic setting.
+% is a large, but mostly fixed dataset used to pretrain the FM, these approaches 
+
+% have not translated well to the streaming data setting where it becomes unclear 
+% how to update the FM and the SFT model.
+For these reasons, another popular approach for leveraging FMs in industrial 
+recommendation systems is knowledge-distillation~\cite{liang_external_2025, kd_google_transfer_ratio}. 
+% A significant barrier to their wider adoption is their reliance on the teacher-student
+In standard knowledge distillation, a large ``teacher'' FM generates predictions as soft labels to help train a smaller ``student'' model~\cite{hinton_distilling_2015}.
+Online production traffic is then  served only by the student model.
+While this avoids serving computational bottlenecks and is 
+well-suited to the streaming data 
+setting because both the teacher and student can be continually 
+trained on incoming data, it can be challenging to ensure that 
+improvements to the teacher are effectively transferred to the student.
+For example, a number of recent works focus on designing 
+specialized losses to mitigate bias from the teacher~\cite{gou2021knowledge}
+and recent work on uncovering scaling laws for knowledge distillation
+found that we can expect student performance to be harmed  
+by the teacher in the large data regime~\cite{busbridge_distillation_2025}.
+These empirical results are supported by well-known results from the classical 
+statistics literature showing that maximum likelihood estimation 
+is consistent and asymptotically efficient~\cite{casella_statistical_2001}.
+
+% Rather than relying on SFT or knowledge distillation,
+% in this work, we propose the Foundation-Expert paradigm which integrates large foundation models with smaller, surface-specific expert models. While expert/adapter based approaches have been used to great success 
+% in a wide-variety of learning contexts~\cite{pfeiffer_modular_2023}
+% including computer vision~\cite{rebuffi_learning_2017} and NLP~\cite{pfeiffer_mad-x_2020}
+% we believe that this is 
+% the first time such an approach has been applied to an industrial recommendation system at such scale.
+
+% The Foundation-Expert paradigm addresses the bottlenecks associated with teacher-student models by separating the foundation model's general-purpose representation learning from surface-specific adaptation while remaining computationally feasible in a streaming data environment. Our approach harnesses the power of a general foundation model (FM), continuously trained on extensive user histories spanning multi-modal content and multiple recommendation surfaces. This FM learns and outputs target-aware embeddings which capture nuanced user interests and their relation to ranked candidates (targets). Surface-specific experts integrate these embeddings, leveraging them as inputs for training on surface-specific features and tasks. Both the FM and experts are served online during inference time. The entire paradigm is supported by HyperCast, our production-grade infrastructure system for multi-tier model training, serving, and deployment. 
+
+In this work, we propose the \textbf{Foundation-Expert paradigm}, an alternative to methods like SFT or knowledge distillation. Our approach integrates a large, general-purpose foundation model (FM) with smaller, specialized expert models, decoupling general knowledge learning from task-specific adaptation. This separation addresses production bottlenecks and ensures computational feasibility in demanding online streaming environments. The core knowledge transfer mechanism in this paradigm is \textbf{target-aware embeddings}.
+
+The FM, continuously trained on lifelong multi-modal user histories spanning multiple recommendation surfaces, generates target-aware embeddings embeddings for each candidate item (target). Unlike traditional relatively stable user embeddings~\cite{zhang_scaling_2024, dv365, ali, tencent, chen2025pinfm} that offer {\em a general summary of user behavior}, the target-aware embeddings {\em dynamically capture a user's contextual interest in a specific item, given the user's interaction history and item information}, providing a more effective signal for downstream tasks. These FM embeddings are then ingested by the expert models, which use them as input features and optimize on surface-specific objectives. 
+
+While expert/adapter based approaches have shown great success in a wide-variety of learning contexts~\cite{pfeiffer_modular_2023}
+including computer vision~\cite{rebuffi_learning_2017} and NLP~\cite{pfeiffer_mad-x_2020}
+we believe that this is 
+the first time such an approach has been applied to an industrial recommendation system of this scale. The entire paradigm is enabled by \textbf{HyperCast}, our production-grade infrastructure designed for decoupled, multi-tier model training, serving, deployment and iteration.
+
+
+Comprehensive offline and online A/B tests demonstrate significant improvements over the traditional one-stage paradigm across multiple recommendation surfaces. Infrastructure metrics such as end-to-end serving latency and CPU remains neutral, with model freshness on the order of minutes and an average data-to-trainer latency of 30 minutes, benefiting from the systematic optimizations from HyperCast. Taken together, the key contributions of this work are summarized as follows:
+\begin{enumerate}
+\item \textbf{High Transfer Ratio:} 
+By leveraging target-aware embeddings, FM-expert sets a new benchmark by achieving a metric transfer 
+ratio between 0.64 and 1.0 from the FM to the expert. 
+This efficiency ensures that a substantial portion of the FM's performance enhancements are directly inherited by the expert surpassing the capabilities of existing knowledge distillation methodologies.
+\item \textbf{Generalization Across Surfaces:} Through meticulous design of the FM's input features, tasks, and architecture, 
+we have built a generalized model across multiple surfaces for our recommender stack. 
+This innovation allows for a single FM across various applications, boosting inference and training efficiency in environments with numerous application surfaces.
+\item \textbf{Accelerated Development Velocity:} Through a careful design of the system and 
+architecture we have decoupled the training of the FM and the experts.
+This enables us to focus on
+refining a single FM using substantial  GPU resources without sacrificing 
+rapid iteration on expert models. 
+\end{enumerate}
+
+Currently deployed across several core recommendation surfaces at Meta and serving tens of billions of daily requests, our paradigm achieves statistically significant user experience improvements while enhancing developer velocity and infrastructure efficiency. To the best of our knowledge, this work represents the first successful deployment of a Foundation-Expert paradigm at this scale, offering a proven, compute-efficient, and developer-friendly blueprint for realizing the promise of scaling laws in industrial recommender systems.
+
+
+% In the next section we present our methodology including how we designed the FM, the expert models,
+% and the deployment system that enables our approach. In Section~\ref{sec:results}
+% we present comprehensive results for approach running live in our production recommender stack. 
+% % We did comprehensive offline experiments to validate above claims.
+% These results suggest a paradigm shift for industrial recommendation systems where FMs serve as foundational backbones for specialized downstream tasks.
+% In Section~\ref{sec:related-works} we discuss connections to related work before 
+% concluding and providing directions for future work in Section~\ref{sec:conclusion}.
+
+% \textbf{related work}
+% Closely related to our work are methods which utilize powerful FMs
+% to learn rich representations of user-item interactions to greatly improve predictive
+% performance on downstream tasks~\cite{el2022twhin, zhang_scaling_2024, dv365, ali, pinsage, itemsage, tencent}.
+% Crucial to the success of these approaches is that they focus on learning 
+% user-item representations without target awareness allowing them to 
+% precompute embeddings offline.
+% While this approach is useful from the perspective of computational
+% efficiency, these approaches are inherently limited in the expressiveness of 
+% the representations they are able to learn. Recent works have 
+% demonstrated that target-aware
+% modeling crucial to ranking model performance~\cite{zhai_actions_2024}.
+% % (\kc{Dai any others?}).
+% % while outperforming our production system in A/B testing.
+
+% \textbf{Experiments}
+
+
+
+
+%These target-aware embeddings are then passed into 
+%surface-specific experts trained on recent interactions and a specific %application. 
+%This separation enables the following key advantages:
+%\begin{enumerate}
+
+%    \item {\bf Decoupled FM and expert iteration:} Our approach allows us 
+%    to decouple the FM and experts in training. From the perspective 
+%    of iterative model refinement in an industrial setting, this allows for 
+%    significant speed up expert model iteration allowing the system to adapt
+%    to fast changing application surfaces while the 
+%    development of the FM is encouraged to focus on 
+%    on learning rich, target-aware representations.
+
+%    \item  {\bf Computational efficiency:} When deploying to multiple %applications, you still only need to serve and maintain single FM which can %improve inference and training 
+%    capacity in situations where you have many application surfaces.
+    % When  
+    % serving traffic across XX applications we project this will allow us to reduce the overall production inference capacity needs by XX\%.
+%\item {\bf Improvements to online metrics and freshness:} 
+%The expert models are trained 
+%to focus on short-term user behavior and a specific application, 
+%improving recommendation recency and specificity without sacrificing the FM's %learned representations. 
+
+\section{Related works}\label{sec:related-works}
+In the previous section we discussed connections to SFT and teacher-student 
+paradigms. In this section we focus on connections to long user history modeling and 
+methods for learning rich user representations for recommendation systems.
+
+
+\paragraph{Long User History Modeling}
+Over the past two years much of the improvement in industry content recommendation  
+quality was arguably driven by systems which 
+% learn rich representations of user
+% and content interactions by leveraging 
+learn from long user interaction histories; for example, see recent works from Meta~\citep{zhai_actions_2024}, 
+LinkedIn~\citep{hertel_efficient_2024}, 
+ByteDance~\citep{chai_longer_2025},
+Xiaohongshu~\citep{huang_towards_2025},
+and Alibaba~\citep{wang_scaling_2025}. These works introduced efficient architectures 
+for sequence modeling and demonstrated the effectiveness of scaling up user history learning in recommender models. 
+Our work is orthogonal to these previous work, as we focus on how to efficiently productionalize the scaled model 
+via a Foundation-Expert framework. 
+Most of those innovations can be applied to our FM design. In this work, we leverage the architecture introduced in~\citep{zhai_actions_2024}, the first generative recommendation system in the literature. 
+%Unfortunately, the goal of learning expressive representations from long user 
+%histories is somewhat misaligned with the goal of recommending fresher content. 
+%By learning from longer user histories, a recommendation system will naturally learn to 
+%recommend content from this longer history. 
+%The FM-expert paradigm is naturally suited to mitigate this challenge.
+%The FM is trained on long user histories allowing it to learn the rich %representations 
+%necessary for accurate predictions while the expert is trained to focus only 
+%on the most current content. 
+%This allows FM-expert to provide more current recommendations without %compromising on user representation quality.
+
+
+% \paragraph{Teacher-student models for recommendation systems.} In this work we made use of
+% target-aware embeddings from the FM to train the expert models, unlike the predictions from FM as student labels in knowledge distillation. 
+% % We showed that in contrast to methods which rely on knowledge distillation~\cite{liang_external_2025, kd_google_transfer_ratio},
+% % we achieve a significantly improved metric transfer ratio from the FM to the expert model of XX\%.
+% As discussed above, a number of recent works have focused on
+% healing some of the issues with standard knowledge distillation~\cite{gou2021knowledge}.
+% At a more fundamental level, \citet{busbridge_distillation_2025}
+% cast doubt on the long term potential of applying traditional knowledge distillation 
+% in the large-data regime by demonstrating that the teacher model will often regress
+% the student model's performance.
+% % that knowledge distillation 
+% % leads to $\leq 0$ transfer ratio in the large data regime. 
+% Modern, large-scale recommendation systems operate in the large data regime and
+% should be designed to take advantage of this scale.
+% Finally, while the student teacher paradigm can be computationally advantageous
+% in that it reduces the requirements on real-time inference capacity, 
+% it does not eliminate the 
+% requirement of passing data through the FM since logged FM outputs are required
+% for training the student model. 
+
+
+% \paragraph{Foundation models specialized with supervised fine-tuning.}
+% Supervised fine-tuning (SFT) has been applied with great success to problems
+% where the training data is mostly static~\cite{devlin_bert_2019,raffel_exploring_2020,hu_lora_2022}; however,
+% it faces significant challenges in learning from streaming datasets.
+% These challenges include catastrophic forgetting during fine-tuning~\cite{luo_empirical_2023},
+% difficulty maintaining performance when fine-tuning on 
+% shifting data distributions~\cite{kumar_fine-tuning_2022}, 
+% and suboptimal strategies for coordinating updates between the foundation model and task-specific layers 
+% in the dynamic setting.
+
+
+% While there is some work showing that perhaps FMs in recommendation systems 
+% might not need to be trained on streaming data~\cite{chen2025pinfm},
+% it is for this reason that most recommender models
+% have relied on other learning paradigms.
+
+
+% \tocheckJH{Suggest to mention FST and their success. Explain why commonly seen approaches do not work well on stream data. Parameter-efficient fine-tuning (PEFT) \jh{https://fburl.com/gye0vogn}  approaches and their implementations \jh{https://fburl.com/ozcugpj7} despite offering promising performance for converting the gains from FM, they all require layer by layer adapting to the transformer. For instance, the LoRA Derivatives \jh{https://fburl.com/6vrs3snt} add low-ranked matrix to the attention layers. Such approaches increase the costs of fine-tuning multiple surface experts at the same time with large volume of streaming data. Given the practical infra concerns, we choose to adopt a cleaner separation by conceptually freezing the whole FM. }
+
+% \paragraph{Foundation models specialized with expert models.}
+% ...
+% ~\cite{el2022twhin, zhang_scaling_2024, dv365, ali, pinsage, itemsage, tencent, chen2025pinfm, }
+
+\paragraph{Learning rich representations for downstream tasks.}
+Closely related to our work are methods which utilize models
+to learn representations of user or item to improve predictive
+performance on downstream tasks~\cite{el2022twhin, zhang_scaling_2024, dv365, ali, pinsage, itemsage, tencent}. These methods largely focus on learning general user or item summarization independently, without focusing on representation of user and item pair --user's target-aware representation is about the user's interest in a specific item based on his/her behavior sequence and the item information). While this approach is beneficial in terms of computational efficiency, it is inherently limited in the expressiveness of the representations it can learn. As a result, it struggles to achieve a high transfer ratio from the FM model to the expert model. Recent studies have shown that target-aware modeling is important for enhancing the performance of recommender models~\cite{zhai_actions_2024, chang2023twin, twinv2}. 
+In the context of recommendation systems, \citet{chen2025pinfm} developed an 
+approach for training FMs to learn from long user histories offline.
+As compared to the approach developed in the present work, our FM focuses on learning target-aware embeddings for each candidate item. In addition, our FM is trained in online streaming setup and updated at a high frequency (on the order of several minutes), continuously adapting to latest user interactions.
+
+
+\section{Methods} \label{sec:methods}
+% At a high-level, our approach consists of two main components: 
+% a large FM trained on cross-surface data and long user histories and 
+% a smaller expert model trained on shorter user histories and data 
+% from a single surface.
+% The expert ingests both standard user, item features as well as carefully
+% chosen intermediate embeddings from the FM. 
+% The specifics of our design our outlined in the upcoming sections.
+
+% Unlike traditional knowledge distillation methods, the Foundation Model (FM) in this work generates target-aware candidate embeddings. These embeddings are derived from efficient, lifetime user history modeling and multi-modal content understanding. They are trained using generalizable cross-surface data and technologies to support various downstream production experts.
+
+% The experts receive these FM embeddings as input features. Within an FM Embedding Module, these embeddings undergo preprocessing and robustness enhancements, including regularization and de-noising. Subsequently, they are fused with the expert's Short-Term and Real-Time User outputs, which capture immediate user interests. The final combined embeddings then interact with other specialized modules within the expert system.
+
+% This architectural approach effectively decouples the development and iteration cycles of the FM and Expert systems. The FM functions as a comprehensive, general knowledge repository, while the Expert system refines and applies specialized production capabilities.
+In this section, we introduce the design of our proposed Foundation-Expert paradigm, a two-stage architecture designed to overcome the inefficiencies in the traditional one-stage per-surface scaling of recommender systems. %; see Figure~\ref{fig:system} for details. 
+% Our approach is distinguished from other popular industrial two-stage solutions like knowledge distillation or user representation learning (transferring relatively-static user behavior summarizations). Instead, our paradigm is built upon target-aware embeddings: a dynamic form of knowledge transfer that captures the nuanced relationship between a user's interaction history and specific candidate items.
+
+In this paradigm, a central, compute-intensive FM learns general knowledge from lifelong user histories, multi-modal content understanding, and cross surface techniques. 
+The FM generates target-aware embeddings for each candidate item which are then consumed as input features by lightweight Expert models (typically 20-40\% compute needed of their one-stage counterparts), which can then focus solely on surface-specific improvements. This decoupling of general knowledge acquisition from specialized adaptation allows for resource-intensive FM scaling and rapid expert iteration to occur in parallel, dramatically improving development velocity and computational efficiency.
+
+In the following subsections, we will detail the architecture of the Foundation Model and the Experts, followed by a description of HyperCast, the end-to-end infrastructure system that enables this paradigm.
+
+\begin{figure*}
+    \centering
+    \includegraphics[width=\linewidth]{figures/arch.pdf}
+    \caption{Overview of FM and Expert Model Architecture. The Foundation Model (FM) uses HSTU~\cite{zhai_actions_2024} to process lifelong, cross-surface user histories and candidate items, producing target-aware embeddings. These embeddings are then ingested by downstream expert models. Each expert uses its own lightweight HSTU to capture short-term, surface-specific signals. A FM Fusion Module combines the long-term knowledge from the FM embeddings with the expert's short-term representations. This fused embedding is then interacted with other surface-specific features to generate the final predictions.}
+    \label{fig:arch}
+\end{figure*}
+
+
+\subsection{Foundation Model Design} 
+
+\subsubsection{Input}
+As depicted in Figure~\ref{fig:arch}, the FM is trained on a dataset comprising of cross-surface, lifelong user histories and multi-modal content. The input features are organized into two categories:
+
+\textbf{Main Features} are used for target-aware sequential modeling to generate the FM embeddings. These include the user's interaction history and information about the target items. Each item (historical or target) is represented by its categorical features such as item ID $p$, contextual features $c$ (which includes but not limited to surface type, timestamp, LLM-powered multi-modal representations), and the associated user action $a$. 
+Each of these inputs is represented as vector or embedding, $Emb_p$, $Emb_c$, and $Emb_a$, respectively.  
+
+
+\textbf{Auxiliary Features} consist of non-sequential data, such as common categorical, continuous and embedding features used in recommender systems. These features, selected based on their importance in each surface, are used to aid the alignment of the FM embeddings during training for better generalizability on downstream experts.
+% As depicted in Figure \ref{fig:arch}, the foundation model integrates a cross surface sequence learning module with a shallow interaction architecture, incorporating a minimal set of generalizable features. The cross surface sequence learning module facilitates the modeling of lifelong user behaviors, while the auxiliary module aligns the foundation model with specific surfaces.
+
+
+ % At a high-level, we consider two FM designs: a small-FM and a large-FM.
+ % The primary difference between the large and the small FM is that the large FM 
+ % ingests a 16k tokens in the HSTU portion while the small FM ingests 3k tokens in 
+ % its HSTU portion. The smaller-FM supplements its shorter sequence length 
+ % using a form of search based interest modeling~\cite{chang2023twin} (or 
+ % very approximate attention).
+
+\subsubsection{Target-aware Sequential Modeling}
+% \begin{figure}
+%     \centering
+%     \includegraphics[width=\linewidth]{figures/target_aware_hstu_small.pdf}
+%     \caption{Target-aware HSTU with reduced action and content embedding.}
+%     \label{fig:arch}
+% \end{figure}
+
+To enable effective target-aware modeling of lifelong user behaviors, we leverage Hierarchical Sequential Transduction Units (HSTU)~\cite{zhai_actions_2024}, a transformer variant engineered for industrial-scale recommendation systems.
+% characterized by large, non-stationary vocabularies. 
+Building upon the original HSTU architecture, we introduce an architectural simplification depicted in Figure~\ref{fig:arch}: instead of interleaving item and action embeddings, we combine them via direct summation. Furthermore, to prevent label leakage from user history, we remove the auto-regressive auxiliary losses. This optimization effectively halves the input sequence length, yielding a 50\% reduction in complexity for the linear projection layers and a 25\% reduction for the attention operations.
+
+In practice, the inputs are a sequence of $N$ past impressions in user history $x_0, x_1,$ $ \ldots, x_{N-1} (x_i \in \mathbb{X})$ ordered chronologically, and a sequence of $M$ target items in one request $y_0, y_1, \ldots, y_{M-1}$ ($y_j \in \mathbb{X}$), where $\mathbb{X}$ denotes the set of all items in the recommendation product pool. After initial preprocessing, we get a joint unified sequence of $Emb_{x_0}, Emb_{x_1},$ $ \ldots, Emb_{x_{N-1}},$ $Emb_{y_0}, Emb_{y_1}, \ldots, Emb_{y_{M-1}}$:
+
+% \begin{equation}
+%     Emb_{x_i} = Emb_s_i + Emb_c_i + Emb_a_i 
+% \label{eq:emb_1}
+% \end{equation}
+
+\begin{equation}
+    Emb_{x_i} = f(Emb_{p, i}, Emb_{c, i}) + Emb_{a, i} 
+\label{eq:emb_1}
+\end{equation}
+
+\begin{equation}
+    Emb_{y_j} = f(Emb_{p, j}, Emb_{c, j})
+\label{eq:emb_2}
+\end{equation}
+where $Emb$ is the embedding representation of the corresponding item abtained from \eqref{eq:emb_1}, \eqref{eq:emb_2}, $f(\cdot)$ is a simple transformation like multilayer perceptron.
+
+With this unified sequence as input, sequential modeling in standard retrieval and ranking models can be formulated as shown in Figure~\ref{fig:arch}.
+
+%%%%%%%%%%%%%%%%
+
+ 
+%  In practice, a sequence of $n$ past impressions in user history $x_0, x_1,$ $ \ldots, x_{n-1} (x_i \in \mathbb{X})$ ordered chronologically, and a sequence of $m$ target items in the request $y_0, y_1, \ldots, y_{m-1}$ ($y_i \in \mathbb{X}$), where $\mathbb{X}$ denotes the set of all items served in the product. With each item associated with an action feature $a$ %(\jzrev{what about labels?}) 
+% and various contextual features including but not limited to surface type, timestamp, denoted as $c$, sequential modeling in standard retrieval and ranking models can be formulated as shown in Figure~\ref{fig:arch}.
+
+% \subsubsection{Sparse Attention for Recommendation Models} 
+% \wl{remove this subsection}
+%  As we scale the FM to process lifelong user histories, the computation of self-attention, which scales quadratically with sequence length, becomes prohibitive. 
+%  Even with the Stochastic Lengths introduced in HSTU \cite{zhai_actions_2024}, attention computation remains very expensive. To address this, we further sparsify the full causal self-attention matrix by introducing a novel attention pattern tailored for recommendation models. The proposed design scales linearly with the input sequence, significantly enhancing efficiency for lifelong user history processing. Our design incorporates two specific attention patterns, drawing inspiration from Longformer \cite{beltagy2020longformer}:
+ 
+%  \begin{enumerate}
+%      \item  \textbf{Sliding Window}: This pattern applies a fixed-size window around each token, maintaining a causal attention mask. The use of multiple layers of such windowed attention ensures the preservation of local context, as higher layers retain access to all input locations.
+% \item \textbf{Global Attention}: In recommendation systems, recent actions often hold more significance than older historical data. Therefore, relying solely on sliding windows may not be flexible enough to effectively capture the most recent user behaviors. To address this, global attention is incorporated to specifically capture and emphasize these most recent user interactions.
+%  \end{enumerate}
+
+
+\subsubsection{Foundation Model Alignment}
+Similar to many recommendation models, our FM is optimized using a multi-task multi-label (MTML) learning objective. The overall loss function $L$ consists of two components,
+% a main MTML loss $L_{main}$ for general knowledge acquisition and an auxiliary MTML loss $L_{aux}$ for surface-specific alignment. 
+\begin{equation}
+    L = \sum_{s=1}^S \omega_s L_{main_s} + \sum_{t=1}^T \omega_t L_{aux_t}
+\label{eq:total_loss}
+\end{equation}
+where $L_{main_s}$ and $L_{aux_t}$ denote the loss of each shared main task and surface-specific auxiliary task respectively, $\omega_s$ and $\omega_t$ denote the weight of the corresponding task $s$ and $t$, $S$ denote total main tasks and $T$ denote total auxiliary tasks.
+
+\textbf{Main Loss ($L_{main}$)} This loss is derived from generalizable, cross-surface objectives such as likes, shares, and video completions. This supervision is applied directly to the HSTU module's output embeddings after a simple multi-task (mt) module, ensuring it can learn powerful and broadly applicable target-aware representations.
+
+% The calculation of $L_main$ is relatively straightforward \eqref{eq:main_loss}:
+% \begin{equation}
+%     L_{main_s}(\theta_H, \theta_{mt_s}) = \sum_i loss_s(\hat{y}^i_s(\theta_H, \theta_{mt_s}), y_s^i)
+% \label{eq:main_loss}
+% \end{equation}
+% where $\theta_H$ denotes the shared parameters (HSTU module), $\theta_{mt_s}$ represents the parameters of the multi-task module of task $s$, $loss_s$ is task $s$'s loss of sample i computed based on prediction $\hat{y}_s^i$ ground truth $y_s^i$. Although $\theta_{mt_s}$ is not shared across $S$ primary tasks, the architectures are simple linear layers and homogeneous across the tasks.
+
+\textbf{Auxiliary Loss ($L_{aux}$)} This loss is designed for surface-specific alignment using crucial tasks from each domain. The target-aware embeddings are passed to a lightweight Alignment Module for interactions with auxiliary features. To handle the heterogeneous nature of these tasks (e.g., engagement with video only happens on a product surface that presents videos).
+the loss for each auxiliary task is calculated only over its respective valid sample space:
+
+\begin{equation}
+    L_{aux_t}(\theta_H, \theta_{aux_t}) = \frac{1}{\sum_i \delta^i_t} \delta^i_t loss_t(\hat{y}^i_t(\theta_H, \theta_{aux_t}), y_t^i)
+\label{eq:aux_loss}
+\end{equation}
+
+where $\theta_{aux_t}$ is the heterogeneous Alignment Module for each specific surface, $loss_t$ is task $t$'s loss of sample i computed based on prediction $\hat{y}_t^i$ ground truth $y_t^i$, $\delta_t^i \in {0, 1}$ indicates whether the sample is in the sample space of task $t$.
+In this way, the surface-specific features, tasks and architectures serve as auxiliary to better align the FM with experts to their individual objectives.
+
+%%%%%%%%%%%%
+%%%%%%%%%%%%%
+
+% Similar to the many applications of multi-task multi-label (MTML) learning in recommendation models, FM is trained with multiple objectives. In the recommender system (recsys) setting, MTML losses are derived from probabilistic predictions and labels of different user engagement events, such as likes, shares, and video completions. 
+% In this work, the primary loss function of FM $L$, stems from the generalizable x-surface objectives of the HSTU module $L_{mt}$, complemented by auxiliary losses $L_{aux}$ from surface-specific tasks:
+
+% \begin{equation}
+%     L = \sum_{s=1}^S \omega_s L_{mt_s} + \sum_{t=1}^T \omega_t L_{aux_t}
+% \end{equation}
+
+% Where $L_{mt_s}$ and $L_{aux_t}$ denote the loss of each shared task and surface specific task respectively, $\omega_s$ and $\omega_t$ denote the weight of each shared task $s$ and expert surface specific $t$ respectively, $S$ and $T$ are the total number of shared and expert tasks.
+
+% The calculation of loss of primary task s is relatively straightforward:
+% \begin{equation}
+%     L_s(\theta_H, \theta_{mt_s}) = \sum_i loss_s(\hat{y}^i_s(\theta_H, \theta_{mt_s}), y_s^i)
+% \end{equation}
+% where $\theta_H$ denotes the shared parameters (HSTU module), $\theta_{mt_s}$ represents the parameters of multi-task module of task $s$, $loss_s$ is task $s$'s loss of sample i computed based on prediction $\hat{y}_s^i$ ground truth $y_s^i$. Although $\theta_{mt_s}$ is not shared across $S$ primary tasks, the architectures are simple linear layers and homogeneous across the tasks.
+
+% The surface specific tasks are defined differently from two perspectives. First, the sample space for different surfaces are heterogeneous, e.g. engagement with video only happens on a product surface that presents videos. During those surface specific tasks, we disregard the samples outside their respective sample spaces:
+
+% \begin{equation}
+%     L_t(\theta_H, \theta_{aux_t}) = \frac{1}{\sum_i \delta^i_t} \delta^i_t loss_t(\hat{y}^i_t(\theta_H, \theta_{aux_t}), y_t^i)
+% \end{equation}
+
+% where $\theta_{aux_t}$ is the heterogeneously design architecture for each specific surface, $loss_t$ is task $t$'s loss of sample i computed based on prediction $\hat{y}_t^i$ ground truth $y_t^i$, $\delta_t^i \in {0, 1}$ indicates whether the sample is in the sample space of task $t$.
+% In this work, the surface specific tasks and architectures are designed as auxiliary to better align the FM with experts to their individual objectives.
+
+\subsubsection{Efficiency Optimizations of Scalable Foundation Model}
+A central goal of our design is to ensure the FM can be scaled efficiently in the online streaming and real-time inference environment. Building upon the efficient scaling properties of the HSTU architecture, we further developed several optimizations including compute de-duplication, sparse attention mechanisms~\cite{beltagy2020longformer} for HSTU self-attention, Triton kernel co-design and various caching techniques. These optimizations are critical for making trillion-parameter scale FMs practical by significantly reducing resources required for training, serving, and logging. While a detailed analysis of these optimizations is beyond the scope of this paper, they are crucial to the success of the paradigm.
+
+%  Unlike knowledge distillation methods, under our design, FM will be fully activated during both training and inference time. 
+% The further scaling of FM is made possible by the de-duplication of compute that is identical for each user request %roo
+% and efficiency optimizations like sparse attention \cite{NSA and more} for the HSTU self-attention compute.
+
+\subsection{Expert Design} 
+In the Foundation-Expert paradigm, the traditional one-stage model for each production surface is replaced by a lightweight Expert model. By offloading the compute-heavy task of general knowledge acquisition to the Foundation Model (FM), experts can be substantially smaller than their one-stage counterparts. This enables rapid iteration cycles focused exclusively on surface-specific optimizations.
+
+The primary architectural difference from their one-stage counterparts is the inclusion of three components: a FM Embedding Module, a FM Fusion Module, and a lightweight HSTU module dedicated to capturing short-term, real-time user interests. The data flow is as follows: first, the expert ingests the target-aware embeddings from the FM. These embeddings undergo preprocessing and robustness enhancements (e.g., regularization, denoising) within the FM Embedding Module. Subsequently, the FM Fusion Module combines these processed embeddings—representing long-term interests—with the output of the expert's own HSTU module, which represents short-term interests. This fused representation then interacts with other parts of the expert model via the Expert Fusion Module to generate final predictions for its surface-specific, multi-task learning objectives. The Expert Fusion Module's architecture is flexible, ranging from a simple MLP to more advanced structures, to meet the specific needs of different surface experts.
+
+
+\subsection{System Deployment}
+\begin{figure}
+    \centering
+    \includegraphics[width=\linewidth]{figures/system.pdf}
+    \caption{Overview of the HyperCast infrastructure system design. HyperCast powers our entire Foundation-Expert ecosystem, managing the full lifecycle of training, serving, feature logging, and model iteration. Its decoupled, multi-tier design enables our two-stage paradigm to operate with high efficiency, supporting online streaming training and real-time inference. The system achieves model freshness on the order of minutes and an average data-to-trainer latency of 30 minutes.}
+    \label{fig:system}
+\end{figure}
+
+% In industrial recommender systems, the online streaming setup, where the system continuously ingests, processes and reacts to latest user interactions ensures that the recommendations are generated based on the most up-to-date context. 
+% This is critical for delivering highly relevant and timely recommendations. 
+% Towards this end, in our Foundation-Expert paradigm, both the FM and experts are trained in this online streaming fashion. Their model weights are updated and synchronized to online inference servers with high frequency (on the order of a few minutes) for real-time inference. During serving, a user request first queries the FM inference server to generate target-aware embeddings. These embeddings, along with other surface-specific features, are then passed to the corresponding expert inference server, which generates the final predictions to fulfill the request. 
+
+% This two-stage architecture introduces an additional processing step compared to traditional one-stage online streaming systems. To address these, we designed and built HyperCast: a decoupled, multi-tier infrastructure for broadcasting/casting hyperscale recommender models. HyperCast provides a flexible and efficient foundation for the entire lifecycle of the Foundation-Expert paradigm, including training, serving, logging, and iteration. Ultimately, with end-to-end comprehensive optimizations, this new infrastructure allows our paradigm to achieve neutral infrastructure performances (e.g., end-to-end latency, CPU) and a 1.8x improvement in development velocity compared to the traditional one-stage paradigm, all while delivering significant topline metric and user experience gains. 
+In industrial recommender systems, an online streaming setup is critical for delivering highly relevant and timely recommendations, as it allows the system to continuously ingest, process, and react to the latest user interactions. However, deploying our two-stage paradigm in such a real-time environment introduces challenges in managing high-frequency updates, low-latency inference, and agile development. To address these, we designed and built HyperCast, the end-to-end infrastructure system depicted in Figure~\ref{fig:system}. HyperCast powers the entire Foundation-Expert lifecycle and is engineered with the following components:
+
+\subsubsection{Decoupled Training Architecture} 
+A core design principle of our paradigm is the complete decoupling of the FM and expert model iterations. This is achieved by materializing the FM's target-aware embeddings and logging them as candidate-level features available in the training data. Consequently, the FM and expert training jobs can operate independently, each consuming its own data and updating its weights without direct dependencies on the other's training state. 
+% The expert model's training process treats the powerful FM embeddings as another input feature, enabling lightweight and rapid iteration.
+
+\subsubsection{High Freshness}
+HyperCast enables exceptional model and data freshness, which is critical in a real-time recommendation environment. 
+For model freshness, both the FM and experts are trained in online streaming fashion. HyperCast facilitates independent and high-frequency model updates, employing a component-wise streaming synchronization mechanism. Specifically, instead of publishing and updating a full model snapshot which can be time-consuming, only part of (e.g. 30\%) the most recently updated model weights are published and synchronized with the inference server, allowing for model refreshes on the order of several minutes without service disruption.
+
+For data freshness, a real-time pipeline logs user interaction events immediately as they occur. A dynamic joining strategy then makes this data available to the online streaming trainers, reducing the average data-to-trainer latency to approximately 30 minutes.
+
+
+\subsubsection{Multi-tier Inference Service Deployment and Optimization}
+The Foundation-Expert paradigm necessitates three distinct inference workloads with different operational requirements: (1) online FM Serving, which provides embeddings for hundreds of ranking candidates under strict latency constraints; (2) offline FM logging, which generates embeddings only for a small subset of served items for training data and has relaxed latency requirements; and (3) online expert serving.
+
+To manage these heterogeneous requirements, HyperCast implements a multi-tier deployment architecture. Each workload is handled by an independent, purpose-built inference service tier, allowing for specialized optimization. For instance, the FM logging tier requires only one-third of the hosts compared to the online FM serving tier. Similarly, the expert tier can be configured flexibly, as the expressive power of the FM embeddings allows for substantially more light-weight expert models for each surface. This scheme enables us to tailor GPU runtime setups, latency targets, and hardware types for each tier, maximizing hardware utilization and inference efficiency.
+
+We mitigate the latency impact of the sequential two-stage serving through several major optimizations. First, HyperCast's data-flow engine merges and parallelizes feature fetching steps across the FM and expert models, ensuring these operations introduce no additional overhead. Second, GPU execution time is inherently reduced due to the lightweight nature of the experts compared with one-stage models. We further improve its efficiency by implementing a "Inference Pruning" strategy, where only the subset of the FM needed for target-aware embedding inference is deployed. These end-to-end optimizations make the two-stage serving highly efficient.
+
+\subsubsection{Agile Development and Version Management}
+The decoupled architecture significantly accelerates the development lifecycle. Experts can be iterated upon rapidly and independently because the powerful FM knowledge is materialized as input features, obviating the need for heavy joint training. To further speed up experimentation with the FM itself, HyperCast provides a mechanism which can recursively load FM checkpoints into an expert's training flow for generating FM embeddings on the fly, enabling quick evaluation without a full, resource-intensive production deployment.
+
+To manage the complexity of this decoupled environment, HyperCast includes a dedicated multi-version control framework. During data generation, embeddings from all active FM versions are logged. Each expert is then configured to select embeddings from a single, specific FM version for its training and deployment. This mechanism isolates the model lifecycles, enabling scalable and safe testing of various Foundation-Expert combinations.
+
+% \subsubsection{Multi-Version Control}
+% A key challenge in such decoupled system is managing version mismatches between the Foundation Model and the numerous expert models that depend on it. To address this, HyperCast introduces a dedicated FM version control framework that decouples their development lifecycles.
+
+% In the training data generation step, embeddings from all active FM versions are computed and logged. Then, during an expert's training configuration, it is configured to select and consume embeddings from only one specific FM version. This mechanism enables scalable offline and online experimentation with various Foundation-Expert model version combinations without creating dependencies that would hinder independent iteration.
+
+% \subsubsection{Efficient FM and Expert Development}
+% The Foundation-Expert paradigm significantly accelerates the development lifecycle. Because the powerful FM knowledge is materialized as input features (embeddings) in the training data, experts can be iterated upon rapidly and independently without the need for heavy joint training. This centralization of compute-heavy scaling efforts onto the FM makes the development process for individual surfaces more agile and efficient.
+
+% To further speed up experimentation, HyperCast provides a mechanism to rapidly test the impact of new FM versions. Developers can recurringly load FM checkpoints into an expert's training flow for a forward pass to generate FM embeddings on the fly, without requiring full FM logging to production scale. This enables quick evaluation of a new FM's downstream impact, thereby preventing the engineering and computational waste associated with productionizing and logging data for unpromising FM candidates.
+ 
+
+\section{Experiment} \label{sec:results}
+In this section, we present a series of experiments to validate our proposed Foundation-Expert paradigm. We begin by demonstrating the effectiveness of the target-aware embeddings, the central component of our approach. Next, we show that performance improvements in the Foundation Model (FM) transfer effectively to expert models across multiple recommendation surfaces, and we analyze the generalization capabilities of the embeddings on tasks for which the FM was not explicitly trained. Finally, we present results from online A/B tests to validate the paradigm's feasibility and performance in a live production environment.   
+
+% how improvements to the FM transfer to improvements in the expert models 
+% across multiple product surfaces under 
+% the proposed Foundation-Expert paradigm. 
+% We then compare the effectiveness of the %drastically-shifting 
+% target-aware embeddings with relatively stable user embeddings, showing that the former is more expressiveness and thus can effectively reduce expert model complexity while the latter cannot. Finally we test the paradigm in an online environment and conduct A/B tests to further validate its feasibility and performance.
+
+\subsection{Experiment Setup}
+
+\paragraph{Data}
+All experiments were conducted on industrial datasets.
+Since this work required a tight coupling between infrastructure and modeling 
+improvements to ensure the practical relevance and scalability, we did not apply our approach to public benchmarks.
+
+\paragraph{Evaluation Metrics}
+In the present work, we estimate the offline performance of our approach 
+using the Normalized Entropy (NE).
+NE is the usual cross-entropy loss normalized by the 
+the entropy of the data distribution~\cite{he2014practical}. For example, 
+given $N$ training examples and letting $y_i \in \left\{0, 1 \right\}$
+be the label of the $i^{\text th}$ training example, the NE is estimated as,
+\begin{equation}
+    NE = \frac{\frac{1}{N} \sum_{i=1} y_i \log p_i + (1- y_i) \log (1 - p_i)}
+    { p \log p + (1-p) \log (1-p)}
+\end{equation}
+where $p=\frac{1}{N}\sum_{i=1}^N y_i$ and $p_i$ is predicted probability for 
+example~$i$.
+The utility of this metric is that it is less sensitive to datasets
+where the number of 
+negative examples greatly outnumbers the number of positive examples and vice-versa 
+than the standard cross-entropy loss. We also note that an improvement
+to the NE of $\approx 0.05\%$ is considered significant. 
+
+In the offline evaluation we assess model performance across several important tasks: 
+(i)~``video complete" which indicates whether or not a user watches a video
+from start to finish;
+(ii)~``video view duration" which measures how long a user watches a particular 
+video for;
+and 
+(iii)~``like" and ``share" both of which are self-explanatory. In addition to these broadly applicable tasks for both FM and most experts, the evaluation also incorporates surface-specific critical tasks, which follow the naming scheme of "Surface\_X\_Task\_i".
+
+\begin{table}[h!]
+    \centering
+    \begin{tabular}{lcccc}
+        \toprule 
+        \textbf{Model} & \multicolumn{4}{c}{\textbf{NE Diff (\%)}} \\ 
+        \cmidrule(lr){2-5} 
+        & \textbf{Like} & \textbf{Share} & \textbf{VVD} & \textbf{VC} \\
+        \midrule 
+        Baseline & 0 & 0 & 0 & 0 \\
+        Baseline + UE & -0.64 & -1.15 & -0.81 & -0.78 \\
+        Baseline + \textbf{TAE (ours)} & -2.13 & -3.02 & -2.97 & -2.96 \\
+        Baseline + UE + \textbf{TAE (ours)} & -2.14 & -3.15 & -2.98 & -2.97 \\
+        \bottomrule 
+    \end{tabular}
+    \caption{Effectiveness of our proposed Target-Aware Embedding (TAE). UE here is the strongest internal User Embedding (UE) method. "VVD" and "VC" are the short forms of "Video View Duration" and "Video Complete" metrics. To ensure a controlled comparison, both embedding features are derived from the same temporal range of user history. NE Diff (\%) $>0.05\%$ can be considered a significant improvement}
+    \label{tab:ue_comp}
+\end{table}
+
+
+% \subsubsection{Model Setup} 
+\paragraph{Foundation Model} The FMs evaluated in this study are trained in standard online streaming setup, utilizing data from four important recommendation surfaces. We evaluate two FM variants, designated HSTU-0.5B (30G inference FLOPs) and HSTU-1B (80G inference FLOPs). It is important to note that the 0.5B and 1B model sizes here refer exclusively to the dense parameters; when including the sparse embedding tables, the models operate on a trillion-parameter scale. Training is conducted on 160 and 512 NVIDIA H100 GPUs for the HSTU-0.5B and HSTU-1B models, respectively. To enhance data freshness, per-surface downsampling is employed on the training data.
+
+\paragraph{Experts} The expert FM Fusion Module utilizes a simple MLP as a robust baseline. While more advanced fusion strategies may yield further improvements, an exploration of these is beyond the scope of this work. Similar to the FM, the experts also utilize data downsampling; however, the specific ratios for each expert are tailored to individual surface requirements and may differ from those of the FM. 
+
+% \begin{table}[h!]
+%     \centering
+%     \begin{tabular}{lcccc}
+%         \toprule 
+%         \textbf{Model} & \multicolumn{4}{c}{\textbf{NE Diff (\%)}} \\ 
+%         \cmidrule(lr){2-5} 
+%         & \textbf{Like} & \textbf{Share} & \textbf{VVD} & \textbf{VC} \\
+%         \midrule 
+%         Baseline & 0 & 0 & 0 & 0 \\
+%         Baseline + UE & -0.64 & -1.15 & -0.81 & -0.78 \\
+%         Baseline + \textbf{TAE (ours)} & -2.13 & -3.02 & -2.97 & -2.96 \\
+%         Baseline + UE + \textbf{TAE (ours)} & -2.14 & -3.15 & -2.98 & -2.97 \\
+%         \bottomrule 
+%     \end{tabular}
+%     \caption{Effectiveness of our proposed Target-Aware Embedding (TAE). UE here is the strongest internal User Embedding (UE) method. "VVD" and "VC" are the short forms of "Video View Duration" and "Video Complete" metrics. To ensure a controlled comparison, both embedding features are derived from the same temporal range of user history. NE Diff (\%) $>0.05\%$ can be considered a significant improvement}
+%     \label{tab:ue_comp}
+% \end{table}
+
+\begin{table*}[t]
+\centering
+\begin{tabular}{l l l c c c }
+\toprule
+\textbf{Surface} & \textbf{Task Type} & \textbf{Task Name} & \textbf{FM NE Diff \%} & \textbf{Expert NE Diff \%} &\textbf{Transfer Ratio} \\
+\hline
+\textbf{Surface A} & Main & Like & -0.73 & -0.54  & 0.7397 \\
+ & Main & Share & -0.50 & -0.50 & 1.0000 \\
+ & Main & Video View Duration & -1.14 & -1.05 & 0.9211 \\
+ & Main & Video Complete & -1.17 & -1.06 & 0.9060 \\
+ \hline
+\textbf{Surface B} & Main & Like & -0.83 & -0.60 & 0.7228 \\
+ & Main  & Share & -0.60 & -0.48 & 0.8000 \\
+ & Main & Video View Duration & -1.16 & -0.91 & 0.7844 \\
+ & Main & Video Complete & -1.36 & -0.92  & 0.6765 \\
+ & Aux & Surface\_B\_Task\_1 & -1.74 & -1.12  & 0.6437 \\
+ & Aux & Surface\_B\_Task\_2 & -1.03 & -0.92  &  0.8932 \\
+ & Aux & Surface\_B\_Task\_3 & -1.44 & -1.06  &  0.7361 \\
+ \hline
+\textbf{Surface C} & Main & Like & -0.77 & -0.60 & 0.7792 \\
+ & Main & Share & -0.51 & -0.46 & 0.9020 \\
+ & Main & Video View Duration & -0.99 & -0.88 & 0.8889 \\
+ & Main & Video Complete & -1.23 & -0.89 & 0.7236 \\
+ & Aux & Surface\_C\_Task\_1 & -0.26 & -0.24  & 0.9231 \\
+ & Aux & Surface\_C\_Task\_2 & -0.43 & -0.40  & 0.9302 \\
+ & Aux & Surface\_C\_Task\_3 & -1.20 & -0.99  & 0.8250 \\
+\bottomrule
+\end{tabular}
+\caption{Foundation-to-Expert Transfer Efficiency across Surfaces. This table presents the Transfer Ratio (higher is better) and evaluation NE performance (lower is better) on important tasks across four recommendation surfaces. Here "FM NE Diff" and "Expert NE Diff" means $NE(HSTU\-1B) -NE(HSTU\-0.5B)$ and $NE({Expert}_{HSTU\-1B}) - NE(Expert_{HSTU\-0.5B})$ respectively. For "Task Type", "Main" means that task is main task for both FMs and Experts. "Aux" means that task is auxiliary task for FMs while main task for Experts. The results demonstrate that our approach achieves high transfer ratios in the range of $[0.64, 1.0]$ 
+}
+\label{tab:transfer-ratio-surf}
+\end{table*}
+
+% \vspace{-1.5em}
+\subsection{Effectiveness of Target-Aware Embeddings}
+As discussed previously, two-stage, embedding-based methods are a popular paradigm in recommender systems, offering an efficient mechanism to share knowledge from a powerful, centralized FM to various downstream models. However, these methods traditionally focus on relatively stable embeddings, such as user-only or item-only embeddings. While this reduces the required FM update frequency and infrastructure optimizations, it limits the expressive power of the embeddings, thereby failing to fully realize the benefits of scaling laws.
+
+To validate the effectiveness of our proposed target-aware embeddings we conduct an ablation study against the strongest internal user embeddings. The FM that produces the baseline user embeddings is trained on the same cross-surface dataset and user history time-range as our HSTU-1B FM. The user embeddings have a dimension 32x larger than our target-aware embeddings and have an embedding freshness of several hours. In the expert models, the user embeddings are processed by a dedicated Fusion Module that uses target-aware attention before interacting with the other components. We note that this user embedding fusion module introduces an additional 5-7\% training speed overhead compared to our simpler MLP-based fusion module.
+
+The results are summarized in Table~\ref{tab:ue_comp}. The "Baseline" model is a production model that excludes both user embeddings and our proposed target-aware embeddings. It clearly shows that adding our target-aware embeddings to the baseline yields substantial NE improvements across all tasks, significantly outperforming the gains achieved by adding the user embeddings. Furthermore, an ablation study adding the user embeddings on top of our system shows only minor additional improvements. This indicates that our approach efficiently captures the necessary signals for modeling a user's interest in a specific candidate, validating the efficacy of our strategy. 
+
+The expressiveness of the target-aware embeddings has a direct impact on the  expert models. It enables the experts to be exceptionally lightweight (requiring just 20-40\% of the compute of their one-stage counterparts), which in turn enables rapid iteration on surface-specific optimizations, greatly improving development velocity and resource efficiency.
+
+
+% \begin{table*}[t]
+% \centering
+% \begin{tabular}{l l l c c c }
+% \toprule
+% \textbf{Surface} & \textbf{Task Type} & \textbf{Task Name} & \textbf{FM NE Diff \%} & \textbf{Expert NE Diff \%} &\textbf{Transfer Ratio} \\
+% \hline
+% \textbf{Surface A} & Main & Like & -0.73 & -0.54  & 0.7397 \\
+%  & Main & Share & -0.50 & -0.50 & 1.0000 \\
+%  & Main & Video View Duration & -1.14 & -1.05 & 0.9211 \\
+%  & Main & Video Complete & -1.17 & -1.06 & 0.9060 \\
+%  \hline
+% \textbf{Surface B} & Main & Like & -0.83 & -0.60 & 0.7228 \\
+%  & Main  & Share & -0.60 & -0.48 & 0.8000 \\
+%  & Main & Video View Duration & -1.16 & -0.91 & 0.7844 \\
+%  & Main & Video Complete & -1.36 & -0.92  & 0.6765 \\
+%  & Aux & Surface\_B\_Task\_1 & -1.74 & -1.12  & 0.6437 \\
+%  & Aux & Surface\_B\_Task\_2 & -1.03 & -0.92  &  0.8932 \\
+%  & Aux & Surface\_B\_Task\_3 & -1.44 & -1.06  &  0.7361 \\
+%  \hline
+% \textbf{Surface C} & Main & Like & -0.77 & -0.60 & 0.7792 \\
+%  & Main & Share & -0.51 & -0.46 & 0.9020 \\
+%  & Main & Video View Duration & -0.99 & -0.88 & 0.8889 \\
+%  & Main & Video Complete & -1.23 & -0.89 & 0.7236 \\
+%  & Aux & Surface\_C\_Task\_1 & -0.26 & -0.24  & 0.9231 \\
+%  & Aux & Surface\_C\_Task\_2 & -0.43 & -0.40  & 0.9302 \\
+%  & Aux & Surface\_C\_Task\_3 & -1.20 & -0.99  & 0.8250 \\
+% \bottomrule
+% \end{tabular}
+% \caption{Foundation-to-Expert Transfer Efficiency across Surfaces. This table presents the Transfer Ratio (higher is better) and evaluation NE performance (lower is better) on important tasks across four recommendation surfaces. Here "FM NE Diff" and "Expert NE Diff" means $NE(HSTU\-1B) -NE(HSTU\-0.5B)$ and $NE({Expert}_{HSTU\-1B}) - NE(Expert_{HSTU\-0.5B})$ respectively. For "Task Type", "Main" means that task is main task for both FMs and Experts. "Aux" means that task is auxiliary task for FMs while main task for Experts. The results demonstrate that our approach achieves high transfer ratios in the range of $[0.64, 1.0]$ 
+% }
+% \label{tab:transfer-ratio-surf}
+% \end{table*}
+
+
+\subsection{Foundation-to-Expert Transfer Efficiency} \label{sec:transfer-ratio-experiment}
+One advantage of the FM-expert design is its transfer efficiency: the FM can be improved centrally, with performance gains transferring at a high ratio to numerous downstream experts simultaneously. This approach
+directly addresses a known challenge of knowledge distillation where, in large-data regimes, improvements to a teacher model no longer transfer effectively to the student~\cite{busbridge_distillation_2025}.
+
+To investigate this transfer capability, we conducted an experiment training two architecturally identical expert models on billions of examples. The sole difference between the them was the source of their input FM embeddings: one utilized the HSTU-0.5B FM, and the other, the HSTU-1B FM. For both expert models we initialized the parameters of the expert model (except for the FM Embedding Module and FM Fusion Module) from an expert that had been trained on the HSTU-0.5B FM for more than 1-month.
+
+We define the Transfer Ratio (TR) between a pair of FMs for a given expert as,
+\begin{equation}
+    TR = \frac{NE({Expert}_{FM1}) - NE(Expert_{FM2})}{NE(FM1) -NE(FM2)}
+\end{equation}
+Here, NE represents the Normalized Entropy, our primary offline performance metric. The TR measures the proportional improvement in the expert model relative to the underlying improvement in the foundation model. 
+A higher TR value signifies a more efficient paradigm, ensuring that investments in scaling the FM yield corresponding performance gains in downstream expert models.
+We note that because both the FM and expert models are trained using 
+a different feature and task set, a transfer ratio of $>=1$
+is theoretically possible due to higher-order interactions between 
+the union of the feature and task set in the overall model in this paradigm design.
+
+We summarize our results in Table~\ref{tab:transfer-ratio-surf}. These 
+results demonstrate that scaling gains from the FM are efficiently propagated to expert models across various surfaces, which can save considerable training resources and engineering effort that would otherwise be dedicated to scaling each model independently. 
+
+% \begin{table}[h!]
+%     \centering
+%     \begin{tabular}{lcc}
+%         \toprule 
+%         \textbf{Task Name} & \textbf{NE Diff (\%) v.s. Baseline} \\ 
+%         \midrule 
+%         \textbf{Surface\_D\_Task\_1} & -0.60 \\
+%         \textbf{Surface\_D\_Task\_2} & -0.53 \\
+%         \textbf{Surface\_D\_Task\_3} & -0.40 \\
+%         \textbf{Surface\_D\_Task\_4} & -0.51 \\
+%         % Expert + TE & -2.13 & -3.02 & -2.97 & -2.96 \\
+%         % Expert + UE + TE & -2.14 & -3.15 & -2.98 & -2.97 \\
+%         \bottomrule 
+%     \end{tabular}
+%     \caption{Expert performance improvements on Surface D tasks that were not seen by the FM during its training. The baseline is the production model.}
+%     \label{tab:general}
+% \end{table}
+% \vspace{-3.0em}
+
+\subsection{Generalization to Unseen Tasks} \label{sec:generalizability}
+While the previous experiments in Section~\ref{sec:transfer-ratio-experiment} demonstrated FM's strong generalizability across surfaces, the FM has been exposed to all the surface-specific tasks as either main or auxiliary objectives.  In this section, we investigate a more challenging scenario: the FM's ability to generalize to expert tasks on which it has no direct training supervision. 
+
+For this experiment, we established a baseline using the production model of "Surface D" without our FM embeddings. The expert model is architecturally identical to the baseline but incorporates embeddings from the HSTU-0.5B FM. Notably, the FM was trained using around 20\% of the "Surface D" data, in contrast to the baseline which was trained on the full 100\%. And this FM was aligned using only one of the primary tasks from Surface D as an auxiliary objective. We then measured expert performance relative to the baseline on the four other tasks from Surface D, which were intentionally withheld from the FM's training.
+
+As shown in Table~\ref{tab:general}, the expert model with FM embeddings achieved statistically significant gains on all four "unseen" tasks over the baseline. This result underscores the FM's powerful generalization ability, proving it can learn and transfer knowledge that is broadly useful, even for tasks beyond its explicit optimization objectives. This capability is a cornerstone of our "build once, use everywhere" vision, enabling a single FM to benefit an entire ecosystem of diverse and evolving tasks.
+
+\begin{table}[h!]
+    \centering
+    \begin{tabular}{lcc}
+        \toprule 
+        \textbf{Task Name} & \textbf{NE Diff (\%) v.s. Baseline} \\ 
+        \midrule 
+        \textbf{Surface\_D\_Task\_1} & -0.60 \\
+        \textbf{Surface\_D\_Task\_2} & -0.53 \\
+        \textbf{Surface\_D\_Task\_3} & -0.40 \\
+        \textbf{Surface\_D\_Task\_4} & -0.51 \\
+        % Expert + TE & -2.13 & -3.02 & -2.97 & -2.96 \\
+        % Expert + UE + TE & -2.14 & -3.15 & -2.98 & -2.97 \\
+        \bottomrule 
+    \end{tabular}
+    \caption{Expert performance improvements on Surface D tasks that were not seen by the FM during its training. The baseline is the production model.}
+    \label{tab:general}
+\end{table}
+
+
+\subsection{Online Performance}\label{sec:online-performance}
+We validated our proposed paradigm through extensive online A/B tests on several core recommendation surfaces. The expert model, which utilizes embeddings from the HSTU-0.5B FM, was benchmarked against directly serving the FM. This setup provides a direct comparison between our two-stage Foundation-Expert paradigm and the traditional one-stage approach. 
+
+The results demonstrated statistically significant improvements on all surfaces across both engagement and consumption metrics, including a notable shift in engagement towards fresher content. We attribute these gains to our architecture's explicit separation of concerns, where the FM captures general, long-term knowledge, enabling the expert to specialize in surface-specific optimizations and real-time user interests. 
+
+Moreover, these user-facing improvements were achieved without compromising system performance. The infrastructure metrics such as end-to-end serving latency and CPU performance remained neutral. This is attributed to optimizations within our new infrastructure, HyperCast. 
+% The paradigm's decoupled design, which centralizes compute-heavy general knowledge in the FM and allows for production experts to be highly light-weight, yielded substantial improvements in both development velocity and training efficiency. Currently, the proposed system is fully deployed across multiple core recommendation surfaces at Meta, serving tens of billions of daily user requests.
+
+
+% Here the expert was trained on approximately 1-month 
+% of data. We then record the \% difference in metrics related to 
+% engagement, consumption, and content freshness over a three day reading period 
+% for the FM-expert model the current production model.
+% We see that on important metrics related to engagement, consumption, and content 
+% freshness the proposed approach offers major improvements over the 
+% current production system. 
+% The FM is trained on multiple application surfaces related to video. We train 
+% two 
+
+% \subsubsection{Cross surface performance}
+% To validate the effectiveness of our proposed paradigm, we conducted online A/B tests on Facebook's major recommendation surfaces. In table \cite{tab:online} We listed both AA migration results and large fm results. 
+
+% -----------------------------------------------------------------------------------------------
+% REMOVING FOR NOW, BUT ONCE WE HAVE SOME LARGE FM RESULTS WE CAN MOVE THIS BACK IN
+% -----------------------------------------------------------------------------------------------
+
+% \kc{I actually think we don't need to separate into AA vs large FM? personally I think 
+% we can just separate this into small vs large FM}
+% \textbf{AA} Here AA migration means we directly take the production model as FM and built a tiny expert on top of it. In this way we can have a fair comparison of traditional one-stage with our decoupled two-stage paradigm. \dl{add explanations about the metrics} Online results show that the expert model has statistically significant improvements over various topline metrics, including 0.026\% session, 0.057\% total watch time, multiple DAU (Daily Active User) proxies. At the same time, engagements shifted from 14+ days old content to more fresh contents, benefiting from the design of transitioning the long-term user interest learning modules to FM, while employing a smaller expert HSTU that focuses on recent user interests.
+
+% Notably, with the aformentioned systematic optimizations, the proposed 2-stage paradigm shows ~30ms total latency savings, neutral CPU costs, and significantly improved development efficiencies.
+
+% \textbf{Large FM} 
+% \dl{can add this if later we have valid online readings of the 64H expert}
+% topline wins,
+% % \subsection{Adapter for improved content freshness}
+% As will be discussed in the \S\ref{sec:related-works}, the FM-expert 
+% paradigm is well-suited for learning and recommending fresher content.
+% In this section the FM is trained 
+% using a user history length of up to 16k while the expert is trained using a much 
+% shorter sequence length of 2k. 
+% In Figure~xx below, we show that content freshness is greatly improved by leveraging 
+% this perspective. 
+
+% -----------------------------------------------------------------------------------------------
+
+% This study further demonstrates how the FM-expert paradigm 
+% can be used to optimize for complex downstream metrics (like content freshness) without 
+% sacrificing on representation quality.
+% \begin{table}[h]
+%     \centering
+%     \caption{RankFM-2 Initiative Key Metrics}
+%     \begin{tabular}{lcc}
+%         \toprule
+%         \textbf{Metric Category} & \textbf{Metric Description} & \textbf{Value} \\
+%         \midrule
+%         \multirow{6}{*}{Engagement} 
+%             & User Engagement Sessions & $0.026 \pm 0.011$ \\
+%             & Engaged Daily Active Users & $0.110 \pm 0.015$ \\
+%             & Sessions with Positive Engagements & $0.369 \pm 0.022$ \\
+%         \midrule\\
+%         \multirow{4}{*}{Consumption} 
+%             & Time Spent on Interfaces & $0.227 \pm 0.021$ \\
+%             & Video Views Count & $0.118 \pm 0.033$ \\
+%             & Video Watch Time & $0.574 \pm 0.032$ \\
+%         \midrule\\
+%         \multirow{5}{*}{Content Freshness} 
+%             & Video Views with Content Age < 12 hours & $1.004 \pm 0.044$ \\
+%             & Video Views with Content Age < 24 hours & $1.657 \pm 0.038$ \\
+%             & \% Video Views with Content Age > 14 days & $-1.632 \pm 0.012$ \\
+%         \bottomrule
+%     \end{tabular}
+% \end{table}
+% \begin{table*}[t]
+%     \centering
+%     \begin{tabular}{lllr}
+%         \toprule
+%         \textbf{Surface} & & \textbf{Metric} & \textbf{\% Change} \\
+%         \midrule
+%         \textbf{Video} &\textbf{Engagement} & User Sessions & $0.026$ \\
+%         &                   & Engaged Daily Active Users & $0.110$ \\
+%         &                   & Sessions with Positive Engagements & $0.369$ \\
+%         % \midrule
+%         &\textbf{Consumption} & Time Spent on FB & $0.227$ \\
+%         &                   & Video Views Count & $0.118$ \\
+%         &                   & Video Watch Time & $0.574$ \\
+%         % \midrule
+%         &\textbf{Content Freshness} & Video Views with Content Age < 12 hours & $1.004$ \\
+%         &                          & Video Views with Content Age < 24 hours & $1.657$ \\
+%         &                           & \% Video Views with Content Age > 14 days & $-1.632$ \\
+%         \midrule
+%         \textbf{In feed video } & \textbf{Engagement} & Clicks & $1.38$ \\
+%         &\textbf{Consumption} & Video Watch Time & $0.26$ \\
+%         \bottomrule
+%     \end{tabular}
+%     \caption{Improvements to some important metrics for the small FM-expert. We see that metrics related
+%     to engagement, consumption, and content freshness are improved across the board by 
+%     a statistically significant margin. }
+% \end{table*}
+
+
+% \vspace{-1.5em}
+\section{Conclusion}\label{sec:conclusion}
+In this paper, we introduced the Foundation-Expert paradigm, a novel approach for deploying hyperscale recommender systems. By decoupling a central, compute-heavy FM from lightweight, surface-specific Experts, our framework facilitates highly efficient and generalizable knowledge transfer at a massive scale via target-aware embeddings. We demonstrated that this paradigm, powered by our HyperCast infrastructure, overcomes the limitations of traditional knowledge distillation and provides statistically significant improvements in online metrics in A/B testing.
+%achieving high transfer ratios in the range of 0.64 to 1.0.
+
+Currently, the proposed paradigm is fully deployed across multiple core recommendation surfaces at Meta, serving tens of billions of daily user requests. This work provides a proven blueprint for realizing the benefits of scaling laws in complex, real-time recommendation environments.
+% Our deployment across several core recommendation surfaces at Meta, serving tens of billions of daily requests daily, validates that this approach allows for focusing on scaling a central FM while maintaining rapid, highly-efficient iterations on production expert models. This work provides a proven blueprint for realizing the benefits of scaling laws in complex, real-time recommendation environments.
+
+% We believe the principles of decoupling knowledge transfer and specializing lightweight models can be extended beyond recommendations, offering a path forward for applying foundation models in other domains constrained by online streaming data and diverse downstream tasks.
+% In this work we developed an approach for training FMs using 
+% multi-modal cross-surface data coupled 
+% with surface specific expert models using target-aware embeddings 
+% to facilitate highly-efficient and generalizable 
+% transfer learning at scale.
+% We shared our learnings and perspectives on deploying 
+% a hyper-scale model into our production recommender stack 
+% that serves tens of billions of user requests each day.
+% % In contrast to the more standard approach to applying FMs in 
+% % the context of recommendation systems
+% In contrast to standard knowledge distillation, which has been shown to suffer
+% from low metric transfer from the teacher to the student model 
+% in the large data regime~\cite{busbridge_distillation_2025}, 
+% we show that our approach provides strong metric transfer ratios 
+% between the teacher and the student in the range of 0.64 to 1.0 on our data.
+% These technical innovations, coupled with our practical  
+% deployment stack, has allowed us to allocate appropriate resources
+% towards scaling our FM while still allowing for rapid iteration 
+% on expert models.
+% Beyond the immediate application to recommendation systems, 
+% we believe that the learnings shared here 
+% can enable FMs to be applied in other domains 
+% where streaming data is currently a bottlekneck to the application 
+% of transfer learning at scale.
+
+% We showed impressive performance improvements on a number of
+% online metrics related to consumption (+0.574\% watch time), 
+% engagement (+0.369\% sessions with positive engagements), 
+% and content freshness (+1\% video views for content age $<$ 12 hours).
+% Together these achievements help to connect users 
+% with content that is better aligned with their preferences.
+
+% In terms of future work, we plan to launch expert models on 
+% additional application surfaces. 
+% We also plan to continue to scale 
+% the FM both in terms of the context length as well as the types of 
+% data which are ingested by the model in
+
+\newpage
+\begin{acks}
+This work represents the joint efforts of many of engineers, researchers, data scientists, and leaders and would not be possible without the following individuals (listed alphabetically): Banit Agrawal, Bin Kuang, Bugra Akyildiz, Chao Deng, Charlie Li, Chelsea Pan, Chenran Li, Chloe Liu, Chufeng Hu, Chunxing Yin, Colin Peppler, Cong Shen, Daisy Shi He, Franco Mo, Han Li, Hao Lin, Hao Wan, Hong Yan, Hongyi Jia, Hongzheng Shi, Huihui Cheng, Ilina Mitra, Jack Chai, James Zuo, Jeet Kanjani, Jiahao Luo, Jiaqi Zhai, Jing Ma, Jing Shan, Ke Gong, Lars Backstrom, Linjian Ma, Lu Fang, Lu Zhang, Marcus Gao, Meihong Wang, Michael Chen, Michael He, Mike Ching, Min Ni, Nikki Zhang, Ning Jiang, Pai-Wei Lai, Qianqian Zhong, Rajasi Saha, Ram Ramanathan, Rex Cheung, Rui Jian, Rui Zhang, Runming Lu, Shikha Kapoor, Shilin Ding, Shiyan Deng, Shouwei Chen, Siqiao Chen, Sophia (Xueyao) Liang, Wen-Yun Yang, Xiaoxing Zhu, Xinyao Hu, Xinye Zheng, Xudong Ma, Yanhong Wu, Yifan Shao, Yisong Song, Yuting Zhang, Zhe (Joe) Wang, Zhuoran Zhao, Zimeng Yang.
+    % This work represents the joint efforts of many of engineers, researchers, data-scientists, and leaders and would not be possible without the following {\bf contributors:} Zimeng Yang, Chloe Liu, Linjian Ma, Han Li, Michael He, Rui Zhang, Chunxing Yin, Jeet Kanjani, Wen-Yun Yang, Franco Mo, Runming Lu, Chao Deng, Hao Lin, James Zuo, Marcus Gao, Jiahao Luo, Bin Kuang, Yifan Shao, Huihui Cheng, Chufeng Hu, Xiaoxing Zhu, Yuting Zhang, Zhe (Joe) Wang, Daisy Shi He, Rui Jian, Min Ni, Bugra Akyildiz, Sophia (Xueyao) Liang, Michael Chen, Lu Zhang, Mike Ching, Qianqian Zhong; {\bf collaborators:} Xinye Zheng, Hao Wan, Charlie Li, Hongzheng Shi, Jing Ma, Siqiao Chen, Shouwei Chen, Yanhong Wu, Ning Jiang, Kai Ren, Chenran Li, Colin Peppler, Jing Shan, Zhuoran Zhao, Hongyi Jia, Lu Fang, Shiyan Deng, Banit Agrawal, Xudong Ma, Ilina Mitra, Rajasi Saha, Pai-Wei Lai, Yisong Song; {\bf and project management and data scientists:} Chelsea Pan, Shikha Kapoor, Ram Ramanathan, Rex Cheung, Cong Shen, Jack Chai, Ke Gong. Finally we would like to thank Shilin Ding, Xinyao Hu, Meihong Wang, Hong Yan and Lars Backstrom for their leadership support. 
+\end{acks}
+
+\bibliographystyle{ACM-Reference-Format}
+\bibliography{paper}
+
+
+%%
+%% If your work has an appendix, this is the place to put it.
+\appendix
+
+% \section{Adaptation to FM embedding distribution shift}
+
+
+\end{document}
+\endinput
+%%
+%% End of file `sample-sigconf.tex'.

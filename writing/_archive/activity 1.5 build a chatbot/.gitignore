@@ -1,0 +1,33 @@
+# Python
+__pycache__/
+*.py[cod]
+*$py.class
+*.so
+.Python
+env/
+venv/
+ENV/
+.venv/
+
+# Vector store
+vector_store/
+*.index
+*.faiss
+
+# Chat history
+chat_history.json
+
+# API keys
+*api_key*
+*apikey*
+API_KEY
+
+# OS
+.DS_Store
+Thumbs.db
+
+# IDE
+.vscode/
+.idea/
+*.swp
+*.swo

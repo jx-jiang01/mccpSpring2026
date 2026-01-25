@@ -1,0 +1,80 @@
+=== Process Log for JJGou Literature Analysis ===
+Date: 2026-01-11
+
+## Task Overview
+Analyze two papers in the JJGou folder:
+1. App-Bmao.pdf - "Graph Edit Distance Estimation: A New Heuristic and A Holistic Evaluation of Learning-based Methods"
+2. AStar-Bmao.pdf - "Accelerating Graph Similarity Search via Efficient GED Computation"
+
+## Step 1: Extract Paper Titles
+✓ App-Bmao.pdf: "Graph Edit Distance Estimation: A New Heuristic and A Holistic Evaluation of Learning-based Methods"
+  Authors: Mouyi Xu, Lijun Chang (The University of Sydney)
+  
+✓ AStar-Bmao.pdf: "Accelerating Graph Similarity Search via Efficient GED Computation"
+  Authors: Lijun Chang, Xing Feng, Kai Yao, Lu Qin, Wenjie Zhang
+
+## Step 2: Search for HTML versions online
+✓ Searched for HTML versions online
+✗ No HTML versions found on arxiv, ACM, or IEEE databases
+Decision: Proceed with PDF to markdown conversion
+
+## Step 3: Convert PDFs to Markdown
+✓ Copied convert_pdf_to_md.py script from JXJiang folder
+✓ Successfully converted App-Bmao.pdf to App-Bmao.md
+✓ Successfully converted AStar-Bmao.pdf to AStar-Bmao.md
+
+## Step 4: Analyze papers and generate reports
+✓ Analyzed App-BMao paper structure and content
+✓ Analyzed AStar-BMao paper structure and content
+✓ Created AppBMaoInsights.md with comprehensive macro-level analysis
+✓ Created AStarBMaoInsights.md with comprehensive macro-level analysis
+✓ Created AppBMaoVisualization.html for interactive visualization
+✓ Created AStarBMaoVisualization.html for interactive visualization
+
+## Summary of Analysis
+
+### App-BMao Paper (SIGMOD 2025)
+**Title**: Graph Edit Distance Estimation: A New Heuristic and A Holistic Evaluation of Learning-based Methods
+**Structure**: Extended IMRaD with comprehensive survey component (~24 pages)
+**Key Features**:
+- Dual contribution: Survey + new heuristic algorithm
+- Comprehensive taxonomy: Interpretable vs. non-interpretable GED prediction
+- Framework identification: Three-module pattern across learning-based methods
+- Challenges conventional wisdom: Heuristic outperforms deep learning methods
+- Cross-community synthesis: Covers DB, ML, IR, CV fields
+
+### AStar-BMao Paper (IEEE Transactions)
+**Title**: Accelerating Graph Similarity Search via Efficient GED Computation
+**Structure**: Classic IMRaD with two-stage refinement (~15 pages)
+**Key Features**:
+- Incremental innovation: Improves state-of-the-art AStar-LSa
+- Two-stage solution: lbBMa (ideal) → lbBMao (practical)
+- Explicit trade-off discussion: Tightness vs. efficiency
+- Memory-focused: Addresses scalability limitations
+- Formal guarantees: Correctness and tightness proofs
+
+### Relationship Between Papers
+- AStar-BMao: Proposes efficient exact GED computation algorithm
+- App-BMao: Adapts AStar-BMao for GED estimation (heuristic version)
+- Both papers share author Lijun Chang
+- Complementary contributions: Exact computation vs. estimation landscape
+
+## Files Generated
+1. App-Bmao.md (converted from PDF)
+2. AStar-Bmao.md (converted from PDF)
+3. AppBMaoInsights.md (detailed macro-level analysis)
+4. AStarBMaoInsights.md (detailed macro-level analysis)
+5. AppBMaoVisualization.html (interactive visualization)
+6. AStarBMaoVisualization.html (interactive visualization)
+7. process.log (this file)
+
+## Task Completion
+All tasks from retrieveAnalyze.md have been completed:
+✓ Checked for HTML versions (none available)
+✓ Converted PDFs to markdown
+✓ Analyzed macro-level structure
+✓ Generated insights reports with extensive excerpts
+✓ Created visualization HTML files
+✓ Documented process in log file
+
+Date Completed: 2026-01-11

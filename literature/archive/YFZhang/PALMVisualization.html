@@ -1,0 +1,434 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>PALM Paper Macro-Level Structure Visualization</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 20px;
+            background-color: #f5f5f5;
+        }
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            background: white;
+            padding: 20px;
+            border-radius: 10px;
+            box-shadow: 0 0 10px rgba(0,0,0,0.1);
+        }
+        h1 {
+            text-align: center;
+            color: #2c3e50;
+            margin-bottom: 30px;
+        }
+        .structure-diagram {
+            display: flex;
+            flex-direction: column;
+            gap: 20px;
+        }
+        .section {
+            border: 2px solid #3498db;
+            border-radius: 8px;
+            padding: 15px;
+            background: #ecf0f1;
+            position: relative;
+        }
+        .section-header {
+            background: #3498db;
+            color: white;
+            padding: 10px;
+            margin: -15px -15px 15px -15px;
+            border-radius: 6px 6px 0 0;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        .section-title {
+            font-weight: bold;
+            font-size: 1.2em;
+        }
+        .word-count {
+            font-size: 0.9em;
+            opacity: 0.9;
+        }
+        .moves {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 10px;
+            margin-top: 10px;
+        }
+        .move {
+            background: white;
+            padding: 10px;
+            border-radius: 5px;
+            border-left: 4px solid #e74c3c;
+        }
+        .move-title {
+            font-weight: bold;
+            color: #e74c3c;
+            margin-bottom: 5px;
+        }
+        .move-content {
+            font-size: 0.9em;
+            color: #555;
+        }
+        .key-excerpt {
+            background: #fff3cd;
+            border: 1px solid #ffeaa7;
+            border-radius: 5px;
+            padding: 10px;
+            margin: 10px 0;
+            font-style: italic;
+        }
+        .analysis {
+            background: #d4edda;
+            border: 1px solid #c3e6cb;
+            border-radius: 5px;
+            padding: 10px;
+            margin: 10px 0;
+            font-size: 0.9em;
+        }
+        .flow-arrow {
+            text-align: center;
+            font-size: 2em;
+            color: #7f8c8d;
+            margin: 10px 0;
+        }
+        .comparison-table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 20px 0;
+            background: white;
+        }
+        .comparison-table th, .comparison-table td {
+            border: 1px solid #ddd;
+            padding: 8px;
+            text-align: left;
+        }
+        .comparison-table th {
+            background-color: #f2f2f2;
+            font-weight: bold;
+        }
+        .highlight {
+            background-color: #fff3cd;
+            font-weight: bold;
+        }
+        .legend {
+            background: #ecf0f1;
+            padding: 15px;
+            border-radius: 5px;
+            margin: 20px 0;
+        }
+        .legend-item {
+            display: inline-block;
+            margin: 5px 15px 5px 0;
+            padding: 5px 10px;
+            border-radius: 3px;
+            font-size: 0.9em;
+        }
+        .cs-convention { background: #3498db; color: white; }
+        .traditional { background: #e74c3c; color: white; }
+        .universal { background: #27ae60; color: white; }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>PALM Paper: Macro-Level Structure Analysis</h1>
+        <p style="text-align: center; color: #7f8c8d;"><strong>Learning with Mixture of Prototypes for Out-of-Distribution Detection</strong><br>
+        ICLR 2024 | Machine Learning / Out-of-Distribution Detection</p>
+
+        <div class="legend">
+            <h3>Analysis Framework</h3>
+            <div class="legend-item cs-convention">Computer Science Convention</div>
+            <div class="legend-item traditional">Traditional Academic</div>
+            <div class="legend-item universal">Universal Best Practice</div>
+        </div>
+
+        <div class="structure-diagram">
+
+            <!-- Introduction Section -->
+            <div class="section">
+                <div class="section-header">
+                    <span class="section-title">Section 1: Introduction (CARS Model)</span>
+                    <span class="word-count">~800 words</span>
+                </div>
+
+                <div class="moves">
+                    <div class="move">
+                        <div class="move-title">Move 1: Establishing Territory</div>
+                        <div class="move-content">
+                            <strong>Centrality Claims:</strong> Deep learning plays "crucial role" in autonomous driving, medical diagnosis, cyber-security. OOD detection is "critical endeavor" for secure deployment.
+                        </div>
+                        <div class="key-excerpt">
+                            "Deep learning (DL) plays a crucial role in many real-world applications, such as autonomous driving (Huang et al., 2020), medical diagnosis (Zimmerer et al., 2022), and cyber-security (Nguyen et al., 2022). When deployed in realistic open-world scenarios (Drummond & Shearer, 2006), deep neural networks (DNNs) trained on datasets that adhere to closed-world assumptions (He et al., 2015), commonly known as in-distribution (ID) data, tend to struggle when faced with testing samples that significantly deviate from the training distribution, referred to as out-of-distribution (OOD) data."
+                        </div>
+                        <div class="analysis">
+                            Strong centrality claims supported by practical applications. Notice interdisciplinary appeal - connects technical ML work to real-world safety-critical domains. The progression from closed-world to open-world scenarios establishes the practical relevance.
+                        </div>
+                        <div class="key-excerpt">
+                            "A trustworthy learning system should be aware of OOD samples instead of naively assuming all input to be ID. In recent years, there has been significant research focus on the OOD detection task (Drummond & Shearer, 2006), aiming to accurately distinguish between OOD and ID inputs. This critical endeavor helps to ensure the secure and reliable deployment of DNN models."
+                        </div>
+                        <div class="analysis">
+                            Clear motivation statement. Uses "should be aware" for necessity claim, "significant research focus" for centrality, and "critical endeavor" for importance. Notice the ethical framing with "trustworthy" and "secure and reliable."
+                        </div>
+                    </div>
+
+                    <div class="move">
+                        <div class="move-title">Move 2: Establishing Niche</div>
+                        <div class="move-content">
+                            <strong>Gaps Identified:</strong> Single prototype limitation, loss functions not designed for OOD detection, oversimplified data assumptions
+                        </div>
+                        <div class="key-excerpt">
+                            "Distance-based OOD detection methods aim to learn informative feature embeddings and utilize distance metrics, such as Mahalanobis (Lee et al., 2018; Sehwag et al., 2021) or KNN distance (Sun et al., 2022), during testing to identify OOD samples. Recent advances in distance-based methods (Tack et al., 2020; Sehwag et al., 2021) use off-the-shelf contrastive loss (Chen et al., 2020; Khosla et al., 2020) to shape the embedding space, which is designed for classification and does not take OOD data into consideration."
+                        </div>
+                        <div class="analysis">
+                            Gap is established through systematic critique. Notice the progression: acknowledges recent advances, then identifies limitation ("designed for classification and does not take OOD data into consideration"). This is a specific, researchable gap.
+                        </div>
+                        <div class="key-excerpt">
+                            "However, in Sec. 4.2 we show that naively modeling all samples of each class with only one single prototype leads to restricted modeling capability, where diverse patterns within each class cannot be well represented, leading to the confusion of ID samples and the OOD samples seen in testing. This lack of comprehensive representation further diminishes the compactness surrounding each prototype, thereby resulting in diminished performance."
+                        </div>
+                        <div class="analysis">
+                            Strong gap identification with forward reference to empirical evidence. Uses "naively modeling" to critique existing approaches and "restricted modeling capability" for the limitation. Notice the causal chain: single prototype → cannot represent diversity → confusion → diminished performance.
+                        </div>
+                    </div>
+
+                    <div class="move">
+                        <div class="move-title">Move 3: Occupying Niche</div>
+                        <div class="move-content">
+                            <strong>Solution:</strong> PALM uses mixture of prototypes with MLE loss and contrastive loss for OOD detection
+                        </div>
+                        <div class="key-excerpt">
+                            "In this paper, we propose a novel distance-based OOD detection method, called PrototypicAl Learning with a Mixture of prototypes (PALM) to learn high-quality hyperspherical embeddings of the data. To capture the natural diversities within each class, we model the hyperspherical embedding space (Sehwag et al., 2021; Sun et al., 2022; Du et al., 2022a; Ming et al., 2023) of each class by a mixture vMF distributions with multiple prototypes, where each prototype represents a subset of the most similar data samples."
+                        </div>
+                        <div class="analysis">
+                            Strong positioning with clear technical description. Notice the acronym introduction (PALM) and explicit connection to prior work in parentheses. The phrase "natural diversities within each class" directly addresses the gap identified.
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="flow-arrow">↓</div>
+
+            <!-- Related Work Section -->
+            <div class="section">
+                <div class="section-header">
+                    <span class="section-title">Section 2: Related Work</span>
+                    <span class="word-count">~600 words</span>
+                </div>
+
+                <div class="moves">
+                    <div class="move">
+                        <div class="move-title">Move 1: Thematic Overview</div>
+                        <div class="move-content">
+                            <strong>Scope:</strong> Three categories: score-based, density-based, distance-based methods
+                        </div>
+                        <div class="key-excerpt">
+                            "Various OOD detection methods have been developed recently, including confidence score based methods (Hendrycks & Gimpel, 2016; Lee et al., 2018; Liang et al., 2018; Liu et al., 2020; Wang et al., 2021; Sun et al., 2021; Huang et al., 2021; Wang et al., 2022), density-based methods (Kingma & Dhariwal, 2018; Du & Mordatch, 2019; Grathwohl et al., 2020; Ren et al., 2019; Xiao et al., 2020; Cai & Li, 2023), and distance-based methods (Tack et al., 2020; Tao et al., 2023; Sun et al., 2022; Du et al., 2022a; Ming et al., 2023; Lee et al., 2018; Sehwag et al., 2021)."
+                        </div>
+                        <div class="analysis">
+                            Comprehensive categorization with extensive citations. Notice the temporal progression implied through citation dates (2016-2023). The three-way categorization provides clear organization.
+                        </div>
+                    </div>
+
+                    <div class="move">
+                        <div class="move-title">Move 2: Critical Analysis</div>
+                        <div class="move-content">
+                            <strong>Themes:</strong> Representation learning, contrastive learning, prototypical learning with systematic critique
+                        </div>
+                        <div class="key-excerpt">
+                            "Building on the recent success of contrastive representation learning methods such as SimCLR (Chen et al., 2020) and SupCon (Khosla et al., 2020), recent distance-based methods (Tack et al., 2020; Sehwag et al., 2021; Sun et al., 2022) have demonstrated the successful application of these methods to OOD detection, despite their training objectives not being specifically designed for this task."
+                        </div>
+                        <div class="analysis">
+                            Acknowledges success while identifying limitation ("despite their training objectives not being specifically designed for this task"). This creates space for methods specifically designed for OOD detection.
+                        </div>
+                        <div class="key-excerpt">
+                            "On top of contrastive learning, Li et al. (2021) integrate prototypical learning that additionally contrasts between samples and prototypes obtained through offline clustering algorithms. The introduced prototypes benefit the representation ability but require all training samples for cluster assignments, leading to training instability due to label permutations (Xie et al., 2022). Unlike the existing prototypical learning methods focusing on basic classification tasks with generic designs, the proposed method uses a novel and specifically designed mixture of prototypes model for OOD detection."
+                        </div>
+                        <div class="analysis">
+                            Critical evaluation with specific limitation identification ("require all training samples...leading to training instability"). Strong differentiation statement: "Unlike the existing prototypical learning methods...the proposed method uses a novel and specifically designed..." Notice the emphasis on "specifically designed for OOD detection."
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="flow-arrow">↓</div>
+
+            <!-- Methods Section -->
+            <div class="section">
+                <div class="section-header">
+                    <span class="section-title">Section 3: Method</span>
+                    <span class="word-count">~2000 words</span>
+                </div>
+
+                <div class="moves">
+                    <div class="move">
+                        <div class="move-title">Technical Specificity</div>
+                        <div class="move-content">
+                            <strong>Architecture:</strong> DNN encoder fθ, projector gϕ, mixture vMF distributions with multiple prototypes
+                            <br><strong>Loss Functions:</strong> MLE loss + prototype contrastive loss
+                        </div>
+                        <div class="key-excerpt">
+                            "The proposed method PALM consists of three main components, as shown in Fig. 1. A DNN encoder fθ : X → RE is used to extract feature embeddings h ∈ RE from the input x with h = fθ (x). To regularize the representation learning, a projector gϕ : RE → RD followed by normalization is used to project the high-dimensional embedding h to a lower-dimentional hyperspherical embedding z via z′ = gϕ (h) and z = z′ /∥z′ ∥2 ."
+                        </div>
+                        <div class="analysis">
+                            Clear architecture description with mathematical notation. Notice the progression: encoder → projector → normalization. The function notation (fθ, gϕ) with parameter subscripts is standard in ML papers.
+                        </div>
+                        <div class="key-excerpt">
+                            "We formulate the embedding space with hyperspherical model, considering the its benefits in representation learning mentioned above (Wang & Isola, 2020; Khosla et al., 2020). The projected embeddings z lying on the unit sphere (∥z∥2 = 1) can be naturally modeled using the von Mises-Fisher (vMF) distribution (Mardia et al., 2000; Wang & Isola, 2020). Generally, the whole embedding space can be modeled as a mixture of vMF distributions, where each is defined by a mean pk and a concentration parameter κ: pD (z; pk , κ) = ZD (κ) exp κp⊤
+                            k z , where pk ∈ R is the the k-th prototype with unit norm, κ ≥ 0 represents the tightness around the mean, and ZD (κ) is the normalization factor."
+                        </div>
+                        <div class="analysis">
+                            Highly technical section with strong mathematical foundation. Notice the formal probability distribution definition and connection to existing work. The mixture modeling is introduced naturally from the single distribution case.
+                        </div>
+                        <div class="key-excerpt">
+                            "The overall training objective of PALM can be formally defined as:
+                            LPALM = LMLE + λLproto-contra ,
+                            where λ > 0 is the weight to control the balance between these two loss functions."
+                        </div>
+                        <div class="analysis">
+                            Simple combination of loss components. Notice the hyperparameter λ for balancing. This is a standard approach in multi-objective optimization.
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="flow-arrow">↓</div>
+
+            <!-- Experiments Section -->
+            <div class="section">
+                <div class="section-header">
+                    <span class="section-title">Section 4: Experiments</span>
+                    <span class="word-count">~1500 words</span>
+                </div>
+
+                <div class="moves">
+                    <div class="move">
+                        <div class="move-title">Empirical Validation</div>
+                        <div class="move-content">
+                            <strong>Metrics:</strong> FPR, AUROC, ID classification accuracy
+                            <br><strong>Datasets:</strong> CIFAR-100, CIFAR-10 as ID; SVHN, Places365, LSUN, iSUN, Textures as OOD
+                        </div>
+                        <div class="key-excerpt">
+                            "Compared to previous distance-based methods such as SSD+ (Sehwag et al., 2021) and KNN+ (Sun et al., 2022), which employ contrastive loss designed for classification tasks, PALM outperforms them based on the regularization designed for OOD detection. All method performs not well for the Place365 OOD dataset due to its input being confusing with the ID data. NPOS achieves the best FPR on Textures as the OOD data, since it directly generates OOD samples to boost training. By modeling the embedding space with a mixture of prototypes, PALM achieves a notable 12.83% reduction in average FPR compared to the most related work CIDER, which also models dependencies between input samples and prototypes."
+                        </div>
+                        <div class="analysis">
+                            Careful comparison with acknowledgment of limitations ("All method performs not well for the Place365 OOD dataset"). Notice the quantitative claim ("12.83% reduction") and comparison with "most related work CIDER."
+                        </div>
+                        <div class="key-excerpt">
+                            "PALM learns a more compact cluster around each prototype. Comparing to previous distance-based methods that encourage samples of each class to be close to each other (Tack et al., 2020; Sehwag et al., 2021; Sun et al., 2022) or its single prototype (Ming et al., 2023), PALM considers a more realistic embedding space where samples are enforced to be close to its most similar prototype of its class and learn a more compact embedding space. In Fig.2 (top), we evaluate the embedding quality of PALM by calculating the cosine similarity of ID samples to their nearest prototype. We observe a more compact distribution with a higher number of similar samples and significantly fewer dissimilar samples."
+                        </div>
+                        <div class="analysis">
+                            Qualitative analysis with reference to visualizations. Notice the claim "more compact cluster" supported by analysis ("more compact distribution with a higher number of similar samples"). The comparison with previous methods is explicit.
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="flow-arrow">↓</div>
+
+            <!-- Conclusion Section -->
+            <div class="section">
+                <div class="section-header">
+                    <span class="section-title">Section 5: Conclusion</span>
+                    <span class="word-count">~200 words</span>
+                </div>
+
+                <div class="moves">
+                    <div class="move">
+                        <div class="move-title">Synthesis & Impact</div>
+                        <div class="move-content">
+                            <strong>Contributions:</strong> Mixture of prototypes framework, automatic prototype learning, extension to unsupervised setting
+                            <br><strong>Limitations:</strong> Manual assignment of number of prototypes
+                            <br><strong>Future Work:</strong> Automatic determination of prototype numbers
+                        </div>
+                        <div class="key-excerpt">
+                            "In this work, we propose PALM, a novel prototypical learning framework with a mixture of prototypes that learns hyperspherical embeddings for OOD detection. By considering the complex underlying structure of data distributions, PALM model the embedding space by a mixture of multiple prototypes conditioned on each class, encouraging a more compact data distribution and demonstrating superior OOD detection performance. Moreover, we impose two extensions where we scale our method to large-scale datasets and unsupervised OOD detection. The limitation is that PALM needs to be manually assign the number of prototypes as a hyperparameter, which is left as future work."
+                        </div>
+                        <div class="analysis">
+                            Strong conclusion that restates contributions and addresses limitations transparently. Notice the explicit limitation statement ("The limitation is that PALM needs to be manually assign the number of prototypes") and future work direction ("which is left as future work").
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+
+        <h2>Cross-Disciplinary Comparison</h2>
+        <table class="comparison-table">
+            <tr>
+                <th>Aspect</th>
+                <th>PALM Paper (ML/CV)</th>
+                <th>Traditional Academic</th>
+                <th>Key Learning</th>
+            </tr>
+            <tr>
+                <td>Literature Review</td>
+                <td class="highlight">Separate section after introduction</td>
+                <td>Integrated into introduction</td>
+                <td>CS papers often dedicate full sections to related work</td>
+            </tr>
+            <tr>
+                <td>Technical Detail</td>
+                <td class="highlight">Very High (algorithms, architectures, loss functions)</td>
+                <td>Medium (methods overview)</td>
+                <td>Mathematical formalism crucial for CS credibility</td>
+            </tr>
+            <tr>
+                <td>Evaluation</td>
+                <td class="highlight">Quantitative metrics, ablation studies, visualizations</td>
+                <td>Theoretical validation, qualitative</td>
+                <td>Empirical rigor through multiple evaluation dimensions</td>
+            </tr>
+            <tr>
+                <td>Contribution Claims</td>
+                <td class="highlight">Technical novelty + empirical validation + extensibility</td>
+                <td>Theoretical advancement + evidence</td>
+                <td>CS emphasizes reproducible, extensible contributions</td>
+            </tr>
+            <tr>
+                <td>Mathematical Formalism</td>
+                <td class="highlight">Extensive (probability distributions, optimization objectives)</td>
+                <td>Moderate (theoretical frameworks)</td>
+                <td>Formal mathematical notation essential for technical papers</td>
+            </tr>
+        </table>
+
+        <h2>Imitation Framework for Future Papers</h2>
+        <div class="analysis">
+            <h3>Structural Elements to Adapt:</h3>
+            <ul>
+                <li><strong>Mixture Modeling Formalism:</strong> Clear definition of probability distributions and mixture components</li>
+                <li><strong>Modular Architecture:</strong> Breaking complex systems into understandable components (encoder, projector, prototype learning)</li>
+                <li><strong>Ablation Studies:</strong> Systematic evaluation of system components (number of prototypes, assignment methods, loss components)</li>
+                <li><strong>Extension Validation:</strong> Demonstrating method applicability to related settings (unsupervised OOD detection)</li>
+                <li><strong>Mathematical Derivation:</strong> Step-by-step presentation from problem formulation to solution</li>
+            </ul>
+
+            <h3>Rhetorical Strategies:</h3>
+            <ul>
+                <li><strong>Gap Identification:</strong> Specific technical limitations ("single prototype," "loss functions not designed for OOD detection")</li>
+                <li><strong>Technical Positioning:</strong> Clear differentiation from related work through specific design choices</li>
+                <li><strong>Empirical Justification:</strong> Quantitative claims supported by comprehensive experiments</li>
+                <li><strong>Limitation Transparency:</strong> Honest discussion of limitations and future work directions</li>
+                <li><strong>Forward References:</strong> References to later sections ("as shown in Sec. 4.2," "as visualized in Fig. 5")</li>
+            </ul>
+
+            <h3>Quality Indicators:</h3>
+            <ul>
+                <li><strong>Mathematical Rigor:</strong> Formal definitions and derivations</li>
+                <li><strong>Empirical Validation:</strong> Multiple benchmarks and metrics</li>
+                <li><strong>Reproducibility:</strong> Detailed experimental setup and hyperparameters</li>
+                <li><strong>Extensibility:</strong> Demonstration on related but distinct settings</li>
+                <li><strong>Transparency:</strong> Clear limitations discussion</li>
+            </ul>
+        </div>
+
+        <div style="text-align: center; margin-top: 30px; color: #7f8c8d; font-size: 0.9em;">
+            <p>Analysis based on macro-level structure framework from academic writing pedagogy</p>
+            <p>Interactive visualization for learning paper organization patterns</p>
+        </div>
+    </div>
+</body>
+</html>

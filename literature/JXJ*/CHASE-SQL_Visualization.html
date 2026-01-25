@@ -1,0 +1,382 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>CHASE-SQL Paper Macro-Level Structure Visualization</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 20px;
+            background-color: #f5f5f5;
+        }
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            background: white;
+            padding: 20px;
+            border-radius: 10px;
+            box-shadow: 0 0 10px rgba(0,0,0,0.1);
+        }
+        h1 {
+            text-align: center;
+            color: #2c3e50;
+            margin-bottom: 30px;
+        }
+        .structure-diagram {
+            display: flex;
+            flex-direction: column;
+            gap: 20px;
+        }
+        .section {
+            border: 2px solid #3498db;
+            border-radius: 8px;
+            padding: 15px;
+            background: #ecf0f1;
+            position: relative;
+        }
+        .section-header {
+            background: #3498db;
+            color: white;
+            padding: 10px;
+            margin: -15px -15px 15px -15px;
+            border-radius: 6px 6px 0 0;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        .section-title {
+            font-weight: bold;
+            font-size: 1.2em;
+        }
+        .word-count {
+            font-size: 0.9em;
+            opacity: 0.9;
+        }
+        .moves {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 10px;
+            margin-top: 10px;
+        }
+        .move {
+            background: white;
+            padding: 10px;
+            border-radius: 5px;
+            border-left: 4px solid #e74c3c;
+        }
+        .move-title {
+            font-weight: bold;
+            color: #e74c3c;
+            margin-bottom: 5px;
+        }
+        .move-content {
+            font-size: 0.9em;
+            color: #555;
+        }
+        .key-excerpt {
+            background: #fff3cd;
+            border: 1px solid #ffeaa7;
+            border-radius: 5px;
+            padding: 10px;
+            margin: 10px 0;
+            font-style: italic;
+        }
+        .analysis {
+            background: #d4edda;
+            border: 1px solid #c3e6cb;
+            border-radius: 5px;
+            padding: 10px;
+            margin: 10px 0;
+            font-size: 0.9em;
+        }
+        .flow-arrow {
+            text-align: center;
+            font-size: 2em;
+            color: #7f8c8d;
+            margin: 10px 0;
+        }
+        .comparison-table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 20px 0;
+            background: white;
+        }
+        .comparison-table th, .comparison-table td {
+            border: 1px solid #ddd;
+            padding: 8px;
+            text-align: left;
+        }
+        .comparison-table th {
+            background-color: #f2f2f2;
+            font-weight: bold;
+        }
+        .highlight {
+            background-color: #fff3cd;
+            font-weight: bold;
+        }
+        .legend {
+            background: #ecf0f1;
+            padding: 15px;
+            border-radius: 5px;
+            margin: 20px 0;
+        }
+        .legend-item {
+            display: inline-block;
+            margin: 5px 15px 5px 0;
+            padding: 5px 10px;
+            border-radius: 3px;
+            font-size: 0.9em;
+        }
+        .cs-convention { background: #3498db; color: white; }
+        .traditional { background: #e74c3c; color: white; }
+        .universal { background: #27ae60; color: white; }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>CHASE-SQL Paper: Macro-Level Structure Analysis</h1>
+
+        <div class="legend">
+            <h3>Analysis Framework</h3>
+            <div class="legend-item cs-convention">Computer Science Convention</div>
+            <div class="legend-item traditional">Traditional Academic</div>
+            <div class="legend-item universal">Universal Best Practice</div>
+        </div>
+
+        <div class="structure-diagram">
+
+            <!-- Introduction Section -->
+            <div class="section">
+                <div class="section-header">
+                    <span class="section-title">Section 1: Introduction</span>
+                    <span class="word-count">~1000 words</span>
+                </div>
+
+                <div class="moves">
+                    <div class="move">
+                        <div class="move-title">Move 1: Establishing Territory</div>
+                        <div class="move-content">
+                            <strong>Centrality Claims:</strong> Text-to-SQL is "crucial" for many use cases, bridging human language and SQL
+                        </div>
+                        <div class="key-excerpt">
+                            "Text-to-SQL, as a bridge between human language and machine-readable structured query languages, is crucial for many use cases, converting natural language questions into executable SQL commands."
+                        </div>
+                        <div class="analysis">
+                            Strong centrality claims supported by practical applications. Connects technical NLP work to real-world database interactions.
+                        </div>
+                    </div>
+
+                    <div class="move">
+                        <div class="move-title">Move 2: Establishing Niche</div>
+                        <div class="move-content">
+                            <strong>Gaps Identified:</strong> Self-consistency methods ineffective (14% gap), single prompt design limitations
+                        </div>
+                        <div class="key-excerpt">
+                            "In fact, as illustrated in Table 1, the most consistent answers would not always be the correct ones, with an upper-bound performance 14% higher than that achieved through self-consistency. This substantial gap highlights the potential for significant improvement by implementing more effective selection methods."
+                        </div>
+                        <div class="analysis">
+                            Specific, quantitative gap identification (14% gap) demonstrates the problem clearly with empirical evidence.
+                        </div>
+                    </div>
+
+                    <div class="move">
+                        <div class="move-title">Move 3: Occupying Niche</div>
+                        <div class="move-content">
+                            <strong>Solution:</strong> CHASE-SQL framework with three candidate generation methods and selection agent
+                        </div>
+                        <div class="key-excerpt">
+                            "Specifically, we propose three distinct candidate generation approaches, each capable of producing high-quality responses. The first is inspired by the divide-and-conquer algorithm... The second employs a query execution-plan-based chain-of-thought strategy... Lastly, we introduce a novel online synthetic example generation method."
+                        </div>
+                        <div class="analysis">
+                            Clear positioning with enumerated contributions. Each method has specific technical description and motivation.
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="flow-arrow">↓</div>
+
+            <!-- Methods Section -->
+            <div class="section">
+                <div class="section-header">
+                    <span class="section-title">Section 2: Methods</span>
+                    <span class="word-count">~4000 words</span>
+                </div>
+
+                <div class="moves">
+                    <div class="move">
+                        <div class="move-title">2.1 Overall Framework</div>
+                        <div class="move-content">
+                            <strong>Components:</strong> Four primary components: Value retrieval, Candidate generator, Query fixer, Selection agent
+                        </div>
+                        <div class="key-excerpt">
+                            "This section outlines the proposed CHASE-SQL framework, which consists of four primary components: 1) Value retrieval, 2) Candidate generator, 3) Query fixer, and 4) Selection agent."
+                        </div>
+                        <div class="analysis">
+                            Clear modular organization with enumerated components. Strong technical structure appropriate for CS/NLP audience.
+                        </div>
+                    </div>
+
+                    <div class="move">
+                        <div class="move-title">2.3 Multi-Path Candidate Generation</div>
+                        <div class="move-content">
+                            <strong>Three Methods:</strong> Divide-and-Conquer CoT, Query Plan CoT, Online Synthetic Example Generation
+                        </div>
+                        <div class="key-excerpt">
+                            "Divide and Conquer CoT: Divide-and-conquer perspective brings breaking down complex problems into smaller sub-problems, solving each individually, and then combining the solutions to obtain the final answer."
+                        </div>
+                        <div class="analysis">
+                            Excellent conceptual framing - connects classical algorithm design (divide-and-conquer) to modern LLM prompting.
+                        </div>
+                    </div>
+
+                    <div class="move">
+                        <div class="move-title">2.5 Selection Agent</div>
+                        <div class="move-content">
+                            <strong>Approach:</strong> Pairwise comparison-based selection using fine-tuned binary classification model
+                        </div>
+                        <div class="key-excerpt">
+                            "Given a set of candidates SQL queries C = {c1, c2, ..., cn}, the final responses are selected by finding the candidate that has the highest score assigned by the selection model. This model θp can take k candidates and rank them based on how accurately each of them answers the given question."
+                        </div>
+                        <div class="analysis">
+                            Clear mathematical formulation with formal notation. Notice the use of θp for the selection model, maintaining consistent mathematical notation.
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="flow-arrow">↓</div>
+
+            <!-- Experiments Section -->
+            <div class="section">
+                <div class="section-header">
+                    <span class="section-title">Section 3: Experiments</span>
+                    <span class="word-count">~2000 words</span>
+                </div>
+
+                <div class="moves">
+                    <div class="move">
+                        <div class="move-title">3.1 Generator and Selection Performance</div>
+                        <div class="move-content">
+                            <strong>Results:</strong> State-of-the-art performance: 73.01% (dev) and 73.0% (test) on BIRD, 87.6% on Spider
+                        </div>
+                        <div class="key-excerpt">
+                            "As shown in Table 2, CHASE-SQL with Gemini 1.5 pro achieves 73.01% accuracy on the BIRD development set and 73.0% on the BIRD holdout test set, outperforming all previous works and setting a new state-of-the-art performance."
+                        </div>
+                        <div class="analysis">
+                            Strong empirical validation with specific quantitative results. Notice the dual emphasis on development and test sets.
+                        </div>
+                    </div>
+
+                    <div class="move">
+                        <div class="move-title">3.2 Ablation Studies</div>
+                        <div class="move-content">
+                            <strong>Analysis:</strong> Systematic component removal demonstrating necessity of each component
+                        </div>
+                        <div class="key-excerpt">
+                            "Table 7 shows the performance of CHASE-SQL without each of these steps, highlighting their significance in achieving higher-quality performance. The results demonstrate the contribution of each component, where removing LSH, the query fixer, or any of the candidate generators leads to a reduction in execution accuracy."
+                        </div>
+                        <div class="analysis">
+                            Strong empirical validation through ablation studies. Systematic approach demonstrating necessity of each component.
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="flow-arrow">↓</div>
+
+            <!-- Conclusion Section -->
+            <div class="section">
+                <div class="section-header">
+                    <span class="section-title">Section 4: Conclusion</span>
+                    <span class="word-count">~200 words</span>
+                </div>
+
+                <div class="moves">
+                    <div class="move">
+                        <div class="move-title">Synthesis & Impact</div>
+                        <div class="move-content">
+                            <strong>Contributions:</strong> Novel agentic framework, multiple CoT methods, selection mechanism
+                            <br><strong>Impact:</strong> State-of-the-art on Text-to-SQL leaderboard, paves way for future improvements
+                        </div>
+                        <div class="key-excerpt">
+                            "We introduce a novel agentic framework, CHASE-SQL, to leverage test-time compute for generating diverse, high-quality SQL queries and accurately selecting the correct one."
+                        </div>
+                        <div class="analysis">
+                            Strong conclusion that restates contributions clearly. Notice the emphasis on "novel agentic framework" and "test-time compute" as key differentiators.
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+
+        <h2>Cross-Disciplinary Comparison</h2>
+        <table class="comparison-table">
+            <tr>
+                <th>Aspect</th>
+                <th>CHASE-SQL Paper (CS/NLP)</th>
+                <th>Traditional Academic</th>
+                <th>Key Learning</th>
+            </tr>
+            <tr>
+                <td>Literature Review</td>
+                <td class="highlight">Integrated into introduction</td>
+                <td>Separate section after introduction</td>
+                <td>CS papers often integrate related work into introduction</td>
+            </tr>
+            <tr>
+                <td>Technical Detail</td>
+                <td class="highlight">Very high (algorithms, math, architectures)</td>
+                <td>Medium (methods overview)</td>
+                <td>Mathematical formalism and algorithmic descriptions crucial for CS credibility</td>
+            </tr>
+            <tr>
+                <td>Evaluation</td>
+                <td class="highlight">Quantitative metrics, ablation studies, benchmarks</td>
+                <td>Theoretical validation, qualitative</td>
+                <td>Empirical rigor through multiple evaluation dimensions and benchmark comparisons</td>
+            </tr>
+            <tr>
+                <td>Contribution Claims</td>
+                <td class="highlight">Technical novelty + state-of-the-art performance</td>
+                <td>Theoretical advancement + evidence</td>
+                <td>CS emphasizes reproducible, extensible contributions with benchmark rankings</td>
+            </tr>
+        </table>
+
+        <h2>Imitation Framework for Future Papers</h2>
+        <div class="analysis">
+            <h3>Structural Elements to Adapt:</h3>
+            <ul>
+                <li><strong>Multi-Component Framework:</strong> Breaking complex systems into well-defined modules (Value Retrieval → Candidate Generation → Query Fixer → Selection Agent)</li>
+                <li><strong>Algorithmic Descriptions:</strong> Formal algorithm presentations (Algorithm 1, 2, 3) with clear specifications</li>
+                <li><strong>Ablation Studies:</strong> Systematic component-wise evaluation demonstrating necessity of each part</li>
+                <li><strong>Multi-Dataset Evaluation:</strong> Testing generalizability across different benchmark datasets</li>
+            </ul>
+
+            <h3>Rhetorical Strategies:</h3>
+            <ul>
+                <li><strong>Gap Identification through Empirical Evidence:</strong> Using quantitative gaps (e.g., "14% higher upper bound") to demonstrate problems</li>
+                <li><strong>Contribution Enumeration:</strong> Clear listing of technical contributions with specific technical descriptions</li>
+                <li><strong>State-of-the-Art Positioning:</strong> Strong claims backed by quantitative results and benchmark rankings</li>
+                <li><strong>Framework Justification:</strong> Connecting technical design choices to identified limitations</li>
+            </ul>
+
+            <h3>Quality Indicators:</h3>
+            <ul>
+                <li><strong>Mathematical Rigor:</strong> Formal notation, algorithmic descriptions, mathematical formulations</li>
+                <li><strong>Empirical Validation:</strong> Multiple evaluation metrics, ablation studies, comprehensive comparisons</li>
+                <li><strong>Modular Design:</strong> Clear component separation with systematic evaluation</li>
+                <li><strong>Reproducibility:</strong> Detailed algorithmic descriptions, hyperparameter specifications</li>
+            </ul>
+        </div>
+
+        <div style="text-align: center; margin-top: 30px; color: #7f8c8d; font-size: 0.9em;">
+            <p>Analysis based on macro-level structure framework from academic writing pedagogy</p>
+            <p>Interactive visualization for learning paper organization patterns</p>
+        </div>
+    </div>
+</body>
+</html>

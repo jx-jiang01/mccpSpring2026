@@ -1,0 +1,572 @@
+\newpage
+\section{Appendix} \label{appendix}
+\input{app-assumptions}
+\input{preliminaries}
+
+%\appendix
+\iffalse
+\subsection{The \textsc{Hidden Set} Problem} \label{hidden_set}
+Let $\mathcal{X}$ be an \emph{admissible} set of actions which is known to a policy. Let $\mathcal{X}^\star$, called the \emph{feasible} set, be a closed and convex subset of $\mathcal{X}$. Due to a large number of defining constraints, the feasible set $\mathcal{X}^\star$ is too complex to communicate to the policy \emph{a priori}. However, an efficient separation oracle for $\mathcal{X}^\star$ is assumed to be available. On the $t$\textsuperscript{th} round, the policy first selects an admissible action $x_t \in \mathcal{X}$ and then, the adversary reveals a convex cost function $f_t$ and \emph{some} convex constraint of the form $g_t(x) \leq 0,$ which contains the unknown feasible set $\mathcal{X}^\star$. As an example, the constraints could come from the separation oracle that, if $x_t$ is infeasible, outputs a hyperplane separating the current action $x_t \in \mathcal{X}$ and the hidden feasible set $\mathcal{X}^\star$. The objective of the policy is to perform as well as any action from the hidden feasible set $\mathcal{X}^\star$ in terms of the regret and the cumulative constraint violation metrics. 
+ 
+ \begin{figure}
+ \centering
+ 	\includegraphics[scale=0.4]{figures/hidden2.pdf}
+ 	\caption{\small{Illustrating the \textsc{Hidden Set} problem. In this figure, the sphere $\mathcal{X}^\star$ is the hidden set. On every round $t$, the adversary reveals a hyperplane supporting $\mathcal{X}^\star.$ }}
+ \end{figure}
+ \fi
+ \iffalse
+\subsection{Why is the problem non-trivial?} \label{non-trivial}
+%We first argue that the \ocs ~problem is non-trivial to solve.
+Let us first consider the $\ocs$.
+A first attempt to solve the $\ocs$ could be to scalarize it by taking a  \emph{fixed} linear combination (\emph{e.g.,} the sum) of the constraint functions and then running a standard OCO policy on the scalarized cost functions (see \cite[Section 5.3.3]{boyd} for an offline version of the above problem, where the coefficients of the linear combination are taken to be the optimal solution to the dual problem). The above strategy immediately yields a sublinear regret guarantee on the same linear combination (\emph{i.e.,} the sum) of the constraint functions. However, since the constraint functions could take both positive and negative values, the constraint violation component of some streams could still be arbitrarily large even when the overall sum is small. Hence, this strategy does not yield individual cumulative violation bounds, where we need to control the more stringent $\ell_\infty$-norm of the cumulative violation vector. 
+%In the particular case of the online constraint satisfaction (\texttt{OCS}) problem 
+%if only one constraint function is revealed on each round, by simply running an OCO policy on the given constraint function yields a sublinear regret and hence, a sublinear constraint violation penalty. However, 
+%with two or more constraint functions (see Section \ref{simul_constr}), 
+Hence, to meet the objective with this scalarization strategy, the ``correct'' coefficients of the linear combination must be learned adaptively in an online fashion. This is exactly what our online meta-policy, described in Section \ref{meta-policy-ocs}, does.
+
+To resolve the above issue, one may alternatively attempt to scalarize the $\ocs$ by considering a non-negative \emph{surrogate} cost function, \emph{e.g.,} the hinge loss function, defined as $\hat{g}_{t,i}(x)=\max(0, g_{t,i}(x)),$ for each constraint $i \in [k]$. However, if the original constraint function $g_{t,i}$ is strongly convex,  this transformation does not necessarily preserve the strong convexity. Furthermore, the above strategy does not work even for convex functions for $S$-feasible benchmarks with $S\geq 2.$ This is because, due to the impossibility of cancellation of positive violations by strictly feasible constraints on different rounds, an $S$-feasible benchmark for the original constraints does not remain feasible for the transformed non-negative surrogate constraints (see Section \ref{ext}). Finally, the above transformation fails in the case of stochastic constraints where the constraint is satisfied only in expectation, i.e., $\mathbb{E} g_t(x) \leq 0, \forall t\geq 1$ \citep{yu2017online}.
+%Finally, since we are interested in bounding the maximum violation penalty over any sub-interval in the entire time horizon \eqref{violation-def1}, it is natural to turn to the strongly adaptive algorithms as a subroutine, which are inefficient as they need to run $O(\log T)$ number of experts algorithms on each round \citep{orabona2018scale}. 
+The above discussion shows why designing an efficient and universal policy for the \texttt{OCS} problem, and consequently, for the constrained OCO problem - which generalizes \ocs, is highly non-trivial. 
+
+\fi
+
+%\iffalse
+
+\subsection{Online Multi-task Learning as an Instance of the \ocs~ Problem} \label{mtl-ocs}
+\begin{figure}[!h]
+ \centering
+ 	\includegraphics[scale=0.45]{figures/multi-task-cropped.pdf}
+  \put(-210,110){\small{Shared weights}}
+ 	\caption{A schematic for the online multi-task learning problem}
+ 	\label{multi-task}
+ \end{figure}
+%\paragraph{Example: Online Multi-task Learning:} 
+Consider the problem of online multi-task learning where  a single model is trained to perform a number of related tasks \citep{ruder2017overview,dekel2006online, murugesan2016adaptive}. %The instances for each task may be chosen adversarially. 
+See Figure \ref{multi-task} for a simplified schematic of the multi-task learning pipeline. In this setup, the action $x_t$ naturally corresponds to the shared weight vector that specifies the common model for all tasks. The loss function for the $j$\textsuperscript{th} task on round $t$ is given by the function $g_{t,j}(\cdot), j \in [k].$ A task is assumed to be satisfactorily completed (\emph{e.g.,} correct prediction in the case of classification problems) on any round if the corresponding loss is non-positive. As an example, using linear predictors for the binary classification problem, the requirement for the $j$\textsuperscript{th} task on round $t$ can be taken to be $g_{t,j}(x_t) \equiv \langle z_{t,j}, x_t\rangle \leq 0,$ where $z_{t,j}$ is the feature vector for the $j$\textsuperscript{th} task. The goal in multi-task learning is to sequentially update the shared weight vectors $\{x_t\}_{t=1}^T$ so that all tasks are successfully completed. Formally, we require that the maximum cumulative loss of each task over any sub-interval grows sub-linearly. Since the weight vector is shared across the tasks, the above goal would be impossible to achieve had the tasks not been related to each other \citep{ruder2017overview}. Theorem \ref{S-benchmark} and Theorem \ref{P_T-benchmark} give performance bounds for Algorithm \ref{ocs-policy} under different task-relatedness assumptions. 
+%Hence, we make the feasibility assumption that there exists a fixed admissible action $x^\star$ that can successfully perform all tasks. 
+%These assumption often holds in overparameterized neural network models which are known to perfectly fit the data \citep{belkin2019reconciling}. 
+%In Theorem \ref{mistake-bd-thm}, we give an explicit mistake bound for the multi-task binary classification problem under the usual $\gamma$-margin assumption for the \textsc{OCS} policy proposed in this paper. This result generalizes the well-known mistake bound for the Perceptron algorithm, which assumes a single task \citep{novikoff1962convergence}. See Section \ref{mistake_bd} for details. Finally, see Section \ref{app} for an application of the tools and techniques developed for the \ocs ~problem to a queueing problem.
+%\fi
+%\edit{A factor of $D$ (diameter of the set) is missing from some regret bounds. Please correct!}
+\iffalse
+\subsection{Proof of Theorem \ref{constr-violation}} \label{constr-violation-pf}
+\subsubsection{Convex constraint functions} \label{cvx-sec}
+From  \eqref{surrogate-def}, we have that 
+\[ \nabla \hat{f}_t(x) = 2 \sum_{i=1}^k Q_i(t) \nabla g_{t,i}(x),\]
+where recall that $Q_i(t)\ge 0$
+Hence, using the triangle inequality for the Euclidean norm, we have 
+\[ ||\nabla \hat{f}_t(x_t)||_2 \leq 2 \sum_{i=1}^k Q_i(t) ||\nabla g_{t,i}(x)||_2. \]
+ Using the Cauchy-Schwarz inequality and the gradient bounds for the constraint functions as given in Assumption \eqref{bddness}, the squared $\ell_2$-norm of the (sub)-gradients of the surrogate cost functions \eqref{surrogate-def} can be bounded as follows:
+\begin{eqnarray} \label{grad-bd2}
+	||\nabla \hat{f}_t(x_t)||^2_2 \leq  4 (\sum_{i=1}^k Q_i^2(t))(\sum_{i=1}^k||\nabla g_{t,i}(x_t)||_2^2) \leq kG^2\sum_{i=1}^k Q_i^2(t),
+\end{eqnarray}
+where we have used the fact that $||\nabla g_{t,i}(x)||_2 \leq G/2, \forall t,i.$
+%In the above, we have slightly overloaded the notations by letting $\nabla h$ denote any subgradient of the convex function $h$ if it is not differentiable at the point of interest.
+ 
+%Note that the previous bound depends on the queue lengths, which, in turn, depends on the policy. 
+In the \ocs ~meta-policy given in Algorithm \ref{ocs-policy}, let us now take the base OCO policy to be the OGD policy with the adaptive step sizes given in part 1 of Theorem \ref{data-dep-regret}. 
+Using \eqref{grad-bd2} in \eqref{cvx-reg-bd}, and substituting that in 
+\eqref{q-regret-reln}, we obtain the following sequential inequality:
+%Hence, using the OGD policy with adaptive step sizes as before, we have the following inequality for all rounds $t \geq 1:$
+\begin{eqnarray} \label{q-ineq}
+	\sum_{i=1}^kQ_i^2(t) \leq c \sqrt{\sum_{\tau=1}^t \big(\sum_{i=1}^kQ_i^2(\tau)\big)}, ~t\geq 1, 
+\end{eqnarray}
+where $c\equiv GD \sqrt{2k}$ is a time-invariant problem-specific parameter that depends on the bounds of the gradient norms, the number of constraints on a round, and the diameter of the admissible set. Note that Algorithm \ref{ocs-policy} is fully \emph{parameter-free} as it uses only available causal information on the constraint functions and does not need to know any parametric bounds (\emph{e.g.,} $G$) on the future constraint functions. 
+\paragraph{Analysis:}
+From \eqref{V-Q}, we know that to bound CCV, it is sufficient to bound $Q_i(t)$. Next, to get an explicit bound 
+on $Q_i(t)$ from recursion \eqref{q-ineq}, we  define the auxiliary variables $Q^2(t)\equiv \sum_{i=1}^k Q_i^2(t), t\geq 1.$ From \eqref{q-ineq}, the variables $\{Q(t)\}_{t\geq 1}$ satisfy the following non-linear system of inequalities that we need to solve.
+\begin{eqnarray} \label{q-ineq2}
+	Q^2(t) \leq c \sqrt{\sum_{\tau=1}^t Q^2(\tau)} \leq c \sqrt{\sum_{\tau=1}^T Q^2(\tau)},~ 1\leq t \leq T.
+\end{eqnarray}
+Summing up the above inequality over all rounds $1\leq t \leq T$ and simplifying, we have 
+\begin{eqnarray}\label{q-bd-eq-4} 
+	\sqrt{\sum_{\tau=1}^T Q^2(t)} \leq cT. 
+\end{eqnarray}
+Substituting the above bound in inequality \eqref{q-ineq2}, we have 
+\begin{eqnarray} \label{cum-viol-bd}
+	\max_i \mathbb{V}_i(T) \stackrel{(a)}{\leq} \max_{i=1}^k Q_i(T) \leq Q(T) \leq c\sqrt{T},
+\end{eqnarray}
+where in inequality (a), we have used \eqref{V-Q}.
+
+%For analytical purposes, we may consider the single scalar quantity $Q(t) \equiv \max(Q_1(t), Q_2(t))$ and obtain an integral inequality for this. 
+\begin{observation} \label{sur-obs1}
+ By replacing the original constraint function $g_t(x)$ with a surrogate constraint function $\hat{g}_t(x), \forall t\geq 1,$ where the function $\hat{g}_t(x)$ satisfies the assumptions in Section \ref{assump} and enjoys the property that  $\hat{g}_t(x)\geq g_t(x), \forall x \in \mathcal{X},$ we have 
+ %the same $O(\sqrt{T})$ cumulative constraint violation guarantee can be established for surrogate constraint functions as well, \emph{i.e.,}
+\begin{eqnarray*}
+\sum_{t=1}^T g_t(x_t)	\leq \sum_{t=1}^T \hat{g}_t(x_t) = O(\sqrt{T}).
+\end{eqnarray*}
+This observation is particularly useful when the original constraint functions are non-convex, \emph{e.g.}, $0-1$ loss, which can be upper bounded with the hinge loss function. In particular, we can also define the surrogate function as 
+$\hat{g}_t(x) \equiv \psi(g_t(x)),$ where $\psi: \mathbb{R}\to \mathbb{R}_+$ is any non-decreasing, non-negative, and convex function with $\psi(0)=0.$ From basic convex analysis, it follows that the surrogate function is convex.
+% the same proof described above gives an $O(\sqrt{T})$ cumulative violation bound for the stronger cumulative surrogate constraint function, \emph{i.e.,}
+This observation substantially generalizes our previous bound \eqref{cum-viol-bd} on the cumulative constraint violations. As an example, we can recover \citet{yuan2018online}'s result for time-invariant constraints by defining the surrogate function to be $\hat{g}_t(x)=\psi(g_t(x))\equiv (\max(0,g_t(x)))^2.$ 
+%Furthermore, the above transformation can be applied even when the original constraints are not convex. For example, the non-convex $0-1$ loss can be replaced with the hinge loss function. 
+\end{observation} 
+%the results of \citet{yuan2018online}
+\subsubsection{Strongly-convex constraint functions} \label{str-cvx-sec}
+Next, we consider the case when the sequence of constraint functions $g_{t,i}$'s are uniformly $\alpha$-strongly convex. Let the base OCO policy be taken as the OGD policy with step sizes chosen in part 2 of Theorem \ref{data-dep-regret}. 
+Using \eqref{grad-bd2} in \eqref{str-cvx-reg-bd} for the surrogate functions and the $\alpha$-strong-convexity of the constraint functions, and substituting that in 
+\eqref{q-regret-reln} we get
+\begin{eqnarray} \label{q-str-cvx-cnstr}
+	\sum_{i=1}^k Q_i^2(t) \leq c \sum_{\tau=1}^t \frac{\sum_{i=1}^k Q_i^2(\tau)}{\sum_{s=1}^\tau \sum_{i=1}^kQ_i(s)},~ t\geq 1,
+\end{eqnarray}
+where $c\equiv \frac{kG^2}{4\alpha}$ is a problem-specific parameter. 
+
+\paragraph{Analysis:} As before, let $Q^2(t) \equiv \sum_{i=1}^kQ_i^2(t), t\geq 1.$ Since the queue variables $Q_i(t)$ are non-negative, we have for any $s \in [T]$:
+\begin{eqnarray*}
+	\sum_{i=1}^k Q_i(s) \geq Q(s).
+\end{eqnarray*}
+Hence, from  \eqref{q-str-cvx-cnstr}, we have
+\begin{eqnarray} \label{str-q-recur}
+	Q^2(t) \leq c \sum_{\tau=1}^t \frac{Q^2(\tau)}{\sum_{s=1}^\tau Q(s)}.
+\end{eqnarray}
+The following Proposition bounds the growth of any sequence that satisfies the above system of inequalities.
+\begin{proposition} \label{q-bd-prop}
+Let $\{Q(t)\}_{t \geq 1}$ be any non-negative sequence with 
+  $Q(1)> 0$. 
+Suppose that the $t$\textsuperscript{th} term of the sequence satisfies the inequality 
+\begin{eqnarray} \label{seq_bd}
+	Q^2(t) \leq c\sum_{\tau=1}^t  \frac{Q^2(\tau)}{\sum_{s=1}^\tau Q(s)}, ~ \forall t\geq 1,
+\end{eqnarray}
+where $c >0$ is a constant.
+Then $Q(t)\leq  c\ln(t) + O(\ln \ln t), \forall t \geq 1$\footnote{If the sequence is identically equal to zero, then there is nothing to prove. Otherwise, by skipping the initial zero terms, one can always assume that the first term of the sequence is non-zero.}.
+\end{proposition}
+%See Section \ref{q-bd-prop-pf} in the Appendix for the proof of the above result.
+
+ %\subsubsection{Proof of Proposition \ref{q-bd-prop}} \label{q-bd-prop-pf} 
+ \iffalse
+\begin{proposition} \label{q-bd-prop}
+Let $\{Q(t)\}_{t \geq 1}$ be a non-negative sequence with 
+  $Q(1)> 0$. 
+Suppose that the $t$\textsuperscript{th} term of the sequence satisfies the inequality 
+\begin{eqnarray} \label{seq_bd}
+	Q^2(t) \leq c\sum_{\tau=1}^t  \frac{Q^2(\tau)}{\sum_{s=1}^\tau Q(s)}, ~ \forall t\geq 1,
+\end{eqnarray}
+where $c >0$ is a constant.
+Then $Q(t)\leq  c\ln(t) + O(\ln \ln t), \forall t \geq 1$\footnote{If the sequence is identically equal to zero, then there is nothing to prove. Otherwise, by skipping the initial zero terms, one can always assume that the first term of the sequence is non-zero.}.
+\end{proposition}
+\fi
+%\begin{proof}
+%Note that if all terms of the sequence are less than $1,$ then there is nothing to prove. Otherwise, by possibly shifting the sequence to left, we can assume that the first term of the sequence $Q(1)$ is at least $1$. 
+\begin{proof} Upon dividing each term of the sequence $\{Q(t)\}_{t \geq 1}$ \eqref{seq_bd} by $c,$ without any loss of generality, we may assume that $c=1$. 
+	Hence, from Eqn.\ \eqref{seq_bd}, we have the following preliminary bound on the growth of the sequence:
+	\begin{eqnarray} \label{prelim_bd1}
+		Q^2(t) \stackrel{(a)}{\leq} \sum_{\tau=1}^t \frac{Q^2(\tau)}{Q(\tau)} = \sum_{\tau=1}^t Q(\tau), ~ \forall t \geq 1. 
+	\end{eqnarray}
+	where in (a), we have used the fact that $\sum_{s=1}^\tau Q(s) \ge  Q(\tau)$ since each term of the sequence $Q(s)$ is non-negative. Substituting the bound \eqref{prelim_bd1} into the RHS of  \eqref{seq_bd}, we obtain
+	\begin{eqnarray*}
+		Q^2(t) \leq \sum_{\tau=1}^t \frac{\sum_{s=1}^\tau Q(s)}{\sum_{s=1}^\tau Q(s)}= t.
+	\end{eqnarray*}
+	This yields 
+	\begin{eqnarray} \label{pre-bd1}
+			Q(t) \leq \sqrt{t}, ~\forall t\geq 1.
+	\end{eqnarray}
+	
+	 Next, for any fixed $t \geq 1,$ let $z=\arg\max_{\tau=1}^t Q(\tau)$ (ties, if any, are broken arbitrarily). Without any loss of generality, we may assume $Q(z) >0$. Then from \eqref{seq_bd}, we have  
+	 \begin{eqnarray*}
+	 	 Q^2(z) \stackrel{}{\leq}  \sum_{\tau=1}^z  \frac{Q^2(\tau)}{\sum_{s=1}^\tau Q(s)} \stackrel{(b)}{\leq} \sum_{\tau=1}^t\frac{Q^2(\tau)}{\sum_{s=1}^\tau Q(s)} \stackrel{(c)}{\leq} Q(z) \sum_{\tau=1}^t\frac{Q(\tau)}{\sum_{s=1}^\tau Q(s)}
+	 \end{eqnarray*}
+	 where  in $(b)$, we have used the non-negativity of the sequence $Q(s)$ and by definition $t\ge z$, and in $(c)$, we have used the fact that $Q(z) \geq Q(\tau), 1\leq \tau \leq t.$ Dividing both sides by $Q(z),$ the above inequality yields:
+	 \begin{eqnarray*}
+	 	Q(z) \leq \sum_{\tau=1}^t\frac{Q(\tau)}{\sum_{s=1}^\tau Q(s)}.
+	 \end{eqnarray*}
+	 Finally, for any $t\geq 1,$ we have
+	 \begin{eqnarray*}
+	 	Q(t) \leq Q(z) 
+	 	&\leq& \sum_{\tau=1}^t\frac{Q(\tau)}{\sum_{s=1}^\tau Q(s)} \\
+	 	&\leq& \sum_{\tau=1}^t \int_{\sum_{s=1}^{\tau-1} Q(s)}^{\sum_{s=1}^\tau Q(s)}\frac{dx}{x} \\
+	 	&\leq& 1+\int_{Q(1)}^{\sum_{s=1}^t Q(s)}\frac{dx}{x}\\
+	 	&\stackrel{(d)}{=}& \ln(\sum_{s=1}^t Q(s)) + c_1 \\
+	 	&\stackrel{(e)}{\leq}& \ln(\sum_{s=1}^t \sqrt{s}) + c_1\leq \frac{3}{2}\ln(t)+c_1,   
+	 \end{eqnarray*}
+	  where in $(d)$ we have defined the constant $c_1\equiv 1-\ln(Q(1))$ and in $(e)$, we have used the bound given by Eqn.\ \eqref{pre-bd1}. We can tighten the previous bound further by substituting it in the inequality $(e)$ above, which results in
+	  \begin{eqnarray*}
+	  	Q(t) \leq \ln(\sum_{s=1}^t \frac{3}{2} \ln s + c_1t) \leq \ln(t)+ \ln(c_1+\frac{3}{2}\ln(t)). 
+	  \end{eqnarray*}
+\end{proof}
+\fi
+%\input{mistake_bounds}
+\input{app-lbcoco}
+\input{remark-COCOPolicy}
+\input{ComparisonOtherPolicies}
+\iffalse
+\subsection{Proof of Theorem \ref{gen-cvx-bd}} \label{gen-cvx-bd-pf}
+\paragraph{Bounding the constraint violations:}
+%Since the (sub)-gradients of the cost function is assumed to be bounded, 
+Since the cost functions are assumed to be Lipschitz with Lipschitz constant $G$ (Assumption \ref{bddness}),
+we have $\textrm{Regret}_t(x^\star) \geq -GDt.$ Hence, from  \eqref{main_eq}, we have 
+	\begin{eqnarray} \nonumber 
+	Q^2(t) &\leq&VGD t + 2GDV\sqrt{t} + 2GD \sqrt{\sum_{\tau=1}^t Q^2(\tau)} \\\label{eq12}
+		 &\leq& VG\delta t + 2GD \sqrt{\sum_{\tau=1}^t Q^2(\tau)}.
+	\end{eqnarray}
+where we have defined $\delta \equiv D(1+\frac{2}{\sqrt{t}}) \leq 3D.$ Hence, for all $1\leq \tau \leq t,$ we have 
+\begin{eqnarray*}
+	Q^2(\tau) \leq 3VGD t+ 2GD \sqrt{\sum_{\tau=1}^t Q^2(\tau)}.
+\end{eqnarray*}
+Summing up the above inequalities for $1\leq \tau \leq t,$ we obtain
+\begin{eqnarray*}
+	\sum_{\tau=1}^t Q^2(\tau) \leq 3VGD t^2 + 2GDt\sqrt{\sum_{\tau=1}^t Q^2(\tau)}. 
+\end{eqnarray*}
+Solving the above quadratic inequality in $x$ with $x\equiv \sqrt{\sum_{\tau=1}^t Q^2(\tau)}$, we conclude
+\begin{eqnarray} \label{quad-bd}
+\sqrt{\sum_{\tau=1}^t Q^2(\tau)} \leq t (2GD+ \sqrt{3VGD}).
+\end{eqnarray}	
+Finally, combining the bound \eqref{quad-bd} with  \eqref{eq12}, we obtain 
+\begin{eqnarray}\label{eq:dummy1}
+	Q^2(t) \leq O(Vt)+ O(t\sqrt{V}) \implies Q(t) = O(\sqrt{Vt}) \stackrel{(\text{choosing} \ V=\sqrt{T})}{\implies} Q(t)= O(T^{3/4}).
+\end{eqnarray} 
+The above concludes the proof of the CCV bound as claimed in the theorem. $\blacksquare$
+
+\paragraph{Note:} In the proof above, we have not used the fact that the constraint functions are non-negative. Hence, the above violation bound holds for constraints which are not necessarily pre-processed (see Section \ref{gen_oco}). However, the rest of the proof exploits the non-negativity of the pre-processed constraint functions.
+% where we redefine $g_t(x)\gets \max(0, g_t(x)), \forall t.$ 
+\paragraph{Bounding the regret:}
+
+\iffalse
+Plugging in the above bound in \eqref{main_eq}, we conclude that 
+\begin{eqnarray*}
+	V\textrm{Regret}_t(x^\star) \leq 2Gt(2G+ \sqrt{VG\delta}) + 2GV \sqrt{t}  \implies \textrm{Regret}_t(x^\star)= O(\frac{t}{\sqrt{V}}+ \sqrt{t}). 
+\end{eqnarray*}
+Setting $V=\sqrt{T}$ yields $\textrm{Regret}_t(x^\star) = O(t^{3/4}).$ 
+\fi
+Since the constraint functions are non-negative, the sequence $\{Q(t)\}_{t \geq 1}$ is monotone non-decreasing. Hence, from  \eqref{main_eq} using the fact that $\sum_{\tau=1}^t Q^2(\tau)\le \sqrt{t}Q(t)$, we have 
+\begin{eqnarray*}
+	V\textrm{Regret}_t(x^\star) \leq 2GDQ(t)\sqrt{t}-Q^2(t)+ 2GDV\sqrt{t},
+\end{eqnarray*}
+where, in the first term on the RHS, we have used the monotonicity of the queue-length sequence. Completing the square on the RHS, we have 
+\begin{eqnarray} \label{reg-plus-q-sq-bd}
+	V\textrm{Regret}_t(x^\star) &\leq& 2GD V\sqrt{t} + G^2D^2t - (Q(t) - GD\sqrt{t})^2 \\
+	&\leq & 2GD V\sqrt{t} + G^2D^2t.
+\end{eqnarray}
+Hence, similar to \eqref{eq:dummy1}, we conclude that
+\begin{eqnarray*}
+	\textrm{Regret}_t(x^\star) \leq 2GD \sqrt{t} + \frac{G^2D^2t}{V} \stackrel{(\text{choosing} \ V=\sqrt{T})}{\implies}\textrm{Regret}_t(x^\star)= O(\sqrt{t}). ~\blacksquare
+\end{eqnarray*}
+\paragraph{Bounding the queue-length when the regret is non-negative:}
+We now establish the improved queue length bound for rounds where the worst-case regret is non-negative. Consider a round $t\geq 1$ where $\sup_{x^\star \in \mathcal{X}^\star}\textrm{Regret}_t(x^\star) \geq 0.$ Then from \eqref{reg-plus-q-sq-bd}, we have 
+\begin{eqnarray*}
+	(Q(t) - GD\sqrt{t})^2 \leq 2GD V\sqrt{t} + G^2D^2t.
+\end{eqnarray*}
+%Hence, we have 
+This yields
+\begin{eqnarray*}
+	Q(t) \leq GD\sqrt{t} + \sqrt{2GD V\sqrt{t}}+ GD \sqrt{t}. 
+\end{eqnarray*}
+Setting $V=\sqrt{T},$ the above bound yields
+\begin{eqnarray*}
+	Q(t)= O((Tt)^{1/4})+O(\sqrt{t}) = O(\sqrt{T}),~ \forall t \geq 1.~~~~\blacksquare 
+\end{eqnarray*}
+\fi
+\iffalse
+\subsection{Proof of Theorem \ref{cvx-lb}} \label{cvx-lb-pf}
+%\begin{proof}
+\edit{The proof has holes. What if we can conclude $x^\star$ by inverting $b_t=g_t(x^\star)$?}
+
+
+	Assume that on round $t \geq 1$, the adversary chooses a convex cost function $g_t(x)$ and a constraint $g_t(x) \leq b_t,$ where the constant $b_t$ will be specified later. Let $x^\star \in \mathcal{X}^\star$ be a feasible action in hindsight, which minimizes the cumulative cost $\sum_{t=1}^T g_t(x).$ We now choose the constant $b_t$ as $b_t = g_t(x^\star), t \in [T].$ Clearly, $x^\star \in \mathcal{X}^\star$ is a feasible point that satisfies all constraints. Hence, the cumulative violation penalty incurred by any online policy $\pi$ over the entire horizon $T$ is given by: 
+	\begin{eqnarray*}
+	\sup_{\mathcal{I}} \mathbb{V}_{\mathcal{I}} \geq \mathbb{V}_T = \sum_{t=1}^T \big(g_t(x_t) - b_t\big) = \sum_{t=1}^T g_t(x_t) - \sum_{t=1}^T g_t(x^\star) \equiv \textrm{Regret}_T(x^\star) \geq \mathcal{X}(\sqrt{T}), 
+	\end{eqnarray*} 
+	where the last inequality follows from the lower bound on the achievable regret for adversarially chosen convex cost functions over a convex domain \citep[Table 3.1]{hazan2016introduction}. This establishes part 1 of the Theorem. The proof for the strongly convex costs is exactly similar, where we choose the functions $g_t$ to be $\alpha$-strongly convex instead and use the corresponding lower bound for the unconstrained OCO problem. 
+%\end{proof}
+
+\fi
+\iffalse
+\subsection{Proof of Theorem \ref{cvx-slater}} \label{cvx-slater-pf}
+\begin{proof}
+%	Since the (sub)-gradient of the cost function is bounded, we have $\textrm{Regret}_t(x^\star) \geq -GDt.$ Hence, \eqref{main_eq} gives
+%	\begin{eqnarray} \label{eq1}
+%		Q^2(t) + 2\eta^\star\sum_{\tau=1}^t Q(\tau) \leq VGD t + 2GV\sqrt{t} + 2G \sqrt{\sum_{\tau=1}^t Q^2(\tau)}.
+%	\end{eqnarray}
+%	Define $\delta \equiv \frac{\max(2,D)}{3}.$ From the above equation, we have that for each $1\leq \tau \leq t:$
+%	\begin{eqnarray*}
+%		Q^2(\tau) \leq VG\delta \tau + 2G\sqrt{\sum_{\tau=1}^t Q^2(\tau)}. 
+%	\end{eqnarray*}
+%	Summing up the above inequalities for $\tau=1$ to $\tau=t,$ and defining $S_t= \sqrt{\sum_{\tau=1}^t Q^2(\tau)},$ we obtain the following quadratic equation in $S_t:$
+We start from Eqn.\ \eqref{quad-bd} which states that
+	\begin{eqnarray*}
+		\sqrt{\sum_{\tau=1}^t Q^2(\tau)} \leq t(2G+ \sqrt{VG\delta}).
+	\end{eqnarray*} 
+Substituting the above bound into \eqref{main_eq} and lower bounding the non-negative terms on the left by zero, we obtain the following upper bound on the average queue lengths
+\begin{eqnarray} \label{eq3_thm2}
+	 \frac{1}{t}\sum_{\tau=1}^t Q(\tau) \leq \frac{1}{2\eta^\star}\big(VG \delta + 4G^2+2G\sqrt{VG\delta}\big)= O(V).  
+\end{eqnarray}
+This proves the first part of the theorem.
+Next, upper-bounding the $\ell_2$-norm with the $\ell_1$-norm in Eqn.\ \eqref{eq12}, and using the upper bound \eqref{eq3_thm2} for the average queue length, we conclude that 
+\begin{eqnarray} \label{eq4_thm2}
+	Q^2(t) \leq t(VG\delta+  \frac{2G}{t}\sum_{\tau=1}^t Q(\tau) ) ~ \implies Q^2(t) \leq c_1 Vt,
+\end{eqnarray}
+where $c_1$ is a constant that depends only on the parameters $G, D,$ and  $\eta^\star.$ Using Eqn.\ \eqref{main_eq} again and dropping the non-negative terms on the LHS, we conclude
+\begin{eqnarray*}
+	V \textrm{Regret}_t(x^\star) &\leq& 2G \sqrt{\max_{1\leq \tau \leq t}Q(\tau) \sum_{\tau=1}^t Q(\tau)}+2GV \sqrt{t}\\
+	&\stackrel{(a)}{\leq}& c_2 (Vt)^{3/4} + 2GV\sqrt{t}
+\end{eqnarray*}
+where $c_2$ is a constant that depends on $G, D,$ and  $\eta^\star.$ In (a) above, we have used the bounds in \eqref{eq3_thm2} and \eqref{eq4_thm2} for separately bounding the maximum and the average queue lengths. The above inequality finally leads to the following regret bound:
+\begin{eqnarray*}
+	\textrm{Regret}_t(x^\star) \leq c_2 \frac{t^{3/4}}{V^{1/4}} + 2G\sqrt{t} \implies \textrm{Regret}_t(x^\star) \stackrel{(V=\sqrt{T})}{=} O(T^{5/8}).
+\end{eqnarray*}
+%where in the last inequality, we have set $V=\sqrt{T}.$
+\end{proof}
+\subsection{Proof of Theorem \ref{positive-regret}} \label{positive-regret-proof}
+\begin{proof}
+	Using the assumption in Eqn.\ \eqref{main_eq}, we have 
+	\begin{eqnarray} \label{t4eq1}
+		Q^2(t) \leq 2G \sqrt{\sum_{\tau=1}^t Q^2(\tau)}+ 2GV\sqrt{t}.
+	\end{eqnarray}
+	The above set of inequalities implies for each $t \geq 1:$
+	\begin{eqnarray*}
+		\sum_{\tau=1}^t Q^2(\tau) \leq 2Gt\sqrt{\sum_{\tau=1}^t Q^2(\tau)}+ 2GV t^{3/2}.
+	\end{eqnarray*}
+	Solving the above quadratic inequality, we obtain 
+	\begin{eqnarray} \label{t4eq2}
+		\sqrt{\sum_{\tau=1}^t Q^2(\tau)} \leq 2Gt + \sqrt{2GV}t^{3/4}.
+	\end{eqnarray}
+	Plugging in the above bound in \eqref{t4eq1}, we obtain
+	\begin{eqnarray*}
+		Q(t) \leq O(\sqrt{t}) + O(V^{1/4}t^{3/8}) + O(V^{1/2}t^{1/4}) \stackrel{(V=\sqrt{T})}{\implies} Q(t)=O(\sqrt{T}).
+	\end{eqnarray*}
+	Finally, plugging \eqref{t4eq2} into \eqref{main_eq}, we obtain for any $x^\star \in \mathcal{X}_t:$
+	\begin{eqnarray*}
+		\textrm{Regret}_t(x^\star) \leq O(\frac{t}{V}) + O(\frac{t^{3/4}}{\sqrt{V}}) + O(\sqrt{t}) \stackrel{(V=\sqrt{T})}{\implies} 	\textrm{Regret}_t(x^\star) = O(\sqrt{T}).
+	\end{eqnarray*}
+\end{proof}
+\fi
+ \subsection{Proof of Theorem \ref{str-cvx-bd}} \label{str-cvx-pf}
+  %\subsubsection{Preliminaries} \label{prelim}
+  \paragraph{Bounding the CCV:} 
+  \iffalse
+  We give two different proofs for the constraint violation bound. The first proof does not assume the non-negativity of the constraint functions and, hence, works for un-pre-processed constraints and is slightly more complex. The second proof exploits the non-negativity of the constraint functions and is elementary. 
+  \paragraph{Proof:}
+     In this proof, we will use the classical Gr\"onwall's inequality for bounding the growth of the queue length sequence $\{Q(t)\}_{t \geq 1}.$ For the ease of reference, we state the result below. 
+%\begin{framed}
+\begin{theorem}[(Gr\"onwall's inequality \citep{bainov1992integral})]
+Let $I$ denote an interval $[a,b],$ $\alpha : I \to \mathbb{R}$ be a non-decreasing function and $\beta : I \to \mathbb{R}$ be a non-negative function. Let the continuous function $u : I \to \mathbb{R}$ satisfies the following integral inequality:
+\begin{eqnarray*}
+	u(t) \leq \alpha(t)+\int_{a}^t \beta(\tau) u(\tau) d\tau. 
+\end{eqnarray*} 
+Then we have
+\begin{eqnarray} \label{gw_ineq}
+	u(t) \leq \alpha(t) \exp\left( \int_{a}^t \beta(\tau) d\tau \right).
+\end{eqnarray}
+\end{theorem}
+%\end{framed}
+ Since the (sub)-gradients of the cost function are assumed to be bounded, we have $\textrm{Regret}_t(x^\star) \geq -GDt.$
+%As in the previous proof, we have $\textrm{Regret}_t \geq -GDt.$
+%\subsection{Analysis}
+ Hence, from inequality \eqref{Gronwall-ineq}, we have that: 
+\begin{eqnarray} \label{str-cvx-eqn}
+	Q^2(t) \leq VG\delta t+ \frac{G^2}{\alpha V}\sum_{\tau=1}^t \frac{Q^2(\tau)}{\tau},  
+\end{eqnarray}
+where we have defined $\delta\equiv (\frac{G}{\alpha}+D).$
+Clearly, we can extend any non-negative sequence $\{Q^2(\tau)\}_{\tau \geq 1}$ to a continuous function by linearly interpolating the sequence values between every two integers. Furthermore, since the sequence is non-negative, the integral of the continuous extension up to any integer $t$ is at least half of the sum of the first $t$ elements of the sequence. Hence, the resulting continuous extension $\big(Q^2(t), \nicefrac{1}{2} \leq t \leq T\big)$ satisfies the following integral inequality:
+\begin{eqnarray*}
+	Q^2(t) \leq VG\delta t + \frac{2G^2}{\alpha V} \int_{\nicefrac{1}{2}}^t \frac{Q^2(\tau)}{\tau}d\tau.
+\end{eqnarray*}
+Using Gr\"onwall's inequality \eqref{gw_ineq} with $u(t)\equiv Q^2(t)$, it immediately follows that 
+\begin{eqnarray} \label{Q-bd-str-cvx}
+	Q^2(t) \leq VG\delta t (2t)^{\frac{2G^2}{\alpha V}}, ~\forall t \geq 1.
+\end{eqnarray}
+\iffalse
+Plugging in the above bound in \eqref{Gronwall-ineq} leads to the following regret bound $\forall x^\star \in \mathcal{X}_t$: 
+\begin{eqnarray*}
+	\textrm{Regret}_t(x^\star) &\leq& \frac{G^2}{\alpha} \ln(t) + \frac{2G^2}{\alpha V^2}VG\delta \int_{\nicefrac{1}{2}}^{t}(2\tau)^{\nicefrac{2G^2}{\alpha V}}d\tau \\
+	&\leq& \frac{G^2}{\alpha} \ln(t) + \frac{2G^3\delta}{\alpha V}t (2t)^{\nicefrac{2G^2}{\alpha V}}.
+\end{eqnarray*}
+\fi
+Hence, upon setting $V \geq \frac{2G^2}{\alpha} \ln(2T),$ we obtain the following bound for the queue length 
+\begin{eqnarray*}
+	Q(t) \leq 2 \sqrt{VG\delta t}= O(\sqrt{V t \log T}).~\blacksquare
+	 %~ \textrm{Regret}_t(x^\star) \leq O\big(\ln(t)\big)+O\big(\frac{t}{V}\big). 
+\end{eqnarray*}
+As in the convex case, we have not used the fact that the constraints are non-negative in the above proof. Hence, the above bound holds for constraints which are not necessarily pre-processed (see Section \ref{gen_oco}). The remaining part of the proof exploits the non-negativity of the constraints where we redefine $g_t(x)\gets \max(0, g_t(x)), \forall t \geq 1.$
+\fi
+%Recall that with the abuse of notation we have used $g_t(x) = \max\{g_t(x),0\}$ in the COCO case. Thus, the queue length sequence $Q(t)$ is monotone non-decreasing. Hence, 
+Choosing $\Phi(x)=x^2$ in Eqn.\ \eqref{Gronwall-ineq}, we have for any feasible $x^\star \in \mathcal{X}^\star:$ 
+\begin{eqnarray} \label{q-reg-str-cvx-bd}
+	Q^2(t) + V\textrm{Regret}_t(x^\star) \leq \frac{VG^2}{\alpha} (1+\ln(t)) + \frac{4G^2Q^2(t)\ln(Te)}{\alpha V},
+\end{eqnarray}
+where, on the last term in the RHS, we have used 
+%the non-decreasing property of the queue lengths and 
+the fact that $t\leq T$. Setting $V = \frac{8G^2 \ln(Te)}{\alpha},$ and transposing the last term on the RHS to the left, the above inequality yields
+\begin{eqnarray} \label{Q-bd-str-cvx}
+	Q^2(t) + 2V\textrm{Regret}_t(x^\star) \leq \frac{2VG^2}{\alpha} (1+\ln(t)).
+\end{eqnarray}
+%Since the (sub)-gradients of the cost function is assumed to be bounded, as before, the regret at any round is lower bounded as $\textrm{Regret}_t(x^\star) \geq -GDt.$ 
+Since the cost functions are assumed to be $G$-Lipschitz (Assumption \ref{bddness}),
+we trivially have $\textrm{Regret}_t(x^\star) = \sum_{t=1}^T (f_t(x_t)-f_t(x^\star)) \geq -GDt.$
+Hence, from Eqn.\ \eqref{Q-bd-str-cvx}, we obtain
+\begin{eqnarray*}
+	Q^2(t) \leq 2VGDt + \frac{2VG^2}{\alpha} (1+\ln(t)) \implies Q(t) \stackrel{(a)}{\leq} 4G \sqrt{\frac{GD}{\alpha}t \ln(Te)} + \frac{4G^2 \ln(Te)}{\alpha}.
+\end{eqnarray*}
+where step (a), we have substituted $V = \frac{8G^2 \ln(Te)}{\alpha}.$ Hence, we have the following bound $\textrm{CCV}_t = O\big(\sqrt{\frac{t \log T}{\alpha}}\big).$
+
+\paragraph{Bounding the regret:} Using the above choice for the parameter $V$ and the fact that $Q^2(t)\geq 0,$ from Eqn.\ \eqref{Q-bd-str-cvx}, we have
+%in Eqn.\ \eqref{q-reg-str-cvx-bd}, we have 
+\begin{eqnarray*}
+	2V\textrm{Regret}_t(x^\star) \leq \frac{2VG^2}{\alpha} (1+\ln(t)). 
+	%- \frac{Q^2(t)}{2} \leq \frac{VG^2}{\alpha} \ln(t).
+\end{eqnarray*}
+%where we have set $V = \frac{2G^2 \ln(Te)}{\alpha}.$
+This leads to the following logarithmic bound for regret for any feasible $x^\star \in \mathcal{X}^\star:$ 
+\[ \textrm{Regret}_t(x^\star) \leq \frac{G^2}{\alpha} (1+\ln(t)).~~~~\blacksquare \]
+
+\paragraph{A sharper CCV bound under the non-negative regret assumption:} We now establish an improved CCV bound when the worst-case regret is non-negative on  some round $t \geq 1$. Let $\sup_{x^\star \in \mathcal{X}^\star}\textrm{Regret}_t(x^\star) \geq 0$ for some round $t \geq 1.$ Letting $V = \frac{8G^2 \ln(Te)}{\alpha}$ as above, from Eq.\ \eqref{Q-bd-str-cvx} we have 
+\begin{eqnarray*}
+	Q^2(t) \leq \frac{2VG^2}{\alpha} (1+\ln(t)) \implies Q(t) = O\big(\frac{\ln T}{\alpha}\big), t \in [T]. ~\blacksquare
+\end{eqnarray*}
+\paragraph{Comment:} From the above proof, it immediately follows that the same conclusion holds even under the weaker assumption of $-\textrm{Regret}_T= O(\frac{\log T}{\alpha}).$ 
+\input{fast_rates.tex}
+\subsection{Connection Between \textsc{OCS} and the Convex Body Chasing Problem}  \label{cbc}
+A well-studied problem related to the \textsc{OCS} problem is the
+{\it nested convex body chasing (NCBC)} problem \citep{bansa2018nested,argue2019nearly,bubeck2020chasing}, 
+where at each round $t$, a convex set $\chi_t \subseteq \chi$ is revealed such that 
+$\chi_t\subseteq \chi_{t-1}$, where  $\chi_0=\chi \subseteq {\mathbb R}^d$ is a convex, compact, and bounded set. 
+The objective is to choose  $x_t \in \chi_t$ so as to minimize the total movement cost across rounds
+$C =   \sum_{t=1}^T  ||x_t - x_{t-1}||_2,$
+where $x_0 \in \chi$ is some fixed action.
+In NCBC, action $x_t$ is chosen \emph{after} the set $\chi_t$ is revealed. This is in contrast to the \textsc{OCS} problem, where $x_t$ must be chosen \emph{before} the constraints $g_{t,i}$'s are revealed at round $t$. Moreover, note that the nested condition $\chi_t \subseteq \chi_{t-1}$ is stricter than Assumption \ref{feas-constr}, which is applicable to the \textsc{OCS} problem.
+However, as we show next, a feasible algorithm for NCBC also provides an upper bound on the CCV of the \textsc{OCS} problem under Assumption \ref{feas-constr}.
+
+In this reduction, we define $\chi_t $ as the intersection of the first $kt$ convex constraints $g_{\tau,i} \leq 0, 1\leq \tau \leq t, i\in [k],$ revealed up to round $t$ for the \textsc{OCS} problem. It is easy to see that $\chi_t$ is convex and $\chi_t \subseteq \chi_{t-1}, \forall t.$
+Let $x_t$ be the action chosen by an algorithm $\cal A$ for the NCBC problem after the set $\chi_t$ is revealed. Note that $\chi_t \neq \emptyset,$ thanks to Assumption \ref{feas-constr}. We now choose $y_{t} := x_{t-1}$ as the action for the \textsc{OCS} problem on round $t$, ensuring that action $y_t$ is chosen before the set $ \chi_t$ is revealed.
+The resulting $i^{th}$ constraint violation for the \textsc{OCS} problem at round $t$ is given by 
+\[
+	g_{t,i}(y_{t}) \stackrel{(a)}\le g_{t,i}(y_{t}) - g_{t,i}(y_{t+1}) \le G ||y_{t} - y_{t+1}||,
+\]
+where $(a)$ follows from the feasibility of $\cal A$ for NCBC, $y_{t+1}= x_{t} \in \chi_{t}$ and hence $g_{t,i}(y_{t+1}) \leq 0$. Summing across rounds $t=1, \dots, T$, and taking the $\max$ over  all the $k$ constraints, we get that the CCV using $\cal A$ for the \textsc{OCS} is upper bounded by $ \sum_{t=2}^T G ||y_{t} - y_{t+1}|| \le \sum_{t=2}^T G ||x_{t-1} - x_{t}|| \le G \cdot C_{\cal A},$
+where $C_{\cal A}$ is the movement cost of $\cal A$ for the NCBC problem.
+
+From prior work \cite{bansa2018nested,argue2019nearly,bubeck2020chasing}, it is known that for NCBC, a Steiner point-based algorithm that chooses $x_t$ as the Steiner point of $\chi_t$ can achieve
+$C_{\cal A} = O(\sqrt{d \log d})$, where $\chi \subset {\mathbb R}^d$. Thus, the Steiner point-based algorithm (even though computationally intensive) provides an $O(\sqrt{d \log d})$ constraint violation for the 
+\textsc{OCS} as well. However, this result is effective for problems where  $\sqrt{d \log d} = o(T).$ Our result efficiently overcomes this hurdle and provides a bound under weaker feasibility assumptions even beyond $\sqrt{d \log d} = o(T)$ -- a setting that is better motivated in practice for modern deep learning applications which are characteristically high-dimensional.
+
+
+\input{extension}
+
+\subsubsection{CCV Bound} 
+%\paragraph{Constraint violation for convex constraints:}
+ We now apply the generalized regret decomposition bound given in \eqref{gen-reg-decomp2} to the case of convex constraint functions. Substituting the regret bound \eqref{cvx-reg-bd} of the AdaGrad policy into Eqn.\  \eqref{gen-reg-decomp2}, we have 
+\begin{eqnarray*}
+		\sum_{i=1}^k Q_i^2(t) \leq c_1 \sqrt{\sum_{\tau=1}^t \big(\sum_{i=1}^kQ_i^2(\tau)\big)}+ c_2 S t +   c_3S\sum_{i=1}^k Q_i(t)+ c_4S^2
+\end{eqnarray*}
+where the constants $c_1 \equiv O(GD \sqrt{k}),c_2=O(kF^2), c_3=O(F), c_4=O(kF^2) $ are problem-specific parameters that depend on the bounds on the gradients and the maximum value of the constraint functions, the number of constraints,  and the diameter of the admissible set. Defining $Q^2(t) \equiv \sum_i Q_i^2(t),$ we obtain:
+\begin{eqnarray*}
+	Q^2(t) \leq c_1 \sqrt{\sum_{\tau=1}^t Q^2(\tau)} + c_2St + c_3 S \sum_{i=1}^k Q_i(t) + c_4S^2.
+\end{eqnarray*}
+Since $Q_i(t) \leq Ft, \forall i,$ the above inequality can be simplified to 
+\begin{eqnarray} \label{simplified-q-bd}
+	Q^2(t) \leq c_1 \sqrt{\sum_{\tau=1}^t Q^2(\tau)} +  c_2'St + c_4S^2, ~ \forall t\geq 1,
+\end{eqnarray}
+where we have defined $c_2'\equiv c_3kF+c_2.$
+To solve the above system of inequalities, note that for each $1 \leq \tau \leq t,$ we have
+\begin{eqnarray*}
+	Q^2(\tau) \leq c_1 \sqrt{\sum_{\tau=1}^t Q^2(\tau)} +  c_2'St + c_4S^2.
+\end{eqnarray*}
+Summing up the above inequalities for $1\leq \tau \leq t$ and defining $Z_t \equiv \sqrt{\sum_{\tau=1}^t Q^2(\tau)},$ we obtain
+\begin{eqnarray*}
+	Z^2_t &\leq&  c_1t Z_t + c_2'St^2 + c_4S^2t \\
+	\emph{i.e.,}~Z_t^2 &\leq & 3 \max(c_1t Z_t, c_2'St^2, c_4S^2t) \\
+	\emph{i.e.,}~ Z_t &=& O(\max(t, t\sqrt{S}, S \sqrt{t})).  
+\end{eqnarray*}
+Substituting the above bound for $Z(t)$ in Eqn.\  \eqref{simplified-q-bd}, we have for any $t\geq 1$:
+\begin{eqnarray*}
+Q^2(t) &=& O(\max(Z_t, St, S^2)) \\
+\emph{i.e.,}~ Q(t) &=& O(\max(\sqrt{Z_t}, \sqrt{St}, S))\\
+\textrm{Hence,}~~ Q_i(t) \leq Q(t) &=& O(\max(\sqrt{t},  \sqrt{t}S^{1/4}, \sqrt{S} t^{1/4}, \sqrt{St}, S))\\
+& =& O(\max(\sqrt{St},S )), ~\forall i\in [k]. 
+\end{eqnarray*}
+The final result follows upon appealing to Eqn.\ \eqref{V-Q}.$~~~~\blacksquare$
+%In the special case $S=T^{1-\epsilon}, 0<\epsilon<1,$ the above bound yields $Q_i(t) = O(T^{1-\epsilon/2}), \forall t\geq 1.$ 
+ %Hence, by setting $V=O(T),$ we get the optimal logarithmic regret for the strongly convex losses but it leads to a trivial linear constraint violation. However, by taking a smaller $V,$ we obtain a both sublinear regret and constraint violation penalty. In general, the following regret $R_T$ and violation penalty $\mathbb{V}_T$ profile is feasible (up to logarithmic factors in $T$): 
+ %\begin{eqnarray*}
+% 	(R_T, \mathbb{V}_T) = \tilde{O}(\frac{T}{V}, \sqrt{VT}).
+% \end{eqnarray*}
+% 
+
+\input{gen_p_T}
+%\input{applications}
+\iffalse
+ \subsection{Proof of Theorem \ref{str-cvx-slater}} \label{str-cvx-slater-proof}
+ Assuming that Slater's condition holds for some $\eta^\star \geq 0,$ from Eqn.\ \eqref{Gronwall-ineq}, we have that 
+ \begin{eqnarray*}
+ 	2\eta^\star \sum_{\tau=1}^t Q(\tau) \leq VG\delta t + \frac{2G^2}{\alpha V} \int_{\nicefrac{1}{2}}^t \frac{Q^2(\tau)}{\tau}d\tau,
+ \end{eqnarray*}
+ where, as before, we have defined $\delta\equiv (\frac{G}{\alpha}+D).$ Substituting the upper bound \eqref{Q-bd-str-cvx} on the RHS, we obtain
+ \begin{eqnarray*}
+ 	\frac{1}{t}\sum_{\tau=1}^t Q(\tau) \leq \frac{1}{2\eta^\star}\big(VG\delta + O(\frac{1}{V})\big) = O(V). 
+ \end{eqnarray*}
+
+\subsection{Proof of Theorem \ref{positive-regret-str-cvx}} \label{positive-regret-str-cvx-proof}
+Under the assumption of uniform non-negativity of the regret, Eqn.\ \eqref{Gronwall-ineq} implies that the queue variables satisfy the following integral inequality:
+\begin{eqnarray*}
+	 	Q^2(t)  \leq \frac{VG^2}{\alpha} \ln(t) + \frac{G^2}{\alpha V} \sum_{\tau=1}^t \frac{Q^2(\tau)}{\tau} \leq \frac{VG^2}{\alpha} \ln(t) + \frac{2G^2}{\alpha V} \int_{\nicefrac{1}{2}}^t \frac{Q^2(\tau)}{\tau}d\tau, ~ \forall t \geq 1,
+\end{eqnarray*}
+where in the second inequality, we have linearly interpolated the discrete $\{Q^2(t)\}_{t \geq 1}$ variables between every two integers as in the proof of Theorem \ref{str-cvx-bd}.
+An application of Gr\"onwall's inequality \eqref{gw_ineq}, yields the following bound on the queue-lengths:
+\begin{eqnarray*}
+	Q^2(t) \leq \frac{VG^2}{\alpha} \ln(t) (2t)^{\frac{2G^2}{\alpha V}}, ~ \forall t \geq 1.
+\end{eqnarray*}
+Next, we set $V \geq \frac{2G^2}{\alpha} \ln(2T),$ so that the last factor is bounded by $e$. This yields the following improved bound for the queue length
+\begin{eqnarray*}
+	Q(t) \leq \frac{2G}{\sqrt{\alpha}}\sqrt{V \ln t}, ~ \forall t \geq 1.
+\end{eqnarray*}
+Plugging in the above bound in \eqref{Gronwall-ineq}, we have the following regret bound
+\begin{eqnarray*}
+	V \textrm{Regret}_t(x^\star) &\leq& \frac{VG^2}{\alpha} \ln(t) + \frac{6G^4}{\alpha^2} \int_{\nicefrac{1}{2}}^t \frac{\ln \tau}{\tau}d\tau \\
+	&\leq& \frac{VG^2}{\alpha} \ln(t) + \frac{3G^4}{\alpha^2}(\ln t)^2.
+\end{eqnarray*}
+This yields the following regret bound:
+\begin{eqnarray*}
+	\textrm{Regret}_t(x^\star) \leq \frac{G^2}{\alpha} \ln(t) + \frac{3G^4}{\alpha^2 V}(\ln t)^2 \stackrel{(V=\mathcal{X}(\ln T))}{=} O(\frac{(\ln t)^2}{V}).
+\end{eqnarray*}
+\fi
+ 
+% 
+%
+%\subsection{Proof of Theorem \ref{constraint-sat-cvx}} 
+%\begin{proposition} \label{q-bd-prop}
+%Let $\{Q(t)\}_{t \geq 1}$ be a non-negative sequence with 
+%  $Q(1)> 0$. 
+%Suppose that the $t$\textsuperscript{th} term of the sequence satisfies the inequality 
+%\begin{eqnarray} \label{seq_bd}
+%	Q^2(t) \leq c\sum_{\tau=1}^t  \frac{Q^2(\tau)}{\sum_{s=1}^\tau Q(s)}, ~ \forall t\geq 1,
+%\end{eqnarray}
+%where $c >0$ is a constant.
+%Then $Q(t)\leq  c\ln(t) + O(\ln \ln t), \forall t \geq 1$\footnote{If the sequence is identically equal to zero then there is nothing to prove. Otherwise, by skipping the initial zero terms, one can always assume that the first term of the sequence is non-zero.}.
+%\end{proposition}
+%\begin{proof}
+%%Note that if all terms of the sequence are less than $1,$ then there is nothing to prove. Otherwise, by possibly shifting the sequence to left, we can assume that the first term of the sequence $Q(1)$ is at least $1$. 
+%By dividing each term of the sequence by $c,$ WOLOG, we can assume that $c=1$. 
+%	From Eqn.\ \eqref{seq_bd}, we have the following preliminary bound on the growth of the sequence:
+%	\begin{eqnarray} \label{prelim_bd1}
+%		Q^2(t) \leq \sum_{\tau=1}^t \frac{Q^2(\tau)}{Q(\tau)} \stackrel{(a)}{=} \sum_{\tau=1}^t Q(\tau), ~ \forall t \geq 1. 
+%	\end{eqnarray}
+%	where in (a), we have used the fact that each term of the sequence is non-negative. Substituting the bound \eqref{prelim_bd1} into Eqn.\ \eqref{seq_bd}, we obtain
+%	\begin{eqnarray*}
+%		Q^2(t) \leq \sum_{\tau=1}^t \frac{\sum_{s=1}^\tau Q(s)}{\sum_{s=1}^\tau Q(s)}= t.
+%	\end{eqnarray*}
+%	Hence, we have 
+%	\begin{eqnarray} \label{pre-bd1}
+%			Q(t) \leq \sqrt{t}, \forall t\geq 1.
+%	\end{eqnarray}
+%	
+%	 Next, for any fixed $t \geq 1,$ let $\arg\max_{\tau=1}^t Q(\tau)= z$ (break ties arbitrarily). We have: 
+%	 \begin{eqnarray*}
+%	 	 Q^2(z) \stackrel{(b)}{\leq}  \sum_{\tau=1}^z  \frac{Q^2(\tau)}{\sum_{s=1}^\tau Q(s)} \stackrel{(c)}{\leq} \sum_{\tau=1}^t\frac{Q^2(\tau)}{\sum_{s=1}^\tau Q(s)} \stackrel{(d)}{\leq} Q(z) \sum_{\tau=1}^t\frac{Q(\tau)}{\sum_{s=1}^\tau Q(s)}
+%	 \end{eqnarray*}
+%	 where in (b), we have used \eqref{seq_bd} for the index $z$, in (c), we have used the non-negativity of the sequence, and in (d), we have used the fact that $Q(z) \geq Q(\tau), 1\leq \tau \leq t.$ Dividing both sides by $Q(z),$ the above inequality yields:
+%	 \begin{eqnarray*}
+%	 	Q(z) \leq \sum_{\tau=1}^t\frac{Q(\tau)}{\sum_{s=1}^\tau Q(s)}.
+%	 \end{eqnarray*}
+%	 Finally, for all $t\geq 1,$ we have
+%	 \begin{eqnarray*}
+%	 	Q(t) \leq Q(z) 
+%	 	&\leq& \sum_{\tau=1}^t\frac{Q(\tau)}{\sum_{s=1}^\tau Q(s)} \\
+%	 	&\leq& \sum_{\tau=1}^t \int_{\sum_{s=1}^{\tau-1} Q(s)}^{\sum_{s=1}^\tau Q(s)}\frac{dx}{x} \\
+%	 	&\leq& 1+\int_{Q(1)}^{\sum_{s=1}^t Q(s)}\frac{dx}{x}\\
+%	 	&\stackrel{(e)}{=}& \ln(\sum_{s=1}^t Q(s)) + c \\
+%	 	&\stackrel{(f)}{\leq}& \ln(\sum_{s=1}^t \sqrt{s}) + c\leq \frac{3}{2}\ln(t)+c,   
+%	 \end{eqnarray*}
+%	  where in (c), we have defined the constant $c\equiv 1-\ln(Q(1))$ and in (f), we have used the bound \eqref{pre-bd1}. We can tighten the result further by substituting the previous bound in the inequality $(e)$ above, which results in
+%	  \begin{eqnarray*}
+%	  	Q(t) \leq \ln(\sum_{s=1}^t \frac{3}{2} \ln s + ct) \leq \ln(t)+ \ln(c+\frac{3}{2}\ln(t)). 
+%	  \end{eqnarray*}
+%\end{proof}

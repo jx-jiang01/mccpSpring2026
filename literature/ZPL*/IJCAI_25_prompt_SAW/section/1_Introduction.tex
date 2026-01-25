@@ -1,0 +1,206 @@
+\vspace{-1.7ex}
+\section{Introduction}
+\label{sec:intro}
+\vspace{-0.7ex}
+LLMs have attracted considerable attention for their superior performance across a wide range of applications. For this, instructions (aka. prompts) play a crucial role in extending the 
+capabilities of LLMs for multiple different tasks. 
+The prompts provide the provision to guide the model to elucidate desired model behavior without perturbing the model parameters. This is also highlighted in recent studies that show well-designed 
+prompts and the integration of external knowledge are significant to enhance the effectiveness of LLMs'~\citep{PromptEngineeringSurvey}. Different LLMs-related techniques directly benefiting from prompts include but are not limited to: 
+In-Context Learning~\citep{ICL}, Chain-of-Thought~\citep{CoT}, 
+Retrieval Augmented Generation~\citep{RAG}, and Agents~\citep{Agent} \emph{etc.} 
+\eat{play a crucial role in this process.} {Generally, prompts may be sub-divided into two types: task-aware and 
+task-agnostic prompts, a quick overview is given in Appendix~\ref{Appendix:aware-prompts} 
+and Appendix~\ref{Appendix:agnositic-prompts} respectively.} 
+
+
+
+% 引出prompt压缩
+%(\citet{softPrompt}~\citep{softPrompt})
+At the same time, the abilities of LLMs are significantly compromised/constrained by increasingly lengthy prompts, even comprising thousands of tokens. Lengthy prompts not only obscure requisite information but also increase computational costs and incur inference latency. To tackle this challenge, \textit{prompt compression} techniques, \emph{e.g.,}~\cite{selectiveContext}, have garnered significant interest. These approaches are based on the fact that natural language is inherently redundant~\citep{rongyu}. Thus, it is possible to substantially compress the length of original textual prompts by preserving requisite information in small segments.
+
+
+% 介绍已有方法
+Existing prompt compression approaches focus on compressing text at the token level, \emph{i.e.,} they verify whether compression is applicable to each individual token. For instance,~\cite{selectiveContext} proposed Selective-Context that uses a compact language model to evaluate context's lexical units, enabling compression by eliminating units with minimal information. Also, LLMLingua~\citep{llmlingua} and LongLLMLingua~\citep{longllmlingua} developed budget control mechanisms to compresses prompts based on their perplexity.
+
+
+
+
+
+% 引出limitation
+While existing approaches could enhance the ability to deal with lengthy prompts for LLMs, they lack grammatical coherence, \emph{i.e.,} existing approaches neglect the syntactic and semantic structure of the compressed prompt. 
+%\warn{we observe the existing research on prompt compression poses the following limitations lack of grammatical coherence} By grammatical coherence, we imply existing approaches neglect the syntactic and semantic structure of the compressed prompt. 
+This is because contemporary prompt compression methods primarily focus on quantifying token-level information, neglecting the overall grammatical structure of the compressed prompt. Such ignorance not only increases the risk of semantic loss within the compressed prompt but also hampers its readability for human readers. An example in this regard is shown in Figure~\ref{fig:example1}, where the original prompt text: {''\em Two women have won the prize: Curie and Maria Goeppert-Mayer''} is compressed to: {\em ''won twoes forg01 theate women prize:ertMayer''}
+by LongLLMlingua~\citep{longllmlingua}. 
+%The compressed prompt is not only hard to understand, it also hampers  the LLM's end-performance on specific tasks. 
+
+% Prompt压缩算法对不同的Prompt压缩结果有较大的方差，但是目前Prompt压缩算法选择的基准Prompt数量较少，这会导致结果的偏移。而且他们没有基于相同的基准Prompt进行压缩，这也进一步加剧了不公平性。
+\eat{By evaluation benchmark, we imply the absence of a universally accepted benchmark for rigorous performance evaluation of the prompt compression techniques. 
+The performance of different compression algorithms varies significantly 
+in terms of the outcomes of compressed prompts.
+Also, the range of original prompts selected by these algorithms is restricted, 
+resulting in biased outcomes. 
+Furthermore, the absence of standardized benchmark prompts across algorithms 
+amplifies the issue of unfair comparisons.}
+
+
+% 这不仅使得压缩后的Prompt存在语义缺失的风险，而且会造成压缩后的Prompt人类进行阅读存在困难。
+
+\input{Figure_tex/fig1}
+% 介绍自己的方法
+To fill in the gap, in this paper, we propose~\OurMODEL{},
+\emph{i.e.,} 
+\textsc{\underline{\textbf{Prompt}}} 
+compres\underline{\textbf{S}}ion 
+via Relation \underline{\textbf{AW}}are graphs, 
+a novel method designed to cut down unnecessary information in 
+the prompt text by using Knowledge Graph (KG) structures to exploit 
+the small-scale information elements (Section \ref{sec:notation}) 
+in the prompts, \emph{i.e.,} information units comprising entities 
+and their underlying relations.
+
+
+\eat{Their succinct and clear representation of information positions Knowledge Graphs (KGs) as an integral component for enhancing LLM, heralding a significant and promising research avenue.}
+\OurMODEL{} first extracts all entities and their relations in 
+the prompt to formulate the graph.
+Later, (i) for task-aware prompts,~\OurMODEL{} looks for
+small-scale information elements in the graph to only 
+retain task-specific information as a sub-graph, 
+(ii) for task-agnostic prompts,~\OurMODEL{} measures
+similarity scores between successive information elements 
+in the graph to remove the redundant elements to obtain 
+required sub-graph.
+To retain the syntactic and semantics of the prompt structure, 
+\OurMODEL{} finally reinstates the information contained in 
+the sub-graph resulting in an optimized and compressed prompt.
+% \fixme{ fill at the end..!}
+
+
+
+%%%%%%%%%%%%%%%%%%
+We conducted extensive experimental analysis of~\OurMODEL{} 
+under both task-agnostic and task-aware settings against 
+existing best-performing models as baselines.
+For evaluation, we used: (i) ~\OurDATA{}, \emph{i.e.,} an extended 
+experimental setting proposed by us for~\textsc{GSM8K}~\citep{GSM8K}, 
+(ii) \textsc{NaturalQuestions}~\citep{LostInMiddle},
+and (iii) ShareGPT\footnote{\url{https://sharegpt.com/}}. 
+Experimental results show that \OurMODEL{} significantly outperforms other baseline models. We summarize the key contributions of this work as follows:
+\eat{i.e.,\OurDATA{} offering extended experimental settings on 
+previous\textsc{GSM8K}~\citep{GSM8K} and \textsc{NaturalQuestions}~\citep{LostInMiddle}. 
+} 
+\begin{itemize}
+\itemsep0em 
+    \item We propose~\OurMODEL{}, a novel framework crafted for 
+    compressing prompts by exploiting graph structures to infer 
+    key information elements in the prompt that are helpful for 
+    compression.
+    
+    \item As current benchmarks for task-agnostic prompts lack comprehensive evaluation, we propose~\OurDATA{}, an extended version of the existing GSM8K benchmark for an intensive evaluation of \OurMODEL.
+    
+    \item We demonstrate the effectiveness of~\OurMODEL{} by 
+    comprehensive experiments, showing~\OurMODEL{} attained state-of-the-art performance outperforming baseline models by up to 10.1\% and 77.1\% respectively for task-agnostic and task-aware settings while compressing the original prompt text by 34.9\% and 56.7\%.
+\end{itemize}
+
+
+
+
+
+
+%%%%%%%%%%%%%%%%%%%%%%%%% EXTRA Text %%%%%%%%%%%%%%%%%%%%%%%%
+
+\eat{They only need to be compressed once, and then they can answer all questions. Based on this, 
+Later, it uses question-related similarity for compressing task-aware prompts and internal structural similarity for compressing task-agnostic prompts. it organizes the relational triplets as meaningful and 
+semantically coherent sentence structures helpful for identifying 
+superfluous information.} 
+
+
+\eat{contemporary prompt compression algorithms primarily focus on 
+quantifying token-level information content, neglecting the overall structural 
+information of the prompt.}
+
+
+
+\eat{For example, RAG task prompt is one of task-aware prompt. For each question, we need to retrieve knowledge from the external document and add the retrieved knowledge to the prompt. For this type of prompt, we need to pay attention to the redundancy of relevance to the question.}
+
+
+
+\eat{For example, mathematical reasoning based on ICL prompt is one of Task-agnostic prompt.
+Compressed reasoning process examples can be applied to all questions. For this type of prompt, we need to pay attention to the redundancy of the internal structure of the prompt.}
+
+
+
+\eat{
+Apart from this, we observe compressing longer prompts into short 
+concise and meaningful 
+text is a challenging task. An effective prompt compression strategy 
+has to preserve the requisite semantic content while at the same time 
+maintaining the end-performance.
+It is very hard to enforce stringent constraints on the
+compressed prompt, as overly-concise prompts may 
+result in losing requisite semantic contents, eventually 
+leading to performance degradation.
+Moreover, the discrete nature of the text makes it difficult to use 
+back-propagation for effective gradient propagation.}
+
+
+
+
+
+
+\eat{\OurMODEL{} attained state-of-the-art performance on open-source data sets, \emph{i.e.,}  
+\textsc{GSM8K} and \textsc{BBH}. 
+Given the fact
+During the experimentation phase, it became clear that a single dataset provided a limited range of tasks and lacked a suitable original prompt for fair comparison. 
+We also developed
+Consequently, we developed a benchmark comprising initial prompts alongside diverse task scenarios.}
+
+
+
+\eat{To address these challenges, in this paper we propose \textbf{K}nowledge 
+\textbf{G}raph \textbf{B}ased \textbf{P}rompt \textbf{C}ompression (\OurMODEL), 
+a novel method designed for prompt compression through the extraction 
+of graph structure information.
+\eat{, aiming to resolve the aforementioned issues}
+Specifically,~\OurMODEL{} first extracts all possible 
+\eat{knowledge graph triples or} relational triplets for 
+the information contained in the prompt.
+\eat{to eliminate redundant semantic information within the prompt.}
+Later, it \eat{\textsc{KGBPC} further} organizes the relational
+triplets as meaningful and semantically coherent sentence structures 
+helpful for identifying\eat{and removing} superfluous information.
+\eat{enhances prompt conciseness by relational triples leveraging graph structure insights.}
+In the concluding phase, \textsc{KGBPC} reinstates essential knowledge graph triples, resulting in an optimized and compressed prompt.
+}
+
+
+\eat{Despite their advantages, LLMs sometimes face issues like logical errors and factual inaccuracies, which limits their real-world applicability (\citet{Hallucination},~\citep{Hallucination}).}
+
+
+%\fixchen{Add some justifications for why we need compressed prompts? E.g., 
+%(i) reduce inference latency, (ii) what else..!}
+
+\eat{Nevertheless, these methods result in the use of increasingly lengthy prompts, 
+even comprising thousands of tokens. Such lengthy prompts not only increase 
+computational costs but also risk obscuring essential information, thereby 
+diminishing the performance of LLMs.}
+
+
+\eat{
+Existing prompt compression approaches may be divided into 
+two major categories: soft prompt compression~\citep{softPrompt} 
+and discrete prompt compression~\citep{Jung2023DiscretePC}).
+Soft prompt compression employs back-propagation to incorporate information from 
+labeled training instances. It suffers from lack of cross-model reusability 
+and is ineffective for proprietary LLMs (only accessible via APIs). 
+On the other hand, discrete prompt compression exploits the discrete nature 
+of the text to design strategies that directly changes/edits the prompt tokens.
+For instance,~\cite{selectiveContext} proposed Selective-Context that uses 
+a compact language model to evaluate context's lexical units, enabling 
+compression by eliminating units with minimal information. 
+Also, LLMLingua~(\citet{llmlingua},~\citep{llmlingua}) 
+and LongLLMLingua~(\citet{longllmlingua},~\citep{longllmlingua}) 
+developed budget control mechanisms to compresses prompts based on their perplexity.
+}
+
+\eat{Prompt compression technologies are currently divided into two main categories: soft prompt compression~\cite{softPrompt} and discrete prompt compression~\cite{Jung2023DiscretePC}. Soft prompt compression, achieved by training embeddings inclusive of the original context, suffers from a lack of cross-model reusability and is ineffective when Large Language Models (LLMs) are accessible only via APIs. Conversely, a more promising strategy involves directly compressing discrete prompts that consist of specific tokens from the vocabulary.
+~\cite{selectiveContext} propose Selective-Context, employs a compact language model to evaluate the self-information of context's lexical units, enabling compression through the elimination of units with minimal informational value. Subsequently, LLMLingua~\cite{llmlingua} and LongLLMLingua~\cite{longllmlingua} developed an innovative budget control mechanism and compresses prompts based on their perplexity.} 

@@ -1,0 +1,22 @@
+\begin{algorithm}[t]
+    \caption{\scshape Subgraph Extraction }
+    \label{alg:alg1}
+    \begin{algorithmic}[1]
+    \Require
+        \item[] { \#$\eta^{*}:$ {Target compression rate}}
+        \item[] { \#$\mathcal{G}:$ Graph structure of prompt}
+        \item[] { \#$len():$ Length of graph as the sum of tokens.}
+    \Ensure subgraph $\mathcal{G}_{subset}$
+        \State $\mathcal{G}_{subset}=\{\}$
+        \For{$i \in Index_{\text{ranked}}$}
+        \State $\mathcal{G}_{subset}.insert(g_i)$
+        \State { \#compute compression rate}
+        \State $rate= len(\mathcal{G}_{subset})/len(\mathcal{G})$
+        \State { \#break if meet the constraint}
+        \State $\mathbf{If}$ $rate> \eta^*$ \textbf{then}
+        \State $ \qquad Break$
+        \State \textbf{end If}
+        \EndFor
+        \State \Return $\mathcal{G}_{subset}$
+    \end{algorithmic}
+\end{algorithm}

@@ -1,0 +1,417 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Foundation-Expert Paper Macro-Level Structure Visualization</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 20px;
+            background-color: #f5f5f5;
+        }
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            background: white;
+            padding: 20px;
+            border-radius: 10px;
+            box-shadow: 0 0 10px rgba(0,0,0,0.1);
+        }
+        h1 {
+            text-align: center;
+            color: #2c3e50;
+            margin-bottom: 30px;
+        }
+        .structure-diagram {
+            display: flex;
+            flex-direction: column;
+            gap: 20px;
+        }
+        .section {
+            border: 2px solid #3498db;
+            border-radius: 8px;
+            padding: 15px;
+            background: #ecf0f1;
+            position: relative;
+        }
+        .section-header {
+            background: #3498db;
+            color: white;
+            padding: 10px;
+            margin: -15px -15px 15px -15px;
+            border-radius: 6px 6px 0 0;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        .section-title {
+            font-weight: bold;
+            font-size: 1.2em;
+        }
+        .word-count {
+            font-size: 0.9em;
+            opacity: 0.9;
+        }
+        .moves {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 10px;
+            margin-top: 10px;
+        }
+        .move {
+            background: white;
+            padding: 10px;
+            border-radius: 5px;
+            border-left: 4px solid #e74c3c;
+        }
+        .move-title {
+            font-weight: bold;
+            color: #e74c3c;
+            margin-bottom: 5px;
+        }
+        .move-content {
+            font-size: 0.9em;
+            color: #555;
+        }
+        .key-excerpt {
+            background: #fff3cd;
+            border: 1px solid #ffeaa7;
+            border-radius: 5px;
+            padding: 10px;
+            margin: 10px 0;
+            font-style: italic;
+        }
+        .analysis {
+            background: #d4edda;
+            border: 1px solid #c3e6cb;
+            border-radius: 5px;
+            padding: 10px;
+            margin: 10px 0;
+            font-size: 0.9em;
+        }
+        .flow-arrow {
+            text-align: center;
+            font-size: 2em;
+            color: #7f8c8d;
+            margin: 10px 0;
+        }
+        .comparison-table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 20px 0;
+        }
+        .comparison-table th, .comparison-table td {
+            border: 1px solid #ddd;
+            padding: 12px;
+            text-align: left;
+        }
+        .comparison-table th {
+            background-color: #3498db;
+            color: white;
+        }
+        .comparison-table tr:nth-child(even) {
+            background-color: #f2f2f2;
+        }
+        .metrics-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 15px;
+            margin: 20px 0;
+        }
+        .metric-card {
+            background: #e8f4f8;
+            padding: 15px;
+            border-radius: 8px;
+            border-left: 4px solid #2980b9;
+        }
+        .metric-title {
+            font-weight: bold;
+            color: #2980b9;
+            margin-bottom: 5px;
+        }
+        .metric-value {
+            font-size: 1.2em;
+            color: #2c3e50;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>Foundation-Expert Paper: Macro-Level Structure Visualization</h1>
+        
+        <div class="metrics-grid">
+            <div class="metric-card">
+                <div class="metric-title">Paper Title</div>
+                <div class="metric-value">Realizing Scaling Laws in Recommender Systems</div>
+            </div>
+            <div class="metric-card">
+                <div class="metric-title">Authors</div>
+                <div class="metric-value">Li et al. (2025)</div>
+            </div>
+            <div class="metric-card">
+                <div class="metric-title">Structure</div>
+                <div class="metric-value">IMRaD</div>
+            </div>
+            <div class="metric-card">
+                <div class="metric-title">Field</div>
+                <div class="metric-value">Recommender Systems / ML</div>
+            </div>
+        </div>
+
+        <div class="structure-diagram">
+            <!-- Section 1: Introduction -->
+            <div class="section">
+                <div class="section-header">
+                    <span class="section-title">Section 1: Introduction (CARS Model)</span>
+                    <span class="word-count">~1500 words</span>
+                </div>
+                
+                <div class="moves">
+                    <div class="move">
+                        <div class="move-title">Move 1: Establishing Territory</div>
+                        <div class="move-content">Claims centrality of scaling laws in deep learning; establishes broad significance across ML domains</div>
+                    </div>
+                    <div class="move">
+                        <div class="move-title">Move 2: Establishing Niche</div>
+                        <div class="move-content">Identifies deployment challenges: streaming data, shifting distributions, latency constraints</div>
+                    </div>
+                    <div class="move">
+                        <div class="move-title">Move 3: Occupying Niche</div>
+                        <div class="move-content">Presents Foundation-Expert paradigm with target-aware embeddings; production validation at Meta</div>
+                    </div>
+                </div>
+
+                <div class="key-excerpt">
+                    "The identification and systematic characterization of scaling laws in deep learning models has fundamentally transformed industrial practice. While these principles originated in the study of large language models, they have since been validated and applied to the study recommender systems."
+                </div>
+
+                <div class="analysis">
+                    <strong>Analysis:</strong> Strong centrality claims with evaluative language ("fundamentally transformed"). Quick pivot from general scaling laws to recommender-specific context.
+                </div>
+            </div>
+
+            <div class="flow-arrow">↓</div>
+
+            <!-- Section 2: Related Works -->
+            <div class="section">
+                <div class="section-header">
+                    <span class="section-title">Section 2: Related Works</span>
+                    <span class="word-count">~800 words</span>
+                </div>
+
+                <div class="moves">
+                    <div class="move">
+                        <div class="move-title">Move 1: Thematic Organization</div>
+                        <div class="move-content">Long User History Modeling, Learning Rich Representations; clear structural cues</div>
+                    </div>
+                    <div class="move">
+                        <div class="move-title">Move 2: Critical Analysis</div>
+                        <div class="move-content">Specific citations (Meta, LinkedIn, ByteDance); "orthogonal" positioning</div>
+                    </div>
+                    <div class="move">
+                        <div class="move-title">Move 3: Research Gaps</div>
+                        <div class="move-content">Low transfer ratio in knowledge distillation; lack of target-aware modeling</div>
+                    </div>
+                </div>
+
+                <div class="key-excerpt">
+                    "These methods largely focus on learning general user or item summarization independently, without focusing on representation of user and item pair—user's target-aware representation is about the user's interest in a specific item based on his/her behavior sequence and the item information."
+                </div>
+
+                <div class="analysis">
+                    <strong>Analysis:</strong> Gap established through direct technical critique. Dash construction emphasizes definition of "target-aware."
+                </div>
+            </div>
+
+            <div class="flow-arrow">↓</div>
+
+            <!-- Section 3: Methods -->
+            <div class="section">
+                <div class="section-header">
+                    <span class="section-title">Section 3: Methods</span>
+                    <span class="word-count">~2000 words</span>
+                </div>
+
+                <div class="moves">
+                    <div class="move">
+                        <div class="move-title">Foundation Model Design</div>
+                        <div class="move-content">Input features, target-aware HSTU, MTML loss; formal mathematical definitions</div>
+                    </div>
+                    <div class="move">
+                        <div class="move-title">Expert Design</div>
+                        <div class="move-content">FM Embedding Module, FM Fusion Module, lightweight HSTU; 20-40% compute reduction</div>
+                    </div>
+                    <div class="move">
+                        <div class="move-title">System Deployment (HyperCast)</div>
+                        <div class="move-content">Decoupled training, high freshness (minutes), multi-tier inference</div>
+                    </div>
+                </div>
+
+                <div class="key-excerpt">
+                    "Building upon the original HSTU architecture, we introduce an architectural simplification: instead of interleaving item and action embeddings, we combine them via direct summation. Furthermore, to prevent label leakage from user history, we remove the auto-regressive auxiliary losses. This optimization effectively halves the input sequence length, yielding a 50% reduction in complexity for the linear projection layers and a 25% reduction for the attention operations."
+                </div>
+
+                <div class="analysis">
+                    <strong>Analysis:</strong> Highly technical with quantitative efficiency claims. "Label leakage" is important production concern.
+                </div>
+            </div>
+
+            <div class="flow-arrow">↓</div>
+
+            <!-- Section 4: Experiments -->
+            <div class="section">
+                <div class="section-header">
+                    <span class="section-title">Section 4: Experiments</span>
+                    <span class="word-count">~1800 words</span>
+                </div>
+
+                <div class="moves">
+                    <div class="move">
+                        <div class="move-title">Experiment Setup</div>
+                        <div class="move-content">Normalized Entropy (NE) metric; formal mathematical definition</div>
+                    </div>
+                    <div class="move">
+                        <div class="move-title">Target-Aware Embedding Effectiveness</div>
+                        <div class="move-content">Ablation vs. user embeddings; substantial NE improvements</div>
+                    </div>
+                    <div class="move">
+                        <div class="move-title">Transfer Ratio</div>
+                        <div class="move-content">Novel metric: TR in range [0.64, 1.0]; quantifies FM→Expert efficiency</div>
+                    </div>
+                    <div class="move">
+                        <div class="move-title">Online Performance</div>
+                        <div class="move-content">A/B test results; statistically significant improvements; neutral latency</div>
+                    </div>
+                </div>
+
+                <div class="key-excerpt">
+                    "We define the Transfer Ratio (TR) between a pair of FMs for a given expert as, TR = (NE(Expert_FM₁) - NE(Expert_FM₂)) / (NE(FM₁) - NE(FM₂)). A higher TR value signifies a more efficient paradigm, ensuring that investments in scaling the FM yield corresponding performance gains in downstream expert models."
+                </div>
+
+                <div class="analysis">
+                    <strong>Analysis:</strong> Novel metric with clear formal definition. TR in [0.64, 1.0] is quantitatively stated. Production A/B validation.
+                </div>
+            </div>
+
+            <div class="flow-arrow">↓</div>
+
+            <!-- Section 5: Conclusion -->
+            <div class="section">
+                <div class="section-header">
+                    <span class="section-title">Section 5: Conclusion</span>
+                    <span class="word-count">~300 words</span>
+                </div>
+
+                <div class="moves">
+                    <div class="move">
+                        <div class="move-title">Summary of Contributions</div>
+                        <div class="move-content">Restates paradigm, HyperCast infrastructure, transfer efficiency</div>
+                    </div>
+                    <div class="move">
+                        <div class="move-title">Production Evidence</div>
+                        <div class="move-content">Deployed at Meta; tens of billions of daily requests</div>
+                    </div>
+                    <div class="move">
+                        <div class="move-title">Future Implications</div>
+                        <div class="move-content">Blueprint for scaling laws in recommenders; extensible to other domains</div>
+                    </div>
+                </div>
+
+                <div class="key-excerpt">
+                    "Currently, the proposed paradigm is fully deployed across multiple core recommendation surfaces at Meta, serving tens of billions of daily user requests. This work provides a proven blueprint for realizing the benefits of scaling laws in complex, real-time recommendation environments."
+                </div>
+
+                <div class="analysis">
+                    <strong>Analysis:</strong> Concrete scale evidence emphasized. "Proven blueprint" positioning is strong claim.
+                </div>
+            </div>
+        </div>
+
+        <!-- Cross-Disciplinary Comparison -->
+        <h2 style="color: #2c3e50; margin-top: 40px;">Cross-Disciplinary Comparison</h2>
+        <table class="comparison-table">
+            <thead>
+                <tr>
+                    <th>Aspect</th>
+                    <th>Foundation-Expert Paper</th>
+                    <th>Traditional Academic</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td><strong>Literature Review Location</strong></td>
+                    <td>Separate section after introduction</td>
+                    <td>Integrated into introduction</td>
+                </tr>
+                <tr>
+                    <td><strong>Technical Detail Level</strong></td>
+                    <td>Very high (infrastructure, production metrics)</td>
+                    <td>Medium (methods overview)</td>
+                </tr>
+                <tr>
+                    <td><strong>Evaluation Focus</strong></td>
+                    <td>Production A/B tests, transfer ratio, latency</td>
+                    <td>Theoretical validation, standard metrics</td>
+                </tr>
+                <tr>
+                    <td><strong>Contribution Claims</strong></td>
+                    <td>Technical + Infrastructure + Production deployment</td>
+                    <td>Theoretical + Empirical</td>
+                </tr>
+                <tr>
+                    <td><strong>Scale Emphasis</strong></td>
+                    <td>Tens of billions of daily requests</td>
+                    <td>Usually academic scale</td>
+                </tr>
+                <tr>
+                    <td><strong>Industry Context</strong></td>
+                    <td>Strong (Meta production system)</td>
+                    <td>Varies, often minimal</td>
+                </tr>
+            </tbody>
+        </table>
+
+        <!-- Key Learning Points -->
+        <h2 style="color: #2c3e50; margin-top: 40px;">Key Learning Points for Imitation</h2>
+        <div class="metrics-grid">
+            <div class="metric-card">
+                <div class="metric-title">1. Production Validation</div>
+                <div class="metric-value" style="font-size: 1em;">Extensive production-scale evidence throughout</div>
+            </div>
+            <div class="metric-card">
+                <div class="metric-title">2. Infrastructure Integration</div>
+                <div class="metric-value" style="font-size: 1em;">Methods section includes HyperCast infrastructure</div>
+            </div>
+            <div class="metric-card">
+                <div class="metric-title">3. Novel Metrics</div>
+                <div class="metric-value" style="font-size: 1em;">Transfer Ratio with formal definition</div>
+            </div>
+            <div class="metric-card">
+                <div class="metric-title">4. Quantitative Claims</div>
+                <div class="metric-value" style="font-size: 1em;">Specific percentages (20-40%, 50% reduction)</div>
+            </div>
+        </div>
+
+        <h2 style="color: #2c3e50; margin-top: 40px;">Structural Elements to Adapt</h2>
+        <div class="metrics-grid">
+            <div class="metric-card">
+                <div class="metric-title">Two-Stage Paradigm</div>
+                <div class="metric-value" style="font-size: 1em;">Clear FM + Expert separation</div>
+            </div>
+            <div class="metric-card">
+                <div class="metric-title">Infrastructure as Methods</div>
+                <div class="metric-value" style="font-size: 1em;">Detailed production infrastructure</div>
+            </div>
+            <div class="metric-card">
+                <div class="metric-title">Production Metrics</div>
+                <div class="metric-value" style="font-size: 1em;">A/B tests and real-world metrics</div>
+            </div>
+            <div class="metric-card">
+                <div class="metric-title">Efficiency Quantification</div>
+                <div class="metric-value" style="font-size: 1em;">Concrete computational savings</div>
+            </div>
+        </div>
+    </div>
+</body>
+</html>

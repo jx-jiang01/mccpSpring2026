@@ -1,0 +1,26 @@
+Process Log - WYQin Paper Analysis
+====================================
+Started: 2025-01-12
+
+Status Updates:
+- [X] Extracted gz files (both arXiv-2310.18955v3.tar.gz and arXiv-2412.10703v21.tar.gz)
+- [X] Reviewed directory structure and file organization
+- [X] Converted to markdown (aaai25_paper.md and COCO_paper.md)
+- [X] Analyzed macro-level structure (both papers completed)
+- [X] Generated reports (COLDQ_Insights.md and COCO_Insights.md completed)
+
+Completed: 2025-01-12
+Both papers have been successfully:
+1. Extracted from tar.gz files
+2. Converted to markdown format
+3. Analyzed for macro-level structure
+4. Reports generated with extensive excerpts from original papers
+
+Progress Notes:
+- Found two papers: 
+  * arXiv-2310.18955v3 (COCO paper, NeurIPS 2024) - uses multiple \input{} files
+  * arXiv-2412.10703v21 (AAAI 2025 paper) - single aaai25.tex file
+- Extracted files to extracted_2310/ and extracted_2412/ directories
+- Reviewed sample analysis format (KellerInsights.md) and existing conversion scripts
+- Created convert_latex_to_md.py script with support for multi-file LaTeX documents
+- Converting papers to markdown format...

@@ -1,0 +1,140 @@
+%\vspace{-0.1in}
+\subsection{Our Contributions} \label{contribution}
+In this paper, we consider both COCO and $\ocs$ problems and make the following contributions. 
+\begin{enumerate}
+%\vspace{-.1in}
+	\item 
+	We propose an efficient first-order policy that simultaneously achieves $O(\sqrt{T})$ regret and $O(\sqrt{T}\log T)$ CCV for the COCO problem. Our result breaks the long-standing $O(T^{\nicefrac{3}{4}})$ barrier for the CCV and matches the lower bound (derived in Theorem \ref{thm:lbcoco}, previously missing from the literature) up to a logarithmic term. For strongly convex cost functions, the regret guarantee is improved to $O(\log T)$ while  keeping the CCV bound the same as above. Under an additional assumption that the regret is non-negative, we obtain a further improved logarithmic CCV bound in the strongly convex setting (see Table \ref{gen-oco-review-table}). 
+%We propose a general framework for designing efficient learning policies for both OCS  and COCO. The performance 
+%of our proposed policies either matches the best-known bound or we get new guarantees for specific cases
+  
+%that achieve simultaneous sublinear regret and a sublinear constraint violation penalty for any sequence of convex cost and constraint functions. 
+%In contrast with the prior works that propose and analyze problem-specific policies, we give a \emph{policy-agnostic} black box reduction of both problems to the unconstrained OCO using \emph{any} adaptive learning policy with a standard data-dependent regret bound. With convex cost and constraint functions, our performance bounds match the best-known result \citep{guo2022online}, however, our policy requires less information and is more efficient as it uses only the gradient information and just takes a single gradient step per round compared to \citep{guo2022online} that requires full access to the cost and constraint functions and solves a convex problem per round.  
+%Consequently, we obtain efficient policies by using standard unconstrained OCO sub-routines that take only one gradient step per round. 
+%In practice, where the cost and constraint functions are given by the output of a neural network and the actions correspond to its weights, this yields an especially convenient training policy with the standard optimization algorithms (such as AdaGrad).
+%or using subroutines that exploit the structure (\emph{e.g.,} combinatorial) of the action set. 
+%In Section \ref{non-trivial} in the Appendix, we discuss the difficulty of the $\ocs$ problem and explain why simple approaches fail. 
+%By exploiting the generality of our technique, we give the first logarithmic regret and constraint violation bounds for strongly convex constraints.
+%\vspace{-.2in}
+\item We additionally consider a special case of the COCO problem, called Online Constraint Satisfaction (OCS), under relaxed feasibility assumptions and obtain sub-linear CCV bounds. 
+
+\item On the algorithmic side, our policy simply runs an adaptive first-order OCO algorithm as a blackbox on a specially constructed convex surrogate cost function sequence. On every round, the policy needs to compute only two gradients and an Euclidean projection. This is way more efficient compared to the policies proposed in the previous works \citep{guo2022online, neely2017online}, which need to solve expensive convex optimization problems on each round while yielding sub-optimal bounds. Furthermore, in the special case of time-invariant constraints, our results yield an efficient first-order OCO policy with competitive regret and CCV bounds \citep{mahdavi2012trading, jenatton2016adaptive, yi2021regret}. 
+
+\item Our results are obtained by introducing a crisp and elegant potential function-based algorithmic technique for simultaneously controlling the regret and the CCV. In brief, the regret and CCV bounds are derived from a single inequality that arises from plugging in off-the-shelf adaptive regret bounds in a new regret decomposition result (Eqn.\ \eqref{gen-reg-decomp}). This new analytical technique might also be of independent interest. 
+%\item Finally, we experiment with our algorithm in the credit card fraud detection setting with a highly imbalanced dataset and obtain 
+
+%\item Our proposed meta-policy for the \ocs ~problem is \emph{parameter-free} and does not need any non-causal information, including uniform upper bounds to the gradients or the strong-convexity parameters of the future constraint functions. Yet, it achieves the optimal violation bounds without making any extraneous assumptions, such as Slater's condition (see Table \ref{gen-oco-review-table}).
+%Since the meta-policy is oblivious to the details of the OCO sub-routine, efficient policies with better regret bounds can be obtained by using known OCO sub-routines that exploit the special structure of the feasible action set (\emph{e.g.,} FTPL for combinatorial problems).  
+
+%\item In the special case of the Online Constraint Satisfaction (\textsc{OCS}) problem, we prove optimal constraint violation penalty bounds for convex and strongly convex constraints with no extraneous assumptions (\emph{e.g.,} Slater's condition). 
+%\item When the worst-case regret on a round is non-negative for our proposed algorithm, we derive 
+%tighter bounds on regret and CCV that match the best bounds derived in \citet{neely2017online} under the Slater's condition.  
+%for COCO are obtained by using a new criterion - the non-negativity of the worst-case regret on a round (see Table \ref{gen-oco-review-table}). 
+%This provides an alternative to the stronger and often infeasible assumption of Slater's condition considered in the literature. 
+%Surprisingly, this new condition leads to an $O(\log T)$ CCV bound for convex (not necessarily strongly convex) constraints and strongly convex cost functions.  
+%Furthermore, we prove the minimax optimal bounds for the constrained OCO problem by introducing a mild assumption on the sign of regret. 
+%\item As a by-product of our algorithm for the \ocs ~problem, we obtain a new class of stabilizing control policies for the classic input-queued switching problem with adversarial arrival and service processes (see Section \ref{app}). 
+%\item we obtain a strongly stable queue control policy for adversarial environments.  
+%\item Different from previous works on this problem, which mostly proceed by constructing and bounding an augmented Lagrangian with a quadratic penalty function \citep{yuan2018online}, 
+%\item We reduce the problem to a standard OCO problem via a new regret decomposition inequality. As a result, unlike the previous works, our algorithm is \emph{parameter-free} - it does not need any non-causal information, \emph{e.g.,} uniform upper bounds on the gradients or strong-convexity parameters of the future cost/constraint functions. 
+%To the best of our knowledge, this is the first such separability result for this problem and might be of independent interest. 
+%\item Thanks to the general regret decomposition result, our proof arguments are crisp, requiring only a few lines of algebra. This should be contrasted with often long and intricate arguments in many of the previous papers.
+
+%\item As an application of the algorithm developed for the \textsc{OCS} problem, we obtain a class of stabilizing control policies for input-queued switches with adversarial arrival and/or service processes. 
+\item Finally, in Section \ref{expts}, we evaluate the practical performance of our algorithm in the online credit card fraud detection problem with a highly imbalanced dataset.
+\end{enumerate}
+%The practical performance of our algorithm in the online credit card fraud detection problem with a highly imbalanced dataset has been discussed in Section \ref{expts}.
+%\begin{table*}[t]
+%%\begin{table*}[t]
+%%\hspace{-70pt}
+%  \begin{tabular}{llllll}
+%    \toprule
+%    %\multicolumn{2}{c}{Part}                   \\
+%   % \cmidrule(r){1-2}
+%    \small {Reference}   & \hspace{-20pt}\small {Benchmark} & \small {Violation} & \small {Algorithm}& \small {Assumptions} \\
+%    \midrule
+%  %  a & b& c& d & e  \\
+%   \small {\citet{jenatton2016adaptive}}  & \small {$1$} & \small {$O(T^{3/4})$} & \small {Primal-Dual GD} & \small {Fixed constraints, Known $G$} \\
+%  \small {\citet{yuan2018online}}  & \small {$1$} & \small {$O(1)$} & \small {Primal-Dual MD} & \small {Fixed constraints} \\
+%  \small {\citet{yu2017online}} & \small {$T$} & \small {$O(\sqrt{T})$}&\small {OGD+drift+penalty} & \small {Stochastic constraints, Slater} \\
+%  \small {\citet{yi2023distributed}}  & \small {$1$} & \small {$O(\sqrt{T})$} & \small {Primal-Dual MD} & \small {Known $G$} \\
+%    \small {\citet{pmlr-v70-sun17a}} & \small {$1$} & \small {$O(T^{3/4})$}& \small {OMD} & \small {Known $G$}  \\
+%    \small {\citet{neely2017online}} & \small {$1$} & \small {$O(\sqrt{T})$} & \small {OGD} & \small {Slater} \\
+%    \small {\citet{georgios-cautious}}  & \small {$S$} & \small {$O(\sqrt{ST})$} & \small {OGD} & \small {Known $S$} \\
+%       \small{\citet{guo2022online}}& \small {$1$} & \small {$O(T^{3/4})$} & \small {Convex opt. each round} & \small {Full access to $\{g_t\}_{t\geq 1}$} \\
+%      %  \citet{guo2022online} & Adversarial, convex & $1$ & $O(T^{3/4})$ & Convex opt. each round & Full access to $\{g_t\}_{t\geq 1}$ \\
+%         %\citet{guo2022online} & Adversarial, strongly-convex & $1$ & $O(\sqrt{T \log T})$ & Convex opt. each round & -do-, Known $\alpha$ \\
+%    \small {\textbf{This paper}}  & \small {$S$} & \small {$O(\sqrt{ST})$} & \small {Any adaptive} & - \\
+% \small {\textbf{This paper}} & \small {$1$} & \small {$O(\log T)$} &\small {Any adaptive} & \small{Strongly-convex constraints} \\
+%       \bottomrule
+%  \end{tabular}
+%  \vspace{5pt}
+%  \caption{\small{Summary of the results for the \textsc{OCS} problem. Unless indicated otherwise, the constraints are assumed to be convex and adversarially chosen. Results from other papers, which consider only the constrained OCO problem, have been appropriately adapted for the \textsc{OCS} problem by taking the cost function to be identically equal to zero and quoting the best violation bound. Excepting our paper, all other papers referenced above bound the cumulative violation over the entire horizon of length $T$, which is weaker than \eqref{violation-def1} for constraints assuming both positive and negative signs. $G$ is an upper bound to the norm of the gradients, $\alpha$ is the strong-convexity parameter; Abbreviations: MD= Mirror Descent, OMD = Online Mirror Descent, OGD = Online Gradient Descent.} }
+%    \label{review-table}
+%\end{table*}
+% \begin{table*}[t]
+% %\hspace{-30pt}
+%   \title{Summary of the results for the constrained OCO problem}
+%   %\centering
+%   \hspace{-80pt}
+%   \begin{tabular}{llllll}
+%     \toprule
+%     %\multicolumn{2}{c}{Part}                   \\
+%    % \cmidrule(r){1-2}
+%    \small { Reference}  &  \small {Constraints} & \hspace{-20pt}\small {Regret} & \small {Violation} & \small {Algorithm}& \small {Assumption} \\
+%     \midrule
+%   %  a & b& c& d & e  \\
+%     \small {\citet{jenatton2016adaptive}} & \small {Fixed} & \small {$O(T^{\max(\beta, 1-\beta)})$} & \small {$O(T^{1-\beta/2})$} & \small {Primal-Dual GD} & \small {Fixed constraints} \\
+%   \small {\citet{yuan2018online}} & \small {Fixed} & \small {$O(T^{\max(\beta, 1-\beta)})$} & \small {$O(T^{1-\beta/2})$}  & \small {Primal-Dual MD} & \small {Fixed constraints} \\
+%  % \citet{yu2017online} & Stochastic & $O(\sqrt{T})$ & $O(\sqrt{T})$& OGD+drift+penalty & Slater condition \\
+%   \small {\citet{yi2021regret}} & \small {Fixed} & \small {$O(T^{\max(\beta, 1-\beta)})$} & \small {$O(T^{(1-\beta)/2})$} & \small {OGD+drift+penalty} & \small {Fixed constraints} \\ 
+%   \small {\citet{yi2022regret}} & \small {Adversarial, str-convex cost} & \small {$O(T^{\beta})$} & \small {$O(T^{1-\beta/2})$} & \small {Primal-Dual} & \small {Known $G, \alpha$} \\ 
+%   \small {\citet{yi2023distributed}} & \small {Adversarial} & \small {$O(T^{\max(\beta, 1-\beta)})$} & \small {$O(T^{1-\beta/2})$} & \small {Primal-Dual MD} & \small {Known $G$} \\
+%     \small {\citet{yi2023distributed}} & \small {Adversarial, str-convex cost} & \small {$O(\log(T))$} & \small {$O(\sqrt{T \log T})$} & \small {Primal-Dual MD} & \small {Known $G, \alpha$} \\
+%     \small {\citet{pmlr-v70-sun17a}} & \small {Adversarial} & \small {$O(\sqrt{T})$} & \small {$O(T^{3/4})$}& \small {OMD} & \small {Known $G$}  \\
+%     \small {\citet{neely2017online}} & \small {Adversarial} & \small {$O(\sqrt{T})$} & \small {$O(\sqrt{T})$} & \small {OGD+drift+penalty} & \small {Slater condition} \\
+%     %\citet{georgios-cautious} & Adversarial, convex & $S$ & $O(\sqrt{ST})$ & OGD & Known $S$ \\
+%         \small {\citet{guo2022online}} & \small {Adversarial} & \small {$O(\sqrt{T})$} & \small {$O(T^{3/4})$} & \small {Convex opt. each round} & \small {Full access to $\{g_t\}_{1}^T$} \\
+%         \small {\citet{guo2022online}} & \small {Adversarial, str-convex cost} & \small {$O(\log T)$} & \small {$O(\sqrt{T \log T})$} & \small {Convex opt. each round} & \small {Full access to $\{g_t\}_{1}^T$} \\
+%          %\citet{guo2022online} & Adversarial, strongly-convex & $1$ & $O(\sqrt{T \log T})$ & Convex opt. each round & -do-, Known $\alpha$ \\
+%   \small {\textbf{This paper}} &  \small {Adversarial} & \small {$O(\sqrt{T})$} & \small {$O(T^{3/4})$} & \small {Any adaptive OCO} & - \\
+%      \small {\textbf{This paper}} &  \small {Adversarial} & \small {$O(\sqrt{T})$} & \small {$O(\sqrt{T})$} & \small {Any adaptive OCO} & \small {$\mathcal{R}_T \geq 0$}\\
+%  \small {\textbf{This paper}} &  \small {Adversarial, str-convex cost}& \small {$O(\log T)$} & \small {$O(\sqrt{T\log T})$} &\small {Any adaptive OCO} & \small{Known $G, \alpha$} \\
+%  \small {\textbf{This paper}} &  \small {Adversarial, str-convex cost}& \small {$O(\log T)$} & \small {$O(\frac{\log T}{\alpha})$} &\small {Any adaptive OCO} & \small {$\mathcal{R}_T \geq 0, \textrm{known} ~ G, \alpha$} \\
+%        \bottomrule
+%   \end{tabular}
+%   \vspace{5pt}
+%   \caption{\small{Summary of the results for the constrained OCO problem. Unless mentioned otherwise, we assume $ 1$ feasibility, arbitrary convex constraints, and convex cost functions while stating the bounds. In the above, $0\leq \beta \leq 1$ is an adjustable parameter. The parameter $\alpha$ denotes the strong convexity parameter of the cost functions. $G$ denotes a uniform upper bound to the gradient of cost and constraint functions. $\mathcal{R}_T$ denotes the worst-case regret against admissible actions $\mathcal{X}^\star$.}}
+%     \label{gen-oco-review-table}
+% \end{table*}
+
+%\paragraph{On the analytical contribution:}
+%Lyapunov or the potential function method is a flexible technique which has been extensively used in the literature for designing and analyzing control policies for linear and non-linear systems. The stochastic variant of the Lyapunov method, and especially the Foster-Lyapuov theorem, has played a pivotal role in designing stabilizing control policies for stochastic queueing networks \citep{meyn2008control, neely2010stochastic}. However, this classical technique has found quite limited application to systems with adversarial dynamics (see \citet{xu2023drift} for a recent survey of the application of the drift method to networking and learning problems). In this paper, we show how the Lyapunov and the drift-plus-penalty technique \citep{neely2010stochastic} can be effectively combined with the OCO framework to design new online algorithms with tight performance bounds. We expect that the analytical methods developed in this paper can be generalized to more complex problems with adversarial inputs. 
+%\paragraph{\bf Note:} If a convex function $f$ is not differentiable at the point $x$ then by $\nabla f(x)$ we denote any sub-gradient of the function at $x$. Recall that any convex function could be non-differentiable only on a set of measures at most zero \citep[Theorem 25.5]{convex_rockafeller72}. Hence, by smoothly perturbing at all points of non-differentiability by an infinitesimal amount, we can alternatively and without any loss of generality assume all cost and constraint functions to be differentiable without altering the regret/constraint violation bounds presented in this paper \citep{hazan2007adaptive}.  
+% 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

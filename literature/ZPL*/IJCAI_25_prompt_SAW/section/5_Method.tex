@@ -1,0 +1,256 @@
+\vspace{-1.7ex}
+\section{\OurMODEL{}}
+\label{sec:proposed}
+\vspace{-0.7ex}
+In this section, we provide details of \OurMODEL{}. 
+The workflow is shown in Figure~\ref{fig:framework}.
+As shown in the figure, \OurMODEL{} takes the original prompt text as input and generates the compressed 
+prompt as the output.
+
+
+
+In contrast to the existing token-level compression methods, 
+in \OurMODEL{} we use a graph structure to effectively 
+represent the textual information in the prompt, which is  helpful to 
+analyze the key aspects of the prompt. 
+Later, we can refine the information in the graph structure to come up with a compressed prompt in a way that:
+(i) The semantic consistency of the compressed prompt is preserved; 
+(ii) The end performance and/or utility of the prompt is not distorted.
+Below, we first introduce the motivation of \OurMODEL{}, 
+followed by the prompt compression process.
+
+\subsection{Motivation of \OurMODEL{}} 
+\label{method_structure}
+\OurMODEL{} is motivated by the observation that the key information 
+within the prompt text could be inferred as a set of entities 
+and relations, which can also be organized into a graph structure, 
+commonly known as a knowledge graph in literature.
+
+
+Formally, given a prompt text $P$, we claim it encompasses a 
+set of entities
+$\mathcal{E}\eat{=\{e_1,e_2,\cdots\}}$, \emph{i.e.,} names of 
+persons, locations, 
+organizations, miscellaneous elements, etc.,~\citep{ali2020fine}. 
+These entities 
+serve as the key elements of the prompt structure.
+In addition to the entities, we can also infer some relations $\mathcal{R}$ in 
+$P$ that may be used to describe the connections between the entities.
+\OurMODEL{} re-organizes these key elements of the prompt (\emph{i.e.,} 
+entities and their relations) in a graph structure, 
+{represented by $\mathcal{G}=
+\{(e_i, r_i,e_i^{'})\subseteq\mathcal{E}\times\mathcal{R}\times\mathcal{E}\}$. We use $g_i=(e_i,r_i,e_i^{'})$ to represent the $i$-th information 
+element of $\mathcal{G}$, \emph{i.e.,} a fact stating that $e_i$
+has $r_i$-$th$ relation with $e_i^{'}$.} 
+
+We argue this transformation of text information to graph is a more reasonable and
+natural approach as:
+(i) {It helps in highlighting the key information elements in 
+the prompt.}
+(ii) {Later, analyzing these key entities in combination 
+with underlying relations helps in filtering/digging out 
+the salient content within the prompt to come up with a
+compressed prompt.}
+
+
+
+
+\subsection{Workflow of \OurMODEL{}}
+The workflow of \OurMODEL{} consists of two parts. First, it 
+uses the information in prompt $P$ to construct a graph $\mathcal{G}$.
+Then, based on the specific scenario, we proceed as follows:
+
+\noindent{\bf(a) Task-aware scenario.} For this scenario, 
+we traverse the graph $(\mathcal{G})$ in a way to preserve 
+only the information elements that are relevant to the task as 
+task-specific subgraphs, indicative of information useful 
+for the compressed prompt.
+\eat{\di{Rewrite this sentence, grammar error}}  \\
+
+
+\noindent{\bf(b) Task-agnostic scenario.} For this scenario, we no 
+longer have access to 
+task-specific information. Thus, we use similarity scores 
+between the information 
+elements in $\mathcal{G}$ to identify and remove the 
+redundant elements to obtain 
+subgraphs that are helpful for compression. 
+
+Further details about the model components of~\OurMODEL{} 
+are provided in the following subsections.  
+
+\subsubsection{Graph Construction.} 
+For graph construction from the text data, 
+we primarily rely traditional knowledge extraction approaches, \emph{i.e.,} OpenIE~\citep{OpenIE}, to 
+construct a graph $G$, as follows
+
+\vspace{-15pt}
+\begin{equation}
+   \mathcal{G} = {IE}({P}), 
+   \label{eq:Stage:OIE}
+\end{equation}
+\vspace{-15pt}
+
+where $P$ is the prompt text, and $IE$ is an 
+information extraction module that takes $P$
+as input and return graph $G$ as output.
+For the cases not addressed by the above equation,
+we use an in-context learning 
+prompt as our auxiliary method that 
+prompts the language model to construct the graph from the original prompt text as follows:
+\begin{equation}
+   \mathcal{G} = {M}(P_{\text{template}}(\text{P})), 
+   \label{eq:graphConstruct}
+\end{equation}
+where $(P)$ is the prompt text and $P_{\text{template}}$ is the prompt template (explained in Appendix~\ref{Appendix:prompt_Graph}) used 
+to guide the LLM $(M)$ to extract the graph $\mathcal{G}$. 
+Note, for Equation~\ref{eq:graphConstruct}, we typically prefer a small-scale open-source LLM in order to avoid
+higher computational costs incurred by large models.
+\eat{, which eventually contributes to the overall computational overhead.}
+
+
+\subsubsection{(i) Task-aware Prompts.}
+Task-aware scenarios refer to the settings when the information within the prompt 
+is helpful and/or is related to the end-task, \emph{e.g.,} question answering. 
+For such cases,~\OurMODEL{} aims to retain only the task-specific information
+in $\mathcal{G}$, while filtering out the redundant/useless information.
+For this, it first uses an encoder function to get the embeddings for 
+the prompt question, as follows.
+\begin{equation}
+    Emb_{p^{\mathrm{que}}} = E(p^{\mathrm{que}})
+\end{equation}
+where $Emb_{p^{\mathrm{que}}}$ is the embedding for prompt question 
+$(p^{\mathrm{que}})$, and $E$ is the encoder network. 
+Then, it computes the pair-wise similarity between the $Emb_{p^{\mathrm{que}}}$ 
+and information elements in $\mathcal{G}$, as shown below.
+\begin{equation}
+    Sim_{\mathcal{G}} = \{E(g_i)\cdot Emb_{p^{\mathrm{que}}} \; | \forall \; g_i \in \mathcal{G} \}
+\end{equation}
+where $g_i$ corresponds to the $i$-$th$ information element in $\mathcal{G}$, 
+$E(g_i)$ is used to encode the information in $g_{i}$, 
+$Sim_{\mathcal{G}}$ is the set of the similarity scores between information element 
+in $\mathcal{G}$ and the question embeddings $Emb_{p^{\mathrm{que}}}$.
+Later, it ranks the scores in $Sim_{\mathcal{G}}$ in order to retain only the elements 
+in $\mathcal{G}$ showing a higher degree of similarity with $p^{\mathrm{que}}$, 
+as shown below.
+\begin{equation}
+   Index_{\text{ranked}} = \text{Rank}(Sim_{\mathcal{G}})
+\end{equation}
+where $\text{Rank}(\cdot)$ is used to sort the similarity scores in 
+$Sim_{\mathcal{G}}$ and return corresponding high-ranked information 
+elements as $Index_{\text{ranked}}$. 
+We then use the information in $Index_{\text{ranked}}$ 
+to iterate over $\mathcal{G}$ to extract the sub-graph 
+$\mathcal{G}_{\text{subset}}$ 
+not surpassing  the targeted compression 
+ratio $\eta^{*}$. Its process-flow is illustrated in Algorithm~\ref{alg:alg1}.
+
+\noindent{\bf Workflow of Algorithm~\ref{alg:alg1}.}
+The workflow of Algorithm~\ref{alg:alg1} is explained as follows:
+(i) initialize $\mathcal{G}_{subset}$ as an empty set (line-1);
+(ii) for each element in $Index_{\text{ranked}}$ repeatedly 
+add $g_i$ in $\mathcal{G}_{subset}$ until the compression rate
+surpasses the target compression rate $\eat^{*}$ (lines 2-7);
+(iii) return final graph $\mathcal{G}_{subset}$ as output (line-10).
+
+Finally, we restore/reconstruct the information elements in 
+$\mathcal{G}_{\text{subset}}$ to come up with our compressed prompt $C$, as shown below.
+\begin{equation}
+    C=e_1\oplus r_1 \oplus e_1^\prime ; \cdots ; e_n\oplus r_n \oplus e_n^\prime
+   \label{eq:Stage1}
+\end{equation}
+
+\eat{
+\begin{equation}
+    C=e_1\oplus r_1 \oplus e_1^\prime \oplus \text{[SEP]} \oplus \cdots e_i\oplus r_i \oplus e_i^\prime \oplus \text{[SEP]} \oplus\cdots e_n\oplus r_n \oplus e_n^\prime
+   \label{eq:Stage1}
+\end{equation}
+}
+where $\oplus$ is the concatenation operator used to combine the entities and 
+relations within the information elements $(g_i)$ {in the extracted subgraph $\mathcal{G}_{\text{subset}}$}, and $({;})$ is the delimiter used to separate different information elements in 
+$\mathcal{G}_{\text{subset}}$. 
+
+\input{Table_tex/alg1s} 
+
+\subsubsection{(ii) Task-agnostic Prompts.}
+
+A task-agnostic scenario implies that it is almost impossible to filter useful 
+and/or task-specific information within the original prompt text $(P)$.
+{In such cases,~\OurMODEL{} looks for recurring information elements in 
+$P$ for probable prompt compression.}
+We assume two main sources of recurring elements in $P$, \emph{i.e.,} (i) the 
+verbose expression of the prompt itself and (ii) the repeated element 
+generated by auxiliary models. 
+Note that these assumptions are based on empirical observation illustrating 
+that large models' re-reading phenomenon leads to the repeated generation of 
+the extracted knowledge \citep{Yan2023UnderstandingIL}. 
+\eat{\warn{Some examples in this regard are show in Appendix~\ref{Appendix:repeated_know}}.
+\fixchen{Add some examples in the Appendix~\ref{Appendix:repeated_know}.}}
+
+
+For compression over task-agnostic scenarios, we sequentially traverse 
+the information elements in $\mathcal{G}$ and select only the elements
+exhibiting a lower similarity with priorly selected information 
+elements.
+Our underlying intuition is that highly similar information elements 
+will carry repeated information. Thus, we could avoid redundant information in $P$ by selecting only dissimilar elements.
+
+For this, we use a threshold $\delta$ as a selection criteria for~\OurMODEL{}.
+The value of the $\delta$ is determined using a binary search algorithm 
+(shown in Algorithm~\ref{alg:alg2}) that computes an appropriate value 
+of threshold $\delta$ required to meet the targeted compression rate $\eta^{*}$.
+
+
+\noindent{\bf Workflow of Algorithm~\ref{alg:alg2}.} The process-flow of Algorithm~\ref{alg:alg2} is explained as follows:
+(i) firstly, we initialize an interval $[l,r]$ for the 
+threshold $\delta$ (line-1);
+(ii) at each step, we partition the interval into two parts $[l, mid]$ and 
+$[mid, r]$ via the midpoint $ mid= (l+r)/2$ 
+(line-3);
+(iii) we will compute the graph subset, \emph{i.e.,} $\mathcal{G}_{subset}$ via function $Compress()$ (explained below) with the value of $mid$ as threshold, shown in line-4;
+(iv) compute the compression rate for the $\mathcal{G}_{subset}$ and 
+accordingly update the values of $l$ and $r$ (lines 6-9). Specifically, if the compression rate is smaller than $\eta^{*}$, then the current threshold is too stringent thus we judge $\delta$ is in $[mid,r]$, otherwise it is in $[l,mid]$;
+(v) depending upon the interval threshold $\gamma$ (line-2),
+we compute the value $(l+r)/2$ as the final similarity threshold $\delta$ 
+(line-11); 
+(vi) finally, use the value of $\delta$ to return the final 
+graph subset $\mathcal{G}_{subset}$ (line-13).
+
+
+\noindent{\bf Compress Function.} The workflow of 
+the $Compress()$ is shown in Algorithm \ref{alg:compress} 
+and explained as follows: 
+(i) start with an empty graph $(\mathcal{G}^\prime)$ (line-1);
+(ii) iterate the information elements in the graph $(g_i \in \mathcal{G})$
+to compute the similarity score of $g_i$ with the 
+elements in $\mathcal{G}^\prime$ to look for maximal similarity, 
+\emph{i.e.,} $sim_{max}$ (lines 2-3);
+(iii) compare $sim_{max}$ against the compression threshold 
+$\delta$ to insert $g_i$ in $(\mathcal{G}^\prime)$ (lines 4-5);
+(iv) finally, return $(\mathcal{G}^\prime)$ as the final subset 
+of the graph.
+The end-goal of Algorithm~\ref{alg:alg2} is to select highly
+dis-similar information elements by neglecting cases with
+$sim_{max} > \delta$.
+For such cases, we assume that the corresponding information element, 
+\emph{i.e.,} $g_i = (e_i,r_i,e_i^{'})$ is redundant 
+because there is already an element in  $\mathcal{G}^\prime$ that 
+is very similar to $g_i$.
+
+\input{Table_tex/alg2s}
+
+
+%%%%%%%%%%%%%% EXTRA STUFF %%%%%%%%%%%%
+\eat{and populate it over time with selected information elements following 
+a similarity threshold.
+In order to check the upcoming information elements $(g_i)$ for 
+redundancy, we first compute the similarity score of $g_i$ with the 
+elements in $\mathcal{G}^\prime$ to look for maximal similarity.
+\begin{equation}
+    max_{\text{sim}} = \max_{g\in \mathcal{G}^\prime}(E(g)\cdot E(g_i))
+   \label{eq:Stage2}
+\end{equation}
+We use this function to iterate the information elements 
+($g_i \in \mathcal{G}$) in order to filter out redundant information.
+where $\mathcal{G}^\prime$ is the set of selected }
+

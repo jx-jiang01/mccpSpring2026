@@ -1,0 +1,341 @@
+
+\section{The Online Constraint Satisfaction Problem (\textsc{OCS})} \label{simul_constr}
+%\vspace{-0.2in}
+%We begin our discourse with $\ocs,$ 
+In this section, we study
+a special case of the COCO problem, which involves only constraint functions and no cost functions. The OCS problem arises in many practical settings, including the multi-task learning problem (see Section \ref{mtl-ocs} in the Appendix for a brief discussion). In Section \ref{cbc} in the Appendix, we also establish a connection between the OCS problem and the well-studied Convex Body Chasing problem \citep{argue2019nearly}. The setup is similar to the COCO setting -- on every round $t\geq 1$, an online policy selects an action $x_t$ from a closed, bounded, and convex admissible set $\mathcal{X} \subseteq \mathbb{R}^d$. After observing the current action $x_t$, the adversary chooses $k$ constraints of the form $g_{t,i}(x) \leq 0, i\in [k],$ where each $g_{t,i}: \mathcal{X} \mapsto \mathbb{R} $ is a convex function. 
+ Let $\mathcal{I}$ be any sub-interval of the horizon $[1,T].$ The cumulative constraint violation (CCV) $\mathbb{V}(T)$ for the \textsc{OCS} problem is defined as the maximum \emph{signed} cumulative constraint violation in any sub-interval:
+ \begin{eqnarray} \label{violation-def1}
+		\mathbb{V}(T) = \max_{i=1}^k \mathbb{V}_i(T), ~ \textrm{where} ~ \mathbb{V}_i(T) = \max_{\mathcal{I} \subseteq [1,T]}\sum_{t \in \mathcal{I}} g_{t,i}(x_t), ~ 1\leq i \leq k.
+\end{eqnarray}
+The objective is to design an online learning policy so that $\mathbb{V}(T)$ is as small as possible.
+It is worth noting that in the $\ocs$ problem, we consider a soft constraint violation metric $\max_{\mathcal{I}}\sum_{t \in \mathcal{I}} g_{t,i}(x_t)$ instead of the hard violation metric $\sum_{t=1}^T (g_{t,i}(x_t))^+$ as in COCO. This allows for compensating the infeasibility on one round with strict feasibility on other rounds.
+%, under the relaxed assumptions discussed below. %Essentially, this helps get 
+%stronger CCV bounds than COCO. If a model requires $\sum_{t}\max\{g_{t,i}(x_t), 0\}$ to be the constraint violation cost, then results derived in Theorem \ref{gen-cvx-bd} and \ref{str-cvx-bd} for COCO will apply.
+%For constraint functions that can take both positive and negative values, controlling the cumulative violations over all sub-intervals is stronger than controlling the cumulative violations over the full horizon. 
+In contrast with the COCO setting, without Assumption \ref{feas-constr}, running a no-regret policy on the pointwise maximum of the constraint functions no longer works as the CCV of any fixed benchmark could grow linearly with 
+%the horizon length 
+$T$. In the OCS problem, we relax the feasibility assumption (Assumption \ref{feas-constr}), and consider the following two distinct alternatives instead. 
+ \paragraph{\bf 1. $S$-feasibility:} Here, we assume that there is an admissible action $x^\star \in \mathcal{X}$ that satisfies the aggregate constraints over any interval of $S$ rounds. However, unlike \citet{georgios-cautious}, which also considers the same assumption, the value of the parameter $S$ is not necessarily known to the policy \emph{a priori}. Towards this end, we define the set of all $S$-feasible actions $\mathcal{X}_S$ as below: 
+\begin{eqnarray} \label{extended-benchmark}
+\mathcal{X}_S =\{x^\star \in \mathcal{X}: \sum_{\tau \in \mathcal{I}} g_{\tau,i}(x^\star) \leq 0, \forall \textrm{sub-intervals}~ \mathcal{I} \subseteq [1,T], ~|\mathcal{I}| = S, \forall i \in [k]\}. 
+\end{eqnarray}
+We now replace Assumption \ref{feas-constr} with the following weaker version:
+\begin{assumption}[$S$-feasibility] \label{s-feas-assump}
+	$\mathcal{X}_S \neq \emptyset$ for some $1\leq S \leq T.$
+\end{assumption}
+%In our analysis, we assume that $\mathcal{X}_S \neq \emptyset$ for some $S \in [T],$ which need not be known to the policy. 
+Clearly, Assumption \ref{s-feas-assump} is weaker than Assumption \ref{feas-constr} as $\mathcal{X}^\star \subseteq \mathcal{X}_S, \forall S \geq 1.$ Note that even when the individual constraint functions satisfy $S$-feasibility, their pointwise maximum need not satisfy $S$-feasibility. Hence, unlike COCO under Assumption \ref{feas-constr}, this problem cannot be solved by simply running a no-regret policy on the pointwise maximum of the constraints.  
+
+\paragraph{\bf 2. $P_T$-constrained adversary}
+In this case, we drop any feasibility assumption altogether. As a consequence, any static admissible benchmark $x^\star \in \mathcal{X}$ also incurs a CCV. 
+\begin{definition} \label{pt-feas-assump}
+%We now consider a different relaxation to the instantaneous feasibility assumption where we now assume that 
+An adversary is called $P_T$-constrained if its minimum static CCV is $P_TF$, \emph{i.e.,} 
+$ \frac{1}{F} \min_{x^\star \in \mathcal{X}} \max_{\mathcal{I} \subseteq [T],i} \sum_{t \in \mathcal{I}} g_{t,i}(x^\star) = P_T$,  where $F$ is a normalizing factor denoting the maximum absolute value of the constraint functions within the compact admissible set $\mathcal{X}$. 
+\end{definition}
+As before, the value of $P_T$ is not necessarily known to the policy \emph{a priori}.
+%\end{itemize}
+%there exists a fixed admissible action $x^\star \in \mathcal{X}$ such that the cumulative violation over any sub-interval of the horizon is upper bounded by $P_TF$, \emph{i.e.,}
+
+
+%Our motivation to study this special case is to .
+%On a high-level, the problem is to design an online policy with an optimal CCV bounds corresponding to each constraints. 
+%Although a variant of this problem can be solved by running a no-regret policy on the sequence of functions $g_t \equiv \max_i g_{t,i}, t\geq 1,$ 
+  %As an example, in the problem of multi-task learning, each of the $k$ constraint sequences can be thought to belong to a specific task. 
+ %The constraint functions are accessible to the policy via a first-order oracle, which returns only the values and the gradients (sub-gradients in the case of non-smooth functions) of the constraint functions at the chosen action points. 
+
+%This problem was considered earlier by \cite{georgios-cautious} in the COCO setting with a single constraint function per round. However, since the parameter $V$ used in their algorithm is restricted as $S \leq V \leq T,$ their algorithm naturally needs to know the value of $S.$ In reality, the value of the parameter $S$ is generally not available \emph{a priori} as it depends on the online constraint functions. Fortunately, our proposed meta-policy does not need to know the value of $S$ and hence, it can automatically adapt itself to the best feasible $S$.
+%As an aside, the definition of maximum cumulative regret is similar to the definition of interval regret or adaptive regret \citep{jun2017improved, hazan2007adaptive}. However, the best-known strongly adaptive algorithms are inefficient as they need to run $O(\log T)$ experts algorithm on every round \citep{jun2017improved}. Interestingly, our proposed meta-policy is efficient as it performs only one gradient step per round. 
+ %Although the \textsc{OCS} problem can be seen to be a special case of the COCO, \cmt{actually not true, with COCO we have $(g_{t,i}(x_t))^+$} it is important as a standalone problem as well. 
+  %In Section \ref{non-trivial}, we discuss the difficulty of the $\ocs$ problem and explain why simple approaches fail. 
+ %Section \ref{mtl-ocs} in the Appendix shows that the online multi-task learning problem can be naturally formulated as an instance of the \textsc{OCS} problem. 
+%So far, we have not made any assumption on the constraint functions which could be selected arbitrarily by the adversary, and no constraint satisfaction bounds can be established for any online policy. 
+%\vspace{-0.1in}
+\iffalse
+\subsection{Assumptions}  \label{assump}
+In this section, we list the general assumptions which apply to both the \ocs ~problem and the COCO, described later in Section \ref{gen_oco}. Since the \ocs ~problem does not contain any cost function, the cost functions mentioned below necessarily refer to COCO only.
+
+\begin{assumption}[Convexity] \label{cvx}
+	The cost functions $f_t: \mathcal{X} \mapsto \mathbb{R}$ and the constraint functions $g_{t,i}: \mathcal{X} \mapsto \mathbb{R}$ are convex for all $t\geq 1, i\in [k]$. The admissible set $\mathcal{X} \subseteq \mathbb{R}^d$ is closed and convex and has a finite diameter of $D$. 
+ %Moreover, $D$ is known ahead of time.
+\end{assumption}
+%\vspace{-0.18in}
+\begin{assumption}[Lipschitzness] \label{bddness}
+ %We have $\textrm{diam}(\mathcal{X}) \leq D, ||\nabla f_t(x)||_2 \leq G/2, \textrm{and}~ ||\nabla g_t(x))||_2 \leq G/2,~\forall t, \forall x\in \mathcal{X}$ for some finite constants $D$ and $G.$ If the functions are not necessarily differentiable, we require that the maximum magnitude of the sub-gradients be bounded accordingly.  Each
+All cost functions $f_t$ and the constraint functions $g_{t,i}$'s are Lipschitz continuous with Lipschitz constant $G$, \emph{i.e.,} for all $x, y \in \mathcal{X},$ we have 
+ \begin{eqnarray*}
+ 	|f_t(x)-f_t(y)| \leq G||x-y||,~
+ 	|g_{t,i}(x)-g_{t,i}(y)| \leq G||x-y||, ~\forall t\geq 1.
+ \end{eqnarray*}
+	\end{assumption}
+	\vspace{-0.1in}
+	Unless specified otherwise, the norm $||\cdot||$ will refer to the standard Euclidean norm throughout the paper. Hence, Assumption \ref{bddness} implies that the $\ell_2$-norm of the (sub)-gradients of the cost and constraint functions are uniformly upper-bounded by $G$ over the admissible set $\mathcal{X}.$ Finally, we make the following feasibility assumption on the online constraint functions.
+\begin{assumption}[Feasibility] \label{feas-constr}
+	There exists some feasible action $x^\star \in \mathcal{X} $ s.t. $g_{t,i}(x^\star) \leq 0, \forall t \in T, \forall i\in [k].$ The set of all feasible actions, denoted by $\mathcal{X}^\star,$ is called the feasible set. The feasibility assumption implies that $\mathcal{X}^\star \neq \emptyset.$
+\end{assumption}
+\fi
+%For convex constraints, Assumption \ref{feas-constr} can be considerably relaxed by requiring the cumulative constraints to be satisfied only over intervals of length $S$. See Section \ref{ext} in the Appendix for details. 
+
+ 
+%\begin{framed}
+%\textbf{Terminologies:}
+%On every round, the online policy takes action from the set $\mathcal{X}$, which we refer to as the \emph{admissible} set. The set of all admissible actions satisfying Assumption \eqref{feas-constr} is known as the \emph{feasible} set, which we denote by $\mathcal{X}^\star \subseteq \mathcal{X}$. Note that the feasible set depends on the online constraints and could be a strict subset of the admissible set.  
+%\end{framed}
+%The above assumption was also made by a number of related papers  \citep{yu2016low,yuan2018online,yi2023distributed, georgios-cautious}.
+ %Next, we discuss the main idea of the paper that is useful to derive an upper bound for CCV for the $\ocs$ as well as the COCO.
+%\vspace{-0.1in}
+\subsection{Designing an \textsc{OCS} Policy with a Quadratic Lyapunov function} \label{meta-policy-ocs}
+We define a process $\bm{Q}(t)=\big(Q_i(t), i \in [k]\big), t \geq 1$, which tracks the CCV:
+\begin{eqnarray}\label{q-ev2}
+	Q_i(t) = \big(Q_i(t-1)+ g_{t,i}(x_t)\big)^+, ~ Q_i(0)=0, ~t \geq 1, ~\forall i \in [k].
+\end{eqnarray}
+Notably, in contrast to COCO, we \emph{do not} clip the constraint functions in the above recursion. 
+%where we have used the notation $y^+ \equiv \max(0,y).$
+Expanding Eqn.\ \eqref{q-ev2}, which is also known as the queueing recursion or the \emph{Lindley process} \citep[pp. 92]{asmussen2003applied}, and using the definition in Eqn.\ \eqref{violation-def1}, we have the following relation for all $i \in [k]:$
+\begin{eqnarray} \label{V-Q}
+	\mathbb{V}_i(T) \equiv \max_{t=1}^T\max (0,\max_{\tau=0}^{t-1} \sum_{s=t-\tau}^t g_{s,i}(x_l))=\max_{t=1}^TQ_i(t). 
+\end{eqnarray}
+Equation \eqref{V-Q} indicates that to control the CCV \eqref{violation-def1}, it is sufficient to control the $\bm{Q}(t)$ process. Similar to the COCO problem, we combine the classic Lyapunov method with adaptive no-regret OCO policies to control the $\bm{Q}(t)$ process. 
+
+%\section{An Online Meta-Policy} \label{policy}
+%We will keep track of the cumulative constraint violation through the deterministic scalar process referred to as \emph{queue lengths} $\{Q(t)\}_{t \geq 1}$ that evolves as follows:
+% \footnote{If the penalty function $\psi$ is also given to be non-negative, then the $(\cdot)^+$ operation in the definition of the recursion becomes superfluous.}:
+% \begin{eqnarray} \label{q-ev}
+% 	Q(t) = \big(Q(t-1)+ \psi(g_t(x_t))\big)^+, ~Q(0)=0. \end{eqnarray}
+%\vspace{-0.1in}
+\paragraph{A Quadratic Lyapunov function:}
+ 	 We consider the quadratic potential function %\begin{eqnarray*}\label{eq:potfunc}
+$\Phi(\bm{Q}(t))\equiv \sum_{i=1}^k Q_i^2(t), t\geq 1.$
+%\vspace{-0.1in}
+%\end{eqnarray*} 
+Since $((x)^+)^2=xx^+, \forall x\in \mathbb{R},$ from Eqn.\ \eqref{q-ev2}, we have 
+%that for each $1\leq i\leq k:$
+	 %\vspace{-0.1in}
+ \begin{eqnarray} \label{q-bd2}
+ 	Q_i^2(t) &=& \big(Q_i(t-1)+ g_{t,i}(x_t)\big)Q_i(t) = Q_i(t-1)Q_i(t)+ Q_i(t) g_{t,i}(x_t), \nonumber \\
+ 	&\stackrel{(a)}{\leq}& \frac{1}{2}Q_i^2(t)+ \frac{1}{2}Q_i^2(t-1) + Q_i(t) g_{t,i}(x_t), ~ \forall i \in [k]. 
+ \end{eqnarray}
+ where in $(a)$, we have used the AM-GM inequality. Rearranging Eqn.\ \eqref{q-bd2},
+% where $\max_{x \in \mathcal{X}} g_t^2(x)+ b_t^2 + 2|g_t(x)b_t| = \max_{x \in \mathcal{X}} (|g_t(x)|+|b_t|)^2\leq B.$ 
+ %the \emph{one-step drift} 
+ the change of the potential function $\Phi(\bm{Q}(t))$ on round $t$ can be upper bounded as follows
+ 	 %\vspace{-0.125in}
+ \begin{eqnarray} \label{drift-bd}
+ 	\Phi(\bm{Q}(t))-\Phi(\bm{Q}(t-1)) = \sum_{i=1}^k \big(Q_i^2(t)-Q_i^2(t-1)\big)\leq 2\sum_{i=1}^k Q_i(t)g_{t,i}(x_t).
+ \end{eqnarray}
+ Similar to \eqref{surrogate_new}, we now define a surrogate cost function $\hat{f}_t:\mathcal{X} \mapsto \mathbb{R}$ as a linear combination of the constraint functions with the coefficients given by the vector $\bm{Q}(t)$, \emph{i.e.,}
+ %\vspace{-0.175in}
+ \begin{eqnarray} \label{surrogate-def}
+ 	\hat{f}_t(x) \equiv 2\sum_{i=1}^kQ_i(t) g_{t,i}(x).
+ \end{eqnarray}
+ %\vspace{-0.11in}
+Clearly, the surrogate cost function $\hat{f}_t(\cdot)$ is convex since the coefficients $Q_i(t)$'s are non-negative and the constraint functions are convex. Our \textsc{OCS} policy, described below, simply runs a regret-minimizing adaptive OCO subroutine on the surrogate cost function sequence \eqref{surrogate-def}.
+
+ %\begin{framed}
+\textbf{The \textsc{OCS} policy (Algorithm \ref{ocs-policy}):} Pass the surrogate cost functions $\{\hat{f}_t\}_{t\geq 1}$ to the AdaGrad algorithm which enjoys a data-dependent regret as given in part 1 of Theorem \ref{data-dep-regret} in the Appendix (Eqn.\ \eqref{cvx-reg-bd}).
+ %\end{framed}
+% \textcolor{blue}{Explain what data-dependent bound means}.
+ %Note that the convex cost function $\hat{f}_t: \mathcal{X} \mapsto \mathbb{R}$ defined in Eqn.\ \eqref{surrogate-def} is a legitimate input cost function to any OCO subroutine as all information required to compute the surrogate cost $\hat{f}_t$ (\emph{i.e.,} $Q(t)$ and $\{g_{t,i}\}_{i=1}^k$ is causally known at the end of round $t$. 
+ %A complete pseudocode of the proposed meta-policy is given in.
+ %The proposed meta-policy is summarized in Algorithm \ref{ocs-policy}. 
+ %To clarify this point further, let us explicitly illustrate the order of events on round $t$. 
+
+ 
+\begin{algorithm} 
+\caption{Online Policy for \textsc{OCS}}
+\label{ocs-policy}
+\begin{algorithmic}[1]
+\State \algorithmicrequire{ Sequence of convex constraint functions $\{g_{t,i}\}_{i\in [k], t\geq 1}$, a closed and convex admissible set $\mathcal{X}$ with a finite Euclidean diameter $D,$ $\mathcal{P}_\mathcal{X}(\cdot)=$ Euclidean projection operator on the set $\mathcal{X}$ }
+\State \algorithmicensure{  Sequence of admissible actions $\{x_t\}_{t\geq 1}$}
+\State{\bf{Initialization}:} Set $ x_1 \in \mathcal{X}$ arbitrarily, $Q_i(0)=0, ~\forall i \in [k].$ 
+\ForEach {each round $t \geq 1$}
+\State Play $x_t,$ observe the constraint functions $\{g_{t,i}\}_{i \in [k]}$ revealed by the adversary. 
+\State [\textbf{Update $\bm{Q}(t)$}] $Q_i(t) = (Q_i(t-1)+ g_{t,i}(x_t))^+, i \in [k]$.
+\State [\textbf{Compute a subgradient}] %Compute the gradient of the surrogate cost function 
+$\nabla_t \equiv \nabla \hat{f}_t(x_t) = 2\sum_{i=1}^kQ_i(t) \nabla g_{t,i}(x_t).$
+\State [\textbf{AdaGrad step}]  Compute the next action $x_{t+1} = \mathcal{P}_\mathcal{X}(x_t - \eta_t \nabla_t)$, where 
+  % \begin{eqnarray*}
+   $\eta_t =
+   	\frac{\sqrt{2}D}{2\sqrt{\sum_{\tau=1}^{t} ||\nabla_\tau||_2^2}}.$
+   %	\end{eqnarray*}
+%\State [\textbf{OCO step}] Feed $\hat{f}_t(x)$ to the base OCO sub-routine $\Pi$, which outputs an action $x_{t+1} \in \mathcal{X}.$ \label{oco-step}
+\EndForEach
+\end{algorithmic}
+\end{algorithm}
+%Note that, unlike some of the previous work based on the Lyapunov drift approach \citep{neely2017online, yu2016low}, Algorithm \ref{ocs-policy} takes full advantage of the adaptive nature of the base OCO sub-routine by exploiting the fact that the adversary is allowed to choose the surrogate cost function $\hat{f}_t$ \emph{after} seeing the current action of the policy $x_t,$ which determines the coefficients $Q_i(t)$'s.
+
+\subsection{Performance Bounds} 
+\label{ext}
+%Under Assumption \ref{feas-constr}, there exists a fixed action $x^\star \in \mathcal{X}$ that satisfies \emph{each} of the online constraints on \emph{each round}, \emph{i.e.,} $\mathcal{X}^\star \neq \emptyset.$
+%Since this is a reasonably strong assumption, in this section, we replace Assumption \ref{feas-constr} with  a weaker one (Assumption \ref{s-feas-assump}) or get rid of it altogether (Theorem \ref{P_T-benchmark}). 
+%\subsubsection{$S$-feasibility}
+%Here we assume that there is a feasible action $x^\star$ that satisfies the aggregate of the constraints over any interval of $S$ rounds, where the parameter $S \in [T]$ need not be known to the policy \emph{a priori}. Towards this end, we define the set of all $S$-feasible actions as below: 
+%\begin{eqnarray} \label{extended-benchmark}
+%\mathcal{X}_S =\{x^\star: \sum_{\tau \in |\mathcal{I}|} g_{\tau,i}(x^\star) \leq 0, \forall \textrm{sub-intervals}~ \mathcal{I} \subseteq [1,T], ~|\mathcal{I}| = S, \forall i \in [k]\}. 
+%\end{eqnarray}
+%We now replace Assumption \ref{feas-constr} with the following weaker version.
+%\begin{assumption}[$S$-feasibility] \label{s-feas-assump}
+%	$\mathcal{X}_S \neq \emptyset.$
+%\end{assumption}
+%Here we assume that $\mathcal{X}_S \neq \emptyset$ for some $S \in [T],$ which need not be known to the policy. Clearly, Assumption \ref{s-feas-assump} is weaker than Assumption \ref{feas-constr} as $\mathcal{X}^\star \subseteq \mathcal{X}_S, \forall S \geq 1.$ Note that even when the individual constraint functions satisfy $S$-feasibility, their point wise max need not satisfy $S$ feasibility. We emphasize that, unlike COCO with Assumption \ref{feas-constr}, this problem can not be solved by simply running a no-regret policy on the point wise max of the constraints.  
+
+ \begin{theorem} \label{S-benchmark}
+Under Assumptions \ref{cvx}, \ref{bddness}, and \ref{s-feas-assump}, 
+%the OGD policy with adaptive step-sizes given in part 1 of Theorem \ref{data-dep-regret} as a sub-routine, 
+Algorithm \ref{ocs-policy} achieves the following CCV bound for the OCS problem: 
+ 	 $\mathbb{V}(T)= O(\max(\sqrt{ST},S )).$
+ \end{theorem}
+
+
+
+
+ \begin{theorem} \label{P_T-benchmark}
+ Under Assumptions \ref{cvx} and \ref{bddness}, 
+% the OGD policy with adaptive step-sizes given in part 1 of Theorem \ref{data-dep-regret} as a sub-routine achieves the following CCV bound 
+Algorithm \ref{ocs-policy} achieves the following CCV bound for the OCS problem
+ for any $P_T$-constrained adversary as given in Definition \ref{pt-feas-assump}: 
+ 	 \[\mathbb{V}(T)= O(P_T^{\nicefrac{1}{3}}T^{\nicefrac{2}{3}})+O(\sqrt{T}).\]
+ \end{theorem}
+ Trivially, we have $S\leq T$ and  $P_T \leq T.$ In the non-trivial case where either $S$ or $P_T$ increases \emph{sub-linearly} with the horizon length $T$, the above theorems yield sublinear CCV bounds.
+%In our case, the surrogate cost function $\hat{f}_t(\cdot)$ depends on $x_t$ via the coefficient vector $\bm{Q}(t).$ 
+%\vspace{-0.3in}
+\iffalse
+ \subsection{Analysis}
+%\begin{enumerate}
+%	
+%	%\item  We compute the cumulative violation $Q(t)$ (which is a non-negative number) using the recursion \eqref{q-ev}. Note that $Q(t)$ depends on the action $x_t$ on the current round $t$.
+%	\item  The surrogate cost function $\hat{f}_t$ defined in  \eqref{surrogate-def} is passed to the policy.
+%\end{enumerate}
+%This should be compared with \cite{neely2017online}\\  
+%\hrule
+%\textbf{Remarks:} 
+%2.  Although we introduce the auxiliary queue-length process $\{Q(t)\}_{t \geq 1}$ as a convenient mathematical tool to bound the constraint violation penalty $\mathbb{V}_T$, in some problems, the process defined in \eqref{q-ev} arises quite naturally as the evolution of some physical queueing process. In these problems, controlling the queue length itself is of primary interest (see Section \ref{app} for an example). When the penalty function $\psi(g_(\cdot))$ can assume negative values as well (which is the case, \emph{e.g.,} when $\psi$ is the identity function and $g_t$'s are linear functions, upper bounding the queue lengths is strictly harder than upper bounding the violation penalty.
+%
+%3. Since $\nabla f_t'(x_t)= V \nabla f_t(x_t) + 2Q(t) \psi'(g_t(x_t))\nabla g_t(x_t),$ in reality, we will only need to pass the (sub-)gradients $\nabla f_t(x_t), \nabla g_t(x_t)$, and the value of $g_t(x_t)$ to the OCO sub-routine. \\
+%\hrule 
+%
+%\subsection{Boundedness Assumption} \label{bdd-assumption}
+
+
+%We will also assume that the cost functions are normalized so that $||f_t||_\infty \leq 1/2, \forall t.$
+%\begin{framed}
+%\textbf{Variants of the Constraint violation metric:} Our framework is flexible. Then we can consider a modified evolution for $Q(t):$
+%\begin{eqnarray*}
+%	Q(t)=\big(Q(t-1)+\psi(g_t(x)\big).~~, Q(0)=0\footnote{If $h>0,$ it is unnecessary to take $\max(0,\cdot)$ of $Q(t)$.}.
+%\end{eqnarray*}
+%Using the same analysis as before, we have 
+%\begin{eqnarray*}
+% 	\Phi(t)-\Phi(t-1) = Q^2(t)-Q^2(t-1)\leq 2Q(t)\psi(g_t(x_t)).
+% \end{eqnarray*}
+%  Motivated by the above calculations, we now define a surrogate cost function $f_t':\mathcal{X} \to \mathbb{R}$ as follows:
+% \begin{eqnarray} \label{surrogate-def}
+% 	f'_t(x) \equiv Vf_t(x) + 2Q(t) \psi(g_t(x)),
+% \end{eqnarray}
+%\end{framed}
+
+
+\paragraph{Regret decomposition:} 
+ Fix any feasible action $x^\star \in \mathcal{X}^\star$ (Assumption \ref{feas-constr}). Using  \eqref{drift-bd}, for any round $\tau \in [T]$ we have: 
+ \begin{eqnarray} \nonumber
+ 	\Phi(\tau)-\Phi(\tau-1)   
+ 	\leq  2\sum_{i=1}^k Q_i(\tau)g_{\tau,i}(x_\tau) &\stackrel{(a)}{\leq}&  2\sum_{i=1}^k Q_i(\tau)g_{\tau,i}(x_\tau) - 2\sum_{i=1}^k Q_i(\tau)g_{\tau,i}(x^\star),  \ \\\label{drift_ineq2}
+ 	&= & \hat{f}_{\tau}(x_\tau) - \hat{f}_\tau(x^\star), 
+ \end{eqnarray}
+ where in $(a)$ we have used the assumption that the action $x^\star$ is feasible and hence, $g_{\tau, i}(x^\star) \leq 0, \forall i, \tau$. 
+ %(\emph{i.e.,} $g_\tau(x^\star) \leq 0$ and that $\psi(z) \leq 0, \forall z\leq 0$). 
+ Summing up the inequalities \eqref{drift_ineq2} above from $\tau=t_1+1$ to $\tau=t_2$, we obtain \eqref{master_eqn} that relates the change in the potential function in an interval  with the regret \eqref{intro-regret-def} for %for learning the original cost functions to the regret for 
+ learning the surrogate cost functions $\hat{f}_t$'s:
+ \begin{eqnarray} \label{master_eqn}
+ 	\Phi(t_2)-\Phi(t_1) \leq \sum_{\tau=t_1+1}^{t_2}\hat{f}_{\tau}(x_\tau) - \sum_{\tau=t_1+1}^{t_2}\hat{f}_\tau(x^\star) \stackrel{\textrm{(def.)}}{=} \textrm{Regret}_{t_1+1:t_2}'(x^\star), ~ \forall x^\star \in \mathcal{X}^\star. 
+ \end{eqnarray}
+%We emphasize that the regret on the RHS depends on the queue variables $\{Q(t)\}_{t\geq 1},$ which are implicitly controlled by the online policy through the evolution \eqref{q-ev2}. 
+By setting $t_1=0, t_2=t$ and recalling that $\Phi(0)= \sum_i Q_i^2(0)=0$, from \eqref{master_eqn} we have that 
+$	\sum_{i=1}^kQ_i^2(t)  \leq \textrm{Regret}'_t(x^\star), ~ \forall x^\star \in \mathcal{X}^\star, t\geq 1,$ where $\textrm{Regret}'_t(x^\star)$ is the regret \eqref{intro-regret-def} with functions ${\hat f}_t$'s.
+Note that \eqref{master_eqn} is valid for any feasible action $x^\star \in \mathcal{X}^\star$, thus taking the supremum of the RHS of \eqref{master_eqn} over the set of all admissible actions in $  \mathcal{X}^\star \subseteq\mathcal{X}$, we obtain
+%\vspace{-0.1in}
+%Using the same drift analysis (with $V=0$), we obtain the following inequality similar to \eqref{q-bd-eqn}
+\begin{eqnarray} \label{q-regret-reln}
+	\sum_{i=1}^kQ_i^2(t)  \leq \textrm{Regret}_t',
+\end{eqnarray}
+where $\textrm{Regret}_t' \equiv \sup_{x^\star \in \mathcal{X}} \textrm{Regret}'_t(x^\star)$, defined in \eqref{intro-regret-def}, denotes the worst-case regret over the entire admissible set $\mathcal{X}$ for the sequence of surrogate cost functions $\{\hat{f}_\tau(x)\}_{\tau=1}^t$. 
+%Note that the surrogate cost functions explicitly depend on the queueing processes. Hence, the regret bound in \eqref{q-regret-reln} depends on the online policy employed in step \ref{oco-step} of Algorithm \ref{ocs-policy}. 
+Inequality \eqref{q-regret-reln} is the key step for bounding the CCV for $\ocs$ in Theorem \ref{constr-violation}. The rest of the proof uses  \eqref{q-regret-reln} in combination with the off-the-shelf data-dependent adaptive regret bounds achieved by the base OCO subroutine (see Theorem \ref{data-dep-regret}).  To derive Theorem \ref{constr-violation}, we use the OGD with adaptive step sizes, but we emphasize that the bound \eqref{q-regret-reln} is general and can be used to obtain performance bound for any base OCO policy with similar regret bounds. The following is our main result for the $\ocs$ problem. 
+%In the following two sections, we consider the case of convex and strongly convex constraint functions, respectively.
+%\begin{eqnarray*}
+%	\hat{f}_t(x)= 2 \sum_{i=1}^k Q_i(t) g_{t,i}(x).
+%	\end{eqnarray*} 
+
+%Hence, we have the following result.
+%In Proposition \ref{q-bd-prop}, we  show that any sequence of non-negative numbers $\{Q(t)\}_{t\geq 1}$ satisfying the inequality \eqref{str-q-recur} can grow at most logarithmically. Hence, we conclude that $\max_{i=1}^k (Q_i(t)) = O(\log t).$ 
+\iffalse
+\subsection{Case III: Convex and Smooth Constraints} \label{smooth-constraints}
+We now consider the case when each constraint function is convex, non-negative, $M$-smooth, and uniformly bounded above by $B$. This implies that the  resulting surrogate cost functions are also convex, non-negative, $\hat{M}$-smooth and uniformly bounded above by $\hat{B}$ where
+\begin{eqnarray} \label{fn-bd}
+	\hat{B} \leq 2B \sum_{i=1}^k Q_i(t).
+\end{eqnarray}
+Furthermore, the surrogate function $\hat{f}_t$ is also smooth with the smoothness parameter given by 
+\[ \hat{M} \leq 2M \sum_{i=1}^k Q_i(t) \]
+Let the base OCO policy be taken as the OGD policy with step sizes chosen in part 3 of Theorem \ref{data-dep-regret}. Using the adaptive $L^\star$ bound quoted in the theorem, inequality \eqref{q-regret-reln} yields the following bound on the queue length process:
+\begin{eqnarray*}
+	\sum_{i=1}^k Q_i^2(t) \leq c_0 + c_1 \sqrt{\sum_{\tau=1}^t \sum_{i=1}^k Q_i(\tau)},  
+\end{eqnarray*}
+where $c_0 \equiv$ 
+\fi
+%The results in Sections \ref{cvx-sec} and \ref{str-cvx-sec} lead to our main result for the \ocs ~problem.
+%\begin{framed}
+\begin{theorem}[Bounds on the CCV for the \textsc{OCS}] \label{constr-violation}
+The \textsc{OCS} Meta-policy (Algorithm \ref{ocs-policy}) achieves a CCV of $O(\sqrt{kT})$ and $O(\frac{k}{\alpha}\log T)$  for convex and strongly-convex constraint functions respectively, by using the standard OGD subroutine with an adaptive step size schedule as described in part 1 and part 2 of Theorem \ref{data-dep-regret}.
+%in step \ref{oco-step} of Algorithm \ref{ocs-policy}.	
+\end{theorem}
+\vspace{-.15in}
+See Section \ref{constr-violation-pf} for the proof of the above result. The extension of Theorem \ref{constr-violation} to $S$-feasible benchmarks is given in Section \ref{ext}.
+The dependence of $k$ (the number of constraints revealed in each round) on the CCV derived in Theorem \ref{constr-violation} for the two cases is interesting. When $g_{t,i}$'s are convex, it grows as $\sqrt{k}$, while when $g_{t,i}$'s are strongly convex, it grows linearly with $k$. \emph{A priori}, the right scaling of CCV w.r.t. $k$ is unclear as increasing $k$ increases the CCV \eqref{violation-def1} since it is the maximum over a larger number of constraints. However, increasing $k$ also reveals more information about the feasible set ${\mathcal X}^\star$ in each round, which can potentially help a policy in reducing its CCV. A lower bound of $\Omega(\sqrt{T})$ on the CCV for any policy in the convex case is presented in Theorem \ref{thm:lbcoco}.
+\fi 
+%We note that for strongly convex constraint functions, the finiteness of the diameter $D$ is not required.
+\iffalse
+\paragraph{Applications:} In Section \ref{mistake_bd}, we use Theorem \ref{constr-violation} to design a multi-task binary classification policy with a bounded number of mistakes (See Theorem \ref{mistake-bd-thm} for the precise statement). This generalizes the classical Perceptron mistake bound of \citet{novikoff1962convergence} to the multi-task setting. Furthermore,
+Section \ref{app}  outlines an application of the \ocs~ algorithm to a canonical network switching problem.
+\fi
+%\vspace{-.175in}
+
+%
+%\subsection{Connection between \textsc{OCS} and the Convex Body Chasing Problem} 
+%A related and well-studied problem to \textsc{OCS} is the
+%{\it nested convex body chasing (NCBC)} \citep{bansa2018nested,argue2019nearly,bubeck2020chasing} 
+%where at each time $t$, a convex set $\chi_t \subseteq \chi$ is revealed such that 
+%$\chi_t\subseteq \chi_{t-1}$, and  $\chi \subseteq {\mathbb R}^d$ is a convex, compact and bounded set. 
+%The objective is to choose  $x_t \in \chi_t$ so as to minimize the total movement cost across time
+%$C =   \sum_{t=1}^T  ||x_t - x_{t-1}||,$
+%where $x_0$ is some fixed action.
+%In NCBC, action $x_t$ is chosen \emph{after} the set $\chi_t$ is revealed contrary to the \textsc{OCS} problem, where $x_t$ has to be chosen \emph{before} the constraints $g_{t,i}$'s are revealed at time $t$. Moreover, note that the nested condition $\chi_t \subseteq \chi_{t-1}$ is stricter than Assumption \ref{feas-constr} that is applicable for the \textsc{OCS}.
+%However, as we show next, a feasible algorithm for NCBC also provides a bound on the CCV of the \textsc{OCS} as follows.
+%
+%Let $\chi_t $ be the intersection of the $k$ constraints $g_{t,i}, i=1,\dots, k$ revealed  at time $t$ for the \textsc{OCS}.
+%Let $x_t$ be the action chosen by an algorithm $\cal A$ for the NCBC after $\chi_t$ is revealed. Then consider choosing $y_{t+1} = x_t$ as the action for the \textsc{OCS}  that ensures that action $y_t$ is chosen before $g_{t,i}$ or $ \chi_t$ is revealed.
+%The resulting $i^{th}$ constraint violation for the \textsc{OCS}  at time $t$ is $ g_{t,i}(y_{t}) \stackrel{(a)}\le g_{t,i}(y_{t}) - g_{t,i}(y_{t+1}) \le G ||y_{t} - y_{t+1}||$
+%where $(a)$ follows from the feasibility of $\cal A$ for NCBC, $y_{t+1}= x_{t} \in \chi_{t}$ and hence $g_{t,i}(y_{t+1}) \leq 0$. Summing across time $t=1, \dots, T$, and taking the $\max$ over  all the $k$ constraints, we get that the CCV using $\cal A$ for the \textsc{OCS} is upper bounded by $ \sum_{t=2}^T G ||y_{t} - y_{t+1}|| \le \sum_{t=2}^T G ||x_{t-1} - x_{t}|| \le G \cdot C_{\cal A},$
+%where $C_{\cal A}$ is the cost of $\cal A$ for the NCBC.
+%
+%From prior work \cite{bansa2018nested,argue2019nearly,bubeck2020chasing}, it is known that for NCBC, a Steiner point-based algorithm that chooses $x_t$ as the Steiner point of $\chi_t$ can achieve
+%$C_{\cal A} = O(\sqrt{d \log d})$, where $\chi \subset {\mathbb R}^d$. Thus, the Steiner point-based algorithm (even though computationally intensive) provides a $O(\sqrt{d \log d})$ constraint violation for the 
+%\textsc{OCS} as well. However, this result is applicable or effective for problems where  $\sqrt{d \log d} = o(T).$ Our result (Theorem \ref{constr-violation}) efficiently overcomes this hurdle and provides a bound even beyond $\sqrt{d \log d} = o(T)$, a setting that is practically better motivated for modern machine learning applications which are characteristically high-dimensional.
+%
+%
+%
+%
+%
+%
+%
+%
+
+
+
+
+
+
+
+
+
+
+

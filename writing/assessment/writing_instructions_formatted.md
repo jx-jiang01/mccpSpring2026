@@ -1,0 +1,102 @@
+# MCCP6020 Assessment Information and Assessment Rubrics
+
+**Writing Assignment – Writing an Introduction and a Literature Review of Your Research**
+
+- **Deadline:** 15 March, 2026 (SUN), 11:59pm  
+- **Weighting:** 40%
+
+---
+
+## INSTRUCTIONS
+
+Write an introduction and a literature review of your research using the provided template below. Please follow the rhetorical moves and incorporate linguistic features discussed in the course. (You may refer to the course materials of Sessions 1 and 2 for details). Indicate the moves in your writing using headings or the 'comment' function in MS Word.
+
+Submitting previously published work is considered self-plagiarism and is therefore not permitted. If you intend to submit past coursework, a portion of your Master's thesis, or your PhD research proposal for this assignment, it must be significantly revised and enhanced to align with the skills covered in this course and the specific instructions for this assignment.
+
+---
+
+## Template: Introduction and Literature Review
+
+### INTRODUCTION
+
+| Move | Description |
+|------|-------------|
+| **Move 1 – Establishing a Territory** | * Present the general topic area/research problem.* Highlight the importance of the research.* Synthesise the key prior research that supports the need for the current research. |
+| **Move 2 – Identifying a Niche** | * Introduce an opposing viewpoints/perspective to the current state of knowledge.* Identify gaps in the existing literature (no need to provide a detailed literature review here).* Explain why addressing these gaps is necessary. |
+| **Move 3 – Occupying the Niche** | * State your research purpose or question.* Outline the objectives of your research and how it will fill the gaps. |
+
+### LITERATURE REVIEW
+
+| Move | Description |
+|------|-------------|
+| **Move 1 – Thematic Overview** | * Provide context (e.g. defining key terms/concepts/research teams) for the literature review.* Explain the purpose and scope of the review. |
+| **Move 2 – Critical Analysis** | * Group the literature according to common themes, paradigms, theories, methodologies or chronological order.* Summarize and synthesize the existing literature. Show connections, relationships or contrasts among studies (e.g. methodologies, findings, claims/arguments).* Critique methodologies and findings of the previous research. |
+| **Move 3 – Research Gaps** | * Reiterate the gaps identified in previous studies.* Emphasize the need for further investigation. |
+| **Move 4 – Conclusion of the Literature Review** | * Summarize key insights and their implications.* Set the stage for your research contribution. Emphasize the significance of the literature in relation to your research question. |
+
+---
+
+## IMPORTANT NOTES
+
+- Write 1000-1500 words, excluding end-of-text citations and annotations. Despite this range of word allowance, make sure you provide sufficient elaboration on your content.
+- Indicate the word count at the end of the writing.
+- Ensure that each section flows logically and connects to your overall research aim. Tell a coherent research story.
+- Use appropriate academic language and adhere to the formatting guidelines provided.
+- Incorporate citations following the referencing style commonly used in your discipline.
+- Late submissions of assignments will incur penalties – one percent of the final score for that assignment will be deducted for each day past the deadline (weekends and statutory holidays included). Assignments submitted more than 5 days after the deadline will receive a zero mark. If you have a valid reason for late submission, you should discuss it with your lecturer prior to the assignment due date.
+
+---
+
+## FORMATING REQUIREMENTS
+
+- Font size: 12
+- Font type: Times New Roman
+- Line spacing: 1.5 or double line spacing
+- Margin: 2.54cm or 1 inch
+
+---
+
+## SUBMISSION OF ASSIGNMENT
+
+- The soft copy of the assignment (in MS WORD format) should be submitted to Turnitin via the Course Moodle for a plagiarism check by the deadline.
+- Please check with your lecturer whether a hard copy of the assignment has to be submitted.
+
+---
+
+## Assessment Rubric for Writing Assignment – Writing an Introduction and a Literature Review of Your Research (40%)
+
+### Task Achievement
+
+*Provision of background information of the research topic | Description of research focus and objectives | Synthesis and evaluation of the relevant literature | Discussion on the significance of the research | Use of sources, citations and referencing | Annotations of the techniques or concepts applied*
+
+| Level | Description |
+|-------|-------------|
+| **Excellent (9–10)** | Extremely clear explanation of the research background, focus and objectives. Skilfully paraphrase, synthesise and critically evaluate the relevant literature. The research gap is clearly delineated and the significance of the research is succinctly highlighted. Adequate and effective use of sources, proper citations & referencing. |
+| **Satisfactory (6–8)** | Generally clear explanation of the research background, focus and objectives. Appropriately paraphrase and synthesise the relevant literature and some critical evaluation is evident. The research gap is identified and the significance of the research is clearly stated. Generally adequate and effective use of sources. There may be a few errors in citations & referencing. |
+| **Unsatisfactory (1–5)** | Insufficient explanation of the research background, and the focus and objectives of the research are not clearly explained. Limited attempt to synthesise and evaluate the relevant literature. There may be some instances of direct copying from the sources. The research gap and the significance of the research are rather vague. Ineffective use of sources. Inconsistent and/or inaccurate citations and referencing. |
+
+### Organisation
+
+*Topic development, paragraph structure, linkage between sentences and paragraphs*
+
+| Level | Description |
+|-------|-------------|
+| **Excellent (9–10)** | The text demonstrates very clear logical flow of ideas and effective use of cohesive devices throughout the text. The research story is presented with exceptional clarity, creating a cohesive narrative. |
+| **Satisfactory (6–8)** | The text demonstrates a generally clear logical flow and effective use of cohesive devices, although the research narrative could be organized more logically. |
+| **Unsatisfactory (1–5)** | The flow of ideas is not easy to follow due to the lack of cohesive devices and logical flaws. The research narrative is not presented logically. |
+
+### Language Range and Accuracy
+
+*Grammar (sentence & word level), spelling, punctuation, word forms and choice*
+
+| Level | Description |
+|-------|-------------|
+| **Excellent (9–10)** | Effective use of advanced grammatical structures and precise lexical resources. |
+| **Satisfactory (6–8)** | Adequate and generally accurate use of complex grammatical structures and appropriate lexical resources with some errors. |
+| **Unsatisfactory (1–5)** | Limited use of complex grammatical structures and numerous errors causing difficulties of understanding in a number of places. |
+
+---
+
+**Your marks:** _____________  
+
+**Total:** ________ out of 30

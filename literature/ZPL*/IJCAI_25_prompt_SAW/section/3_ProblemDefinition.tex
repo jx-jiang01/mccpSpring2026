@@ -1,0 +1,77 @@
+\vspace{-1.7ex}
+\section{Preliminaries}
+\label{sec:prelimnaries}
+\vspace{-0.7ex}
+In this section, we first introduce mathematical notations
+and formulate our problem.
+Background on the core concepts required for the design 
+and development of~\OurMODEL{} is provided in Appendix~\ref{Appendix:Background}.
+
+
+
+\subsection{Notations.}
+\label{sec:notation}
+We use $P$ and $C$ to represent the original and compressed 
+prompt respectively.
+Likewise, we use $N$ and $\widetilde{N}$ to represent 
+the length of the original and compressed prompt. 
+We use $\eta=\widetilde{N}/N$ 
+to represent the compression rate and $1/\eta$ as the compression ratio.
+$\eta^{*}$ is used to represent the target compression rate.
+The graph is represented by $\mathcal{G}=\{(e_i,r_i,e_i^{'})\subseteq\mathcal{E}\times\mathcal{R}\times\mathcal{E}\}$,
+where $e_i$, $r_i$ and $e_i^{'}$ represent the subject entity, 
+relation and object entity in the graph respectively; 
+$\mathcal{E} = \{e_1, e_2, \cdots, e_m\}$ and $\mathcal{R}=\{r_1,r_2, \cdots, r_n\}$ denote the set of entities and relations in $\mathcal{G}$.
+$g_i = (e_i,r_i,e_i^{'})$ is used to represent small-scale information 
+elements in $\mathcal{G}$, equivalent to graph triplet.
+$M$ represents auxiliary models used for graph construction.
+$E$ is used to represent the encoder network.
+$\delta$ represents the similarity threshold used for sub-graph construction.
+
+
+
+
+\subsection{Problem Setting}
+%\label{sec:Psetting}
+In this work, we aim to design and develop an effective prompt compression strategy that can cut down the prompt text by only 
+preserving the requisite information content while at the same time 
+maintaining the semantics and end performance of the prompt to the best possible extent.
+
+Formally, 
+we aim to generate a compressed prompt $C = \{c_i\}_{i=1}^{\widetilde{N}}$
+given the original prompt 
+$P=(p^\mathrm{ins},p^\mathrm{info},p^\mathrm{que})$,
+where $p^\mathrm{ins} = \{p_{i}^\mathrm{ins}\}_{i=1}^{N^\mathrm{ins}}$,
+$p^\mathrm{info} = \{p_{i}^\mathrm{info}\}_{i=1}^{N^\mathrm{info}}$, and 
+$p^\mathrm{que} = \{p_{i}^\mathrm{que}\}_{i=1}^{N^\mathrm{que}}$, denote
+the prompt instruction, information and question, respectively;
+$\widetilde{N}$, $N^\mathrm{ins}$, $N^\mathrm{info}$ and $N^\mathrm{que}$ 
+represent the number of tokens in $C$, $p^\mathrm{ins}$,
+$p^\mathrm{info}$, $p^\mathrm{que}$ and respectively.
+We denote $N = N^\mathrm{ins}$ + $N^\mathrm{info}$ + $N^\mathrm{que}$
+as the length of the original prompt.
+
+
+
+%%%%%%%% EXTRA STUFF %%%%%%%%%%%%
+
+\eat{Following LLMLingua (\citet{llmlingua}, \citep{llmlingua}) and LongLLMlingua (\citet{longllmlingua}, \citep{longllmlingua}), 
+we adopt $x=(x^\mathrm{ins},x^\mathrm{info},x^\mathrm{que})$ to represent a prompt $x$, where $x^\mathrm{ins}$ describes the instructions that LLM needs to follow, $x^\mathrm{info}$ contains some additional information such as external knowledge and few-shot demonstrations, $x^\mathrm{que}$ contains the specific questions that the model needs to answer by following the above instructions.} 
+
+
+
+
+\eat{Formally, given the original prompt $P = \{p_1,p_2..p_n\}$ with $n$
+tokens, we aim to compress it into $m$ tokens, i.e., 
+$C = \{c_1,c_2..c_m\}$ with $m\ll n$.
+\warn{preserve the semantics of original prompt.}\\
+\warn{No loss for the end-application for LLM.}}
+\eat{\subsection{Structural Form of Prompt}
+We will introduce the specific definition of prompt. According to the different
+functions of each part of prompt, it can be divided into different structural parts.}
+
+
+
+
+
+

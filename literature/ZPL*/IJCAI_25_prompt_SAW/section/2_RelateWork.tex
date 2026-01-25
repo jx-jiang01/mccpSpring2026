@@ -1,0 +1,120 @@
+\vspace{-1.7ex}
+\section{Related Work}
+\label{sec:RL}
+\vspace{-0.7ex}
+{\bf Prompt Compression.}
+Prompt compression techniques are used to reduce the inference 
+cost of  LLMs across a wide range of applications.
+Existing work can be categorized into 
+soft prompt compression and discrete prompt compression.
+
+Soft prompts were introduced by~\citet{softPrompt}. A soft prompt integrates additional trainable parameters at the model's input stage.
+\citet{softpromptcompression} emphasized that soft prompt 
+compression effectively retains crucial abstract information 
+with a reduced parameter count.
+\citet{CompressThenPropmt} emphasized that carefully crafted 
+prompts are helpful in augmenting the end-performance of 
+compressed LLMs, also the compressed LLMs are helpful in the prompt 
+learning phase. 
+
+Compared to soft prompt compression, discrete prompt compression 
+seeks to optimize the effectiveness of prompts via token-level search 
+strategies. 
+\citet{Jung2023DiscretePC} employed policy networks to eliminate
+unnecessary tokens for prompt compression.
+\citet{selectiveContext} utilized self-information metrics to identify 
+and remove superfluous information in prompts. 
+Capitalizing on these 
+advancements, \citet{llmlingua} and \citet{longllmlingua} \eat{have}
+formulated algorithms for dynamically adjusting compression rates 
+across different prompt sections, giving precedence to tokens with 
+higher perplexity\eat{due to their substantial influence}. 
+
+Despite the significant advancements achieved by these studies, 
+their primary focus lies on token-level compression, neglecting the 
+comprehensive graph structure information inherent in the prompt. 
+\eat{To the best of our knowledge, our study represents the first 
+exploration of prompt compression using graph structure.}
+
+
+
+\eat{{\bf Chain-of-Thought (CoT).}
+CoT is a novel prompting technique aimed at enhancing 
+the reasoning abilities of LLMs~\citep{CoT}.
+It incorporates intermediate problem-solving steps 
+to improve LLMs' capacity to tackle 
+complex reasoning tasks significantly.
+\citet{ToT} exploited the CoT technique and developed Tree-of-Thought (ToT) in order to augment the reasoning 
+capabilities of LLMs further. \cite{GoT} proposed Graph-of-Thought 
+that employs graphical reasoning capabilities to construct 
+prompts.}
+
+
+\noindent{\bf Knowledge Graphs (KGs) for LLM.}
+KGs organize information as structured units, \emph{i.e.,} relational 
+triplets (explained in Appendix~\ref{sec:BCKGD_KG}), that 
+encapsulate a wide variety of entities/concepts along with 
+underlying relations~\citep{KGSurvey}. 
+\citet{KGLLMSurvey} illustrated multiple different scenarios for 
+integration of KGs with LLM for knowledge and data-driven 
+bi-directional reasoning.
+\eat{namely: KG-augmented LLMs, LLMs augmented KGs, 
+showcasing advancements through KG-enhanced LLM, KG-augmented 
+LLM, and synergistic LLM and KG methodologies.}
+\citet{ReasoningOnGraph} combined LLMs with KGs for interpretable
+reasoning over KG Question Answering tasks.
+\citet{KGGPT} introduced an innovative framework that 
+leverages LLM's reasoning capabilities for executing KG-based tasks. 
+To the best of our knowledge, \OurMODEL{} is the first to
+make an attempt to leverage knowledge graph structure for prompt compression.
+
+
+
+
+\input{Figure_tex/fig2}
+
+%%%%%%%%%%% EXTRA STUFF %%%%%%%%%%%%%%%
+\eat{
+\subsection{Retrieval-Augmented Generation}
+Retrieval-Augmented Generation (RAG) integrates pre-trained parametric 
+and non-parametric memory to improve the language generation quality of 
+LLMs (\citet{RAG},\citep{RAG}).
+\warn{By dynamically retrieving pertinent information throughout 
+the answer generation phase, the RAG model facilitates the production 
+of responses derived from a wider and more accurate knowledge base. 
+Recent research identifies RAG as a pivotal technology in enhancing 
+the quality and accuracy of LLM.}
+\eat{ investigates a model architecture known as, which }
+\fixme{We don't need related work on RAG I think. I am omitting it.}}
+
+
+
+
+
+\eat{
+Knowledge Graphs organize structured information as relational triplets 
+that encapsulate a vast variety of entities/concepts along with 
+underlying relations (\citet{KGSurvey}, \citep{KGSurvey}). 
+\cite{KGLLMSurvey} delves into the cutting-edge integration of 
+knowledge graphs with LLM, showcasing advancements through KG-enhanced 
+LLM, KG-augmented LLM, and synergistic LLM and KG methodologies. 
+\cite{ReasoningOnGraph} advocates for the improvement of LLM 
+performance in Knowledge Graph Question Answering (KGQA) tasks 
+through the innovative generation and retrieval of relational 
+paths within Knowledge Graphs. 
+\cite{KGGPT} introduces an 
+innovative framework that leverages LLM's reasoning capabilities 
+for executing Knowledge Graph based tasks. To the best of our 
+knowledge, this study represents the inaugural effort to leverage 
+knowledge graphs for prompt compression.
+}
+
+\eat{To re-emphasized the prompts are widely used to get the best 
+possible performance of LLMs across a wide range of application 
+scenarios, e.g., Incremental Context Learning~\citep{ICL},
+Chain-of-Thought~\citep{CoT}, 
+and Retrieval-Augmented Generation~\citep{RAG} etc.,
+However, these methods often results in 
+wordy/verbose prompts, underscoring the need of 
+\eat{research in }prompt compression.}
+

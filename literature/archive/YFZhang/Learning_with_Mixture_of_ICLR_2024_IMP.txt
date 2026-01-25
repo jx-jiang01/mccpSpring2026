@@ -1,0 +1,3143 @@
+Published as a conference paper at ICLR 2024
+
+L EARNING WITH M IXTURE OF P ROTOTYPES FOR O UTOF -D ISTRIBUTION D ETECTION
+Haodong Lu1 , Dong Gong1∗, Shuo Wang2 , Jason Xue2 , Lina Yao1,2 , Kristen Moore2
+University of New South Wales, 2 CSIRO’s Data61
+{haodong.lu, dong.gong}@unsw.edu.au,
+{shuo.wang, jason.xue, lina.yao, kristen.moore}@data61.csiro.au
+1
+
+A BSTRACT
+Out-of-distribution (OOD) detection aims to detect testing samples far away from
+the in-distribution (ID) training data, which is crucial for the safe deployment
+of machine learning models in the real world. Distance-based OOD detection
+methods have emerged with enhanced deep representation learning. They identify unseen OOD samples by measuring their distances from ID class centroids
+or prototypes. However, existing approaches learn the representation relying on
+oversimplified data assumptions, e.g., modeling ID data of each class with one
+centroid class prototype or using loss functions not designed for OOD detection,
+which overlook the natural diversities within the data. Naively enforcing data
+samples of each class to be compact around only one prototype leads to inadequate
+modeling of realistic data and limited performance. To tackle these issues, we propose PrototypicAl Learning with a Mixture of prototypes (PALM) which models
+each class with multiple prototypes to capture the sample diversities, and learns
+more faithful and compact samples embeddings to enhance OOD detection. Our
+method automatically identifies and dynamically updates prototypes, assigning
+each sample to a subset of prototypes via reciprocal neighbor soft assignment
+weights. To learn embeddings with multiple prototypes, PALM optimizes a maximum likelihood estimation (MLE) loss to encourage the sample embeddings to
+be compact around the associated prototypes, as well as a contrastive loss on all
+prototypes to enhance intra-class compactness and inter-class discrimination at
+the prototype level. Compared to previous methods with prototypes, the proposed
+mixture prototype modeling of PALM promotes the representations of each ID
+class to be more compact and separable from others and the unseen OOD samples,
+resulting in more reliable OOD detection. Moreover, the automatic estimation of
+prototypes enables our approach to be extended to the challenging OOD detection
+task with unlabelled ID data. Extensive experiments demonstrate the superiority of
+PALM over previous methods, achieving state-of-the-art average AUROC performance of 93.82 on the challenging CIFAR-100 benchmark. Code is available at
+https://github.com/jeff024/PALM.
+1 I NTRODUCTION
+Deep learning (DL) plays a crucial role in many real-world applications, such as autonomous driving
+(Huang et al., 2020), medical diagnosis (Zimmerer et al., 2022), and cyber-security (Nguyen et al.,
+2022). When deployed in realistic open-world scenarios (Drummond & Shearer, 2006), deep neural
+networks (DNNs) trained on datasets that adhere to closed-world assumptions (He et al., 2015),
+commonly known as in-distribution (ID) data, tend to struggle when faced with testing samples that
+significantly deviate from the training distribution, referred to as out-of-distribution (OOD) data.
+A trustworthy learning system should be aware of OOD samples instead of naively assuming all
+input to be ID. In recent years, there has been significant research focus on the OOD detection task
+(Drummond & Shearer, 2006), aiming to accurately distinguish between OOD and ID inputs. This
+critical endeavor helps to ensure the secure and reliable deployment of DNN models.
+Since OOD samples are unseen during training, the key challenge is to obtain a model and an
+associated OOD detection criterion, based on only ID samples. Various OOD detection methods
+∗
+D. Gong is the corresponding author. This work was partially supported by an ARC DECRA Fellowship
+(DE230101591) awarded to D. Gong. H. Lu is affiliated with CSIRO Data61 through a PhD scholarship.
+
+1
+
+Published as a conference paper at ICLR 2024
+
+have been developed recently, including confidence score based methods (Hendrycks & Gimpel,
+2016; Lee et al., 2018; Liang et al., 2018; Liu et al., 2020; Wang et al., 2021; Sun et al., 2021; Huang
+et al., 2021; Wang et al., 2022), density-based methods (Kingma & Dhariwal, 2018; Du & Mordatch,
+2019; Grathwohl et al., 2020; Ren et al., 2019; Xiao et al., 2020; Cai & Li, 2023), and distance-based
+methods (Tack et al., 2020; Tao et al., 2023; Sun et al., 2022; Du et al., 2022a; Ming et al., 2023; Lee
+et al., 2018; Sehwag et al., 2021). Promising distance-based methods leverage the capability of DNNs
+to extract feature embeddings and identify OOD samples by measuring the distances between the
+embeddings and the centroids or prototypes of ID classes (Lee et al., 2018; Sehwag et al., 2021; Ming
+et al., 2023; Tao et al., 2023). They are effective in many scenarios, compared with other methods
+that overconfidently misclassify OOD data as ID (Hendrycks & Gimpel, 2016; Liang et al., 2018), or
+suffer from difficulty in training generative models (Ren et al., 2019; Grathwohl et al., 2020).
+Distance-based OOD detection methods aim to learn informative feature embeddings and utilize
+distance metrics, such as Mahalanobis (Lee et al., 2018; Sehwag et al., 2021) or KNN distance (Sun
+et al., 2022), during testing to identify OOD samples. Recent advances in distance-based methods
+(Tack et al., 2020; Sehwag et al., 2021) use off-the-shelf contrastive loss (Chen et al., 2020; Khosla
+et al., 2020) to shape the embedding space, which is designed for classification and does not take OOD
+data into consideration. On top of that, Ming et al. (2023); Du et al. (2022a) shape the hyperspherical
+embedding space (Wang & Isola, 2020; Wang & Liu, 2021; Du et al., 2022a; Ming et al., 2023) of
+in-distribution (ID) data with class-conditional von Mises-Fisher (vMF) distributions (Mardia et al.,
+2000), enforcing ID samples of the same class to be compactly embedded around the prototype of
+its class. However, in Sec. 4.2 we show that naively modeling all samples of each class with only
+one single prototype leads to restricted modeling capability, where diverse patterns within each class
+cannot be well represented, leading to the confusion of ID samples and the OOD samples seen in
+testing. This lack of comprehensive representation further diminishes the compactness surrounding
+each prototype, thereby resulting in diminished performance.
+In this paper, we propose a novel distance-based OOD detection method, called PrototypicAl Learning
+with a Mixture of prototypes (PALM) to learn high-quality hyperspherical embeddings of the data.
+To capture the natural diversities within each class, we model the hyperspherical embedding space
+(Sehwag et al., 2021; Sun et al., 2022; Du et al., 2022a; Ming et al., 2023) of each class by a mixture
+vMF distributions with multiple prototypes, where each prototype represents a subset of thee most
+similar data samples. Instead of naively enforcing data samples of each class to be compact around
+a single prototype (Du et al., 2022a; Ming et al., 2023; Tao et al., 2023), we encourage a more
+compact cluster around each one of the multiple prototypes, inherently encourage better ID-OOD
+discrimination. Specifically, we automatically estimate the reciprocal assignment weights between
+data samples and prototypes, and dynamically update the prototypes guided by these weights.
+To ensure each sample a high probability of assignment to the corresponding vMF distribution
+conditioned on each prototype, we apply a MLE loss to minimize the distance between each sample
+embedding and the prototype, similar to (Ming et al., 2023; Li et al., 2021; Caron et al., 2020).
+Furthermore, we propose a contrastive loss on the prototypes to further enhance the intra-class
+compactness at the prototype/cluster level and simultaneously encourage inter-class discrimination.
+Our main contributions are summarized as follows:
+• We propose a novel distance-based OOD detection method, i.e., PALM, which regularizes the
+representation learning in hyperspherical embedding space. Unlike previous methods with
+oversimplified assumptions, we use more realistic modeling with a mixture of prototypes to
+formulate and shape the embedding space, leading to better ID-OOD discrimination.
+• In PALM, we propose a prototypical learning framework to learn the mixture prototypes
+automatically. Samples are softly assigned to prototypes using specifically designed methods.
+PALM uses a MLE loss between samples and prototypes, as well as a contrastive loss on all
+prototypes to enhance intra-class compactness and inter-class discrimination.
+• Extensive experiments and in-depth analyses show the effectiveness of PALM on OOD
+detection. In addition to the standard labelled setting, the automatic prototype learning
+enables PALM to be easily extended to unsupervised OOD detection with promising results.
+
+2
+
+R ELATED W ORK
+
+Out-of-distribution detection. The problem of OOD detection was first posed by Nguyen et al.
+(2015), to address the limitation that DNN models were found to tend to generate overconfident
+results. This problem has drawn increasing research interest ever since. To overcome this issue,
+2
+
+Published as a conference paper at ICLR 2024
+
+various OOD detection methods have been proposed like score-based methods (Hendrycks & Gimpel,
+2016; Lee et al., 2018; Liang et al., 2018; Liu et al., 2020; Wang et al., 2021; Sun et al., 2021; Huang
+et al., 2021; Wang et al., 2022), generative-based methods (Ryu et al., 2018; Kong & Ramanan,
+2021) and distance-based methods (Tack et al., 2020; Tao et al., 2023; Sun et al., 2022; Du et al.,
+2022a; Ming et al., 2023; Lee et al., 2018; Sehwag et al., 2021). Score-based methods derive scoring
+functions for model outputs in output space including confidence-based score (Hendrycks & Gimpel,
+2016; Liang et al., 2018; Sun et al., 2021; Wang et al., 2022; Wei et al., 2022), classification score
+from a learned discriminator (Kong & Ramanan, 2021), energy-based score (Liu et al., 2020; Wang
+et al., 2021) and gradient-based score (Huang et al., 2021). Building upon the idea that OOD samples
+should be far away from known ID data centroids or prototypes in the embedding space, recent
+distance-based methods have shown promising results by computing distances to the nearest training
+sample (Tack et al., 2020) or nearest prototype (Tao et al., 2023), KNN distance (Sun et al., 2022; Du
+et al., 2022a; Ming et al., 2023) and Mahalanobis distance (Lee et al., 2018; Sehwag et al., 2021).
+In addition to that, only a few methods (Tack et al., 2020; Sun et al., 2022) explore the potential of
+developing OOD detection models using completely unlabeled training data. In this work, we extend
+our framework to be able to work with unlabeled training data.
+Representation learning for OOD detection. Building on the recent success of contrastive representation learning methods such as SimCLR (Chen et al., 2020) and SupCon (Khosla et al., 2020), recent
+distance-based methods (Tack et al., 2020; Sehwag et al., 2021; Sun et al., 2022) have demonstrated
+the successful application of these methods to OOD detection, despite their training objectives not
+being specifically designed for this task. Notably, features obtained from SupCon (Khosla et al.,
+2020) have been used to compute distance metrics, such as the Mahalanobis distance (Sehwag et al.,
+2021) and KNN distance (Sun et al., 2022), for OOD detection. These approaches outperform
+previous distance-based methods that derive features trained from standard cross entropy (Lee et al.,
+2018). Methods like VOS (Du et al., 2022b) and NPOS (Tao et al., 2023) have taken a different
+approach by synthesizing OOD data samples to regularize the model’s decision boundary between
+ID and OOD data. Recent works (Du et al., 2022a; Ming et al., 2023) that model the data as vMF
+distribution (Mardia et al., 2000) provide simple and clear interpretation of the hyperspherical embeddings. Specifically, Ming et al. (2023) propose a regularization strategy to ensure that all samples are
+compactly located around their class’s corresponding single prototype.
+Contrastive learning and prototypical learning. Contrastive representation learning methods treat
+each sample as an individual class, and bring together multiple views of the same input sample
+while pushing away from other samples. This effectively enhances the discriminative properties of
+the learned representations, enabling these approaches to take the lead in learning powerful feature
+representations in unsupervised (Wu et al., 2018; Oord et al., 2018; He et al., 2020; Chen et al.,
+2020; Robinson et al., 2021), semi-supervised (Assran et al., 2021) and supervised settings (Khosla
+et al., 2020). The fundamental properties and effectiveness of contrastive loss in hyperspherical
+space have been investigated in studies (Wang & Isola, 2020; Wang & Liu, 2021). Other methods
+learn feature representations by modeling the relations of samples to cluster centroids (Caron et al.,
+2018) or prototypes (Snell et al., 2017). On top of contrastive learning, Li et al. (2021) integrate
+prototypical learning that additionally contrasts between samples and prototypes obtained through
+offline clustering algorithms. The introduced prototypes benefit the representation ability but require
+all training samples for cluster assignments, leading to training instability due to label permutations
+(Xie et al., 2022). Unlike the existing prototypical learning methods focusing on basic classification
+tasks with generic designs, the proposed method uses a novel and specifically designed mixture of
+prototypes model for OOD detection.
+
+3
+
+M ETHOD
+
+Let X and Y id denote the input and label space of the ID training data given to a machine learning
+model, respectively. For example, X := Rn and Y id := {1, ..., C} are the input image space and
+the label space for multi-label image classification. A machine learning method can access the ID
+training dataset Did = {(xi , yi )} drawn i.i.d. from the joint distribution PX ×Y id , and assumes the
+same distribution (e.g., same label space) in training and testing under a closed-world setting.
+The aim of OOD detection is to identify whether a testing sample x ∈ X is from ID or not (i.e.,
+OOD). In a typical scenario of classification (Hendrycks & Gimpel, 2016), the OOD data are from
+unknown classes y ∈
+/ Y id , i.e., Y id ∩ Y ood = ∅. By letting PXid denote the marginal distribution of
+PX ×Y id on X , an input x is identified as OOD according to P id (x) < σ, where threshold σ is a level
+3
+
+Published as a conference paper at ICLR 2024
+
+𝒄𝟏 𝒄𝟐
+Prototypes 𝐏
+Prototype
+Identification
+& Update
+
+Input
+
+Projector
+
+Encoder
+
+𝐡
+Feed Forward
+
+… 𝑪
+𝒄𝟐
+𝒄𝟏
+𝐩$$ 𝐩$% 𝐩$% 𝐩%% … 𝐩*)
+𝐳$
+
+…
+
+Assignment
+Weights
+
+𝑔*
+
+𝑓*
+
+𝑪
+…
+
+ℒ+,-.
+
+𝐳
+Update with weights
+(no gradient)
+
+Data Sample
+
+ℒ!"#$
+
+Prototype
+
+ℒ$%"&"'!"(&%)
+
+# …
+(
+! 𝑤!
+#
+𝑤!,'
+𝑤!,!
+!,# 𝑤!,! 𝑤!,#
+
+𝐳%
+
+!
+!
+# 𝑤# …
+(
+𝑤#,!
+𝑤#,#
+𝑤#,!
+𝑤#,'
+#,#
+
+𝐳&
+
+# …
+!
+!
+#
+(
+𝑤$,#
+𝑤$,!
+𝑤$,#
+𝑤$,!
+𝑤$,'
+
+𝐳'
+…
+
+!
+! 𝑤#
+# … 𝑤(
+𝑤%,!
+𝑤%,#
+%,'
+%,! 𝑤%,#
+
+𝐳(
+
+!
+! 𝑤# 𝑤# …
+(
+𝑤&,!
+𝑤&,#
+𝑤&,'
+&,! &,#
+
+… … … … … …
+
+Assignment Weights
+
+Figure 1: Overview of our proposed framework of prototypical learning with a mixture of prototypes
+(PALM). We regularize the embedding representation space via the proposed mixture of prototype
+modeling. We propose (1) optimizing an MLE loss to encourage the sample embeddings to be compact
+around their associated prototypes, and (2) minimizing prototype contrastive loss to regularize the
+model at the prototype level. We visualize the calculation of assignment weights on the right.
+set parameter determined by the false ID detection rate (e.g., 0.05) (Ming et al., 2023; Chen et al.,
+2017). Note that OOD samples are not seen/available during training, and the ID training data are
+labelled. In the unsupervised/unlabelled OOD/outlier detection (Sehwag et al., 2021; Yang et al.,
+2021) setting, the model can only access unlabelled ID data Did = {xi }.
+
+3.1 OVERVIEW OF THE P ROPOSED M ETHOD
+The proposed method PALM consists of three main components, as shown in Fig. 1. A DNN encoder
+fθ : X → RE is used to extract feature embeddings h ∈ RE from the input x with h = fθ (x). To
+regularize the representation learning, a projector gϕ : RE → RD followed by normalization is used
+to project the high-dimensional embedding h to a lower-dimentional hyperspherical embedding z via
+z′ = gϕ (h) and z = z′ /∥z′ ∥2 . Relying on the mixture modeling of the hyperspherical embeddings,
+the proposed prototypical learning module with the associated losses is used to shape the embedding
+space and regularize the learning of fθ and gϕ , which will produce discriminative embeddings for
+OOD detection. Distance metrics (Sehwag et al., 2021; Sun et al., 2022) will be applied to embeddings
+h to determine the OOD detection scores, as in other distance/representation-based methods (Tack
+et al., 2020; Tao et al., 2023; Du et al., 2022a).
+
+3.2 M ODELING H YPERSPHERICAL E MBEDDINGS WITH M IXTURE M ODELS
+We formulate the embedding space with hyperspherical model, considering the its benefits in representation learning mentioned above (Wang & Isola, 2020; Khosla et al., 2020). The projected embeddings
+z lying on the unit sphere (∥z∥2 = 1) can be naturally modeled using the von Mises-Fisher (vMF)
+distribution (Mardia et al., 2000; Wang & Isola, 2020). Generally, the whole embedding space can be
+modeled as a mixture of vMF distributions, whereeach is defined by a mean pk and a concentration
+D
+parameter κ: pD (z; pk , κ) = ZD (κ) exp κp⊤
+k z , where pk ∈ R is the the k-th prototype with
+unit norm, κ ≥ 0 represents the tightness around the mean, and ZD (κ) is the normalization factor.
+
+Prior works use single class-conditional vMF distribution with one prototype to represent the samples
+within a specific class (Du et al., 2022a; Ming et al., 2023). In the whole embedding space, each
+sample is assigned to and pushed to the single prototype of its class. However, uniformly enforcing
+all samples to be close to one prototype may be unrealistic for complex data, leading to insufficient
+representative capability, non-compact embeddings and confusions between ID and OOD, as visualized in Fig. 5. We thus propose to model each class with a mixture of vMF distributions by multiple
+prototypes. For each class c, we define K prototypes Pc = {pck }K
+k=1 corresponding to a mixture
+of vMF. Each zi is assigned to the prototypes via assignment weights wic ∈ RK . The probability
+density for a sample zi in class c is defined as a mixture model:
+K
+X
+c
+c
+c
+p(zi ; wi , P , κ) =
+wi,k
+ZD (κ) exp(κpck ⊤ zi ),
+(1)
+k=1
+c
+where wi,k
+denotes the k-th element of wic . We define the same number of prototypes, i.e., same K,
+for each class. In PALM, the assignment weights are decided according to the adjacency relationship
+between the samples and the estimated prototypes, as discussed in the following. Given the probability
+model in Eq. (1), an embedding zi is assigned to a class c with the following normalized probability:
+PK
+c
+c⊤
+k=1 wi,k exp(pk zi /τ )
+,
+(2)
+p(yi = c|zi ; {wij , Pj , κ}C
+)
+=
+j=1
+PC PK
+j
+j ⊤
+w
+exp(p
+z
+/τ
+)
+′
+′
+′
+i
+j=1
+k =1 i,k
+k
+
+4
+
+Published as a conference paper at ICLR 2024
+
+where τ = 1/κ is analogous to the temperature parameter in our MLE loss.
+3.3
+
+P ROTOTYPICAL L EARNING WITH M IXTURE OF P ROTOTYPES
+
+Relying on the class-conditional mixture vMF distributions of different classes, we can regularize
+the representation learning in the hyperspherical embedding space with the prototypes as anchors.
+Sharing a similar motivation to prior works, we optimize the derived end-to-end trainable objectives
+to 1) let each sample be assigned to the correct class with a higher probability compared to the
+incorrect classes, and 2) learn more informative representations for discriminating different classes,
+as well as ID and OOD samples. In PALM, we learn the (randomly initialized) prototypes and the
+assignment weights dynamically, and conduct the prototypical learning via optimizing the objectives
+relying on the mixture prototypes derived from the vMF mixture distributions.
+Training objectives. Given the training data, we can perform maximum likelihood estimation (MLE)
+QN
+C
+according to Eq. (1) by solving the problem maxθ,ϕ i=1 p(yi = c|zi , {wic , {pck , κ}K
+k=1 }j=1 ), where
+zi is the hyperspherical embedding obtained with fθ and gϕ . By taking the negative log-likelihood,
+the optimization problem can be equivalently rewritten as:
+PK
+yi
+yi ⊤
+N
+1 X
+k=1 wi,k exp (pk zi /τ )
+LMLE = −
+log PC PK
+,
+(3)
+c
+c ⊤
+N i=1
+c=1
+k′ =1 wi,k′ exp (pk′ zi /τ )
+where y i represents the class index of the sample xi , and τ is the temperature parameter. This MLE
+loss encourages samples to be close to the proper prototypes belonging to their own classes. Instead
+of forcing all samples in one class to be compact around one prototype as in (Ming et al., 2023; Du
+et al., 2022a), PALM assigns each sample to specific prototypes according to the assignment weights.
+The mixture prototypes enable diverse samples to be better represented by specific prototypes.
+The MLE loss in Eq. (3) only encourages the compactness between samples and the prototypes. To
+further shape the embedding space, we encourage intra-class compactness and inter-class discrimination at the prototype level. To do this, we propose the prototype contrastive loss, which relies on the
+class information of the prototypes as an implicit supervision signal (Khosla et al., 2020; Sehwag
+et al., 2021):
+PK
+C K
+1(k′ ̸= k) exp(pck ⊤ pck′ /τ )
+1 XX
+′
+log PC PKk =1
+Lproto-contra = −
+,
+(4)
+c ⊤ c′
+′′
+′
+CK c=1
+c′ =1
+k′′ =1 1(k ̸= k, c ̸= c) exp(pk pk′′ /τ )
+k=1
+
+where 1() is an indicator function for avoiding contrasting between the same prototype. As discussed
+in the following, the prototypes are updated with the exponential moving average (EMA) technique.
+Thus the loss in Eq. (4) is mainly used to regularize the sample embeddings through the connection
+between samples and the prototypes.
+The overall training objective of PALM can be formally defined as:
+LPALM = LMLE + λLproto-contra ,
+
+(5)
+
+where λ > 0 is the weight to control the balance between these two loss functions.
+Soft prototype assignment with reciprocal neighbor relationships. The assignment weights
+are mainly used for calculating the MLE loss in Eq. (3) and updating the prototypes as discussed
+in the following, which are both in the training process with label information available. In the
+class-conditional mixture modeling, for each sample, we consider the assignment within its classes.
+Given a sample and the mixture prototypes of its class, we assign it to the prototypes relying on
+the adjacency information. Specifically, we first obtain the assignment weights by considering the
+global information with an online soft cluster assignment method in (Caron et al., 2020). Given K
+prototypes Pc of class c and a batch of B embeddings Z, having B c samples Zc in class c, we can
+obtain the assignment weights packed in a matrix as:
+Wc = diag(u) exp(
+c
+
+Pc ⊤ Zc
+)diag(v),
+ϵ
+
+(6)
+
+B
+where u ∈ RK
++ and v ∈ R+ are nonnegative renormalization vectors calculated for obtaining the
+solution (Cuturi, 2013), and diag() denotes the diagonal matrix of a vector. They can be obtained
+
+5
+
+Published as a conference paper at ICLR 2024
+
+through efficient matrix multiplications using the iterative Sinkhorn-Knopp algorithm (Cuturi, 2013),
+and we show the efficiency of this approximation in Appendix C.1 in detail.
+Assignment Pruning. Eq. (6) assigns each sample to the prototypes with soft assignment weights.
+Some prototypes far away from a sample can also be assigned with small weights. Although every
+prototype can be a neighbor of a sample described by a weight (reflecting the distance), a prototype
+may not be a proper neighbor of a sample, considering it mainly describes another cluster of samples
+very close to it. We consider further refining the assignments obtained via Eq. (6), considering the
+potential mutual neighbor relationship from a local perspective. For simplicity, instead of producing
+complicated mutual neighbor analyses, we conduct pruning on the assignment weights of each sample
+c
+c
+c
+via top-K shrinkage operation: wi,k
+:= 1[wi,k
+> β] ∗ wi,k
+, where β is the K-th largest assignment
+c
+weight, and 1[wi,k > β] ∈ {0, 1} is an indicator function. We studied how the hyperparameter K for
+the top-K selection will influence the performance in Sec. 4.3, as shown in Fig. 4(a).
+Prototype updating. As mentioned previously, to ensure optimal performance during the optimization of network parameters, we implemented the widely-used exponential moving average (EMA) (Li
+et al., 2020) technique to update the prototype values. This enables model parameters (fθ , hθ ) and
+prototypes P to be updated asynchronously. The EMA technique allows us to iteratively update the
+prototype values while maintaining a consistent assignment, which helps to smooth out training. This
+approach is aimed at avoiding sub-optimal solutions that may arise during training due to fluctuations
+in the prototype values. Given a batch of B data samples, we formally denote the update rule as:
+B
+X
+c
+pck := Normalize(αpck + (1 − α)
+1(yi = c)wi,k
+zi ),
+(7)
+i=1
+
+where 1() is an indicator function that ensures only selecting samples belonging to the same class
+for updating. Subsequently, we renormalize prototypes to the unit sphere for future optimization,
+ensuring that the distances between prototypes and embeddings remain meaningful and interpretable.
+Extension to unsupervised OOD detection. In PALM, the prototypes and the assignments in the
+class-conditional mixture model can be automatically learned and estimated. Benefiting from this
+learning paradigm, we can extend PALM to the unsupervised OOD detection without any class labels
+available during training, with minor adjustments. Specifically, we do not use the label information
+and release the supervised learning version of prototype contrastive loss into an unsupervised learning
+version. Even with such simple modifications, PALM can perform well on unsupervised OOD setting,
+showing the potential. More details are left in Appendix A.4.
+
+4
+
+E XPERIMENTS
+
+Datasets and training details. We use the standard CIFAR-100 and CIFAR-10 dataset
+(Krizhevsky et al., 2009) as our ID training dataset, and report OOD detection performance on
+a series of natural image datasets including SVHN (Netzer et al., 2011), Places365 (Zhou et al.,
+2017), LSUN (Yu et al., 2015), iSUN (Xu et al., 2015), and Textures (Cimpoi et al., 2014). We
+further assess the performance of PALM on Near-OOD detection benchmarks (Tack et al., 2020; Sun
+et al., 2022), as outlined in Appendix C. In our main experiments, we use ResNet-34 as our backbone
+model for the CIFAR-100 ID training dataset and ResNet-18 for CIFAR-10, along with a two-layer
+MLP projector that projects to a 128-dimensional unit sphere following (Sehwag et al., 2021; Sun
+et al., 2022; Ming et al., 2023; Tao et al., 2023). We train the model using stochastic gradient descent
+with momentum 0.9 and weight decay 10−6 for 500 epochs. We employ the same initial learning
+rate of 0.5 with cosine learning rate scheduling (Loshchilov & Hutter, 2017; Misra & Maaten, 2020).
+By default, we maintain 6 prototypes for each class and select 5 closest prototypes during the pruning
+phase. To ensure consistent assignment between iterations, we use a large momentum α of 0.999
+as the default value for prototype update. For unsupervised OOD detection, none of the class labels
+for ID training samples are available, presenting a considerably more challenging benchmark. More
+experimental details are provided in Appendix B and more experiment results Appendix C.
+OOD detection scoring function. Given that our approach is designed to learn compact representations, we select the widely-used distance-based OOD detection method of Mahalanobis score (Lee
+et al., 2018; Sehwag et al., 2021). In line with standard procedure (Sehwag et al., 2021; Sun et al.,
+2022; Ming et al., 2023), we leverage the feature embeddings from the penultimate layer for distance
+metric computation. For completeness, we also compare our method using the recently proposed
+distance metric of KNN (Sun et al., 2022).
+6
+
+Published as a conference paper at ICLR 2024
+
+Table 1: OOD detection performance on methods trained on labeled CIFAR-100 as ID dataset using
+backbone network of ResNet-34. ↓ means smaller values are better and ↑ means larger values are
+better. Bold numbers indicate superior results.
+Methods
+
+SVHN
+
+Places365
+
+OOD Datasets
+LSUN
+
+iSUN
+
+Textures
+
+Average
+
+FPR↓
+
+AUROC↑
+
+FPR↓
+
+AUROC↑
+
+FPR↓
+
+AUROC↑
+
+FPR↓
+
+AUROC↑
+
+FPR↓
+
+AUROC↑
+
+FPR↓
+
+AUROC↑
+
+MSP
+Vim
+ODIN
+Energy
+VOS
+CSI
+SSD+
+kNN+
+NPOS
+CIDER
+
+78.89
+73.42
+70.16
+66.91
+43.24
+44.53
+31.19
+39.23
+10.62
+12.55
+
+79.80
+84.62
+84.88
+85.25
+82.8
+92.65
+94.19
+92.78
+97.49
+97.83
+
+84.38
+85.34
+82.16
+81.41
+76.85
+79.08
+77.74
+80.74
+67.96
+79.93
+
+74.21
+69.34
+75.19
+76.37
+78.63
+76.27
+79.90
+77.58
+78.81
+74.87
+
+83.47
+86.96
+76.36
+59.77
+73.61
+75.58
+79.39
+48.99
+20.61
+30.24
+
+75.28
+69.74
+80.1
+86.69
+84.69
+83.78
+85.18
+89.30
+92.61
+92.79
+
+84.61
+85.35
+79.54
+66.52
+69.65
+76.62
+80.85
+74.99
+35.94
+45.97
+
+74.51
+73.16
+79.16
+84.49
+86.32
+84.98
+84.08
+82.69
+88.94
+88.94
+
+86.51
+74.56
+85.28
+79.01
+57.57
+61.61
+66.63
+57.15
+24.92
+35.55
+
+72.53
+76.23
+75.23
+79.96
+87.31
+86.47
+86.18
+88.35
+91.35
+92.26
+
+83.57
+81.13
+78.70
+70.72
+64.18
+67.48
+67.16
+60.22
+32.01
+40.85
+
+75.27
+74.62
+78.91
+82.55
+83.95
+84.83
+85.91
+86.14
+89.84
+89.34
+
+PALM (ours)
+
+3.29
+
+99.23
+
+64.66
+
+84.72
+
+9.86
+
+98.01
+
+28.71
+
+94.64
+
+33.56
+
+92.49
+
+28.02
+
+93.82
+
+Table 2: Unsupervised OOD detection performance on methods trained on unlabeled CIFAR-100 as
+ID dataset using backbone network of ResNet-34.
+Methods
+
+SVHN
+
+Places365
+
+OOD Datasets
+LSUN
+
+iSUN
+
+Textures
+
+Average
+
+FPR↓
+
+AUROC↑
+
+FPR↓
+
+AUROC↑
+
+FPR↓
+
+AUROC↑
+
+FPR↓
+
+AUROC↑
+
+FPR↓
+
+AUROC↑
+
+FPR↓
+
+AUROC↑
+
+SimCLR+KNN
+SSD
+SimCLR
+CSI
+
+61.21
+60.13
+52.63
+14.47
+
+84.92
+86.40
+91.52
+97.14
+
+81.46
+79.05
+77.51
+86.23
+
+72.97
+73.68
+76.01
+66.93
+
+69.65
+61.94
+31.28
+34.12
+
+77.77
+84.47
+94.05
+94.21
+
+83.35
+84.37
+90.90
+87.79
+
+70.39
+75.58
+66.51
+80.15
+
+78.49
+71.91
+70.07
+45.16
+
+76.75
+83.35
+81.81
+92.13
+
+74.83
+71.48
+64.48
+53.55
+
+76.56
+80.70
+81.98
+86.11
+
+PALM (ours)
+
+13.86
+
+97.53
+
+85.63
+
+69.46
+
+21.28
+
+95.95
+
+53.43
+
+89.06
+
+42.62
+
+88.33
+
+43.37
+
+88.07
+
+Evaluation metrics. To demonstrate the effectiveness of PALM, we report three commonly used
+evaluation metrics: (1) the false positive rate (FPR) of OOD samples when the true positive rate of
+ID samples is at 95%, (2) the area under the receiver operating characteristic curve (AUROC), and
+(3) ID classification accuracy (ID ACC).
+4.1 M AIN R ESULTS
+PALM outperforms previous supervised methods by a large margin. Table 1 shows the experimental results based on the standard setting of using CIFAR-100 as ID data and other datasets as
+unseen OOD data. For a fair comparison, all results are obtained using ResNet-34 trained on the ID
+CIFAR-100 dataset without access to any auxiliary outlier/OOD datasets. We compare our method
+with recent competitive methods, including MSP (Hendrycks & Gimpel, 2017), Vim (Wang et al.,
+2022), ODIN (Liang et al., 2018), Energy (Liu et al., 2020), VOS (Du et al., 2022b), CSI (Tack et al.,
+2020), SSD+ (Sehwag et al., 2021), kNN+ (Sun et al., 2022), NPOS (Tao et al., 2023), and CIDER
+(Ming et al., 2023).
+Compared to previous distance-based methods such as SSD+ (Sehwag et al., 2021) and KNN+ (Sun
+et al., 2022), which employ contrastive loss designed for classification tasks, PALM outperforms
+them based on the regularization designed for OOD detection. All method performs not well for the
+Place365 OOD dataset due to its input being confusing with the ID data. NPOS achieves the best FPR
+on Textures as the OOD data, since it directly generates OOD samples to boost training. By modeling
+the embedding space with a mixture of prototypes, PALM achieves a notable 12.83% reduction in
+average FPR compared to the most related work CIDER, which also models dependencies between
+input samples and prototypes. PALM outperforms the most recent work of NPOS, without the need to
+generate artificial OOD samples. Moreover, PALM achieves a new state-of-the-art level of AUROC
+performance. We also report the results on OpenOOD benchmark (Yang et al., 2022; Zhang et al.,
+2023) in Table 6 in Appendix C.
+PALM outperforms competitive unsupervised approaches. As demonstrated in Table 2, our
+method in the unlabeled setting outperforms previous approaches, including SimCLR (Chen et al.,
+2020) + KNN (Sun et al., 2022), SimCLR (Chen et al., 2020; Tack et al., 2020), CSI (Tack et al.,
+2020), and SSD (Sehwag et al., 2021). Although our primary contribution does not specifically
+target this unlabeled setting, we still observe a significant performance boost, surpassing CSI on
+most of the datasets. It is worth noting that CSI utilizes an ensemble of different transformations and
+incurs 4 times the computational cost during both training and testing. Remarkably, our unsupervised
+method achieves on par or superior performance compared to our supervised prior works NPOS and
+7
+
+Table 2: OOD detection performance on methods trained on unlab
+using backbone network of ResNet-34.
+
+Published as a conference paper at ICLR 2024
+
+Methods
+
+SVHN
+FPR#
+
+AUROC"
+
+Places365
+FPR#
+
+OOD Datasets
+LSUN
+
+iSUN
+
+AUROC"
+
+FPR#
+
+AUROC"
+
+FPR#
+
+AURO
+
+SimCLR+KNN 61.21
+84.92
+81.46
+72.97
+CIDER on various test datasets under the same training budget
+information.
+More
+SSD without any
+60.13label86.40
+79.05
+73.68
+SimCLR
+52.63
+91.52
+77.51
+76.01
+experiment results and discussions in Appendix C.2.
+CSI
+14.47
+97.14
+86.23
+66.93
+
+69.65
+61.94
+31.28
+34.12
+
+77.77
+84.47
+94.05
+94.21
+
+83.35
+84.37
+90.90
+87.79
+
+70.3
+75.5
+66.5
+80.1
+
+Density
+
+Density
+
+70
+
+60
+
+Area of intersection (%)
+
+Density
+
+Density
+
+Density
+
+PALM (ours)
+13.86
+97.53
+85.63
+69.46
+21.28
+95.95
+53.43
+89.0
+4.2 D ISCUSSIONS
+PALM learns a more compact cluster around each prototype. Comparing to previous
+distance-based methods that encourage samples of each
+class to be close to each other (Tack et al., 2020; SeCIDER
+PALM
+hwag et al., 2021; Sun et al., 2022) or its single prototype (Ming et al., 2023), PALM considers a more
+Dispersion " C
+Methods
+realistic embedding space where samples are enforced
+(in degree)
+to be close to its most similar prototype of its class
+CIDER
+89.46
+and learn a more compact embedding space. In Fig.2
+0.0
+0.4
+0.8
+PALM
+89.83
+(top), we evaluate the embedding quality of PALM
+by calculating the cosine similarity of ID samples to
+0.0 0.2 0.4 0.6 0.8 1.0
+Cosine similarity
+their nearest prototype. We observe a more compact
+distribution with a higher number of similar samples
+Compactness ↓
+Number of far
+Methods
+Figure 2: Analysis
+(in degree)of embedding
+ID samplesquality
+(%) ↓ for CIFAR-100 (ID) using
+and significantly fewer dissimilar samples. Notably,
+the
+distance distribution
+(left) 25.79
+and evaluate dispersion, compactness, a
+CIDER struggles with the representative ability of proCIDER
+31.08
+PALM
+24.21
+15.71
+with
+cosine similarity
+less than
+0.8 (right).
+totypes, where some ID samples even exhibit near-zero
+similarity. We also quantify the number of far ID samples, whose similarity is below 0.8, in Fig. 2 (bottom). Figure 2: Analysis of embedding quality for
+To provide a comprehensive analysis, we additionally CIFAR-100 (ID) using CIDER and PALM.
+assess the compactness measurements of (Ming et al., We examine the distance distribution (top),
+4.2evaluate
+D ISCUSSIONS
+compactness and the propor2023) in Fig. 2 (bottom), where it measures the av- and
+erage cosine similarity of input samples to its closest tion of far ID samples (bottom).
+prototype.
+PALM learns a more compact cluster around each prototype. C
+based methods that encourage samples of each class to be close t
+Sehwag et al., 2021; Sun et al., 2022) or its single prototype (Ming
+more realistic embedding space where samples are enforced to be cl
+of its class and learn a more compact embedding space. In Fig.2 (l
+quality of PALM by calculating the cosine similarity of ID sample
+observe a more compact distribution with a higher number of similar
+CIFAR-100 (ID)
+iSUN (OOD)
+dissimilar samples. Notably, CIDER struggles with the representat
+some ID samples even exhibit near-zero similarity. We also quantif
+whose similarity is below 0.8, in Fig. 2 (right). To provide a compreh
+the0.0 dispersion
+0.0 0.2 0.4 0.6 0.8 1.0
+0.0 0.2 0.4 0.6 0.8 1.0
+0.0 0.2 0.4 0.6assess
+0.8 1.0
+0.2 0.4 0.6 0.8 1.0and compactness measurements of (Ming et a
+Score
+Score
+Score
+Score
+dispersion measures
+the average cosine similarity of prototypes f
+(a) SSD+
+(b) KNN+
+(c) CIDER
+(d) the
+PALM
+(ours)cosine similarity of input samples to its closes
+measures
+average
+Figure 3: UMAP (McInnes et al., 2018) visualization of the
+first 20
+subclasses
+ID (CIFAR-100)
+PALM
+enhances
+theof
+separability
+between ID and OOD.
+and all OOD (iSUN) samples plotted to the same embedding
+for methods
+includingdistribution
+(a) SSD+ of ID (CIFARWespace
+visualize
+the embedding
+(Sehwag et al., 2021) (b) KNN+ (Sun et al., 2022) (c) CIDER
+(Ming
+al., (iSUN)
+2023) and
+(d) PALM.
+Thecluster in pink) us100)
+and et
+OOD
+samples
+(central
+scores are obtained by scaling the distance metrics used by each
+method
+to
+[0,
+1]
+for
+visulization.
+We 3. In contrast to
+ing UMAP (McInnes et al., 2018) in Fig.
+measure the area of overlapping sections between ID and OOD
+scores,
+as
+shown
+in
+Fig.
+5.
+previous works that suffer from correlations between OOD
+and numerous
+ID clusters
+(Figs. 3(a)3(b)3(c)),
+PALM enhances the separability between ID and OOD.samples
+We visualize
+the embedding
+distribution
+PALM
+exhibits
+a weak
+correlation
+of ID (CIFAR-100) and OOD (iSUN) samples (central cluster
+in pink)
+usingonly
+UMAP
+(McInnes
+et al., with a single ID
+cluster
+(Fig. 3(d)).
+2018) in Fig. 3. In contrast to previous works that suffer from
+correlations
+between OOD samples and
+numerous ID clusters (Figs. 3(a)3(b)3(c)), PALM exhibits only a weak correlation with a single ID
+Additionally, we estimate the distance density distribution
+cluster (Fig. 3(d)). Notably, PALM further enhances the separability between ID and OOD samples
+of ID and OOD samples for each UMAP visualization in
+by promoting a more noticeable distance between ID clusters less correlated to OOD samples.
+Fig. 3 and quantitatively measure the area of overlapping Figure 4
+Additionally, we estimate the distance density distribution of
+ID andinOOD
+for eachsignificantly
+UMAP
+sections
+Fig. samples
+4. Our method
+promotes a between
+visualization in Fig. 3 and quantitatively measure the arealarge
+of overlapping
+sectionsID
+inand
+Fig.OOD
+5. Our
+separation between
+samples, suggesting centage
+method significantly promotes a large separation between ID
+and OOD
+samples,
+a more
+a more
+effective
+OODsuggesting
+detection performance.
+rior resu
+effective OOD detection performance.
+4.3 A BLATION S TUDIES
+8
+PALM generalizes well to various distance-based OOD detection scoring functions. To
+demonstrate the effectiveness of our proposed representation learning framework for OOD detection, we perform ablation studies on the choice of distance metrics in Table 3. We tested
+
+50
+
+40
+
+30
+
+20
+
+10
+
+0
+
+8
+
+Published as a conference paper at ICLR 2024
+
+Table 3: Ablation on distance metrics selection for OOD detection. We evaluate two widely used
+distance metrics of KNN distance (K=300) and Mahalanobis distance.
+Distance
+Metrics
+
+Methods
+
+SVHN
+
+OOD Datasets
+LSUN
+
+Places365
+
+iSUN
+
+Average
+
+Textures
+
+AUROC↑
+
+FPR↓
+
+AUROC↑
+
+FPR↓
+
+AUROC↑
+
+FPR↓
+
+AUROC↑
+
+FPR↓
+
+AUROC↑
+
+FPR↓
+
+AUROC↑
+
+KNN
+
+KNN+
+NPOS
+CIDER
+PALM (ours)
+
+39.23
+10.62
+12.55
+6.90
+
+92.78
+97.49
+97.83
+98.54
+
+80.74
+67.96
+79.93
+61.87
+
+77.58
+78.81
+74.87
+82.32
+
+48.99
+20.61
+30.24
+14.60
+
+89.30
+92.61
+92.79
+96.67
+
+74.99
+35.94
+45.97
+30.76
+
+82.69
+88.94
+88.94
+92.06
+
+57.15
+24.92
+35.55
+37.04
+
+88.35
+91.35
+92.26
+90.84
+
+60.22
+32.01
+40.85
+30.23
+
+86.14
+89.84
+89.34
+92.09
+
+Mahalanobis
+
+SSD+
+PALM (ours)
+
+31.19
+3.29
+
+94.19
+99.23
+
+77.74
+64.66
+
+79.90
+84.72
+
+79.39
+9.86
+
+85.18
+98.01
+
+80.85
+28.71
+
+84.08
+94.64
+
+66.63
+33.56
+
+86.18
+92.49
+
+67.16
+28.02
+
+85.91
+93.82
+
+90
+
+80
+SVHN
+Places365
+LSUN
+iSUN
+Textures
+Average
+
+70
+60
+1
+
+2
+
+3
+
+4
+
+5
+
+6
+
+Number of topK assignments
+
+(a) Top-K assignment #.
+
+100
+
+100
+
+Hard
+Soft
+
+80
+
+70
+
+90
+SVHN
+Places365
+LSUN
+iSUN
+Textures
+Average
+
+85
+80
+
+60
+
+75
+50
+
+SVHN Places365 LSUN
+
+1 2
+
+iSUN Textures Average
+
+Dataset
+
+(b) Assignment rules.
+
+Learnable Prototypes
+EMA
+
+90
+
+95
+
+4
+
+6
+
+8
+
+AUROC
+
+100
+
+90
+
+AUROC
+
+100
+
+AUROC
+
+AUROC
+
+FPR↓
+
+80
+
+70
+
+60
+
+50
+
+10
+
+SVHN Places365 LSUN
+
+(c) Number of prototypes.
+
+iSUN Textures Average
+
+Dataset
+
+Number of prototypes per class
+
+(d) Prototype updating.
+
+Figure 4: Ablation studies on (a) pruning selection, (b) soft vs. hard assignments, (c) number of
+prototypes for each class and (d) prototype update procedure.
+our method on two commonly used distance metrics, KNN distance (Sun et al., 2022; Ming
+et al., 2023; Tao et al., 2023) and Mahalanobis distance (Lee et al., 2018; Sehwag et al.,
+2021). Our method achieves superior performance on these two widely-used distance metrics.
+PALM improves large-scale OOD detection. We demonstrate the
+performance of PALM on a more challenged large-scale benchmark in
+Fig. 6. We consider ImageNet-100 (Tian et al., 2020) as our ID
+training dataset. Following (Huang & Li, 2021; Ming et al., 2023), we
+evaluate our OOD detection performance on test datasets SUN (Xiao et al.,
+2010), Places (Zhou et al., 2017), Textures (Cimpoi et al., 2014)
+and iNaturalist (Van Horn et al., 2018). More experiment details
+Dataset
+are left in Appendix B and experiment results in Appendix C.1.
+Figure 5: Area of overPruning less relevant assignments benefits the learning process. Fig. lapping sections between
+4(a) demonstrates the effectiveness of our introduced pruning procedure ID and OOD distance
+by top-K selection. We observe a significant improvement in performance densities in percentage.
+when selecting more assignments, up to 5 out of the 6 available prototypes. Smaller numbers indicate
+Soft assignment helps model find optimal solutions. In Fig. 4(b), we superior results.
+compare the performance between soft assignments and hard assignments.
+Soft assignments help preventing stuck in sub-optimal local minima.
+97
+Area of intersection (%)
+
+70
+
+50
+40
+30
+20
+10
+
+0
+
+EMA provides a more consistent cluster assignment. As widely discussed in the literature (He et al., 2020; Grill et al., 2020; Ming et al.,
+2023), an asynchronous update between the model parameters of the two
+views or between model parameters and prototypes is fundamental to the
+success of recent representation learning methods. Here we also examine
+the effectiveness of the EMA update used for our prototypes in Fig. 4(d).
+
+SVHN Places365 LSUN
+
+iSUN Texture Average
+
+SSD+
+KNN+
+CIDER
+PALM
+
+96
+95
+
+AUROC
+
+Ablation on number of prototypes. We demonstrate the effects of
+varying the number of prototypes in Fig. 4(c) and observe an increase in
+performance as the number of prototypes increases. We find that defining
+only one prototype for each class, results in worse performance.
+
+SSD+
+KNN+
+CIDER
+PALM
+
+60
+
+94
+93
+92
+91
+90
+89
+
+SUN
+
+Places
+
+Textures iNaturalist Average
+
+Dataset
+
+Figure 6: OOD detection
+performance on methods by fine-tuning pretrained ResNet-50 models on ImageNet-100.
+5 C ONCLUSION
+In this work, we propose PALM, a novel prototypical learning framework with a mixture of prototypes
+that learns hyperspherical embeddings for OOD detection. By considering the complex underlying
+structure of data distributions, PALM model the embedding space by a mixture of multiple prototypes
+conditioned on each class, encouraging a more compact data distribution and demonstrating superior
+OOD detection performance. Moreover, we impose two extensions where we scale our method
+to large-scale datasets and unsupervised OOD detection. The limitation is that PALM needs to be
+manually assign the number of prototypes as a hyperparameter, which is left as future work.
+9
+
+Published as a conference paper at ICLR 2024
+
+R EFERENCES
+Yuki Markus Asano, Christian Rupprecht, and Andrea Vedaldi. Self-labelling via simultaneous
+clustering and representation learning. In International Conference on Learning Representations,
+2020. URL https://openreview.net/forum?id=Hyx-jyBFPr.
+Mahmoud Assran, Mathilde Caron, Ishan Misra, Piotr Bojanowski, Armand Joulin, Nicolas Ballas,
+and Michael Rabbat. Semi-supervised learning of visual features by non-parametrically predicting
+view assignments with support samples. In Proceedings of the IEEE/CVF International Conference
+on Computer Vision, pp. 8443–8452, 2021.
+Mu Cai and Yixuan Li. Out-of-distribution detection via frequency-regularized generative models.
+In Proceedings of the IEEE/CVF Winter Conference on Applications of Computer Vision, pp.
+5521–5530, 2023.
+Mathilde Caron, Piotr Bojanowski, Armand Joulin, and Matthijs Douze. Deep clustering for unsupervised learning of visual features. In Proceedings of the European conference on computer vision
+(ECCV), pp. 132–149, 2018.
+Mathilde Caron, Ishan Misra, Julien Mairal, Priya Goyal, Piotr Bojanowski, and Armand Joulin.
+Unsupervised learning of visual features by contrasting cluster assignments. Advances in neural
+information processing systems, 33:9912–9924, 2020.
+Ting Chen, Simon Kornblith, Mohammad Norouzi, and Geoffrey Hinton. A simple framework for
+contrastive learning of visual representations. In International conference on machine learning, pp.
+1597–1607. PMLR, 2020.
+Yen-Chi Chen, Christopher R Genovese, and Larry Wasserman. Density level sets: Asymptotics,
+inference, and visualization. Journal of the American Statistical Association, 112(520):1684–1696,
+2017.
+Mircea Cimpoi, Subhransu Maji, Iasonas Kokkinos, Sammy Mohamed, and Andrea Vedaldi. Describing textures in the wild. In Proceedings of the IEEE conference on computer vision and pattern
+recognition, pp. 3606–3613, 2014.
+Marco Cuturi. Sinkhorn distances: Lightspeed computation of optimal transport. Advances in neural
+information processing systems, 26, 2013.
+Nick Drummond and Rob Shearer. The open world assumption. In eSI workshop: the closed world
+of databases meets the open world of the semantic web, volume 15, pp. 1, 2006.
+Xuefeng Du, Gabriel Gozum, Yifei Ming, and Yixuan Li. Siren: Shaping representations for detecting
+out-of-distribution objects. In Advances in Neural Information Processing Systems, 2022a.
+Xuefeng Du, Zhaoning Wang, Mu Cai, and Sharon Li. Towards unknown-aware learning with
+virtual outlier synthesis. In International Conference on Learning Representations, 2022b. URL
+https://openreview.net/forum?id=TW7d65uYu5M.
+Yilun Du and Igor Mordatch. Implicit generation and modeling with energy based models. In H. Wallach, H. Larochelle, A. Beygelzimer, F. d'Alché-Buc, E. Fox, and R. Garnett (eds.), Advances in Neural Information Processing Systems, volume 32. Curran Associates, Inc., 2019. URL https://proceedings.neurips.cc/paper_files/paper/
+2019/file/378a063b8fdb1db941e34f4bde584c7d-Paper.pdf.
+Dong Gong, Lingqiao Liu, Vuong Le, Budhaditya Saha, Moussa Reda Mansour, Svetha Venkatesh,
+and Anton van den Hengel. Memorizing normality to detect anomaly: Memory-augmented deep
+autoencoder for unsupervised anomaly detection. In Proceedings of the IEEE/CVF International
+Conference on Computer Vision, pp. 1705–1714, 2019.
+Will Grathwohl, Kuan-Chieh Wang, Joern-Henrik Jacobsen, David Duvenaud, Mohammad Norouzi,
+and Kevin Swersky. Your classifier is secretly an energy based model and you should treat
+it like one. In International Conference on Learning Representations, 2020. URL https:
+//openreview.net/forum?id=Hkxzx0NtDB.
+10
+
+Published as a conference paper at ICLR 2024
+
+Jean-Bastien Grill, Florian Strub, Florent Altché, Corentin Tallec, Pierre Richemond, Elena
+Buchatskaya, Carl Doersch, Bernardo Avila Pires, Zhaohan Guo, Mohammad Gheshlaghi Azar,
+et al. Bootstrap your own latent-a new approach to self-supervised learning. Advances in neural
+information processing systems, 33:21271–21284, 2020.
+Kaiming He, Xiangyu Zhang, Shaoqing Ren, and Jian Sun. Delving deep into rectifiers: Surpassing
+human-level performance on imagenet classification. In Proceedings of the IEEE international
+conference on computer vision, pp. 1026–1034, 2015.
+Kaiming He, Haoqi Fan, Yuxin Wu, Saining Xie, and Ross Girshick. Momentum contrast for
+unsupervised visual representation learning. In Proceedings of the IEEE/CVF conference on
+computer vision and pattern recognition, pp. 9729–9738, 2020.
+Dan Hendrycks and Kevin Gimpel. A baseline for detecting misclassified and out-of-distribution
+examples in neural networks. arXiv preprint arXiv:1610.02136, 2016.
+Dan Hendrycks and Kevin Gimpel. A baseline for detecting misclassified and out-of-distribution
+examples in neural networks. In International Conference on Learning Representations, 2017.
+URL https://openreview.net/forum?id=Hkg4TI9xl.
+Rui Huang and Yixuan Li. Mos: Towards scaling out-of-distribution detection for large semantic
+space. In Proceedings of the IEEE/CVF Conference on Computer Vision and Pattern Recognition,
+pp. 8710–8719, 2021.
+Rui Huang, Andrew Geng, and Yixuan Li. On the importance of gradients for detecting distributional
+shifts in the wild. Advances in Neural Information Processing Systems, 34:677–689, 2021.
+Xiaowei Huang, Daniel Kroening, Wenjie Ruan, James Sharp, Youcheng Sun, Emese Thamo, Min
+Wu, and Xinping Yi. A survey of safety and trustworthiness of deep neural networks: Verification,
+testing, adversarial attack and defence, and interpretability. Computer Science Review, 37:100270,
+2020.
+Prannay Khosla, Piotr Teterwak, Chen Wang, Aaron Sarna, Yonglong Tian, Phillip Isola, Aaron
+Maschinot, Ce Liu, and Dilip Krishnan. Supervised contrastive learning. Advances in neural
+information processing systems, 33:18661–18673, 2020.
+Durk P Kingma and Prafulla Dhariwal. Glow: Generative flow with invertible 1x1 convolutions.
+Advances in neural information processing systems, 31, 2018.
+Shu Kong and Deva Ramanan. Opengan: Open-set recognition via open data generation. In
+Proceedings of the IEEE/CVF International Conference on Computer Vision, pp. 813–822, 2021.
+Alex Krizhevsky, Geoffrey Hinton, et al. Learning multiple layers of features from tiny images. 2009.
+Kimin Lee, Kibok Lee, Honglak Lee, and Jinwoo Shin. A simple unified framework for detecting
+out-of-distribution samples and adversarial attacks. Advances in neural information processing
+systems, 31, 2018.
+Junnan Li, Caiming Xiong, and Steven CH Hoi. Mopro: Webly supervised learning with momentum
+prototypes. arXiv preprint arXiv:2009.07995, 2020.
+Junnan Li, Pan Zhou, Caiming Xiong, and Steven Hoi. Prototypical contrastive learning of unsupervised representations. In International Conference on Learning Representations, 2021. URL
+https://openreview.net/forum?id=KmykpuSrjcq.
+Shiyu Liang, Yixuan Li, and R. Srikant. Enhancing the reliability of out-of-distribution image
+detection in neural networks. In International Conference on Learning Representations, 2018.
+URL https://openreview.net/forum?id=H1VGkIxRZ.
+Weitang Liu, Xiaoyun Wang, John Owens, and Yixuan Li. Energy-based out-of-distribution detection.
+Advances in neural information processing systems, 33:21464–21475, 2020.
+Ilya Loshchilov and Frank Hutter. SGDR: Stochastic gradient descent with warm restarts. In
+International Conference on Learning Representations, 2017. URL https://openreview.
+net/forum?id=Skq89Scxx.
+11
+
+Published as a conference paper at ICLR 2024
+
+Kanti V Mardia, Peter E Jupp, and KV Mardia. Directional statistics, volume 2. Wiley Online
+Library, 2000.
+Leland McInnes, John Healy, Nathaniel Saul, and Lukas Grossberger. Umap: Uniform manifold
+approximation and projection. The Journal of Open Source Software, 3(29):861, 2018.
+Yifei Ming, Yiyou Sun, Ousmane Dia, and Yixuan Li. How to exploit hyperspherical embeddings for out-of-distribution detection? In The Eleventh International Conference on Learning
+Representations, 2023.
+Ishan Misra and Laurens van der Maaten. Self-supervised learning of pretext-invariant representations.
+In Proceedings of the IEEE/CVF conference on computer vision and pattern recognition, pp. 6707–
+6717, 2020.
+Yuval Netzer, Tao Wang, Adam Coates, Alessandro Bissacco, Bo Wu, and Andrew Y Ng. Reading
+digits in natural images with unsupervised feature learning. 2011.
+Andre T Nguyen, Fred Lu, Gary Lopez Munoz, Edward Raff, Charles Nicholas, and James Holt. Out
+of distribution data detection using dropout bayesian neural networks. In Proceedings of the AAAI
+Conference on Artificial Intelligence, volume 36, pp. 7877–7885, 2022.
+Anh Nguyen, Jason Yosinski, and Jeff Clune. Deep neural networks are easily fooled: High confidence
+predictions for unrecognizable images. In Proceedings of the IEEE conference on computer vision
+and pattern recognition, pp. 427–436, 2015.
+Aaron van den Oord, Yazhe Li, and Oriol Vinyals. Representation learning with contrastive predictive
+coding. arXiv preprint arXiv:1807.03748, 2018.
+Jie Ren, Peter J Liu, Emily Fertig, Jasper Snoek, Ryan Poplin, Mark Depristo, Joshua Dillon, and
+Balaji Lakshminarayanan. Likelihood ratios for out-of-distribution detection. Advances in neural
+information processing systems, 32, 2019.
+Joshua David Robinson, Ching-Yao Chuang, Suvrit Sra, and Stefanie Jegelka. Contrastive learning
+with hard negative samples. In International Conference on Learning Representations, 2021. URL
+https://openreview.net/forum?id=CR1XOQ0UTh-.
+Seonghan Ryu, Sangjun Koo, Hwanjo Yu, and Gary Geunbae Lee. Out-of-domain detection based
+on generative adversarial network. In Proceedings of the 2018 Conference on Empirical Methods
+in Natural Language Processing, pp. 714–718, 2018.
+Vikash Sehwag, Mung Chiang, and Prateek Mittal. Ssd: A unified framework for self-supervised
+outlier detection. In International Conference on Learning Representations, 2021.
+Jake Snell, Kevin Swersky, and Richard Zemel. Prototypical networks for few-shot learning. Advances
+in neural information processing systems, 30, 2017.
+Yiyou Sun, Chuan Guo, and Yixuan Li. React: Out-of-distribution detection with rectified activations.
+Advances in Neural Information Processing Systems, 34:144–157, 2021.
+Yiyou Sun, Yifei Ming, Xiaojin Zhu, and Yixuan Li. Out-of-distribution detection with deep nearest
+neighbors. In International Conference on Machine Learning, pp. 20827–20840. PMLR, 2022.
+Jihoon Tack, Sangwoo Mo, Jongheon Jeong, and Jinwoo Shin. Csi: Novelty detection via contrastive
+learning on distributionally shifted instances. Advances in neural information processing systems,
+33:11839–11852, 2020.
+Leitian Tao, Xuefeng Du, Jerry Zhu, and Yixuan Li. Non-parametric outlier synthesis. In The Eleventh
+International Conference on Learning Representations, 2023. URL https://openreview.
+net/forum?id=JHklpEZqduQ.
+Yonglong Tian, Dilip Krishnan, and Phillip Isola. Contrastive multiview coding. In Computer
+Vision–ECCV 2020: 16th European Conference, Glasgow, UK, August 23–28, 2020, Proceedings,
+Part XI 16, pp. 776–794. Springer, 2020.
+12
+
+Published as a conference paper at ICLR 2024
+
+Grant Van Horn, Oisin Mac Aodha, Yang Song, Yin Cui, Chen Sun, Alex Shepard, Hartwig Adam,
+Pietro Perona, and Serge Belongie. The inaturalist species classification and detection dataset. In
+Proceedings of the IEEE conference on computer vision and pattern recognition, pp. 8769–8778,
+2018.
+Feng Wang and Huaping Liu. Understanding the behaviour of contrastive loss. In Proceedings of the
+IEEE/CVF conference on computer vision and pattern recognition, pp. 2495–2504, 2021.
+Haoqi Wang, Zhizhong Li, Litong Feng, and Wayne Zhang. Vim: Out-of-distribution with virtuallogit matching. In Proceedings of the IEEE/CVF Conference on Computer Vision and Pattern
+Recognition, pp. 4921–4930, 2022.
+Tongzhou Wang and Phillip Isola. Understanding contrastive representation learning through alignment and uniformity on the hypersphere. In International Conference on Machine Learning, pp.
+9929–9939. PMLR, 2020.
+Yezhen Wang, Bo Li, Tong Che, Kaiyang Zhou, Ziwei Liu, and Dongsheng Li. Energy-based
+open-world uncertainty modeling for confidence calibration. In Proceedings of the IEEE/CVF
+International Conference on Computer Vision, pp. 9302–9311, 2021.
+Hongxin Wei, Renchunzi Xie, Hao Cheng, Lei Feng, Bo An, and Yixuan Li. Mitigating neural network
+overconfidence with logit normalization. In International Conference on Machine Learning, pp.
+23631–23644. PMLR, 2022.
+Zhirong Wu, Yuanjun Xiong, Stella X Yu, and Dahua Lin. Unsupervised feature learning via nonparametric instance discrimination. In Proceedings of the IEEE conference on computer vision
+and pattern recognition, pp. 3733–3742, 2018.
+Jianxiong Xiao, James Hays, Krista A Ehinger, Aude Oliva, and Antonio Torralba. Sun database:
+Large-scale scene recognition from abbey to zoo. In 2010 IEEE computer society conference on
+computer vision and pattern recognition, pp. 3485–3492. IEEE, 2010.
+Zhisheng Xiao, Qing Yan, and Yali Amit. Likelihood regret: An out-of-distribution detection score
+for variational auto-encoder. Advances in neural information processing systems, 33:20685–20696,
+2020.
+Jiahao Xie, Xiaohang Zhan, Ziwei Liu, Yew-Soon Ong, and Chen Change Loy. Delving into interimage invariance for unsupervised visual representations. International Journal of Computer
+Vision, 130(12):2994–3013, 2022.
+Pingmei Xu, Krista A Ehinger, Yinda Zhang, Adam Finkelstein, Sanjeev R Kulkarni, and Jianxiong
+Xiao. Turkergaze: Crowdsourcing saliency with webcam based eye tracking. arXiv preprint
+arXiv:1504.06755, 2015.
+Jingkang Yang, Kaiyang Zhou, Yixuan Li, and Ziwei Liu. Generalized out-of-distribution detection:
+A survey. arXiv preprint arXiv:2110.11334, 2021.
+Jingkang Yang, Pengyun Wang, Dejian Zou, Zitang Zhou, Kunyuan Ding, Wenxuan Peng, Haoqi
+Wang, Guangyao Chen, Bo Li, Yiyou Sun, et al. Openood: Benchmarking generalized out-ofdistribution detection. Advances in Neural Information Processing Systems, 35:32598–32611,
+2022.
+Fisher Yu, Ari Seff, Yinda Zhang, Shuran Song, Thomas Funkhouser, and Jianxiong Xiao. Lsun:
+Construction of a large-scale image dataset using deep learning with humans in the loop. arXiv
+preprint arXiv:1506.03365, 2015.
+Jingyang Zhang, Jingkang Yang, Pengyun Wang, Haoqi Wang, Yueqian Lin, Haoran Zhang, Yiyou
+Sun, Xuefeng Du, Kaiyang Zhou, Wayne Zhang, et al. Openood v1. 5: Enhanced benchmark for
+out-of-distribution detection. arXiv preprint arXiv:2306.09301, 2023.
+Bolei Zhou, Agata Lapedriza, Aditya Khosla, Aude Oliva, and Antonio Torralba. Places: A 10
+million image database for scene recognition. IEEE transactions on pattern analysis and machine
+intelligence, 40(6):1452–1464, 2017.
+13
+
+Published as a conference paper at ICLR 2024
+
+Tianfei Zhou, Wenguan Wang, Ender Konukoglu, and Luc Van Gool. Rethinking semantic segmentation: A prototype view. In Proceedings of the IEEE/CVF Conference on Computer Vision and
+Pattern Recognition, pp. 2582–2593, 2022.
+David Zimmerer, Peter M Full, Fabian Isensee, Paul Jäger, Tim Adler, Jens Petersen, Gregor Köhler,
+Tobias Ross, Annika Reinke, Antanas Kascenas, et al. Mood 2020: A public benchmark for
+out-of-distribution detection and localization on medical images. IEEE Transactions on Medical
+Imaging, 41(10):2728–2738, 2022.
+
+14
+
+Published as a conference paper at ICLR 2024
+
+A PPENDIX
+A
+
+M ORE D ETAILS OF THE P ROPOSED M ETHOD
+
+A.1
+
+A LGORITHM D ETAILS
+
+We present the training scheme of the proposed method, Prototypical Learning with Mixture of
+prototypes (PALM), in Algorithm 1. The algorithm maintains and updates prototypes, conducts the
+soft prototype assignment for the samples, optimizing the MLE loss and the prototype contrastive
+loss. Algorithm 1 summarizes the main operations in the training process and omits some calculation
+steps, e.g., data augmentation.
+In step 8 of Algorithm 1, the prototype assignment weights are calculated by considering the global
+information on the relationship between sample embeddings and the prototypes. The weights are then
+further refined, considering the mutual neighborhood relationship in step 9. By pruning the weights
+to keep top-K neighbor prototypes for each sample, the operation makes sure the samples and the
+assigned prototypes are not too far away from each other. Intuitively, the samples are “attached” to
+the prototypes in the EMA updating process. The prototypes work as “anchors” to back-propagate
+the gradients from optimizing the objectives to update the NN parameters, where the mixture of
+prototypes and the hyperspherical modeling regularize the NN representation learning. At the end of
+each iteration, the prototypes are detached from gradient calculation for the next round of updates.
+Algorithm 1: Prototypical Learning with Mixture of prototypes (PALM)
+Input: Training dataset Did with C classes, neural network encoder fθ , projection head gϕ , loss
+weight, other hyperparameters, e.g., number of prototypes K for each class.
+1 Initialize the NN parameters;
+c K
+C
+2 Initialize the class-conditional prototypes {{pk }k=1 }c=1 for each class c;
+// No grad. on initialized prototypes
+3 while training stopping conditions are not achieved do
+// mini-batch iterations in each epoch:
+4
+for iter = 1, 2, . . . , do
+5
+Sample a mini-batch of B input samples {(xi , yi )}B
+i=1 ;
+6
+Obtain projected embeddings for each input: z′i = gϕ (fθ (xi )), i ∈ {1, ..., B};
+7
+Normalize the embeddings to the unit sphere via zi = z′i /∥z′i ∥2 , i ∈ {1, ..., B};
+// Soft prototype assignment in Step 8-9:
+8
+Compute soft assignment weights for each set of the class-conditional mixture of
+prototypes {pck }K
+k=1 , c = 1, ..., C, relying on Eq. (6) ;
+9
+Obtain the assignment weights via assignment weights pruning via Sec. 3.3;
+10
+Prototype updating via EMA in Eq. (7) (based on assignment weights);
+// Optimizing training objectives:
+// Grad. back-propagating to NN parameters through the
+prototypes.
+11
+Calculate the objectives with Lassign and Lproto-contra in Eq. (3) and Eq. (4), respectively,
+and optimizing for updating network parameters;
+12
+Detach the updated prototypes from gradient calculation (for next round of updating);
+
+A.2
+
+M ORE D ETAILS ON P ROTOTYPE A SSIGNMENT AND U PDATING
+
+During training, we assign each sample to the prototypes with soft assignment weights. In Sec. 3.3 of
+the main paper, we introduce how to calculate the assignment weights considering the global information and then refine the weights via pruning operation considering the local mutual neighborhood
+relationship. We put more details about the assignment weights calculation and prototype updating in
+the following.
+Estimation of the soft assignment weights. Recall that we have K prototypes Pc = {pck }K
+k=1
+for each class c, where pck ∈ RD . In mini-batch training, we obtain a batch of B samples and the
+15
+
+Published as a conference paper at ICLR 2024
+
+D
+corresponding projected embeddings {zi }B
+i=1 , with z ∈ R , as shown in Algorithm 1. As introduced
+in Sec. 3.2, each sample/embedding is assigned to prototypes in its corresponding class with weights
+wc ∈ RK . Instead of assigning each sample to one prototype with a hard assignment, we use soft
+assignment weights to approach more smooth modeling. Experiments in Sec. 4.3 show the benefits of
+soft assignments as in Fig. 4(b). In each iteration of the mini-batch training, the prototype assignment
+aims to obtain the weights wc for each sample.
+
+To avoid the trivial solution where all samples may be assigned to the sample prototype (Caron
+et al., 2020; Gong et al., 2019; Zhou et al., 2022) in the online updating process, we encourage
+the samples in a batch (belonging to the same class) to be assigned to diverse prototypes (for the
+corresponding
+class), as the previous methods. As briefly introduced in the main paper, we define
+c
+Zc ∈ RD×B to represent the concatenated embeddings of the class c, i.e., Zc = [z1 , ..., zi , ..., zB c ],
+c
+c
+Pc ∈ RD×K with Pc = [pc1 , ..., pci , ..., pcK ], and Wc = RK×B for Wc = [w1c , ..., wic , ..., wB
+c ],
+c
+where B denotes the number of samples belonging in to class c in the batch. To encourage the
+diverse prototype assignment, we optimize Wc (for each class c) by solving the following problem
+to maximize the similarity of the assigned prototypes and the samples (Caron et al., 2020):
+max Tr(Wc ⊤ Pc ⊤ Zc ) + ϵR(Wc ),
+
+Wc ∈W
+
+(8)
+
+c
+c
+where R(·) is the entropy function as the regularize on Wc , i.e., R(Wc ) = − i,j wi,j
+log wi,j
+with
+c
+wi,j
+to denote the i, j-th element in the matrix Wc , ϵ is the regularization weight, W is the defined
+domain of Wc . Following (Caron et al., 2020), W is defined as a transportation polytope (Asano
+et al., 2020), in the format of
+1
+1
+(9)
+W = {W ∈ RK×B
+|W1B = 1, WT 1K = 1B },
++
+K
+B
+where 1K and 1B denote the vector of ones in dimension of K and B, respectively. It can be handled
+efficiently in Problem Eq. (8). Please find more details of the definition of the transportation polytope
+in (Caron et al., 2020; Asano et al., 2020; Cuturi, 2013). As introduced in the main paper, the soft
+assignment weights can be obtained by solving the problem in Eq. (8) as the following normalized
+exponential matrix (Cuturi, 2013):
+
+P
+
+Pc ⊤ Zc
+)diag(v),
+(6)
+ϵ
+where u and v are renormalization vectors in RK and RB obtained from a few steps of SinkhornKnopp iterations (Cuturi, 2013; Caron et al., 2020). As shown in Lemma 2 in (Cuturi, 2013), the
+solution of Wc with the transportation polytope constraint in Eq. (9) is unique and can be obtained
+via the form of Eq. (6). u and v are two non-negative vectors for obtaining the solution, which
+can be computed with Shinkhorn’s fixed point iteration (u, v) ← (1/(KHv), 1/(BHu)), where
+c⊤ c
+we use H to denote exp( P ϵ Z ) in Eq. (6). With further simplification, u and v can be obtained
+with a few iterations, as discussed in Algorithm 1 in (Cuturi, 2013). Please find the proof and more
+details in (Cuturi, 2013). diag(u) and diag(v) are the diagonal matrix of the two vectors u and v.
+Through solving the problem in Eq. (8), the assignment weights are obtained by considering the
+similarity between embeddings and prototypes (as reflected by Pc ⊤ Zc ) and the relationships between
+the prototypes and all the samples in a global viewpoint. In practice, the calculations for different
+classes can be conducted simultaneously and in parallel.
+Wc = diag(u) exp(
+
+A.3
+
+M ORE S TEPS FOR O BTAINING E Q . (2)
+
+The probability density for a zi in class c is defined as the mixture model in Eq. (1) in the main paper:
+p(zi ; wic , {pck , κ}K
+k=1 ) =
+
+K
+X
+
+c
+wi,k
+ZD (κ) exp(κpck ⊤ zi ),
+
+k=1
+
+c
+where wi,k
+denotes the k-th element of wic . We define the same number of K prototypes for each class.
+The assignment weights are decided according to the adjacency relationship between the samples
+and the estimated prototypes, in PALM. Given the probability model in Eq. (1), an embedding zi is
+assigned to a class c with the following normalized probability:
+PK
+c
+c⊤
+k=1 wi,k ZD (κ) exp(κpk zi )
+C
+,
+p(yi = c|zi , {wic , {pck , κ}K
+}
+)
+=
+(10)
+k=1 j=1
+PC PK
+j
+j⊤
+w
+Z
+(κ)
+exp(κp
+z
+)
+D
+i
+j=1
+k=1 i,k
+k
+
+16
+
+Published as a conference paper at ICLR 2024
+
+where τ = 1/κ is analogous to the temperature parameter in our MLE loss. By eliminating ZD (κ),
+we can obtain Eq. (2) in the main paper as:
+PK
+c
+c⊤
+k=1 wi,k exp(pk zi /τ )
+c
+c
+K
+C
+.
+p(yi = c|zi , {wi , {pk , κ}k=1 }j=1 ) = P
+C PK
+j
+j⊤
+w
+exp(p
+z
+/τ
+)
+i
+k=1 i,k
+j=1
+k
+A.4
+
+E XTENDING PALM TO U NSUPERVISED OOD/O UTLIER D ETECTION
+
+In this work, we mainly study the OOD detection tasks with the labeled datasets with the class label
+for each sample. Different from previous methods (Ming et al., 2023; Du et al., 2022a) assigned a
+single prototype to each class, we automatically maintain and update a mixture of multiple prototypes
+for each class. Benefiting from PALM’s ability to learn multiple prototypes for a set of samples
+automatically, we study the potential of the proposed techniques to handle the OOD/outlier detection
+with unlabelled ID training data.
+On the unlabelled data, we can define K prototypes P = {pk }K
+k=1 for the entire training dataset
+without label information and conduct the similar prototype assignment process between all samples
+and all prototypes. The contrastive loss can be applied to encourage each sample embedding z to be
+close to the prototypes based on the assignment weights w in the form of
+ℓ(zi , wi ) = − log
+
+K
+X
+wi,k exp (p⊤
+k zi /τ )
+.
+PK
+⊤
+k′ =1 exp (pk′ zi /τ )
+k=1
+
+(11)
+
+Without label information, Eq. (11) encourages the sample embeddings to be close to the prototypes
+based on the weights. Note that the underlying model of assignment weights here is slightly different
+from the weights in the class-conditional mixture model under the supervised setting. The model also
+has the potential to consider the relationships between prototypes relying on the distance to produce a
+latent class-level clustering. The prototype updating and assignment can still be conducted as the
+standard PALM.
+We produce a simple implementation to adapt the proposed method on the unsupervised setting and
+conduct experiments to validate the potential, as shown in Appendix C.2. Due to the lack of strong
+supervision information, we utilize data augmentation in implementation, relying on the swapped
+assignment in (Caron et al., 2020). By letting z̃i denote the embedding of the augmented version of
+the sample and w̃i denote the corresponding assignment weights obtained for z̃i , the loss function
+based on Eq. (11) can be written as:
+N
+
+Lunsuper = −
+
+1 X1
+(ℓ(zi , w̃i ) + ℓ(z̃i , wi )),
+N i=1 2
+
+(12)
+
+which is similar to the framework of SwAV for self-supervised learning (Caron et al., 2020). With
+the experimental results in Appendix C.2, we show a hint of the potential of the proposed techniques
+for unsupervised OOD detection and will study more detailed design of that in the future works.
+
+B
+
+M ORE I MPLEMENTATION D ETAILS
+
+Software and hardware. We perform all experiments on an NVIDIA GeForce RTX-3090 GPU
+using Pytorch.
+Training details for experiments on CIFAR benchmarks. We utilize ResNet-34 as our backbone
+model for the CIFAR-100 ID training dataset, and ResNet-18 for CIFAR-10, along with a two-layer
+MLP projector that projects to a 128-dimensional unit sphere following (Sehwag et al., 2021; Sun
+et al., 2022; Ming et al., 2023; Tao et al., 2023). We apply stochastic gradient descent with a
+momentum of 0.9 and weight decay of 10−6 for 500 epochs. We adopt the same initial learning rate
+of 0.5 with cosine learning rate scheduling (Loshchilov & Hutter, 2017; Misra & Maaten, 2020), and
+use the temperature τ of 0.1 and 0.5 for the MLE loss and prototype contrastive loss, respectively.
+We set loss weight as 1 to balance the proposed two loss components for simplicity. Following
+(Caron et al., 2020), we use ϵ value of 0.05 and 3 Sinkhorn-Knopp iterations to obtain our soft
+17
+
+Published as a conference paper at ICLR 2024
+
+Table 4: OOD detection performance on methods trained on labeled CIFAR-10 as ID dataset using
+backbone network of ResNet-18.
+Methods
+
+SVHN
+
+Places365
+
+OOD Datasets
+LSUN
+
+iSUN
+
+Textures
+
+Average
+
+FPR↓
+
+AUROC↑
+
+FPR↓
+
+AUROC↑
+
+FPR↓
+
+AUROC↑
+
+FPR↓
+
+AUROC↑
+
+FPR↓
+
+AUROC↑
+
+FPR↓
+
+AUROC↑
+
+MSP
+ODIN
+Vim
+Energy
+VOS
+CSI
+kNN+
+SSD+
+NPOS
+CIDER
+
+59.66
+20.93
+24.95
+54.41
+15.69
+37.38
+2.70
+2.47
+4.96
+2.89
+
+91.25
+95.55
+95.36
+91.22
+96.37
+94.69
+99.61
+99.51
+97.15
+99.72
+
+62.46
+63.04
+63.04
+42.77
+37.95
+38.31
+23.05
+22.05
+17.61
+23.88
+
+88.64
+86.57
+86.57
+91.02
+91.78
+93.04
+94.88
+95.57
+91.29
+94.09
+
+51.93
+31.92
+7.26
+23.45
+27.64
+10.63
+7.89
+10.56
+3.94
+5.75
+
+92.73
+94.82
+98.53
+96.14
+93.82
+97.93
+98.01
+97.83
+97.67
+99.01
+
+54.57
+33.17
+33.17
+27.52
+30.42
+10.36
+24.56
+28.44
+13.69
+20.21
+
+92.12
+94.65
+94.65
+95.59
+94.87
+98.01
+96.21
+95.67
+95.01
+96.64
+
+66.45
+56.40
+56.40
+55.23
+32.68
+28.85
+10.11
+9.27
+7.64
+12.33
+
+88.50
+86.21
+86.21
+89.37
+93.68
+94.87
+97.43
+98.35
+94.92
+96.85
+
+59.01
+41.09
+36.96
+40.68
+28.88
+25.11
+13.66
+14.56
+9.57
+13.01
+
+90.65
+91.56
+92.26
+92.67
+94.10
+95.71
+97.23
+97.39
+95.21
+97.26
+
+PALM
+
+0.34
+
+99.91
+
+28.81
+
+94.80
+
+1.11
+
+99.65
+
+34.07
+
+95.17
+
+10.48
+
+98.29
+
+14.96
+
+97.57
+
+online assignment weights. By default, we keep 6 prototypes for each class and select the 5 closest
+prototypes during the pruning phase. To secure consistent assignment weights across iterations, we
+set a large momentum α of 0.999 as the default value for prototype updating.
+Details for compared methods. We follow the standard settings in previous methods (Sehwag et al.,
+2021; Sun et al., 2022; Ming et al., 2023; Tao et al., 2023) to produce the results of the compared
+state-of-the-art methods. Details are in the following. For methods that derive OOD detection scores
+from models trained using standard cross-entropy (i.e., MSP (Hendrycks & Gimpel, 2017), Vim
+(Wang et al., 2022), ODIN (Liang et al., 2018), Energy (Liu et al., 2020)), we train the model with a
+initial learning rate of 0.1 and decays by a factor of 10 at epochs 50, 75, and 90 respectively for 200
+epochs on CIFAR-100 dataset. We use stochastic gradient descent with momentum 0.9 and weight
+decay 10−4 . For most recent powerful methods, including VOS (Du et al., 2022b), CSI (Tack et al.,
+2020), SSD+ (Sehwag et al., 2021), KNN+ (Sun et al., 2022), NPOS (Tao et al., 2023), and CIDER
+(Ming et al., 2023), we train the model with batch size of 512, using stochastic gradient descent with
+the same initial learning rate of 0.5 (Khosla et al., 2020; Sehwag et al., 2021; Ming et al., 2023) with
+cosine learning rate scheduling (Loshchilov & Hutter, 2017; Misra & Maaten, 2020).
+Details for experiments on ImageNet-100. We use ResNet-50 for ImageNet-100 dataset and project
+the embeddings to a 128-dimensional unit sphere with a two-layer MLP projector. Following the
+commonly used setting in OOD detection (Ming et al., 2023), we produce fine-tuning the last residual
+block and the projection layer on a pre-trained ResNet backbone for 10 epochs, with a learning rate
+of 0.001.
+
+C
+
+A DDITIONAL E XPERIMENTAL R ESULTS
+
+OOD Detection Performance on CIFAR-10. In Table 1, we present the efficacy of PALM against
+recent competitive OOD detection methods on the challenging CIFAR-100 benchmark. Complementary comparisons on the less challenging CIFAR-10 benchmark are illustrated in Table C. The results
+indicate that, while recent competitive methods yield comparable performance on this benchmark,
+PALM continues to achieve results that are on par or even surpass on these OOD datasets. This
+further demonstrates the efficacy and adaptability of our proposed framework.
+PALM performs superior on Near-OOD detection. We evaluate the performance of Near-OOD
+detection following (Tack et al., 2020; Sun et al., 2022), utilizing ID dataset CIFAR-100 and OOD
+datasets including LSUN-FIX, ImageNet-FIX, ImageNet-RESIZE, and CIFAR-10. While
+our work is primarily evaluated on the Far-OOD scenario, PALM nonetheless exhibits state-of-the-art
+performance on these more challenging benchmarks even without explicit considering Near-OOD
+scenarios. Specifically, PALM yields an improvement of 13.48% in the average FPR and achieves
+an 81.76 average AUROC score. Importantly, PALM substantially reduces the FPR on ImageNet-R
+from 56.89 to 27.02, effectively halving the false positives.
+PALM outperforms previous methods using OpenOOD benchmark. In Table 6, we extend the
+evaluation of our method using the OpenOOD benchmark Yang et al. (2022); Zhang et al. (2023).
+Our findings indicate that PALM achieves superior performance on both CIFAR-10 and CIFAR-100
+18
+
+Published as a conference paper at ICLR 2024
+
+Table 5: Near-OOD detection performance on methods trained on labeled CIFAR-100 as ID dataset
+using backbone network of ResNet-34.
+Methods
+
+LSUN-F
+
+ImageNet-F
+
+OOD Datasets
+ImageNet-R
+
+CIFAR-10
+
+Average
+
+FPR↓
+
+AUROC↑
+
+FPR↓
+
+AUROC↑
+
+FPR↓
+
+AUROC↑
+
+FPR↓
+
+AUROC↑
+
+FPR↓
+
+AUROC↑
+
+MSP
+Energy
+SSD+
+KNN+
+CIDER
+
+88.24
+87.17
+83.36
+84.96
+90.94
+
+69.21
+72.20
+76.63
+75.37
+70.31
+
+86.33
+78.99
+76.73
+75.52
+78.83
+
+70.74
+76.40
+79.78
+79.95
+77.53
+
+86.32
+80/93
+83.67
+68.49
+56.89
+
+72.88
+80.60
+81.09
+84.91
+87.62
+
+88.06
+86.47
+85.16
+84.12
+84.87
+
+76.30
+70.50
+73.70
+75.91
+73.30
+
+87.24
+84.21
+82.23
+78.27
+77.88
+
+72.28
+74.93
+77.80
+79.04
+77.19
+
+PALM
+
+77.15
+
+77.24
+
+66.19
+
+82.51
+
+27.02
+
+95.03
+
+87.25
+
+72.28
+
+64.40
+
+81.76
+
+Table 6: OOD detection performance on methods using OpenOOD benchmark.
+OOD Datasets
+Methods
+CIFAR-10
+CIFAR-100
+Near-OOD Far-OOD Near-OOD Far-OOD
+MSP
+88.03
+90.73
+80.27
+77.76
+ODIN
+82.87
+87.96
+79.90
+79.28
+Vim
+88.68
+93.48
+74.98
+81.70
+Energy
+87.58
+91.21
+80.91
+79.77
+OpenGAN
+53.71
+54.61
+65.98
+67.88
+VOS
+87.70
+90.83
+80.93
+81.32
+CSI
+89.51
+92.00
+71.45
+66.31
+kNN
+90.64
+92.96
+80.18
+82.40
+NPOS
+89.78
+94.07
+78.35
+82.29
+CIDER
+90.71
+94.71
+73.10
+80.49
+PALM
+92.96
+98.09
+76.89
+92.97
+datasets compared to previous methods. This further highlight the efficacy and robustness of our
+approach using the OpenOOD framework.
+More detailed results for the experiments on large-scale OOD detection task. In Fig. 6 in the
+main paper, we evaluate the OOD detection performance on large-scale dataset ImageNet-100
+(Tian et al., 2020). Here we provide more detailed performance in Table 7. We fine-tune the last
+residual block and projection layer of pre-trained ResNet-50 model, while freezing the parameters
+in the first three residual blocks, following the setting in the previous work (Ming et al., 2023). We
+compare our approach with recent powerful methods including SSD+ (Sehwag et al., 2021), KNN+
+(Sun et al., 2022) and CIDER (Ming et al., 2023). PALM maintains an outstanding performance
+compared to previous methods, suggesting the effectiveness of our proposed mixture of prototypes
+framework.
+ID classification accuracy. We demonstrate the ID classification accuracy in Fig. 7. Fig. 7 shows
+the ID classification accuaracy of standard cross-entropy (CE), SSD+ (Sehwag et al., 2021) & KNN+
+(Sun et al., 2022) (use the same training objective of SupCon (Khosla et al., 2020)), NPOS (Tao et al.,
+2023), CIDER (Ming et al., 2023), and PALM. Commonly used linear probing (Khosla et al., 2020)
+
+Table 7: OOD detection performance on methods fine-tuning on ImageNet-100 using pre-trained
+ResNet-50 models.
+Methods
+
+OOD Datasets
+Places
+Textures
+
+SUN
+
+iNatualist
+
+Average
+
+FPR↓
+
+AUROC↑
+
+FPR↓
+
+AUROC↑
+
+FPR↓
+
+AUROC↑
+
+FPR↓
+
+AUROC↑
+
+FPR↓
+
+AUROC↑
+
+SSD+
+KNN+
+CIDER
+
+30.34
+41.85
+42.26
+
+93.06
+92.25
+92.84
+
+34.38
+44.41
+42.81
+
+91.52
+90.26
+91.39
+
+26.49
+26.60
+19.31
+
+94.84
+94.22
+95.44
+
+38.19
+38.54
+45.49
+
+90.96
+94.15
+92.83
+
+32.35
+37.85
+37.47
+
+92.60
+92.72
+93.12
+
+PALM
+
+42.37
+
+93.20
+
+41.22
+
+91.95
+
+17.02
+
+96.16
+
+32.08
+
+95.14
+
+33.17
+
+94.11
+
+19
+
+Published as a conference paper at ICLR 2024
+
+75
+
+ID ACC
+
+70
+
+65
+
+60
+
+55
+
+50
+
+CE
+
+SSD+ & KNN+
+
+NPOS
+
+CIDER
+
+PALM
+
+Method
+
+Figure 7: ID classification accuracy of methods trained on CIFAR-100.
+Table 8: OOD detection performance comparisons on methods trained on labeled CIFAR-100 as ID
+dataset using ResNet-34 over 3 independent runs. The experiment results for CIDER are obtained
+from (Ming et al., 2023).
+Methods
+CIDER
+PALM
+
+SVHN
+
+OOD Datasets
+LSUN
+
+Places365
+
+iSUN
+
+Average
+
+Textures
+
+FPR↓
+
+AUROC↑
+
+FPR↓
+
+AUROC↑
+
+FPR↓
+
+AUROC↑
+
+FPR↓
+
+AUROC↑
+
+FPR↓
+
+AUROC↑
+
+FPR↓
+
+AUROC↑
+
+23.67±2.28
+3.31±0.34
+
+95.07±0.13
+99.24±0.07
+
+79.37±1.84
+65.51±1.91
+
+72.97±3.90
+83.01±1.66
+
+22.04±5.12
+10.63±3.68
+
+96.01±1.80
+97.83±0.62
+
+62.16±8.48
+30.49±5.83
+
+83.70±2.92
+94.81±3.73
+
+44.96±6.01
+35.45±2.23
+
+90.25±0.97
+92.21±0.31
+
+46.45±2.01
+31.34±3.88
+
+87.60±1.03
+93.02±1.08
+
+is used to obtain linear classification accuracy for SupCon, CIDER, and PALM. While producing
+effective OOD detection, PALM can perform well for ID classification with better or competitive
+results than other methods, showing the effectiveness of the representation learning.
+Stability of PALM. To validate the stability of PALM on producing state-of-the-art performance, we
+train PALM using 3 distinct random seeds and present the average and standard deviation of FPR and
+AUROC in Table 8. Together with Table 1 in the main paper, it is shown that PALM consistently
+achieves state-of-the-art performance with a small standard deviation.
+C.1
+
+A DDITIONAL A BLATION S TUDIES
+
+Prototype contrastive loss improves OOD detection capability. We demonstrate the efficacy of
+the introduced prototype-level contrastive loss Lproto-contra in Fig. 8(a) and Table 9. Even without the
+application of Lproto-contra , our method PALM exhibits state-of-the-art performance. Moreover, by integrating our proposed Lproto-contra that encourage intra-class compactness and inter-class discrimination
+at the prototype level, PALM is elevated to a new level of promising performance.
+
+100.0
+
+100.0
+
+w/o Lproto−contrast
+w Lproto−contrast
+
+97.5
+
+97.5
+95.0
+92.5
+
+92.5
+
+AUROC
+
+AUROC
+
+95.0
+
+90.0
+
+90.0
+87.5
+SVHN
+Places365
+LSUN
+iSUN
+Textures
+Average
+
+87.5
+85.0
+
+85.0
+82.5
+
+82.5
+80.0
+
+80.0
+
+SVHN
+
+Places365
+
+LSUN
+
+iSUN
+
+Textures
+
+Average
+
+0.5
+
+Dataset
+
+0.9
+
+0.99
+
+0.995
+
+0.999
+
+0.9995
+
+Momentum α
+
+(a) Lproto-contra
+
+(b) Momentum of EMA
+
+Figure 8: Ablation studies on (a) prototype contrastive loss Lproto-contra , (b) the momentum update
+parameter α of EMA update procedure.
+20
+
+Published as a conference paper at ICLR 2024
+
+PALM with different momentum hyperparameters for prototype updating. In Fig. 8(b), we
+analyze the influence of maintaining consistent prototype assignment weights. Our observation
+confirms that utilizing a higher momentum to ensure less changes in the prototypes across iterations,
+thus achieving more consistent assignment weights, leads to improved performance. The results also
+show that PALM can perform well consistently with a large enough momentum. Moreover, the
+momentum parameter α mainly controls the updating strength in the iteration (like a learning rate),
+which does not influence too much the training behaviours on different data. The experiments show
+that the influence of α is small. A properly set hyperparameter can work well for many datasets.
+During the updating of prototypes, the sample-prototype assignment weights are highly relevant to
+the class/data characteristics. We update with the robust cluster assignment method in Eq. 6 and use
+the assignment pruning method to alleviate the influence of unexpected points in prototype updating.
+Table 9: Ablations on loss weight λ
+Loss Weight λ FPR↓ AUROC↑
+
+Table 10: Ablations on temperature τ
+Temperature τ FPR↓ AUROC↑
+
+0
+0.1
+0.5
+1 (default)
+
+0.05
+0.1 (default)
+0.2
+0.3
+
+33.77
+33.04
+27.65
+28.02
+
+92.42
+92.11
+93.34
+93.82
+
+49.70
+28.02
+52.88
+76.82
+
+87.51
+93.82
+84.74
+75.18
+
+Ablation on temperature parameter. In alignment with conventional contrastive learning methods
+(Chen et al., 2020; Khosla et al., 2020), the temperature parameter τ plays a crucial role in the training
+process, serving as a hyperparameter to regulate the compactness of each cluster. It adeptly weights
+different examples, and selecting an apt temperature is instrumental in aiding the model to learn from
+hard negatives effectively. Through empirical examination, we empirically found that a temperature
+of 0.1 yields optimal results.
+Ablation on initialization of prototypes. In Table 12, we explore the impact of different prototype
+initialization strategies. Our analysis compares two approaches: initialization with random initialization using a normal distribution, and random initialization with a uniform distribution, the latter being
+our default setting. The two random initialization variants demonstrate relatively similar performance,
+showcasing the efficacy of PALM when given proper initialization. This finding further demonstrates
+the robustness of our approach in updating the prototypes using EMA, showcasing its effectiveness
+and high-quality prototypes regardless of the initial state of the prototypes.
+Computational efficiency of PALM. In Table 11 we demonstrate the training speed of our method
+when training on CIFAR-100 using ResNet-34 with single GeForce RTX3090 GPU, we are comparable as popular contrastive learning method SupCon (Khosla et al., 2020) with negligible overhead.
+The additional computations of our method are mainly caused by calculating the soft assignment
+weight using the efficient Sinkhorn-Knopp approximation, which takes only 32 milliseconds each
+time.
+In terms of memory, the additional parameters introduced by the multi-prototype design are only the
+prototypes as vectors, and the assignment weights for each batch are temporally calculated during
+training. Under the default setting with 6 prototypes for each of 100 classes (i.e., 600 prototypes
+in total), it introduces 1.2% of additional parameters compared to the single prototype method.
+Specifically, based on ResNet-34 with 21.60M, CIDER introduces one prototype per class, increasing
+the parameters to 21.65M, while our method is 21.91M. The additional computation caused by ours
+is restricted.
+Table 11: Training time for different methods.
+Training Time
+Methods
+(seconds per epoch)
+CE
+SupCon
+CIDER
+PALM
+
+12.34
+19.23
+23.65
+19.87
+21
+
+Published as a conference paper at ICLR 2024
+
+Table 12: Ablations on the different ways of initializing the prototypes.
+Initialization of Prototypes
+Normal Distribution
+Uniform Distribution (default)
+
+FPR↓
+2.70
+3.29
+
+SVHN
+AUROC↑
+99.39
+99.23
+
+Places365
+FPR↓ AUROC↑
+66.04
+81.33
+64.66
+84.72
+
+100
+
+OOD Datasets
+LSUN
+AUROC↑
+97.77
+98.01
+
+FPR↓
+10.66
+9.86
+
+Textures
+FPR↓ AUROC↑
+41.08
+91.08
+33.56
+92.49
+
+Average
+FPR↓
+30.69
+28.02
+
+AUROC↑
+92.77
+93.82
+
+80
+
+FPR
+
+AUROC
+
+60
+
+40
+
+20
+
+0
+
+iSUN
+AUROC↑
+94.26
+94.64
+
+100
+
+SwAV
+PCL
+PALM
+
+80
+
+FPR↓
+32.97
+28.71
+
+60
+
+40
+
+20
+
+Places365
+
+iSUN
+
+Textures
+
+LSUN
+
+SVHN
+
+0
+
+Average
+
+Dataset
+
+Places365
+
+iSUN
+
+Textures
+
+LSUN
+
+SVHN
+
+Average
+
+Dataset
+
+(a) FPR for different methods
+
+(b) AUROC for different methods
+
+Figure 9: OOD detection performance on methods trained on unlabeled CIFAR-100 as ID dataset
+using backbone network of ResNet-34. Smaller FPR values and larger AUROC values indicate
+superior results.
+C.2
+
+M ORE E XPERIMENTS AND D ISCUSSIONS ON U NSUPERVISED OOD D ETECTION
+
+Comparisons to previous prototypical contrastive learning approaches on unsupervised
+OOD/Outlier detection. In addition to the performance metrics presented in Table 2, we conduct a
+comparative study between our unsupervised extension and two powerful prototypical contrastive
+learning frameworks PCL (Li et al., 2021) and SwAV (Caron et al., 2020) on OOD detection performance. All methods are trained on unlabeled CIFAR-100 dataset using ResNet-34, identical to
+our default experiment settings. For a fair comparison, we do not employ the multi-crop technique
+suggested in (Caron et al., 2020), we use default data augmentation techniques for all experiments
+following (Sehwag et al., 2021; Ming et al., 2023) and our default settings.
+Compared to PCL (Li et al., 2021), which generates prototype assignments using an offline clustering
+algorithm that may lead to training instability, our method PALM efficiently assigns prototypes via
+a stable online procedure. In comparison with SwAV (Caron et al., 2020), we opt to update our
+prototypes using EMA technique instead of gradient backpropagation, resulting in a more consistent
+assignment and aiding in the avoidance of sub-optimal solutions. While PCL (Li et al., 2021) and
+SwAV (Caron et al., 2020) provide similar performance in terms of FPR and AUROC, PALM achieve
+a 29.35% improvement on average FPR compared to PCL and an outstanding average AUROC
+score of 88.07. The results show the effectiveness of the proposed techniques, rendering promising
+potential for unsupervised OOD detection.
+EMA technique also benefits unsupervised OOD detection. In Fig. 4(d), we find that employing
+EMA technique for prototypes updating considerably benefits the proposed approach PALM for
+supervised OOD detection. We examine the efficacy of EMA technique for our unsupervised OOD
+detection extension in Fig. 10. We find that the employed EMA technique remarkably improves our
+unsupervised extension, achieving state-of-the-art OOD detection performance.
+
+D
+
+M ORE D ISCUSSIONS ON L IMITATIONS
+
+As discussed in the main paper (in Sec. 5), PALM faces a notable limitation regarding the manual
+selection of the number of prototypes as a hyperparameter. And we simply assign the same number
+of prototypes to all classes of samples. Although experiments demonstrated in Fig. 4(c) show that
+22
+
+Published as a conference paper at ICLR 2024
+
+100
+Learnable Prototypes
+EMA
+
+AUROC
+
+80
+
+60
+
+40
+
+20
+
+0
+
+Places365
+
+iSUN
+
+Textures
+
+LSUN
+
+SVHN
+
+Average
+
+Dataset
+
+Figure 10: Ablation study on the efficacy of EMA technique for our unsupervised extension.
+the PALM can perform well with different numbers of prototypes on the benchmark dataset, it still
+may limit the applicability of it in more complex scenarios, e.g., the datasets in which different
+classes require different numbers of prototypes. It may also influence the further extension on the
+unsupervised setting. In the future, we will consider tackling this limitation by relying on nonparametric Bayesian approaches. Moreover, the potential of the proposed method can be further
+explored by conducting the learning of the probabilistic mixture model.
+
+23
+
+

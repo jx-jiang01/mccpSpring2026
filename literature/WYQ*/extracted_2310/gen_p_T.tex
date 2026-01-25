@@ -1,0 +1,72 @@
+\subsection{Proof of Theorem \ref{P_T-benchmark}} \label{P_T_constrained}
+%We now consider a different relaxation to the instantaneous feasibility assumption where we now assume that 
+%We now drop the feasibility assumption and assume that the CCV incurred by the optimal static offline policy, as defined in Eqn.\ \eqref{violation-def1} is $P_TF,$ for some $P_T \leq T.$
+\iffalse
+Under Assumption \ref{pt-feas-assump}, there exists a fixed admissible action $x^\star \in \mathcal{X}$ such that the cumulative violation over any sub-interval of the horizon is upper bounded by $P_TF$, \emph{i.e.,}
+\[ \sum_{\tau \in \mathcal{I}} g_{\tau, i}(x^\star) \leq P_TF, ~ \forall ~\textrm{sub-intervals}~ \mathcal{I} \subseteq [T], ~\forall i \in [k]. \]
+%From the definition given in Eqn.\ \eqref{}, it follows that $P_TF$ is the cost of the offline  
+In the non-trivial case, $P_T$ increases \emph{sub-linearly} with the horizon-length $T$. However, the value of $P_T$ is not necessarily known to the algorithm.  As before, our objective is to show that the proposed \ocs ~policy achieves a sublinear queue-length bound under the above assumption. 
+
+ \begin{theorem} \label{P_T-benchmark}
+ Using the OGD policy with adaptive step-sizes given in part 1 of Theorem \ref{data-dep-regret} as a sub-routine, Algorithm \ref{ocs-policy} achieves the following CCV bound for the $P_T$-constrained adversary as described above for convex cost functions: 
+ 	 \[\max_{i=1}^k \mathbb{V}_i(T)= O(P_T^{\nicefrac{1}{3}}T^{\nicefrac{2}{3}}).\]
+ \end{theorem}
+%For this purpose, similar to the treatment in \citet{liang2018minimizing}, we reduce the above problem to an $S$-feasible instance where the value of $S$ depends on the parameter $P_T$. 
+
+%\paragraph{Analysis of CCV:} 
+%Define an auxiliary sequence of reduced constraint functions $\tilde{g}_{t,i}(x)= g_{t,i}(x)-a, \forall t,i,$ where the value of the parameter $a$ will be decided later. 
+%\begin{proof}
+\fi
+We will use a similar line of arguments used in the analysis of an $S$-constrained adversary for a suitable value of $S$ to be determined later. We start from Eqn.\ \eqref{S-bd1}, which holds for any value of the sub-interval length $S \geq 1$ and any arbitrary adversary. Furthermore, from the definition of a $P_T$-constrained adversary, we know that there exists a benchmark $x^\star \in \mathcal{X}$ such that for any interval $\mathcal{I}_j$ and any $i \in [k],$ we have:
+\[ \sum_{\tau \in \mathcal{I}_j} g_{\tau, i} (x^\star) \leq P_TF, \]
+where $F$ is the maximum absolute value of the constraint functions as given in Definition \ref{pt-feas-assump}.
+Hence, 
+\begin{eqnarray*}
+	\sum_{j=1}^{\lceil t/S \rceil}Q_i^\star(j) \sum_{\tau \in \mathcal{I}_j}g_{\tau, i}(x^\star) &\leq& P_TF \sum_{j=1}^{\lceil t/S \rceil}Q_i^\star(j) \\
+	&\leq & \frac{P_TF}{S} \sum_{j=1}^{\lceil t/S \rceil} \sum_{\tau \in \mathcal{I}_j}\big(Q_i^\star(j)-Q_i(\tau)\big) + \frac{P_TF}{S}\sum_{\tau=1}^t Q_i(\tau).
+\end{eqnarray*}
+Hence, from Eqn.\ \eqref{S-bd1}, we have that 
+\begin{eqnarray*}
+	 	\sum_{\tau=1}^t Q_i(\tau)g_{\tau, i}(x^\star)  &\leq& \big(1+\frac{t}{S}\big) F^2S(S-1) + (1+\frac{t}{S})P_TF^2(S-1) + \frac{P_TF}{S}\sum_{\tau=1}^t Q_i(\tau) \\
+	 	&\leq & F^2(S+P_T)(S+t)+ \frac{P_TF}{S}\sum_{\tau=1}^t Q_i(\tau).
+\end{eqnarray*}
+Substituting the above bound into Eqn.\ \eqref{new-reg-decomp}, we have that 
+\begin{eqnarray*}
+	\sum_{i=1}^k Q_i^2(t) \leq \textrm{Regret}_t'(x^\star) + 2kF^2(S+P_T)(S+t)+ \frac{2P_TF}{S}\sum_{\tau=1}^t \sum_{i=1}^k Q_i(\tau).
+\end{eqnarray*}
+Plugging in the regret bound of the AdaGrad policy for the surrogate cost functions, the above equation yields
+\begin{eqnarray} \label{p_t-bd-eq}
+		\sum_{i=1}^k Q_i^2(t) \leq GD \sqrt{2k}\sqrt{\sum_{\tau=1}^t \big(\sum_{i=1}^kQ_i^2(\tau)\big)}+ 2kF^2(S+P_T)(S+t)+ \frac{2P_TF}{S}\sum_{\tau=1}^t \sum_{i=1}^k Q_i(\tau).
+\end{eqnarray} 
+Using Cauchy-Schwarz inequality, the last term of the above inequality can be upper bounded by \[\frac{2P_TF \sqrt{kt}}{S} \sqrt{\sum_{\tau=1}^t \big(\sum_{i=1}^kQ_i^2(\tau)\big)}.\]
+Hence, we have the following inequality which holds for any $1\leq S \leq t$ and $1\leq \tau \leq t:$
+\begin{eqnarray} \label{p_t-bd-eq2}
+		\sum_{i=1}^k Q_i^2(\tau) \leq \bigg(GD \sqrt{2k}+ \frac{2P_TF \sqrt{kt}}{S}\bigg)\sqrt{\sum_{\tau=1}^t \big(\sum_{i=1}^kQ_i^2(\tau)\big)}+ 2kF^2(S+P_T)(S+t).
+\end{eqnarray} 
+Summing up the above inequalities for $1\leq \tau \leq t$ and defining $Z_t^2 \equiv \sum_{\tau=1}^t \sum_{i=1}^kQ_i^2(\tau),$ we have:
+\begin{eqnarray*}
+	Z_t^2 &\leq& \bigg(GD \sqrt{2k}+ \frac{2P_TF \sqrt{kt}}{S}\bigg)tZ_t + 2kF^2t(S+P_T)(S+t) \\
+	&\leq& 2 \max \bigg(\big(GD \sqrt{2k}+ \frac{2P_TF \sqrt{kt}}{S}\big)tZ_t, 2kF^2t(S+P_T)(S+t)\bigg). 
+\end{eqnarray*}
+The above inequality implies that 
+\begin{eqnarray}
+	Z_t &\leq& 2 \max \bigg(\big(GD \sqrt{2k}+ \frac{2P_TF \sqrt{kt}}{S}\big)t, F\sqrt{kt(S+P_T)(S+t)}\bigg) \nonumber \\
+	&\leq & 2 \max \bigg(\big(GD \sqrt{2k}+ \frac{2P_TF \sqrt{kT}}{S}\big)T, FT\sqrt{2k(S+P_T)}\bigg), \label{Z-t-bd2}
+\end{eqnarray}
+where in the last step, we have used the fact that $t \leq T$ and $S \leq T$. Now, let us choose $S\equiv  P_T^{\nicefrac{2}{3}}T^{\nicefrac{1}{3}}$. With the above choice of $S$, from the above inequality, we have the following bound for $Z_t:$
+\begin{eqnarray*}
+	Z_t \leq 2 \max \bigg(\big(GD \sqrt{2k}+ 2F\sqrt{k}P_T^{\nicefrac{1}{3}}T^{\nicefrac{1}{6}}\big)T, 2F\sqrt{k}P_T^{\nicefrac{1}{3}}T^{\nicefrac{7}{6}}\bigg) = O(P_T^{\nicefrac{1}{3}}T^{\nicefrac{7}{6}})+O(T),
+\end{eqnarray*}
+where we have used the fact that $P_T \leq T.$
+Substituting the above bound in \eqref{p_t-bd-eq2}, we have for any $1\leq i\leq k$ and any $t \leq T:$
+\begin{eqnarray*}
+	\sum_{i=1}^k Q_i^2(t) \stackrel{(a)}{=} O(P_T^{\nicefrac{2}{3}}T^{\nicefrac{4}{3}})+ O(T)+ O(P_T^{\nicefrac{2}{3}}T^{\nicefrac{4}{3}}) = O(P_T^{\nicefrac{2}{3}}T^{\nicefrac{4}{3}}) +O(T),
+\end{eqnarray*}
+where in (a), we have used the fact that $T\geq S\geq P_T$ in bounding the last term.
+Hence, we have the following upper bound on the queue lengths for any $1\leq t \leq T$
+\begin{eqnarray*}
+||\bm{Q}(t)||_\infty \leq ||\bm{Q}(t)||_2 = O(P_T^{\nicefrac{1}{3}}T^{\nicefrac{2}{3}})+O(\sqrt{T}).
+\end{eqnarray*}
+The final result follows upon appealing to the relation \eqref{V-Q}. $~~~~\blacksquare$
+%where we recall that $P_T$ is proportional to the CCV achieved by the optimal static offline policy.
+%\end{proof}

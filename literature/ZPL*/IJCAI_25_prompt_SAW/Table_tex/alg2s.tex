@@ -1,0 +1,25 @@
+\begin{algorithm}[t]
+    \caption{\scshape Binary Search}
+    \label{alg:alg2}
+    \begin{algorithmic}[1]
+    \Require
+        \item[] { \#$\eta^{*}:$ {Target compression rate}}
+        \item[] { \#$\mathcal{G}:$ Graph structure of prompt}
+        \item[] { \#$\gamma:$ interval threshold}
+    \Ensure subgraph $\mathcal{G}_{subset}$
+        \State double $l=0,r=1$
+        \While{$r-l > \gamma$}
+        \State double $mid=(l+r)/2$
+        \State $\mathcal{G}_{subset} = Compress(\mathcal{G},mid)$
+        \State $Rate= len(\mathcal{G}_{subset})/len(\mathcal{G})$
+        \State $\mathbf{If}$ $Rate > \eta^{*}$ \textbf{then}
+        \State $ \qquad r=mid$
+        \State \textbf{Else} 
+        \State $ \qquad l=mid$
+        \EndWhile
+        \State $\delta=(l+r)/2$  \# compression threshold
+        \State $\mathcal{G}_{subset} = Compress(\mathcal{G},\delta)$
+        \State \Return $\mathcal{G}_{subset}$
+    \end{algorithmic}
+\end{algorithm}
+

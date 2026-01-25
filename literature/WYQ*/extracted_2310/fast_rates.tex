@@ -1,0 +1,138 @@
+\subsection{Adversaries Ensuring Non-negative Regret} \label{improved_rates}
+%In Theorem \ref{gen-cvx-bd} and \ref{str-cvx-bd}, we showed that under the assumption of the non-negativity of the worst-case regret, the constraint violation bounds can be improved to $O(\sqrt{{T}})$ and $O(\ln T/\alpha)$ for convex and strongly-convex cost functions, respectively. In this section, we additionally show that the same improved bounds hold in the case of a time-invariant fixed constraint function and a certain class of worst-case adversaries, called \emph{convex adversary}, defined next. COCO with time-invariant constraints has been studied in the literature where the main objective is to design gradient-based first-order policies that avoid the costly projection step on the constraint set \citep{jenatton2016adaptive, yuan2018online}. 
+
+\paragraph{Convex adversary:} An adversary is called \emph{convex} if for any sequence of  action sequence $\{x_t\}_{t=1}^T,$ the adversary chooses the cost function sequence $\{f_t\}_{t=1}^T$ such that for any $T \geq 1,$ we have
+\begin{eqnarray} \label{jensenadv}
+	\sum_{t=1}^T f_t(x_t) \geq \sum_{t=1}^T f_t(\bar{x}_T),
+\end{eqnarray}     
+where $\bar{x}_T \equiv \frac{1}{T}\sum_{t=1}^T x_t.$ Hence, by definition, a convex adversary guarantees a non-negative regret with respect to the average action $\bar{x}_T$ for all rounds. In the following, we give two examples of convex adversaries.
+
+
+ \paragraph{1. Fixed adversary:} An adversary which always selects a fixed convex function $f$ on all rounds is a convex adversary. In this case, Eqn.\ \eqref{jensenadv} holds due to the Jensen's inequality. 
+
+\paragraph{2. Minimax adversary:} Let $\mathcal{F}$ denote an arbitrary non-empty set of convex functions defined on the admissible set $\mathcal{X}$. Consider an adversary $\mathcal{M}$, which, upon seeing the selected action $x_t$, chooses the worst cost function $f_t$ from the set $\mathcal{F}$ on round $t:$ 
+\[f_t \in \arg\max_{f\in \mathcal{F}} f(x_t). \]
+We now show that $\mathcal{M}$ is a convex adversary. By definition, for any round $\tau \in [T],$ we have 
+\[ f_\tau(x_\tau) \geq f_t(x_\tau) \implies f_\tau(x_\tau) \geq \frac{1}{T} \sum_{t=1}^T f_{t}(x_\tau). \]
+Summing up the above inequalities for each $\tau \in [T],$ we have 
+\begin{eqnarray}\label{conv-adv-def}
+ \sum_{\tau=1}^T f_\tau(x_\tau) \geq \sum_{t=1}^T \frac{1}{T}\sum_{\tau=1}^T f_t(x_{\tau}) \stackrel{\textrm{(a)}}{\geq} \sum_{t=1}^T f_t(\bar{x}_T),
+ \end{eqnarray}
+where inequality (a) follows upon applying Jensen's inequality to each cost function. 
+Eqn.\ \eqref{conv-adv-def} shows that $\mathcal{M}$ is a convex adversary. 
+
+P.S. It can be easily seen that Fixed adversary is a special case of Minimax adversary where $\mathcal{F}=\{f\}.$
+\iffalse
+\subsection{Assumptions}
+\begin{assumption}[Time-invariant constraints] \label{constr_assump1}
+Assume that the constraint functions on every round are fixed and given by $g_t=g.$ Hence, the feasible set is defined as:
+\begin{eqnarray*}
+	\mathcal{X}^\star = \{x^\star \in \mathcal{X}: g(x^\star) \leq 0\}.  
+\end{eqnarray*}
+\end{assumption}
+\begin{assumption}[Convex adversary] \label{adversary_assump2}
+	The cost functions are chosen by a convex adversary. 
+\end{assumption}
+\begin{assumption}[Bounded dual optimal variable] \label{sensitivity}
+	Let $\bar{f}_T \equiv \frac{1}{T} \sum_{t=1}^T f_t$ be the average of the cost functions. Consider the following optimization problem $P_T:$
+	%For any $\beta \geq 0,$ let us define:
+	%\begin{eqnarray*}
+		%S_T(\beta)= \min_{x \in \mathcal{X}} \{\bar{f}_T (x), ~ \textrm{s.t.} ~ g(x) \leq \beta\}.
+		\[ \min_{x\in \mathcal{X}} \bar{f}_T(x)~ \textrm{s.t.}~ g(x) \leq 0. \]
+		We assume that for each $T \geq 1,$ strong duality holds for the problem $P_T$ and that the limsup of a sequence of optimal dual variables is strictly bounded above by a finite constant $\lambda $. Note that the value of $\lambda$ need not be known a priori.
+%	\end{eqnarray*}
+	%It is easy to verify that $S_T (\cdot)$ is a non-increasing, convex function of $\beta$ \citep[Section 5.6.1]{boyd}. We assume that $\limsup_{T} |S_T'(0^+)| \leq \lambda$ for some finite $\lambda.$
+\end{assumption}
+\textbf{Remark:} In the case of a fixed adversary, we have $\bar{f}_T = f.$ Hence, $\lambda$ can be efficiently determined by examining the dual of a single convex problem. Note that \citep{nedic2009subgradient} made a similar assumption for the standard offline convex optimization problem with a given cost and a constraint function. However, their algorithm must know an upper bound to $\lambda$ \emph{a priori}.  The following proposition gives a sufficient condition for Assumption \ref{sensitivity}. In particular, it shows that if the unclipped constraint function satisfies Slater's condition, then Assumption \ref{sensitivity} holds \footnote{Clearly, the clipped constraint function can not satisfy Slater's condition. Hence, we study the unclipped constraint function in Proposition \ref{slater-bdd}.}. 
+ \begin{proposition} \label{slater-bdd}
+ 	Let $\tilde{g}$ be the constraint function which can be negative and that satisfies Slater's condition, \emph{i.e.,} there exists an admissible $z \in \mathcal{X}$ s.t. $\tilde{g}(z) \leq -\epsilon$ for some $\epsilon >0. $ Then Assumption \ref{sensitivity} holds for some $\lambda = O(\frac{1}{\epsilon})$.
+ \end{proposition} 
+ \begin{proof}
+ 	It is easy to verify that any dual optimal solution to the problem with the unclipped constraint function is also a dual optimal solution to $P$ with the clipped constraint function. Let $(z^\star, \lambda)$ be an optimal primal-dual solution pair for the problem with the unclipped constraint function. Since $(z^\star, \lambda)$ is a saddle point for the Lagrangian, we can write 
+ 	\begin{eqnarray*}
+ 		\bar{f}_T(z)+\lambda \tilde{g}(z) \geq \bar{f}_T(z^\star)+ \lambda \tilde{g}(z^\star)= \bar{f}_T(z^\star), 
+ 	\end{eqnarray*}
+ 	where we have used the complementary slackness property on the RHS. Now since $\tilde{g}(z)\leq -\epsilon,$ from the above, we have 
+ 	\begin{eqnarray*}
+ 		\bar{f}_T(z) -\lambda \epsilon \geq \bar{f}_T(z^\star) ~\implies \lambda = O(\frac{1}{\epsilon}),
+ 	\end{eqnarray*}
+ 	where in the last step, we have used the fact that the range of any convex function with a bounded subgradient over a bounded domain is bounded.
+ \end{proof}
+ 
+
+\subsection{Cumulative violation bound under Assumptions \ref{constr_assump1}, \ref{adversary_assump2}, and \ref{sensitivity}} 
+Taking  \eqref{q-bd-eqn} as our starting point, for any feasible action $x^\star \in \mathcal{X}^\star$, we have:
+\begin{eqnarray} \label{master_eq2}
+	Q^2(T) + V \textrm{Regret}_T(x^\star) \leq \textrm{Regret}_T'(x^\star). 
+\end{eqnarray} 
+%We can lower bound the regret term as follows:
+In Theorem \ref{gen-cvx-bd} and \ref{str-cvx-bd}, we trivially lower bounded the regret term by a negative linear term, which resulted in a sub-optimal violation bound. Using Assumptions \ref{constr_assump1}, \ref{adversary_assump2}, and \ref{sensitivity}, we next derive a tighter lower bound to the regret by directly relating it to the queue length. We have 
+\begin{eqnarray} \label{reg_lb_jensen}
+	\textrm{Regret}_T(x^\star) &=& \sum_{t=1}^T f_t(x_t) - \sum_{t=1}^T f_t(x^\star) \nonumber\\
+	&\stackrel{(a)}{\geq} & \sum_{t=1}^T f_t(\bar{x}_T) - \sum_{t=1}^T f_t(x^\star) \nonumber\\
+	&=& T (\bar{f}_T(\bar{x}_T) - \bar{f}_T(x^\star)). 
+\end{eqnarray}
+where in step (a), we have used the fact that the adversary is convex. Next, from the CCV bound of COCO Meta-policy, we have 
+\begin{eqnarray*}
+T g(\bar{x}_T)	\stackrel{(\textrm{Jensen's ineq.})}{\leq} \sum_{t=1}^T g(x_t) \leq Q(T),
+\end{eqnarray*}
+\emph{i.e.,} 
+\begin{eqnarray*}
+	g(\bar{x}_T) \leq \frac{Q(T)}{T}.
+\end{eqnarray*}
+Now let $y^\star \in \mathcal{X}$ be a solution to the following optimization problem:
+\begin{eqnarray}\label{opt_prob2}
+	y^\star \in \arg \min_{x \in \mathcal{X}} \bar{f}_T(x), ~ \textrm{s.t.}~ g(x) \leq \frac{Q(T)}{T}.
+\end{eqnarray}
+Since the average action $\bar{x}_T$ is a feasible solution to the above program, we have 
+\begin{eqnarray*}
+	\bar{f}_T(\bar{x}_T) \geq \bar{f}_T(y^\star).
+\end{eqnarray*}
+Finally, choose the feasible action $x^\star$ as follows:
+\begin{eqnarray}\label{opt_prob3}
+	x^\star \in \arg\min_{x \in \mathcal{X}} \bar{f}_T(x), ~ \textrm{s.t.} ~ g(x) \leq 0. 
+\end{eqnarray}
+Hence, from Eqn.\ \eqref{reg_lb_jensen}, \eqref{opt_prob2}, and \eqref{opt_prob3}, we have 
+\begin{eqnarray*}
+	\textrm{Regret}_T(x^\star) \geq T(\bar{f}_T(y^\star)- \bar{f}_T(x^\star)).
+\end{eqnarray*}
+Since $Q(T)=o(T),$ from Theorem \ref{gen-cvx-bd}, we now make the key observation that $x^\star$ and $y^\star$ are the solutions to optimization problems \eqref{opt_prob2} and \eqref{opt_prob3} respectively, where the latter problem has been obtained from the former by perturbing the inequality constraint by a small amount for a large $T$. Hence, the difference in their objective values can be obtained by studying the sensitivity of the convex programs. Hence, using Eqn.\ (5.57) from \citet[Section 5.6.2]{boyd}, we conclude that for a sufficiently large horizon length $T,$ we have:
+\begin{eqnarray*}
+	\textrm{Regret}_T(x^\star) \geq T \big(-\lambda \frac{Q(T)}{T}\big) = - \lambda Q(T). 
+\end{eqnarray*}
+Plugging in the above bound in  \eqref{master_eq2}, we have the following relaxation of our key regret decomposition result for large enough $T:$
+\begin{eqnarray} \label{reg_decomp_new}
+	 Q^2(T) - V\lambda Q(T) \leq \textrm{Regret}_T'(x^\star),
+\end{eqnarray}
+where, as before, the $\textrm{Regret}_T'$ term on the right-hand side denotes the worst-case regret (over the admissible set $\mathcal{X}$) of the OCO sub-routine. We now have the following theorem
+\begin{theorem} \label{improved_violation_bd}
+	Under Assumptions \ref{constr_assump1}, \ref{adversary_assump2}, and \ref{sensitivity}, the cumulative constraint violation bounds in Theorem \ref{gen-cvx-bd} and Theorem \ref{str-cvx-bd} can be improved to $Q(T)= \mathbb{V}(T)=O((1+\lambda) \sqrt{T}),$ and $Q(T)=\mathbb{V}(T)=O((1+\lambda)\frac{\log T}{\alpha}),$ respectively. 
+\end{theorem} 
+\begin{proof}
+	The proof proceeds similarly to Theorem \ref{gen-cvx-bd} part 1 and  Theorem \ref{str-cvx-bd} part 1, respectively, where we now take into account the additional linear term. 
+	\paragraph{Case I (Convex costs):}
+	Similar to Eqn.\ \eqref{main_eq}, plugging in the adaptive regret bound for convex cost functions on the RHS of Eqn.\ \eqref{reg_decomp_new}, we have 
+	\begin{eqnarray*}
+		Q^2(T)-V\lambda Q(T) \leq 2GDQ(T)\sqrt{T}+ 2GDV\sqrt{T},
+	\end{eqnarray*}	
+	where, as before, we have used the non-decreasing property of the queue-length sequence. Setting $V=\sqrt{T}$ and completing the square, we obtain the following bound for the queue-length sequence for a sufficiently large horizon length $T:$
+	\begin{eqnarray*}
+		Q(T) = O(\lambda\sqrt{T})+O(\sqrt{T}).
+	\end{eqnarray*} 
+		\paragraph{Case II (Strongly-convex costs):}
+		Plugging in the adaptive regret bound \eqref{adaptive_str_cvx_bd} for strongly-convex cost functions on the RHS of Eqn.\ \eqref{reg_decomp_new}, we obtain: 
+		\begin{eqnarray*}
+			Q^2(T) - V\lambda Q(T) \leq \frac{VG^2\ln (Te)}{\alpha} + \frac{G^2 \ln (Te)}{\alpha V} Q^2(T),
+		\end{eqnarray*}
+		where, as before, we have used the non-decreasing property of the queue-length sequence. Setting $V=\frac{2G^2 \ln(Te)}{\alpha}$ as before, we have
+		\begin{eqnarray*}
+			Q^2(T) - 2V\lambda Q(T) \leq 2\frac{VG^2}{\alpha}\ln(Te). 
+		\end{eqnarray*}
+		Completing the square, we conclude that 
+		\begin{eqnarray*}
+			Q(T) = O(\frac{\lambda \log T}{\alpha})+ O(\frac{\log T}{\alpha}).
+		\end{eqnarray*}
+\end{proof}
+\fi
+
+

@@ -1,0 +1,86 @@
+\section{KGBPC} 
+\OurMODEL{} is a graph-based prompt compression method that can capture the overall semantic information of prompts using graph structures and determine the optimal compression ratio adaptively based on the information content. The core components of \OurMODEL{} include a graph structure information extractor and an adaptive compression ratio calculator. The workflow of \OurMODEL{} is summarized as follows: 1. Construct a graph from the original prompt. 2. Adaptively extract subgraphs from the graph based on the information content. 3. Recover the natural language representation from the extracted subgraphs.
+
+\subsection{Graph Construction}
+The ultimate goal of the graph construction process is to propose a mechanism to represent the information of the original prompt in a more structured manner. We posit that this extraction process facilitates the initial removal of redundant information from the original prompt. 
+
+The graph construction process takes the original prompt  $\mathcal{P}_t$ as input and generates a graph $\mathcal{G}_{t}$ as output. The representation of structured information in the form of $\textless{}s, r, o\textgreater{}$ is highly effective. Therefore, the initial step involves decomposing the prompt into multiple instances of $\textless{}s, r, o\textgreater{}$ format.
+
+This step constructs the $\textless{}s, r, o\textgreater{}$ tuple, which itself filters out redundant information. However, semantic duplication still persists across different $\textless{}s, r, o\textgreater{}$ tuples. Consequently, it is necessary to further fuse them. Fusion involves employing any metric related to distance. In this work, the technique utilized merges nodes sharing identical values of $s$ and $r$.
+We embed all the fused $\textless{}s, r, o\textgreater{}$, and use the embedded results as the vertices of the graph, thus obtaining $\mathcal{G}_{t}$.
+
+\subsection{Adaptive subgraph extraction}
+The prompt is specifically crafted to address the problem, necessitating the inclusion of relevant information in the initial diagram constructed during the first phase.
+
+Due to the high information density of the problem itself, structuring the problem might result in the loss of some critical information. Therefore, we choose to set the problem as the super vertex of the graph directly. Specifically, we extract the problem $P_q$ in its entirety from the original prompt and then set the embedding result $E_q$ of $P_q$ as the super vertex 
+$v_{super}$ of $\mathcal{G}_{t}$.
+
+
+To perform subgraph extraction effectively, it is essential to evaluate the contribution of each vertex within $\mathcal{G}_{t}$ towards the super vertex and to isolate subgraphs that exhibit high contributions. This process involves establishing connections between all vertices in $\mathcal{G}_{t}$. The edge between $v_i$ and $v_j$ is denoted as $e_{ij}$, which can be represented as:
+\begin{equation}
+   e_{ij} = D(v_i, v_j)
+\end{equation}
+$D(\cdot)$ can be any metric related to similarity. In this work, we use cosine similarity as the metric.
+
+Initially, we let the vertex set $S_{v}$ in final extracted subgraph as $\{v_{super}\}$, with its initial score designated as 0. Subsequently, we select the edge $e_k$ that has the highest value from those connected to the super-origin and incorporate its corresponding vertex $v_k$ into $S_v$. Following this, we compute the current score of the subgraph using the specified formula:
+\begin{equation}
+score_{k} = \frac{1}{k}\sum_{i=1}^k w(v_i,v_0)
+\end{equation}
+where $k$ denotes the extraction of the $k^{th}$ subgraph, while $v_i$ represents the $i^{th}$ element within $S_{v}.$
+Next, we employ an adaptive compression rate calculator to ascertain whether to halt subgraph extraction and output or to persist in the extraction process.
+
+We calculate the gap $\beta$ between the score of the current subgraph and the score of the subgraph from the previous round:
+\begin{equation}
+    \beta = \frac{score_k-score_{k-1}}{score_{k-1}}
+\end{equation}
+if $\beta > \eta$, persist in the extraction process; otherwise halt subgraph extraction,delete the final element in $S_v$ and output $S_v$. $\eta$ is a hyperparameter used to balance compression accuracy and compression ratio, a larger $\eta$ will lead to a higher compression ratio but may result in a potential decrease in compression accuracy, and vice versa.
+
+\subsection{Recover from subgraph}
+We employ mapping techniques to reconstruct the original natural language representation from $S_v$, denoted as $N_v$, subsequently deriving the final prompt through amalgamation. It is crucial to emphasize that while amalgamating, reliance on the scores outlined in Section 5.2 is unsuitable; instead, amalgamation should proceed according to the sequential order in which each vertex appears in the original prompt. Relying on scores for amalgamation may result in illogical transitions, thereby deteriorating prompt performance.
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

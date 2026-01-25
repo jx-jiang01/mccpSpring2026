@@ -1,0 +1,12 @@
+# RAG Chatbot Dependencies
+langchain==0.1.0
+langchain-community==0.0.10
+langchain-openai==0.0.5
+openai>=1.7.2  # For Poe API and general OpenAI compatibility
+faiss-cpu==1.7.4
+beautifulsoup4==4.12.3
+python-dotenv==1.0.0
+sentence-transformers>=2.5.0  # For demo mode (local embeddings)
+zai-sdk>=0.2.0  # For Z.AI API
+streamlit>=1.28.0  # For web UI
+requests>=2.31.0  # For HKBU API

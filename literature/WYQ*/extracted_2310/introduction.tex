@@ -1,0 +1,44 @@
+\section{Introduction} \label{intro}
+Online convex optimization (OCO) is a standard framework for modelling and analyzing a broad family of online decision problems under uncertainty. In the OCO problem, on every round $t$, an online policy first selects an action $x_t$ from a closed and convex admissible set (\emph{a.k.a.} decision set) $\mathcal{X}.$ Then the adversary reveals a convex cost function $f_t$, resulting in a cost of $f_t(x_t)$. 
+The goal of an online policy is to choose an admissible action sequence $\{x_t\}_{t=1}^T$ so that its cumulative cost is not much larger than that of any fixed admissible action chosen in hindsight. In particular, the objective is to minimize the static regret defined below
+%\vspace{-0.1in}
+\begin{eqnarray} \label{intro-regret-def}
+	\textrm{Regret}_T \equiv \sup_{\{f_t\}_{t=1}^T} \sup_{x^\star \in \mathcal{X}} \textrm{Regret}_T(x^\star), ~\textrm{where~}\textrm{Regret}_T(x^\star) \equiv \sum_{t=1}^T f_t(x_t) - \sum_{t=1}^T f_t(x^\star).
+\end{eqnarray}
+ The term \emph{static} refers to using a fixed benchmark, specifically only one action $x^\star$ throughout the horizon of length $T$. 
+ 
+ In this paper, we consider a generalization of the standard OCO framework. In this problem, on every round $t,$ the online policy first chooses an admissible action $x_t \in \mathcal{X},$ 
+ and then the adversary chooses a convex cost function $f_t: \mathcal{X} \to \mathbb{R}$ and $k$ constraints of the form $g_{t,i}(x) \leq 0, \ i \in [k],$ where $g_{t,i}: \mathcal{X} \to \mathbb{R}$ is a convex function for each $i \in [k]$\footnote{Notations: For any natural number $n$, we define $[n] \equiv \{1,2,\ldots, n\}.$ For any real number $z$, we define $(z)^+ \equiv \max(0,z).$}. Since $g_{t, i}$'s are revealed after the action $x_t$ is chosen, an online policy need not necessarily take feasible actions on each round, and the obvious metric of interest in addition to \eqref{intro-regret-def} is the total cumulative constraint violation (CCV) $\mathbb{V}(T)$ defined as 
+ %\vspace{-0.1in}
+  \begin{eqnarray} \label{intro-gen-oco-goal}
+ 	\textrm{CCV}_T \equiv \mathbb{V}(T) = \max_{i=1}^k \mathbb{V}_i(T)\quad  \text{where} \quad \mathbb{V}_i(T)  = \sum_{t=1}^T (g_{t,i}(x_t))^+. 
+	\end{eqnarray}
+Let $\mathcal{X}^\star$ be the feasible set consisting of all admissible actions that satisfy all constraints $g_{t,i}(x) \leq 0, \ i \in [k], t\in [T]$. Under the standard assumption that $\mathcal{X}^\star$ is not empty, the goal is to design an online policy to simultaneously achieve a small regret \eqref{intro-regret-def} with respect to any admissible benchmark $x^\star \in \mathcal{X}^\star$ and a small CCV \eqref{intro-gen-oco-goal}. We refer to this problem as the constrained OCO (COCO). The assumption $\mathcal{X}^\star \neq \emptyset $ will be relaxed in Section \ref{simul_constr} for the  Online Constraint Satisfaction (OCS) problem where the cost functions are set to zero, and the objective is to minimize just the CCV.
+%Compared to the stringent condition that 
+%$\mathcal{X}^\star \neq \emptyset$, a relaxed condition is called the $S$-feasible benchmark, where the fixed action $x^\star$ in an $S$-feasible benchmark enjoys the property that the sum of the constraint functions evaluated at $x^\star$ over any consecutive sequence of $S \geq 1$ rounds is non-positive. Clearly, $S=1$ corresponds to  $\mathcal{X}^\star \neq \emptyset$. We consider both $S=1$ and general $S$-feasible benchmarks in this paper.
+
+
+%control both the regret and the cumulative violation penalty optimally. This problem departs from the celebrated OCO framework because of the instantaneous constraints. This begets a natural question - Is it possible to efficiently reduce the constrained problem to a standard OCO problem while obtaining the optimal regret and cumulative violation bounds? In this paper, we answer this question affirmatively in a constructive fashion. 
+%In this paper, our objective is to design a class of efficient online learning policies to simultaneously minimize the regret and the cumulative constraint violations.
+%In addition to having a small regret, we require the cumulative constraint violations to be sublinear in time. 
+
+%We consider the problem of Online Convex Optimization with time-varying instantaneous online constraints where the cost and constraint functions could be chosen adversarially. 
+%\paragraph{Applications:} 
+COCO arises in many applications, including online portfolio optimization with risk constraints, resource allocation in cloud computing with time-varying demands, pay-per-click online ad markets with budget constraints \citep{georgios-cautious}, online recommendation systems, dynamic pricing, revenue management, robotics and path planning problems, and multi-armed bandits with fairness constraints \citep{sinha2023banditq}. 
+%Control policies for emerging applications such as autonomous vehicles face multi-dimensional constraints at each time, resulting from the requirement to stay on the course, speed constraints, collision avoidance constraints, and traffic regulatory constraints \citep{feng2023dense}. Offline optimization problems with a huge set of constraints can also be conveniently formulated in this framework. 
+The necessity for revealing the constraints sequentially may also arise, \emph{e.g.,} in communication-limited settings, where it might be infeasible to reveal all constraints defining the feasible set at a time (\emph{e.g.,} combinatorial auctions). See Section \ref{expts} for an application of the COCO framework in fraud detection which involves binary classification with a highly-imbalanced dataset.  
+%For further motivation, see Section \ref{hidden_set} in the Appendix, where we introduce a natural convex optimization over a hidden constraint set, called the \textsc{Hidden Set} problem.
+ %To further motivate the problem, we now introduce a convex optimization over a hidden constraint set, which we call the \textsc{Hidden Set} problem.
+ % The above set up can be motivated by imagining that there is a 
+ \iffalse
+ \paragraph{The \textsc{Hidden Set} Problem:}
+Let $\mathcal{X}$ be an \emph{admissible} set of actions which is known to the policy. Let $\mathcal{X}^\star$, called the \emph{feasible} set, be a closed and convex subset of $\mathcal{X}$. Due to a large number of defining constraints, the feasible set $\mathcal{X}^\star$ is too complex to communicate to the policy \emph{a priori}. However, an efficient separation oracle for $\mathcal{X}^\star$ is assumed to be available. On the $t$\textsuperscript{th} round, the policy first selects an admissible action $x_t \in \mathcal{X}$ and then, the adversary reveals a convex cost function $f_t$ and \emph{some} convex constraint of the form $g_t(x) \leq 0,$ which contains the unknown feasible set $\mathcal{X}^\star$. As an example, the constraints could come from the separation oracle that, if $x_t$ is infeasible, outputs a hyperplane separating the current action $x_t \in \mathcal{X}$ and the hidden feasible set $\mathcal{X}^\star$. The objective of the policy is to perform as well as any action from the hidden feasible set $\mathcal{X}^\star$ in terms of the regret and the cumulative constraint violation metrics. 
+ 
+ \begin{figure}
+ \centering
+ 	\includegraphics[scale=0.4]{figures/hidden2.pdf}
+ 	\caption{\small{Illustrating the \textsc{Hidden Set} problem. In this figure, the sphere $\mathcal{X}^\star$ is the hidden set. On every round $t$, the adversary reveals a hyperplane supporting $\mathcal{X}^\star.$ }}
+ \end{figure}
+ \fi
+ 
+ %As an interesting byproduct, our proposed online learning policy also yields throughput-optimal control policies for controlling queueing systems under adversarial arrival and service processes. This aspect has been illustrated in Section \ref{app}.

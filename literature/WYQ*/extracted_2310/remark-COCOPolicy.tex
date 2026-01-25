@@ -1,0 +1,23 @@
+\iffalse
+\subsection{Comments on OCO Meta-policy}\label{app:commentsMetaOCO}
+
+ It can be verified that the surrogate cost function sequence $\{\hat{f}_t\}_{t\geq 1}$ is a legitimate input to any base OCO policy as all the ingredients required to compute the surrogate cost function $\hat{f}_t$ (\emph{i.e.,} $f_t, Q(t),\textrm{and}~ g_t$) are known to the policy at the end of round $t$. 
+ 
+ \textbf{Remarks:} 
+2.  Although we introduce the auxiliary queue-length process $\{Q(t)\}_{t \geq 1}$ as a convenient mathematical tool to bound the constraint violation penalty $\mathbb{V}_T$, in some problems, the process defined in \eqref{q-ev} arises quite naturally as the evolution of some physical queueing process. In these problems, controlling the queue length itself is of primary interest. When the penalty function $\psi(g_(\cdot))$ can assume negative values as well (which is the case, \emph{e.g.,} when $\psi$ is the identity function and $g_t$'s are linear functions, upper bounding the queue lengths is strictly harder than upper bounding the violation penalty.
+\fi
+\iffalse
+\textbf{Remarks:} 
+%1. As in the \ocs ~problem, we are taking full advantage of the adaptive nature of the OCO sub-routine by exploiting the fact that the adversary is allowed to choose the surrogate cost function $\hat{f}_t$ \emph{after} seeing the current action $x_t$ on any round. %The policy is illustrated in the following pseudocode.
+ Since $\nabla \hat{f}_t(x_t)= V \nabla f_t(x_t) + 2Q(t)\nabla g_t(x_t),$ the meta-policy, in reality, needs to pass only the (sub-)gradients $\nabla f_t(x_t), \nabla g_t(x_t)$, and the current violation $g_t(x_t)$ to an OGD sub-routine. The full description of the functions at every point in its domain is \emph{not required} by the meta-policy, and hence, the proposed policy is more efficient compared to the policy proposed by \citet{guo2022online}, which needs to solve a convex optimization problem involving the constraint function $g_t$. 
+ \fi
+%\hrule 
+
+%\subsection{Boundedness Assumption} \label{bdd-assumption}
+\iffalse
+Using the triangle inequality for the Euclidean norms, the norm of the (sub)-gradients of the surrogate cost functions can be bounded as follows:
+\begin{eqnarray} \label{grad-bd}
+	||\nabla \hat{f}_t(x_t)||_2 \leq V ||\nabla f_t(x_t)||_2 + 2Q(t)||\nabla g_t(x_t)||_2 \leq (V+Q(t))G.
+\end{eqnarray}
+The above bound on the norm of the gradient of the surrogate costs depends on the queue length, and hence, it depends on the past actions of the online policy.
+\fi

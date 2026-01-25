@@ -1,0 +1,18 @@
+# Ignore sensitive data
+.env
+*.key
+API_KEY*
+openRouterAPIkey.md
+HKBUAPIkey.md
+zai.md
+poe.md
+
+# Ignore OS files
+.DS_Store
+
+# Ignore large/unnecessary files
+*.zip
+*.pdf
+*.docx
+*.pptx
+

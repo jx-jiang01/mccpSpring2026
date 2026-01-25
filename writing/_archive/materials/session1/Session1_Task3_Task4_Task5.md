@@ -1,0 +1,113 @@
+# Task 3: Identifying Centrality Statements
+
+Read the two excerpts below which are extracted from the introductions of two academic journal articles (in the fields of Chemistry and Social Sciences). Discuss the following questions with a partner:
+
+1. Can you identify the centrality statements in the excerpts? How did the authors establish the general territory of the research topic?
+
+---
+
+## Excerpt 1 (Chemistry)
+
+**INTRODUCTION**
+
+Organic electronics have drawn enormous attention in the past few decades owing to the ease of processing, ultralow-cost substrates, lightweight properties, thin film flexibility and tunable functionality.¹ Integration of photochromic properties with organic electronics has been a tempting approach to accomplish photo-responsive multifunctional optoelectronics.² Several pioneering projects that focused on the development of organic electronics embedded with photochromic layers have brought photochromic materials much closer to having real electronic applications in the foreseeable future.³ In fact, thermal irreversibility and fatigue resistance are especially desirable prerequisites regarding the long-term stability and photo-switching cyclability of photochromic materials for optoelectronic applications. Solid state of thin film photochromic properties are essential for the practical application of photo-responsive optoelectronics. In contrast to crystalline photochromism, which has been well-studied for potential applications in light-driven molecular machines,⁴ thin film photochromism adopted in photo-modulated organic electronics has not been comprehensively investigated for its photochromic properties.
+
+[Paragraphs taken out]
+
+**Source:** Wu, N.M.W., Wong, H.L., & Yam, V.W.W. (2017). Photochromic benzo[b]phosphole oxide with excellent thermal irreversibility and fatigue resistance in the thin film solid state via direct attachment of dithienyl units to the weakly aromatic heterocycle. *Chemical Science*, 8, 1309-1315.
+
+---
+
+## Excerpt 2 (Social Sciences)
+
+**INTRODUCTION**
+
+A considerable amount of literature has analysed how the transition to retirement affects subjective well-being (SWB). Older research has reported contradictory results, with no clear findings as to whether retirement had a positive, negative or no general effect on SWB (e.g., Gall et al., 1997; Isaksson & Johansson, 2000; Richardson and Kilty, 1991; Warr et al., 2004). Evidence from more recent studies has highlighted that trajectories of SWB in the post-retirement phase of life show no single universal pattern. Instead, SWB post-retirement depends on a number of protective- and risk-factors that vary across social groups and individuals (e.g., Bender, 2012; Calvo et al., 2009; Pinquart and Schindler, 2007; van Solinge and Henkens, 2005, 2007, 2008; Wang, 2007; Wetzel et al., 2016). Specifically, influencing factors such as economic, social and personal resources (e.g., socio-economic status, marital status, health) as well as the situational context in which retirement takes place (e.g., timing and voluntariness of retirement) can enhance or hamper SWB in the post-work phase of life (van Solinge, 2013).
+
+**Source:** Schmälzle, M., Wetzel, M., & Huxhold, O. (2019). Pathways to retirement: Are they related to patterns of short- and long-term subjective well-being? *Social Science Research*, 77, 214-229.
+
+---
+
+2. Can you come up with one or two centrality statements for your own thesis topic? You can use the academic phrasebank ([http://www.phrasebank.manchester.ac.uk/introducing-work/](http://www.phrasebank.manchester.ac.uk/introducing-work/)) and ChatGPT to help you. After you finish, show your centrality statements to a partner and get comments.
+
+3. Ask ChatGPT for some comments on your centrality statements. You may input prompts such as:
+
+> "My research is about… (your research focus). I am writing centrality statements to highlight the importance of the research topic in the field of … (your research field). Can you suggest how the following centrality statements can be improved?"
+
+**What are some common phrases and language features used in centrality statements?**
+
+> **Note:** Although ChatGPT is a useful tool, it may not always give you reliable and accurate information. You need to use your own critical judgement to evaluate ChatGPT's responses. Additionally, you should not ask ChatGPT to write your centrality statements because you understand the importance and novelty of your research topic much better than ChatGPT does.
+
+---
+
+# Task 4: Analyzing Sample Introductions
+
+Read the two sample introductions extracted from two journal articles in the fields of Chemistry and Social Sciences respectively. Identify the rhetorical moves and the linguistic features.
+
+1. Can you identify the rhetorical moves in the introductions? Are the moves similar or different in the two introductions?
+2. To what extent are the moves in the two introductions similar to the CARS model proposed by Swales (1990)?
+3. What do you notice about the linguistic features (e.g. tenses, voices, technical jargon) of the introductions?
+4. What are the phrases used for pointing out the gaps in the existing literature?
+5. What are the phrases used for highlighting the significance of the research?
+
+---
+
+## Sample 1 (Chemistry)
+
+**INTRODUCTION**
+
+Organic electronics have drawn enormous attention in the past few decades owing to the ease of processing, ultralow-cost substrates, lightweight properties, thin film flexibility and tunable functionality.¹ Integration of photochromic properties with organic electronics has been a tempting approach to accomplish photo-responsive multifunctional optoelectronics.² Several pioneering projects that focused on the development of organic electronics embedded with photochromic layers have brought photochromic materials much closer to having real electronic applications in the foreseeable future.³ In fact, thermal irreversibility and fatigue resistance are especially desirable prerequisites regarding the long-term stability and photo-switching cyclability of photochromic materials for optoelectronic applications. Solid state of thin film photochromic properties is essential for the practical application of photo-responsive optoelectronics. In contrast to crystalline photochromism, which has been well-studied for potential applications in light-driven molecular machines,⁴ thin film photochromism adopted in photo-modulated organic electronics has not been comprehensively investigated for its photochromic properties.
+
+Among the photochromic compounds,⁵ diarylethenes have been regarded as one of the most attractive photochromic compounds given their promising thermal irreversibility, fatigue resistance and ability to carry out solid state photochromism. Various photochromic diarylethenes with different photo-controlled functions have been reported. However, most of the research has been confined to carrying out modifications of pendant aryl units attached to the perfluorocyclopentene backbone.³⁻⁶ A number of researchers have been expanding the structural diversity and functionality by incorporating diarylethene moieties into various heterocycles such as 1, 10-phenanthroline,⁷ imidazole,⁸ thiophene,⁹ thiazole,¹⁰ benzo[b]thiophene¹¹ and thiophene-fused heteroacenes.¹² However, a number of the aforementioned diarylethenes usually suffered from less than satisfactory practical thermal stability in the photogenerated closed form as well as a reduction in their robust fatigue resistance during photochromic cycles.
+
+[a paragraph describing the recent development of the topic was taken out]
+
+Despite these exciting developments, there is still room for improvement and there is a need for research that will enable understanding for the rational design of heterocyclic-fused diarylethenes with promising photochromic behavior, particularly those heterocycles that could be easily functionalized and derivatized.
+
+[a paragraph describing the recent studies on phospholes was taken out]
+
+With our continuous interest in designing various photochromic materials,⁷⁻⁹,¹²,¹⁴,¹⁸ we envisioned that the direct attachment of two thienyl rings onto the phosphole ring would offer a strategy to optimize the photochromic performance of the system. Although phosphole-containing photochromic compounds have been reported previously,¹⁸ the photochromic bis-thienyl units are not directly attached onto the ethane unit of the phosphole ring to take advantage of the low aromaticity of phosphole, and to the best of our knowledge, exploration of the direct attachment of the two thienyl units to the phosphole ring has never been reported. In addition, studies on the photochromic properties of thin films of fused-heterocycle diarylethenes under ambient conditions are still not as extensively explored as those of the perfluorocyclopentene analogues. It is envisaged that the demonstration of thin film photochromism with excellent thermal irreversibility and with the fatigue resistance of fused-heterocycle diarylethenes could offer alternative promising candidates for future potential applications in photoswitching and optical memory devices.
+
+[a paragraph describing the focus of the present study was taken out]
+
+The present work provides important insights and guiding principles into the molecular design of photochromic diarylethene systems with excellent thermal irreversibility and fatigue resistance.
+
+[End of the Introduction]
+
+**Source:** Wu, N.M.W., Wong, H.L., & Yam, V.W.W. (2017). Photochromic benzo[b]phosphole oxide with excellent thermal irreversibility and fatigue resistance in the thin film solid state via direct attachment of dithienyl units to the weakly aromatic heterocycle. *Chemical Science*, 8, 1309-1315.
+
+---
+
+## Sample 2 (Social Sciences)
+
+**INTRODUCTION**
+
+A considerable amount of literature has analysed how the transition to retirement affects subjective well-being (SWB). Older research has reported contradictory results, with no clear findings as to whether retirement had a positive, negative or no general effect on SWB (e.g., Gall et al., 1997; Isaksson & Johansson, 2000; Richardson and Kilty, 1991; Warr et al., 2004). Evidence from more recent studies has highlighted that trajectories of SWB in the post-retirement phase of life show no single universal pattern. Instead, SWB post-retirement depends on a number of protective- and risk-factors that vary across social groups and individuals (e.g., Bender, 2012; Calvo et al., 2009; Pinquart and Schindler, 2007; van Solinge and Henkens, 2005, 2007, 2008; Wang, 2007; Wetzel et al., 2016). Specifically, influencing factors such as economic, social and personal resources (e.g., socio-economic status, marital status, health) as well as the situational context in which retirement takes place (e.g., timing and voluntariness of retirement) can enhance or hamper SWB in the post-work phase of life (van Solinge, 2013).
+
+In the present study, we add to the literature by focusing on how specific pathways to retirement may lead to different patterns of SWB post-retirement. Pathways to retirement refer to the succession of different labour market statuses in the years preceding retirement. To date, most research has been focused on people with straightforward work-to-retirement transitions (e.g., Damman, Henkens & Kalmijn, 2013a; Hershey & Henkens, 2014; Shultz et al., 1998) while systematically excluding people who did not participate in the labour market prior to retirement (e.g., unemployed people, homemakers, people who do not work due to health impairments). In recent decades, however, retirement transitions have become more de-standardised (Brückner & Mayer, 2005), and an increasing number of people retire from a position of economic inactivity (Ebbinghaus, 2006; Fasang, 2010; Kohli et al., 1991). The rising prevalence of non-standard pathways emphasizes the need to understand how different pathways may be related to distinct patterns of SWB post-retirement. Furthermore, it is increasingly recognized that the retirement transition and its impact on SWB is a dynamic process which occurs over several years (Wang et al., 2011). The few existing studies which analysed trajectories of SWB before and after retirement either did not focus on the diversity of retirement pathways (Hetschko et al., 2013; Wetzel et al., 2016) or could not capture the long-term dynamics of SWB due to data limitations (Halleröd et al., 2013; Ponomarenko et al., 2017).
+
+In the current study, we address these gaps in the literature by examining the relationship between five distinct pathways to retirement and patterns of SWB from pre-to post-retirement. Our conceptualization of pathways to retirement considers both the duration and succession of labour market statuses before retirement. As a result, we are better able to differentiate the consequences of (non-)employment histories before retirement on SWB in later life relative to previous studies. We also extend previous research by distinguishing between short-term (i.e., first year of retirement) and long-term (ten years after retirement) trajectories of SWB post-retirement. As an indicator of SWB, we use life satisfaction which reflects the cognitive component of SWB (Diener, 1984). Critical life events like retirement affect life satisfaction more than the affective components of SWB (i.e., emotions) (Luhmann et al., 2012). Life satisfaction is therefore a valid indicator for analysing the patterns of SWB from pre-to post-retirement because it mirrors the subjective evaluation of the current level as well as changes in living conditions (Diener et al., 2013).
+
+In the following, we first introduce the institutional context of retirement in Germany and five distinct pathways to retirement. We then outline our theoretical framework for understanding the development of SWB during the retirement transition which combines assumptions from the life course approach, dynamic resource-based perspective and cumulative (dis)advantage. We argue that short-term development of SWB is more strongly associated with institutionalized norms and changes in social status, while long-term development of SWB is more strongly associated with individuals' access to resources. Finally, we draw on our theoretical framework to make specific hypotheses about how we expect the different retirement pathways will be related to patterns of short- and long-term development of SWB post-retirement.
+
+[End of the Introduction]
+
+**Source:** Schmälzle, M., Wetzel, M., & Huxhold, O. (2019). Pathways to retirement: Are they related to patterns of short- and long-term subjective well-being? *Social Science Research*, 77, 214-229.
+
+---
+
+# Task 5: Analyzing Introductions in Your Discipline
+
+## Part I
+
+Select a journal article in your discipline that you have read recently. Analyse the introduction section of the article and identify the moves for writing up the Introduction. Pay attention to the language features and the phrases for achieving the moves as well. Share your findings with a partner.
+
+## Part II
+
+Ask ChatGPT to analyse the structure and the language features of the introduction section of the article you have just analysed. Compare its analysis results with yours. What specific features about the structure and language do you notice? Do you think these features are common in your discipline?
+
+---
+
+## Extended Task (Homework)
+
+Select a thesis in your discipline. You can visit HKBU Institutional Repository [https://scholars.hkbu.edu.hk/en/studentTheses/](https://scholars.hkbu.edu.hk/en/studentTheses/) to look for a thesis in your field. Review the introduction section of the article and identify the moves for writing up the Introduction and analyse the language features.

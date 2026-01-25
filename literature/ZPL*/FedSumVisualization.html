@@ -1,0 +1,385 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>FedSum Paper Macro-Level Structure Visualization</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 20px;
+            background-color: #f5f5f5;
+        }
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            background: white;
+            padding: 20px;
+            border-radius: 10px;
+            box-shadow: 0 0 10px rgba(0,0,0,0.1);
+        }
+        h1 {
+            text-align: center;
+            color: #2c3e50;
+            margin-bottom: 30px;
+        }
+        .structure-diagram {
+            display: flex;
+            flex-direction: column;
+            gap: 20px;
+        }
+        .section {
+            border: 2px solid #3498db;
+            border-radius: 8px;
+            padding: 15px;
+            background: #ecf0f1;
+            position: relative;
+        }
+        .section-header {
+            background: #3498db;
+            color: white;
+            padding: 10px;
+            margin: -15px -15px 15px -15px;
+            border-radius: 6px 6px 0 0;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        .section-title {
+            font-weight: bold;
+            font-size: 1.2em;
+        }
+        .moves {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 10px;
+            margin-top: 10px;
+        }
+        .move {
+            background: white;
+            padding: 10px;
+            border-radius: 5px;
+            border-left: 4px solid #e74c3c;
+        }
+        .move-title {
+            font-weight: bold;
+            color: #e74c3c;
+            margin-bottom: 5px;
+        }
+        .move-content {
+            font-size: 0.9em;
+            color: #555;
+        }
+        .key-excerpt {
+            background: #fff3cd;
+            border: 1px solid #ffeaa7;
+            border-radius: 5px;
+            padding: 10px;
+            margin: 10px 0;
+            font-style: italic;
+            font-size: 0.9em;
+        }
+        .analysis {
+            background: #d4edda;
+            border: 1px solid #c3e6cb;
+            border-radius: 5px;
+            padding: 10px;
+            margin: 10px 0;
+            font-size: 0.9em;
+        }
+        .flow-arrow {
+            text-align: center;
+            font-size: 2em;
+            color: #7f8c8d;
+            margin: 10px 0;
+        }
+        .comparison-table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 20px 0;
+            background: white;
+        }
+        .comparison-table th, .comparison-table td {
+            border: 1px solid #ddd;
+            padding: 8px;
+            text-align: left;
+        }
+        .comparison-table th {
+            background-color: #f2f2f2;
+            font-weight: bold;
+        }
+        .highlight {
+            background-color: #fff3cd;
+            font-weight: bold;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>FedSum Paper: Macro-Level Structure Analysis</h1>
+
+        <div class="structure-diagram">
+
+            <!-- Introduction Section -->
+            <div class="section">
+                <div class="section-header">
+                    <span class="section-title">Section 1: Introduction</span>
+                </div>
+
+                <div class="moves">
+                    <div class="move">
+                        <div class="move-title">Move 1: Establishing Territory</div>
+                        <div class="move-content">
+                            <strong>Centrality Claims:</strong> Text summarization grows explosively across journalism, medicine, entertainment
+                        </div>
+                        <div class="key-excerpt">
+                            "The amount of text data has grown explosively in various domains, such as journalism, medicine, and entertainment. For productivity enhancement, the summarization model, namely summarizer, compresses textual content into shorter versions while retaining key concepts from input content."
+                        </div>
+                        <div class="analysis">
+                            Strong interdisciplinary appeal connecting CS work to real-world domains.
+                        </div>
+                    </div>
+
+                    <div class="move">
+                        <div class="move-title">Move 2: Establishing Niche</div>
+                        <div class="move-content">
+                            <strong>Gaps Identified:</strong> Data scarcity (less than 500 samples with 10M+ parameters), Leading Bias vulnerability, privacy constraints
+                        </div>
+                        <div class="key-excerpt">
+                            "Nevertheless, when the FL system is plagued by data scarcity (e.g., under edge computing or cold starting settings, where each FL client trains a common and basic summarization model with over 10M parameters with less than 500 samples), it is intractable for the summarizer to get adequate knowledge and vulnerable to data bias, such as Leading Bias, resulting in performance degradation."
+                        </div>
+                        <div class="key-excerpt">
+                            "Then a natural question is: <em>How to derive a well-behaved summarizer in data scarcity FL?</em>"
+                        </div>
+                        <div class="analysis">
+                            Specific, researchable gap with concrete numerical constraints. Explicit question format emphasizes research problem.
+                        </div>
+                    </div>
+
+                    <div class="move">
+                        <div class="move-title">Move 3: Occupying Niche</div>
+                        <div class="move-content">
+                            <strong>Solution:</strong> FedSum extends FL framework from depth (Data Partition + Data skip) and breadth (Multi-knowledge Local Training)
+                        </div>
+                        <div class="key-excerpt">
+                            "We propose FedSum which extends the standard FL framework from depth and breadth to further extract prime and diversified knowledge for constructing the summarizer."
+                        </div>
+                        <div class="key-excerpt">
+                            "For depth extension, inspired by hard sample mining and bias elimination, we introduce the Data Partition method to recognize the prime samples, and adjust the weight of data by the proposed Data skip mechanism."
+                        </div>
+                        <div class="analysis">
+                            Clear two-pronged approach with explicit technical components.
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="flow-arrow">↓</div>
+
+            <!-- Background Section -->
+            <div class="section">
+                <div class="section-header">
+                    <span class="section-title">Section 2: Background</span>
+                </div>
+
+                <div class="moves">
+                    <div class="move">
+                        <div class="move-title">Thematic Overview</div>
+                        <div class="move-content">
+                            <strong>Scope:</strong> Extractive summarization (BERTSUM) and FL algorithms (FedProx, SCAFFOLD, FedNova, FedProto, FedDC)
+                        </div>
+                        <div class="key-excerpt">
+                            "Inspired by the success of BERT, a summarizer with an enlightening pattern has been proposed, namely BERTSUM. It leverages BERT to represent the input content and then recognizes the most salient sentences by classification modules."
+                        </div>
+                    </div>
+
+                    <div class="move">
+                        <div class="move-title">Critical Analysis</div>
+                        <div class="move-content">
+                            <strong>Gap Identification:</strong> Existing methods "not always behave outstanding in the summarization task, due to the neglect of data bias"
+                        </div>
+                        <div class="key-excerpt">
+                            "These above methods mitigate the negative effects of data heterogeneity and scarcity, but not always behave outstanding in the summarization task, due to the neglect of data bias."
+                        </div>
+                        <div class="analysis">
+                            Specific critique sets up contribution: addressing data bias in summarization.
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="flow-arrow">↓</div>
+
+            <!-- Methods Section -->
+            <div class="section">
+                <div class="section-header">
+                    <span class="section-title">Section 4: Method</span>
+                </div>
+
+                <div class="moves">
+                    <div class="move">
+                        <div class="move-title">Depth Extension: Data Partition</div>
+                        <div class="move-content">
+                            <strong>Approach:</strong> Sentence-level prime vs. normal sample identification using bias level and supervised loss
+                        </div>
+                        <div class="key-excerpt">
+                            "Considering the characteristics of ExtSum, that the extractive summarization can be decomposed to the classification of multiple sentences, we propose that the criterion for the prime sample should be detailed down to the sentence level."
+                        </div>
+                        <div class="key-excerpt">
+                            "Since the amount of key sentences is much less than the ordinary, the loss of sentences labeled with '1' is more valuable, which can precisely reflect the dilemma in classification."
+                        </div>
+                    </div>
+
+                    <div class="move">
+                        <div class="move-title">Data Skip Mechanism</div>
+                        <div class="move-content">
+                            <strong>Approach:</strong> Dynamic skipping of normal samples based on training progress
+                        </div>
+                        <div class="key-excerpt">
+                            "Given j-th batch B_j from i-th client belongs to normal subset D_(i,N), the skipping probability ρ_(i,j) = (t/T) · (e/E) · (j/τ_i) is determined by the progress in communication, epoch, and local update."
+                        </div>
+                    </div>
+
+                    <div class="move">
+                        <div class="move-title">Breadth Extension: Multi-knowledge Training</div>
+                        <div class="move-content">
+                            <strong>Sources:</strong> Data knowledge, Prototype knowledge (hidden space), Parameter knowledge (global parameters via PDT)
+                        </div>
+                        <div class="key-excerpt">
+                            "For the lack of knowledge problem caused by data scarcity, FedSum maximizes data efficiency by mining diversified knowledge from three aspects: data, hidden space, and received parameters."
+                        </div>
+                        <div class="key-excerpt">
+                            "Since the prototype is generally regarded as the carrier of semantic information in hidden space, we leverage different prototypes to build prototype loss, improving the generalization and discrimination of features."
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="flow-arrow">↓</div>
+
+            <!-- Experiments Section -->
+            <div class="section">
+                <div class="section-header">
+                    <span class="section-title">Section 5: Experiments</span>
+                </div>
+
+                <div class="moves">
+                    <div class="move">
+                        <div class="move-title">Performance Results</div>
+                        <div class="move-content">
+                            <strong>Improvements:</strong> 0.15% to 29.9% improvement over baselines; 1.6%/1.31%/1.52% in R-F and 2.18%/1.82%/2.05% in R-R vs. FedAvg on CNNDM
+                        </div>
+                        <div class="key-excerpt">
+                            "Overall, FedSum obtains significant improvement in performance over baselines. The most obvious improvements compared to FedAvg are 1.6%/1.31%/1.52% in R-F and 2.18%/1.82%/2.05% in R-R on CNNM."
+                        </div>
+                        <div class="key-excerpt">
+                            "Under data heterogeneity, comparing FedSum with the optimal baseline, there exists 0.15% total improvement at least, and 29.9% total improvement at most over ROUGE metrics on two datasets."
+                        </div>
+                    </div>
+
+                    <div class="move">
+                        <div class="move-title">Generalization & Robustness</div>
+                        <div class="move-content">
+                            <strong>Findings:</strong> Fluctuation ≤ 2.6% on CNNDM across heterogeneity levels; Better alignment with Oracle for leading bias mitigation
+                        </div>
+                        <div class="key-excerpt">
+                            "The performance of FedSum fluctuates slightly (≤ 2.6% on CNNDM) as Dir increases. When Dir is 8, the FedSum ranks second with small gaps from the highest (≤ 1.5%), verifying the generalization of FedSum under different heterogeneous."
+                        </div>
+                        <div class="key-excerpt">
+                            "The distribution of the extracted proportion about FedSum is more similar to the same of Oracle than FedAvg. The extracted result of FedAvg contains more leading bias than FedSum."
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="flow-arrow">↓</div>
+
+            <!-- Conclusion Section -->
+            <div class="section">
+                <div class="section-header">
+                    <span class="section-title">Section 6: Conclusion</span>
+                </div>
+
+                <div class="moves">
+                    <div class="move">
+                        <div class="move-title">Contributions Summary</div>
+                        <div class="move-content">
+                            <strong>Key Achievements:</strong> Data efficiency maximization, generalization under heterogeneity, scalability, bias robustness
+                        </div>
+                        <div class="key-excerpt">
+                            "FedSum demonstrates its promising improvement over baselines on benchmark datasets, while exhibiting its generalization in tackling the intricacies of data heterogeneity. We further verify the scalability of FedSum with various data quantities and the efficacy in mitigating the negative effect of data bias."
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+
+        <h2>Cross-Disciplinary Comparison</h2>
+        <table class="comparison-table">
+            <tr>
+                <th>Aspect</th>
+                <th>FedSum Paper (CS/FL)</th>
+                <th>Traditional Academic</th>
+                <th>Key Learning</th>
+            </tr>
+            <tr>
+                <td>Literature Review</td>
+                <td class="highlight">Separate section after introduction</td>
+                <td>Integrated into introduction</td>
+                <td>CS papers often dedicate full sections to related work</td>
+            </tr>
+            <tr>
+                <td>Technical Detail</td>
+                <td class="highlight">Very High (algorithms, math, architectures)</td>
+                <td>Medium (methods overview)</td>
+                <td>Mathematical formalism crucial for CS credibility</td>
+            </tr>
+            <tr>
+                <td>Evaluation</td>
+                <td class="highlight">Quantitative metrics, ablation studies, multiple datasets</td>
+                <td>Theoretical validation, qualitative</td>
+                <td>Empirical rigor through multiple evaluation dimensions</td>
+            </tr>
+            <tr>
+                <td>Contribution Claims</td>
+                <td class="highlight">Technical novelty + algorithmic innovation</td>
+                <td>Theoretical advancement + evidence</td>
+                <td>CS emphasizes reproducible, extensible contributions</td>
+            </tr>
+        </table>
+
+        <h2>Imitation Framework for Future Papers</h2>
+        <div class="analysis">
+            <h3>Structural Elements to Adapt:</h3>
+            <ul>
+                <li><strong>Two-Pronged Approach:</strong> Depth and breadth extensions as organizational framework</li>
+                <li><strong>Modular Architecture:</strong> Breaking complex systems into understandable components</li>
+                <li><strong>Algorithmic Presentation:</strong> Detailed pseudocode with line-by-line explanations</li>
+                <li><strong>Comprehensive Evaluation:</strong> Multiple datasets, metrics, baselines, and analysis dimensions</li>
+            </ul>
+
+            <h3>Rhetorical Strategies:</h3>
+            <ul>
+                <li><strong>Problem Novelty:</strong> Explicit question format ("Then a natural question is") + specific technical gaps</li>
+                <li><strong>Technical Positioning:</strong> Clear differentiation from related work with specific critiques</li>
+                <li><strong>Practical Relevance:</strong> Connecting technical contributions to real-world constraints</li>
+                <li><strong>Quantitative Precision:</strong> Specific numerical improvements and bounds (0.15% to 29.9%, ≤ 2.6%)</li>
+            </ul>
+
+            <h3>Quality Indicators:</h3>
+            <ul>
+                <li><strong>Mathematical Rigor:</strong> Formal definitions and loss functions with precise notation</li>
+                <li><strong>Empirical Validation:</strong> Multiple evaluation metrics and baselines across datasets</li>
+                <li><strong>Reproducibility:</strong> Clear algorithmic descriptions and experimental setup details</li>
+                <li><strong>Scalability Analysis:</strong> Explicit evaluation of method's behavior under varying conditions</li>
+            </ul>
+        </div>
+
+        <div style="text-align: center; margin-top: 30px; color: #7f8c8d; font-size: 0.9em;">
+            <p>Analysis based on macro-level structure framework from academic writing pedagogy</p>
+            <p>Interactive visualization for learning paper organization patterns</p>
+        </div>
+    </div>
+</body>
+</html>

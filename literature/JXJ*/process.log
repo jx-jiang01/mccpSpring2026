@@ -1,0 +1,99 @@
+# Process Log for JXJiang Literature Analysis
+
+## Task Overview
+- Analyze two PDF papers in the JXJiang folder
+- Try to find HTML versions first
+- If not available, convert PDFs to markdown
+- Generate analysis reports similar to writing/activity 1.2 analyze macro-level structure
+- Create HTML visualizations and insights reports with extensive excerpts from original papers
+
+## Steps Completed
+
+### Step 1: Initial Setup
+- [x] Reviewed retrieveAnalyze.md task description
+- [x] Examined sample report formats (KellerInsights.md, visualSample.html)
+- [x] Identified two PDFs:
+  - CHASE-SQL MULTI-PATH REASONING AND PREFERENCE OPTIMIZED CANDIDATE SELECTION IN TEXTTO-SQL.pdf
+  - OpenSearch-SQL Enhancing Text-to-SQL with Dynamic Few-shot and Consistency Alignment.pdf
+
+### Step 2: HTML Search (Completed)
+- [x] Searched for HTML versions of papers online
+- [x] Paper 1: "CHASE-SQL MULTI-PATH REASONING AND PREFERENCE OPTIMIZED CANDIDATE SELECTION IN TEXTTO-SQL" - HTML version not readily available
+- [x] Paper 2: "OpenSearch-SQL Enhancing Text-to-SQL with Dynamic Few-shot and Consistency Alignment" - HTML version not readily available
+- [x] Decision: Proceed with PDF to markdown conversion
+
+### Step 3: PDF Conversion (Completed)
+- [x] Created convert_pdf_to_md.py script based on YJYin/convert_pdf_to_md.py
+- [x] Converted PDFs to markdown format using PyMuPDF (pymupdf)
+- [x] Created markdown files:
+  - CHASE-SQL MULTI-PATH REASONING AND PREFERENCE OPTIMIZED CANDIDATE SELECTION IN TEXTTO-SQL.md (1857 lines)
+  - OpenSearch-SQL Enhancing Text-to-SQL with Dynamic Few-shot and Consistency Alignment.md (1692 lines)
+- [x] Verified text extraction quality - successful
+
+### Step 4: Analysis (Completed)
+- [x] Analyzed first paper structure (CHASE-SQL - ICLR 2025)
+  - Paper: CHASE-SQL: MULTI-PATH REASONING AND PREFERENCE OPTIMIZED CANDIDATE SELECTION IN TEXT-TO-SQL
+  - Authors: Pourreza et al. (2025)
+  - Structure: Introduction → Methods (2.1 Overall Framework, 2.2 Value Retrieval, 2.3 Multi-Path Candidate Generation, 2.4 Query Fixer, 2.5 Selection Agent) → Experiments (3.1 Generator and Selection Performance, 3.2 Ablation Studies) → Conclusion
+  - Key contributions: Three candidate generation methods (Divide-and-Conquer CoT, Query Plan CoT, Online Synthetic Example Generation), selection agent with pairwise comparison
+  - Performance: 73.01% EX (dev), 73.0% EX (test) on BIRD, 87.6% on Spider
+- [x] Generated insights report for first paper: CHASE-SQL_Insights.md
+- [x] Analyzed second paper structure (OpenSearch-SQL)
+  - Paper: OpenSearch-SQL: Enhancing Text-to-SQL with Dynamic Few-shot and Consistency Alignment
+  - Authors: Xie et al. (2025)
+  - Structure: Introduction → Preliminary (2.1 Large Language Models, 2.2 Text-to-SQL, 2.3 Hallucination) → Methodology (3.1 Alignments, 3.2 Self-Taught Fewshot, 3.3-3.6 Framework Components, 3.7 Algorithm, 3.8 Optimization) → Experiments → Related Work → Conclusion
+  - Key contributions: Consistency alignment mechanism, self-taught dynamic few-shot, SQL-Like intermediate language, four-stage framework (Preprocessing, Extraction, Generation, Refinement)
+  - Performance: 69.3% EX (dev), 72.28% EX (test), 69.36% R-VES on BIRD, all ranking first
+- [x] Generated insights report for second paper: OpenSearch-SQL_Insights.md
+
+### Step 5: HTML Visualization Files (Completed)
+- [x] Created CHASE-SQL_Visualization.html for CHASE-SQL paper
+- [x] Created OpenSearch-SQL_Visualization.html for OpenSearch-SQL paper
+- [x] HTML files follow visualSample.html template structure
+- [x] HTML files include key sections, moves, excerpts, and analysis
+- [x] HTML files include cross-disciplinary comparison tables and imitation frameworks
+
+### Step 6: Documentation (Completed)
+- [x] Created process.log documenting all steps
+- [x] Finalized process.log with completion status
+
+## Summary
+- Successfully converted 2 PDFs to markdown format
+- Generated 2 comprehensive insights reports following the format of writing/activity 1.2 analyze macro-level structure/KellerInsights.md
+- Reports include extensive excerpts from original papers as requested (13+ excerpts per paper)
+- Both reports analyze macro-level structure, section-by-section analysis, cross-disciplinary comparison, and imitation opportunities
+- Generated 2 HTML visualization files following the format of writing/activity 1.2 analyze macro-level structure/visualSample.html
+- HTML files include interactive visualizations of paper structure with key excerpts and analysis
+- All files created: CHASE-SQL_Insights.md, CHASE-SQL_Visualization.html, OpenSearch-SQL_Insights.md, OpenSearch-SQL_Visualization.html, process.log
+
+## Key Features of Generated Reports
+
+### CHASE-SQL Reports
+- **Insights Report**: Comprehensive macro-level structure analysis with 13+ excerpts from original paper
+- **HTML Visualization**: Interactive visualization with CARS model analysis, framework components, experimental results
+- **Structure Analysis**: Introduction (CARS Model), Methods (4 components), Experiments (2 subsections), Conclusion
+- **Key Excerpts**: Extensive quotes from introduction, methods, experiments, and conclusion sections
+
+### OpenSearch-SQL Reports
+- **Insights Report**: Comprehensive macro-level structure analysis with 12+ excerpts from original paper
+- **HTML Visualization**: Interactive visualization with limitation enumeration (L1, L2, L3), framework stages, alignment mechanisms
+- **Structure Analysis**: Introduction (CARS Model with L1-L3), Preliminary, Methodology (8 subsections), Experiments, Related Work
+- **Key Excerpts**: Extensive quotes from introduction, methodology, experiments, and framework descriptions
+
+## Files Created
+1. convert_pdf_to_md.py - PDF to markdown conversion script
+2. CHASE-SQL MULTI-PATH REASONING AND PREFERENCE OPTIMIZED CANDIDATE SELECTION IN TEXTTO-SQL.md - Converted markdown (1857 lines)
+3. OpenSearch-SQL Enhancing Text-to-SQL with Dynamic Few-shot and Consistency Alignment.md - Converted markdown (1692 lines)
+4. CHASE-SQL_Insights.md - Comprehensive insights report (~25KB)
+5. CHASE-SQL_Visualization.html - HTML visualization (~18KB)
+6. OpenSearch-SQL_Insights.md - Comprehensive insights report (~24KB)
+7. OpenSearch-SQL_Visualization.html - HTML visualization (~18KB)
+8. process.log - Process documentation (this file)
+
+## Analysis Methodology
+- Followed macro-level structure framework from academic writing pedagogy
+- Applied CARS (Create a Research Space) model for introduction analysis
+- Used hourglass flow analysis (General → Specific → General)
+- Included cross-disciplinary comparison (CS/NLP conventions vs. traditional academic writing)
+- Provided imitation opportunities for future papers
+- Included extensive excerpts from original papers as requested

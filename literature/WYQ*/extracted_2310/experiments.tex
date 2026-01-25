@@ -1,0 +1,81 @@
+\section{Experiments: Credit Card Fraud Detection} \label{expts}
+%\paragraph{Online anomaly detection:}
+\begin{figure}[ht]
+    \centering
+    \begin{minipage}{0.49\textwidth}
+        \centering
+        \includegraphics[scale=0.4]{./figures/ROC_plt.pdf}
+        \caption{\small{ROC curve obtained by varying $\lambda$}}
+        \label{fig:ROC}
+    \end{minipage}
+    \hfill
+    \begin{minipage}{0.49\textwidth}
+        \centering
+        %\includegraphics[scale=0.4]{./figures/CCV_variation_Fraud_detection.png}
+                \includegraphics[scale=0.4]{./figures/CCV_variation_plt.pdf}
+        \caption{\small{Typical variation of the CCV with time}}
+        \label{fig:ccv}
+    \end{minipage}
+\end{figure}
+\paragraph{Classification with a highly imbalanced dataset:}
+We first formulate the credit card fraud detection problem in the COCO framework. %We use Algorithm \ref{coco_alg} to train a neural network for detecting credit card fraud using a publicly available dataset. 
+%We emphasize that in contrast with the standard resampling-based strategies for imbalanced classification, our policy is online. %The online operation is indispensable in the credit card fraud detection setting, where the algorithm needs to continuously learn in a dynamic environment and make real-time predictions.
+Assume that we receive a sequence of $d$-dimensional feature vectors $\{z_t\}_{t \geq 1}$ and the corresponding binary labels $\{y_t\}_{t \geq 1}$ for a sequence of credit card transactions, where each transaction can either be legitimate (\texttt{label} $=0$) or fraudulent (\texttt{label} $=1$). The problem is to predict the label $\hat{y}_t$ for each transaction $z_t$ before its true label $y_t \in \{0,1\}$ is revealed. Typically, legitimate transactions outnumber fraudulent transactions by orders of magnitude. Since the goal is to detect any fraudulent transactions (even at the cost of a few false alarms), maximizing the classification accuracy alone is insufficient due to the significant class imbalance. We propose the following reformulation for this problem within the COCO framework. 
+\vspace{-8pt}
+\paragraph{Formulation:} Let $\hat{y}_t(z_t,x)$ be the likelihood of class $1$ for the feature $z_t,$ given by a parameterized model with parameter $x$. Hence, the log-likelihood $\mathcal{L}(t)$ of the data on round $t$ can be expressed as: 
+\begin{align}
+    \mathcal{L}(t) = y_t\log(\hat{y}_t(z_t, x))+ (1-y_t)\log(1 - \hat{y}_t(z_t, x)).
+%    \begin{cases} 
+%    \log(\hat{y}_t) & \text{if } y_t = 1 \\ 
+%    \log(1 - \hat{y}_t) & \text{if } y_t = 0
+%    \end{cases}
+\end{align}
+We train the model by maximizing the sum of log-likelihoods for legitimate transactions, subject to the constraint that all fraudulent transactions have a likelihood value close to $1$ (\emph{i.e.,} the sum of the log-likelihoods of the fraudulent transactions remains close to zero):
+\begin{eqnarray} \label{prob1}
+    \max_x \sum_{t=1}^T (1-y_t) \log(1-\hat{y}_t(z_t, x)),~~ \textrm{s.t.}~~\sum_{t=1}^T y_t \log(\hat{y}_t(z_t, x)) \geq 0.
+\end{eqnarray}
+%s.t. 
+%\begin{eqnarray} \label{constr1}
+%    \sum_{t=1}^T y_t \log(\hat{y}_t) \geq 0,
+%\end{eqnarray}
+%where the maximization is done over the parameters of the model. In other words,  %Problem \ref{prob1} can be rewritten as
+%\begin{eqnarray} \label{main_prob}
+%    \min \sum_{t=1}^T -(1-y_t) \log(1-\hat{y}_t) 
+%\end{eqnarray}
+%s.t. 
+%\begin{eqnarray} \label{new-constr}
+%    \sum_{t=1}^T -y_t (\log(\hat{y}_t)) \leq 0
+%\end{eqnarray}
+The above problem \eqref{prob1} can be immediately recognized to be an instance of COCO with the following cost and constraint functions:
+\[ f_t(x) \equiv -(1-y_t) \log(1-\hat{y}_t(z_t,x)), ~~g_t(x)\equiv -y_t \log(\hat{y}_t(z_t,x)), ~t\geq 1.\]
+In our experiments, we consider the common scenario in which the likelihoods are modeled by the output of a feedforward neural network. Note that the feasibility assumption (Assumption 3) is naturally satisfied as the overparameterized neural network models are known to perfectly fit the data \citep{belkin2019reconciling}. However, in this case, the functions $f_t$ and $g_t$ are generally non-convex. 
+%Nevertheless, we find that Algorithm 1 performs excellently even when the convexity assumption does not hold. 
+\vspace{-8pt}
+\paragraph{Experiments:}
+
+We experiment with a publicly available credit card transaction dataset \citep{dal2014learned}. This highly imbalanced dataset contains only $492$ frauds ($\sim 0.17\%$) out of $284,807$ reported transactions. 
+%\paragraph{Dataset and Network Architecture:} 
+Each data point has $D_{\textrm{in}}=30$ features and binary labels. We choose a simple network architecture with a single hidden layer containing $H=10$ hidden nodes and sigmoid non-linearities. Unlike previous algorithms, our algorithm is especially suitable for training neural network models as it only needs to compute the gradients (via backward pass) and evaluate the functions (via forward pass). Initially, all weights are independently sampled from a standard  normal distribution. The network is then trained  using Algorithm \ref{coco_alg} on a quad-core CPU with 8 GB RAM. The projection operation corresponds to $L_2$-normalization. The code has been  publicly released \citep{coco-code}. 
+
+
+%
+%\begin{figure}
+%    \centering
+%    \includegraphics[width=0.7\linewidth]{./figures/ROC_plt.png}
+%    \caption{Plot of the ROC curve}
+%    \label{fig:ROC}
+%\end{figure}
+%
+%\begin{figure}
+%    \centering
+%    \includegraphics[width=0.7\linewidth]{./figures/CCV_variation_Fraud_detection.png}
+%    \caption{A plot of typical variation of CCV with time}
+%    \label{fig:ccv}
+%\end{figure}
+\vspace{-8pt}
+\paragraph{Results:}
+
+Given the severe class imbalance, the area under the ROC curve, which plots the True Positive Rate (TPR) against the False Positive Rate (FPR), is an appropriate metric to evaluate any prediction algorithm for this problem. By varying the hyperparameter $\lambda$, we obtain the ROC curve shown in Figure \ref{fig:ROC}. The area under the ROC curve is computed to be $\approx 0.92$, which is an excellent score (cf. ideal score $=1.0$), notwithstanding the fact that, unlike the standard resampling-based techniques, the algorithm learns in an entirely online fashion starting from random initialization. Figure \ref{fig:ccv} illustrates the expected sublinear variation of CCV during one of the algorithm runs.
+%\paragraph{References}
+%
+%[1] Dal Pozzolo, Andrea, Olivier Caelen, Yann-Ael Le Borgne, Serge Waterschoot, and Gianluca Bontempi. ``Learned lessons in credit card fraud detection from a practitioner perspective." Expert systems with applications 41, no. 10 (2014): 4915-4928.

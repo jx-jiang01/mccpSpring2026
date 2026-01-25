@@ -1,0 +1,434 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>MC-Diffusion Paper Macro-Level Structure Visualization</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 20px;
+            background-color: #f5f5f5;
+        }
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            background: white;
+            padding: 20px;
+            border-radius: 10px;
+            box-shadow: 0 0 10px rgba(0,0,0,0.1);
+        }
+        h1 {
+            text-align: center;
+            color: #2c3e50;
+            margin-bottom: 30px;
+        }
+        .structure-diagram {
+            display: flex;
+            flex-direction: column;
+            gap: 20px;
+        }
+        .section {
+            border: 2px solid #3498db;
+            border-radius: 8px;
+            padding: 15px;
+            background: #ecf0f1;
+            position: relative;
+        }
+        .section-header {
+            background: #3498db;
+            color: white;
+            padding: 10px;
+            margin: -15px -15px 15px -15px;
+            border-radius: 6px 6px 0 0;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        .section-title {
+            font-weight: bold;
+            font-size: 1.2em;
+        }
+        .word-count {
+            font-size: 0.9em;
+            opacity: 0.9;
+        }
+        .moves {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 10px;
+            margin-top: 10px;
+        }
+        .move {
+            background: white;
+            padding: 10px;
+            border-radius: 5px;
+            border-left: 4px solid #e74c3c;
+        }
+        .move-title {
+            font-weight: bold;
+            color: #e74c3c;
+            margin-bottom: 5px;
+        }
+        .move-content {
+            font-size: 0.9em;
+            color: #555;
+        }
+        .key-excerpt {
+            background: #fff3cd;
+            border: 1px solid #ffeaa7;
+            border-radius: 5px;
+            padding: 10px;
+            margin: 10px 0;
+            font-style: italic;
+            font-size: 0.9em;
+        }
+        .analysis {
+            background: #d4edda;
+            border: 1px solid #c3e6cb;
+            border-radius: 5px;
+            padding: 10px;
+            margin: 10px 0;
+            font-size: 0.9em;
+        }
+        .flow-arrow {
+            text-align: center;
+            font-size: 2em;
+            color: #7f8c8d;
+            margin: 10px 0;
+        }
+        .comparison-table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 20px 0;
+            background: white;
+        }
+        .comparison-table th, .comparison-table td {
+            border: 1px solid #ddd;
+            padding: 8px;
+            text-align: left;
+        }
+        .comparison-table th {
+            background-color: #f2f2f2;
+            font-weight: bold;
+        }
+        .highlight {
+            background-color: #fff3cd;
+            font-weight: bold;
+        }
+        .legend {
+            background: #ecf0f1;
+            padding: 15px;
+            border-radius: 5px;
+            margin: 20px 0;
+        }
+        .legend-item {
+            display: inline-block;
+            margin: 5px 15px 5px 0;
+            padding: 5px 10px;
+            border-radius: 3px;
+            font-size: 0.9em;
+        }
+        .cs-convention { background: #3498db; color: white; }
+        .traditional { background: #e74c3c; color: white; }
+        .universal { background: #27ae60; color: white; }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>MC-Diffusion Paper: Macro-Level Structure Analysis</h1>
+
+        <div class="legend">
+            <h3>Analysis Framework</h3>
+            <div class="legend-item cs-convention">Computer Science Convention</div>
+            <div class="legend-item traditional">Traditional Academic</div>
+            <div class="legend-item universal">Universal Best Practice</div>
+        </div>
+
+        <div class="structure-diagram">
+
+            <!-- Introduction Section -->
+            <div class="section">
+                <div class="section-header">
+                    <span class="section-title">Section 1: Introduction</span>
+                    <span class="word-count">~600 words</span>
+                </div>
+
+                <div class="moves">
+                    <div class="move">
+                        <div class="move-title">Move 1: Establishing Territory</div>
+                        <div class="move-content">
+                            <strong>Centrality Claims:</strong> Image captioning enables automated textbook explanations, medical imaging reports, accessibility assistance
+                        </div>
+                        <div class="key-excerpt">
+                            "Image captioning is a task that uses a neural network to generate relevant text for a given image. Image captioning enables automated textbook illustration explanations, medical imaging report generation (e.g., X-ray descriptions), and real-time assistance for visually impaired individuals. This multimodal task bridges the realms of natural language processing and computer vision."
+                        </div>
+                        <div class="analysis">
+                            Strong interdisciplinary appeal. Uses present tense for timeless significance. Connects technical CS/NLP work to real-world domains (education, healthcare, accessibility).
+                        </div>
+                    </div>
+
+                    <div class="move">
+                        <div class="move-title">Move 2: Establishing Niche</div>
+                        <div class="move-content">
+                            <strong>Gaps Identified:</strong> Unidirectional semantic passing (autoregressive), continuous-to-discrete misalignment, coarse-grained image-sentence alignment
+                        </div>
+                        <div class="key-excerpt">
+                            "However, such techniques suffer from unidirectional semantic passing issue and accumulated prediction error. Specifically, tokens are predicted from left to right. If a wrong word is sampled, this error propagates unidirectionally, amplifying inaccuracies in subsequent tokens."
+                        </div>
+                        <div class="key-excerpt">
+                            "Despite their success, existing diffusion-based image captioning methods still have some limitations. On one hand, there exists a continuous-to-discrete misalignment. Existing methods extract the continuous image representation before serving as conditions to generate captions. Images exhibit continuity and high redundancy with low information density, whereas text operates through discrete tokens carrying highly abstract information, enabling concise visual description."
+                        </div>
+                        <div class="analysis">
+                            Specific, researchable gaps with clear technical description. Uses parallel structure ("On one hand... On the other hand") for organization. Technical precision in describing misalignment problem.
+                        </div>
+                    </div>
+
+                    <div class="move">
+                        <div class="move-title">Move 3: Occupying Niche</div>
+                        <div class="move-content">
+                            <strong>Solution:</strong> MC-Diffusion (Masked Conditional Diffusion) with VQ-VAE and discrete diffusion models, plus MCS (Masked Condition Strategy)
+                        </div>
+                        <div class="key-excerpt">
+                            "To mitigate the weakness above, we devise a <strong>M</strong>asked <strong>C</strong>onditional <strong>D</strong>iffusion model (MC-Diffusion). We start with a Vector Quantised Variational AutoEncoder (VQ-VAE) as an image encoder to extract discrete image features. We leverage a discrete diffusion model for generating captions. Conditioned on the discrete image features, MC-Diffusion can establish a unified discrete-to-discrete alignment framework that explicitly bridges visual and textual semantics."
+                        </div>
+                        <div class="analysis">
+                            Clear positioning with acronym introduction (MC-Diffusion, MCS). Three main contributions enumerated following logical progression: framework → method → validation.
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="flow-arrow">↓</div>
+
+            <!-- Related Work Section -->
+            <div class="section">
+                <div class="section-header">
+                    <span class="section-title">Section 2: Related Work</span>
+                    <span class="word-count">~400 words</span>
+                </div>
+
+                <div class="moves">
+                    <div class="move">
+                        <div class="move-title">Move 1: Thematic Overview</div>
+                        <div class="move-content">
+                            <strong>Scope:</strong> Autoregressive Models vs. Non-autoregressive Models (including diffusion models)
+                        </div>
+                        <div class="key-excerpt">
+                            "Early image captioning methods focus on utilizing a CNN as an image encoder to learn high-level representations, followed by an RNN text decoder to predict the caption word-by-word. Later on, techniques that leverage the attention mechanism are explored to predict the caption by concentrating on the relevant image region."
+                        </div>
+                        <div class="analysis">
+                            Clear thematic organization by methodology type (autoregressive vs. non-autoregressive) rather than chronological. Establishes scope with temporal progression ("Early... Later on... Most recently").
+                        </div>
+                    </div>
+
+                    <div class="move">
+                        <div class="move-title">Move 2: Critical Analysis</div>
+                        <div class="move-content">
+                            <strong>Evaluation:</strong> Identifies limitations of existing diffusion-based methods (continuous image representation)
+                        </div>
+                        <div class="key-excerpt">
+                            "All approaches mentioned above extract the continuous image representation before serving as conditions to generate captions. While our work similarly adopts discrete diffusion modeling, we depart from prior techniques that encode images into continuous features. Instead, we condition the diffusion process on discrete image tokens, establishing a unified discrete-to-discrete alignment framework that explicitly bridges visual and textual semantics."
+                        </div>
+                        <div class="analysis">
+                            Strong critical analysis with clear differentiation. Uses "While... Instead" structure to distinguish approach from prior work. Gap identification through limitation analysis.
+                        </div>
+                    </div>
+
+                    <div class="move">
+                        <div class="move-title">Move 3: Research Gaps</div>
+                        <div class="move-content">
+                            <strong>Gaps:</strong> Continuous-to-discrete misalignment, coarse-grained alignment
+                        </div>
+                        <div class="analysis">
+                            Gaps established through systematic critique. Repeated emphasis on discrete-to-discrete alignment as key innovation.
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="flow-arrow">↓</div>
+
+            <!-- Methodology Section -->
+            <div class="section">
+                <div class="section-header">
+                    <span class="section-title">Section 3: Methodology</span>
+                    <span class="word-count">~800 words</span>
+                </div>
+
+                <div class="moves">
+                    <div class="move">
+                        <div class="move-title">MC-Diffusion Framework</div>
+                        <div class="move-content">
+                            <strong>Components:</strong> VQ-VAE Image Encoder, Discrete Diffusion Forward/Reverse Process, Loss Function
+                            <br><strong>Structure:</strong> Model Structure, VQ-VAE Encoder, Forward Process, Reverse Process, Loss Function
+                        </div>
+                        <div class="key-excerpt">
+                            "As shown in Figure [reference], given an image, the VQ-VAE encoder first encodes the image into latent representations. Then it maps this representation with the closest embedding in the Codebook. The discrete diffusion text decoder contains several transformer blocks. The decoder achieves multimodal feature fusion in the cross-attention layer."
+                        </div>
+                        <div class="analysis">
+                            Highly technical section with strong mathematical foundation. Clear step-by-step process descriptions. Use of formal notation and clear distinction between forward and reverse processes.
+                        </div>
+                    </div>
+
+                    <div class="move">
+                        <div class="move-title">Masked Condition Strategy (MCS)</div>
+                        <div class="move-content">
+                            <strong>Innovation:</strong> Fine-grained visual-language alignment through partial image feature masking
+                            <br><strong>Formal Definition:</strong> Definition 1 (Classifier-free Guidance), Definition 2 (MCS)
+                        </div>
+                        <div class="key-excerpt">
+                            "Classifier-free guidance achieves coarse-grained visual-language alignment, which fails to capture localized semantics. MCS achieves fine-grained visual-language alignment by not removing the entire condition information, but masks partial condition information."
+                        </div>
+                        <div class="key-excerpt">
+                            "By masking partial condition information, the model is trained to align different image features with text at each time step. Hence, this strategy forces the neural network to establish fine-grained visual-language alignment."
+                        </div>
+                        <div class="analysis">
+                            Strong methodological innovation with both formal definition and intuitive explanation. Theoretical connections to related concepts (image inpainting). Clear algorithmic description (Algorithm 1).
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="flow-arrow">↓</div>
+
+            <!-- Experiments Section -->
+            <div class="section">
+                <div class="section-header">
+                    <span class="section-title">Section 4: Experiments</span>
+                    <span class="word-count">~600 words</span>
+                </div>
+
+                <div class="moves">
+                    <div class="move">
+                        <div class="move-title">Empirical Validation</div>
+                        <div class="move-content">
+                            <strong>Dataset:</strong> CUB-200 (8k training, 3k test images)
+                            <br><strong>Metrics:</strong> Reference-based (BLEU, Meteor, ROUGE, CIDEr, SPICE, RefCLIPScore) and Reference-free (CLIPScore)
+                            <br><strong>Baselines:</strong> Autoregressive (Source Pre-trained, DCC, ATCIC) and Non-autoregressive (Bit Diffusion)
+                        </div>
+                        <div class="key-excerpt">
+                            "MC-Diffusion outperforms autoregressive baselines across all metrics. Specifically, the Meteor and SPICE are 103.0% and 12.2%, demonstrating an improvement of 1.8% and 1.1% compared to autoregressive baselines, respectively. Compared with Bit Diffusion, MC-Diffusion has a similar performance on reference-based metrics while achieving higher CLIPScore, meaning better visual-language alignment."
+                        </div>
+                        <div class="analysis">
+                            Rigorous quantitative evaluation with appropriate baselines. Detailed implementation specifications. Multiple evaluation metrics covering different aspects (reference-based vs. reference-free).
+                        </div>
+                    </div>
+
+                    <div class="move">
+                        <div class="move-title">MCS Evaluation</div>
+                        <div class="move-content">
+                            <strong>Comparison:</strong> MCS vs. Classifier-free Guidance across different guidance scales γ
+                            <br><strong>Key Finding:</strong> MCS shows smaller decline in CLIPScore compared to classifier-free guidance
+                        </div>
+                        <div class="key-excerpt">
+                            "As the reference-based metrics increase, it can be significantly observed that the MCS shows a much smaller decline in the reference-free metric (CLIPScore) compared to classifier-free guidance. This improvement can be attributed to the partial masking of the image features. It enables finer-grained visual-language alignment while demonstrating superior capability in model guidance."
+                        </div>
+                        <div class="analysis">
+                            Strong ablation study demonstrating effectiveness of MCS. Directly addresses key contribution (fine-grained alignment) with quantitative improvement. Trade-off analysis between metrics.
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="flow-arrow">↓</div>
+
+            <!-- Conclusion Section -->
+            <div class="section">
+                <div class="section-header">
+                    <span class="section-title">Section 5: Conclusion</span>
+                    <span class="word-count">~150 words</span>
+                </div>
+
+                <div class="moves">
+                    <div class="move">
+                        <div class="move-title">Synthesis & Impact</div>
+                        <div class="move-content">
+                            <strong>Contributions:</strong> MC-Diffusion framework, MCS method, discrete-to-discrete alignment
+                            <br><strong>Results:</strong> Higher CLIPScore (better visual-language alignment), improved reference-based metrics
+                            <br><strong>Future Work:</strong> Application to text-to-image task
+                        </div>
+                        <div class="key-excerpt">
+                            "In this work, we dive into the idea of devising the visual-language alignment in diffusion models for image captioning. We propose a masked conditional diffusion model (MC-Diffusion) to establish discrete-to-discrete alignment. The Masked Condition Strategy (MCS) is further proposed to achieve fine-grained visual-language alignment. We validate the MC-Diffusion against the baselines and state-of-the-art methods on the CUB-200 dataset. We are happy to see that MC-Diffusion achieves a higher CLIPScore (better visual-language alignment) while MCS improves reference-based metrics with minimal hurt on CLIPScore."
+                        </div>
+                        <div class="analysis">
+                            Concise conclusion that restates contributions and key findings. Connection to related tasks (text-to-image) shows broader applicability. Clear future research directions.
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+
+        <h2>Cross-Disciplinary Comparison</h2>
+        <table class="comparison-table">
+            <tr>
+                <th>Aspect</th>
+                <th>MC-Diffusion Paper</th>
+                <th>Traditional Academic</th>
+            </tr>
+            <tr>
+                <td><strong>Literature Review Location</strong></td>
+                <td>Separate section after introduction</td>
+                <td>Integrated into introduction</td>
+            </tr>
+            <tr>
+                <td><strong>Technical Detail Level</strong></td>
+                <td>High (algorithms, mathematical formulations, architectures)</td>
+                <td>Medium (methods overview)</td>
+            </tr>
+            <tr>
+                <td><strong>Evaluation Focus</strong></td>
+                <td>Quantitative metrics (BLEU, CLIPScore, etc.), ablation studies</td>
+                <td>Theoretical validation, qualitative analysis</td>
+            </tr>
+            <tr>
+                <td><strong>Contribution Claims</strong></td>
+                <td>Technical novelty (discrete-to-discrete alignment) + method (MCS)</td>
+                <td>Theoretical advancement + empirical evidence</td>
+            </tr>
+            <tr>
+                <td><strong>Mathematical Formalism</strong></td>
+                <td>Extensive (equations, algorithms, formal definitions)</td>
+                <td>Limited (conceptual frameworks)</td>
+            </tr>
+        </table>
+
+        <h2>Imitation Framework for Future Papers</h2>
+        <div class="analysis">
+            <h3>Structural Elements to Adapt:</h3>
+            <ul>
+                <li><strong>Discrete-to-Discrete Framework:</strong> Clear alignment framework establishment (can be adapted to other modality alignment problems)</li>
+                <li><strong>Modular Architecture:</strong> Breaking complex systems into understandable components (VQ-VAE encoder, diffusion decoder, guidance strategy)</li>
+                <li><strong>Formal Definitions:</strong> Using formal definitions for key concepts (Definition 1, Definition 2)</li>
+                <li><strong>Algorithm Presentation:</strong> Clear algorithmic description of training/inference procedures</li>
+                <li><strong>Multi-Metric Evaluation:</strong> Comprehensive evaluation using both reference-based and reference-free metrics</li>
+            </ul>
+
+            <h3>Rhetorical Strategies:</h3>
+            <ul>
+                <li><strong>Problem Novelty:</strong> "Despite their success, existing...methods still have some limitations. On one hand... On the other hand..."</li>
+                <li><strong>Technical Positioning:</strong> "While our work similarly adopts...we depart from prior techniques... Instead, we..."</li>
+                <li><strong>Contribution Enumeration:</strong> Bulleted list of contributions following logical progression</li>
+                <li><strong>Gap Identification:</strong> Parallel structure ("On one hand... On the other hand") for organizing multiple gaps</li>
+            </ul>
+
+            <h3>Quality Indicators:</h3>
+            <ul>
+                <li><strong>Mathematical Rigor:</strong> Formal definitions, equations, and algorithmic descriptions</li>
+                <li><strong>Empirical Validation:</strong> Multiple evaluation metrics, baselines, and ablation studies</li>
+                <li><strong>Technical Innovation:</strong> Clear novelty claims supported by technical differentiation</li>
+                <li><strong>Reproducibility:</strong> Detailed implementation specifications (architecture, hyperparameters, datasets)</li>
+                <li><strong>Broader Applicability:</strong> Connection to related tasks showing extensibility</li>
+            </ul>
+        </div>
+
+        <div style="text-align: center; margin-top: 30px; color: #7f8c8d; font-size: 0.9em;">
+            <p>Analysis based on macro-level structure framework from academic writing pedagogy</p>
+            <p>Interactive visualization for learning paper organization patterns</p>
+            <p><strong>Paper:</strong> Image Captioning via Masked Conditional Diffusion</p>
+            <p><strong>Authors:</strong> Jiayi Zhou, Chen Li, Huidong Tang, Sayaka Kamei, Shuai Jiang, Yasuhiko Morimoto</p>
+        </div>
+    </div>
+</body>
+</html>

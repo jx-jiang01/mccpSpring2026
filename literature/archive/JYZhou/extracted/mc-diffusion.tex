@@ -1,0 +1,415 @@
+% This is samplepaper.tex, a sample chapter demonstrating the
+% LLNCS macro package for Springer Computer Science proceedings;
+% Version 2.21 of 2022/01/12
+\RequirePackage{amsmath}
+\documentclass[runningheads]{llncs}
+%
+\usepackage[T1]{fontenc}
+% T1 fonts will be used to generate the final print and online PDFs,
+% so please use T1 fonts in your manuscript whenever possible.
+% Other font encondings may result in incorrect characters.
+%
+\usepackage{graphicx}
+\usepackage{booktabs}
+\usepackage{multirow}
+\usepackage{amssymb, amsfonts}
+\usepackage{algorithm}
+\usepackage{algorithmic}
+\usepackage{hyperref}
+\usepackage[misc]{ifsym}
+\usepackage{orcidlink}
+% Used for displaying a sample figure. If possible, figure files should
+% be included in EPS format.
+%
+% If you use the hyperref package, please uncomment the following two lines
+% to display URLs in blue roman font according to Springer's eBook style:
+%\usepackage{color}
+%\renewcommand\UrlFont{\color{blue}\rmfamily}
+%\urlstyle{rm}
+%
+\begin{document}
+%
+\title{Image Captioning via Masked
+Conditional Diffusion
+}
+%
+%\titlerunning{Abbreviated paper title}
+% If the paper title is too long for the running head, you can set
+% an abbreviated paper title here
+%
+\author{
+Jiayi Zhou\inst{1}$^{(\textrm{\Letter})}$\orcidlink{0009-0004-5369-6627} \and 
+Chen Li\inst{2}\orcidlink{0000-0002-8784-8148} \and
+Huidong Tang\inst{3}\orcidlink{0000-0002-5141-2457} \and 
+Sayaka Kamei\inst{4}\orcidlink{0000-0003-1716-3028} \and
+Shuai Jiang\inst{4}\orcidlink{0000-0002-3046-8689} \and 
+Yasuhiko Morimoto\inst{4}\orcidlink{0000-0001-7130-2864}
+}
+%
+\authorrunning{J. Zhou et al.}
+% First names are abbreviated in the running head.
+% If there are more than two authors, 'et al.' is used.
+%
+\institute{
+Hong Kong Baptist University, Hong Kong SAR \\ \email{jyzhou@comp.hkbu.edu.hk} \and
+D3 Center, The University of Osaka, Japan \and
+Shandong Institute of Commerce and Technology, China \and 
+Hiroshima University, Japan\\
+}
+%
+\maketitle              % typeset the header of the contribution
+%
+\begin{abstract}
+Current image captioning methods mainly adopt the autoregressive framework that operates through a next-token prediction paradigm. A non-autoregressive method called diffusion models has shown superiority in image generation. However, their potential in image captioning remains
+underexplored due to the visual-language misalignment. In this work, we present a novel Masked Conditional Diffusion model (MC-Diffusion). It contains a discrete denoising diffusion probabilistic model (D3PM) and a pre-trained vector quantized variational autoencoder (VQ-VAE). Specifically, we first extract discrete image features via
+VQ-VAE. Conditioned on these discrete image features, the discrete diffusion model generates captions through transformer blocks to establish discrete-to-discrete alignment. Furthermore, we propose a simple yet effective guidance method, named Masked Condition Strategy (MCS). Compared with classifier-free guidance, our proposed method achieves finer-grained visual-language alignment while demonstrating superior capability in model guidance. Experiments on the CUB-200 dataset show that the proposed method performs better than baselines on several metrics. Compared with classifier-free guidance, MCS achieves similar performance on reference-based metrics (e.g., BLEU, Meteor, etc.) while alleviating the hurt on CLIPScore.
+
+
+\keywords{Image Captioning  \and Diffusion Model \and  Vector Quantized Variational Autoencoder.}
+\end{abstract}
+%
+%
+%
+\section{Introduction}
+Image captioning is a task that uses a neural network to generate relevant text for a given image. Image captioning enables automated textbook illustration explanations, medical imaging report generation (e.g., X-ray descriptions), and real-time assistance for visually impaired individuals. This multimodal task bridges the realms of natural language processing and computer vision. Autoregressive models stand out as a widely used approach to generate captions word-by-word. The up-to-date methods~\cite{li2023blip,li2024evcap} have achieved remarkable results by capitalizing on this next-token prediction paradigm. However, such techniques suffer from unidirectional semantic passing issue and accumulated prediction error. Specifically, tokens are predicted from left to right. If a wrong word is sampled, this error propagates unidirectionally, amplifying inaccuracies in subsequent tokens.
+
+To alleviate the limitations, researchers have adopted non-autoregressive methods for image captioning
+that allow for bidirectional semantic passing. One such approach involves adapting diffusion models~\cite{ho2020denoising}, which have succeeded in image generation~\cite{rombach2022high}, to image captioning. With the pioneering work of Bit Diffusion~\cite{chen2022analog}, which explores a continuous diffusion model to generate discrete texts, SCD-Net~\cite{luo2023semantic} can generate captions with
+the relevant semantic conditions. DDCap~\cite{zhu2022exploring} first utilizes a discrete diffusion model in image captioning.
+
+Despite their success, existing diffusion-based image captioning methods still have some limitations. On one hand, there exists a continuous-to-discrete misalignment.  Existing methods~\cite{luo2023semantic,zhu2022exploring} extract the continuous image representation before serving as conditions to generate captions. Images exhibit continuity and high redundancy with low information density, whereas text operates through discrete tokens carrying highly abstract information, enabling concise visual description. It is non-trivial to align continuous image features to discrete
+text features well. On the other hand, the coarse-grained image-sentence alignment fails to capture localized semantics. Current works mainly employ either a full conditional model or classifier-free guidance~\cite{ho2021classifier} (some image conditions are removed) to establish visual-language alignment. However, while these approaches achieve alignment to some extent, their coarse-grained image-sentence level alignment renders models incapable of capturing fine-grained semantic correspondences. For instance, they may align the image with the full caption but fail to establish correct object-word correspondences (e.g., linking detected ``dog'' regions to the token ``cat'' in text).
+
+\begin{figure}[t]
+    \centering
+    \includegraphics[width=0.63\linewidth]{figs/discrete_diffusion.jpg}
+    \caption{Discrete diffusion model for text generation. The noise depends on the transition matrix. [M] refers to the mask token.}
+    \label{fig:discrete_diffusion}
+\end{figure}
+
+To mitigate the weakness above, we devise a \textbf{M}asked \textbf{C}onditional \textbf{Diffusion} model (MC-Diffusion). We start with a Vector Quantised Variational AutoEncoder (VQ-VAE)~\cite{van2017neural} as an image encoder to extract discrete image features. We leverage a discrete diffusion model~\cite{austin2021structured} for generating captions. Specifically, as shown in Figure~\ref{fig:discrete_diffusion}, the forward process of the discrete diffusion model corrupts the token sequence into noise through a transition matrix. Starting from noisy data, the reverse process reconstructs the text through iterative denoising. Conditioned on the discrete image features, MC-Diffusion can establish a unified discrete-to-discrete alignment framework that explicitly bridges visual and textual semantics.
+
+The MC-Diffusion can further achieve fine-grained visual-language alignment. Through discrete image features modeled by VQ-VAE, we introduce a simple yet effective guidance method, named Masked Condition Strategy (MCS). For each data sample, a portion of the discrete image features is removed before serving as the condition to generate a caption. Our work leverages the advantage of VQ-VAE in modeling discrete features, enabling masking on high-level image features spanning across multiple regions to establish fine-grained image-caption alignment. In addition, the MCS can be regarded as the fine-grained form of classifier-free guidance, as it involves removing a portion rather than the entire image features for certain examples.
+
+To verify the MC-Diffusion, we conduct image captioning experiments on the CUB-200 dataset~\cite{WahCUB_200_2011}. Our method achieves better results on all reference-based metrics than baselines. We further verify the proposed MCS, experiment results confirm our approach achieves similar performance on reference-based metrics while alleviating the hurt of CLIPScore~\cite{hessel2021CLIPScore}. The main contributions of this work are as follows:
+\begin{itemize}
+\item We propose MC-Diffusion, a novel framework combining VQ-VAE and discrete diffusion models to establish discrete-to-discrete alignment.
+\item We design the MCS to enable fine-grained visual-language alignment through partial image feature masking.
+\item Experiments demonstrate the superior performance of MC-Diffusion compared with baseline methods, validating its effectiveness in alignment.
+\end{itemize} 
+
+\section{Related Work}
+
+\subsection{Autoregressive Models}
+
+Early image captioning methods~\cite{chen2017show,donahue2015long,mao2014explain} focus on utilizing a CNN as an image encoder to learn high-level representations, followed by an RNN text decoder to predict the caption word-by-word. Later on, techniques~\cite{anderson2018bottom,huang2019attention} that leverage the attention mechanism are explored to predict the caption by concentrating on the relevant image region. Inspired by the triumph of Transformer~\cite{vaswani2017attention}, $M^2$ transformer~\cite{cornia2020meshed} exploits mesh-like connectivity to learn both low-level and high-level image features. RSTNet~\cite{zhang2021rstnet} enhances the transformer decoder with the adaptive-attention module to measure the importance of the visual-language prior. Recent advances have focused on exploring large vision-language models which contain billions of trainable parameters, such as the one described by Liu et al.~\cite{liu2023visual}. The text decoder of the above methods generates text in a left-to-right reading order, where the former predicted words are input into the neural network to generate the next word.
+
+\subsection{Non-autoregressive Models}
+Unlike the autoregressive methods aforementioned, non-autoregressive methods predict each word independently of previously generated ones. Fei~\cite{fei2020iterative} proposed a look-back mechanism that is introduced for variable refinement and faster caption generation. Yu et al.~\cite{yu2023end} greatly improve the performance by devising the model with the Swin-Transformer and a semantic retrieval method to increase the decoder scale. SAIC~\cite{yan2021semi} 
+ makes a trade-off between captioning speed and model performance by a semi-autoregressive model.
+
+Most recently, a non-autoregressive method called diffusion models, first proposed in~\cite{ho2020denoising}, has had a huge success in image generation~\cite{rombach2022high,gu2022vector}. Depending on the data type, diffusion models can be divided into continuous diffusion models~\cite{ho2020denoising,song2019generative} and discrete diffusion models~\cite{austin2021structured,zhu2022exploring}. On one hand, based on the continuous diffusion models, Bit Diffusion~\cite{chen2022analog} first projects tokens into continuous space and generates captions. SCD-Net~\cite{luo2023semantic} further improves Bit Diffusion by better visual-language alignment through cascaded transformer blocks. On the other hand, DDCap~\cite{zhu2022exploring} first utilizes a discrete diffusion model with a CLIP~\cite{radford2021learning} image encoder in the image captioning task. All approaches mentioned above extract the continuous image representation before serving as conditions to generate captions. While our work similarly adopts discrete diffusion modeling, we depart from prior techniques that encode images into continuous features. Instead, we condition the diffusion process on discrete image tokens, establishing a unified discrete-to-discrete alignment framework that explicitly bridges visual and textual semantics.
+
+\section{Methodology}
+\subsection{Masked Conditional Diffusion Model}
+\subsubsection{Model Structure}
+As shown in Figure~\ref{fig:model}, given an image, the VQ-VAE encoder first encodes the image into latent representations. Then it maps this representation with the closest embedding in the Codebook. The discrete diffusion text decoder contains several transformer blocks. The decoder achieves multimodal feature fusion in the cross-attention layer. Furthermore, the Masked Condition Strategy (MCS) is applied to randomly mask some discrete image features before serving as the conditions. Given the ground truth caption $\mathbf{x}$ and image feature $\mathbf{y}$, the MC-Diffusion aims to maximize $p(\mathbf{x}|\mathbf{y})$.
+
+\begin{figure}
+    \centering
+    \includegraphics[width=\linewidth]{figs/model.png}
+    \caption{Overall framework of Masked Conditional Diffusion Model (MC-Diffusion). MC-Diffusion includes: (a) VQ-VAE to extract discrete image features. (b) Masked condition strategy (MCS) to mask random image features. (c) Discrete diffusion decoder to denoise the caption sequence.}
+    \label{fig:model}
+\end{figure}
+
+\subsubsection{VQ-VAE Image Encoder}
+MC-Diffusion begins with a VQ-VAE to extract discrete image features, represented as $\mathbf{y}\in \mathbb{R}^{h\times w}$ and reshaped into a vector $\mathbf{y}=\{y_1,y_2,...,y_N\}$, where $N=h\times w$ and $(h,w)$ denotes the encoded image feature size.
+
+\subsubsection{Discrete Diffusion Forward Process}
+Unlike continuous diffusion models that corrupt an image by gradually injecting Gaussian noise, discrete diffusion models corrupt text by randomly replacing some tokens with other tokens or the [MASK] token~\cite{austin2021structured}. Specifically, consider the one-hot version of a token $\mathbf{x}_{t-1} \in \mathbb{R}^{1\times (M+1)}$, where $t$ denotes the time step, and $M$ the vocabulary size. The forward process can be parameterized by a transition matrix $\mathbf{Q}_t\in\mathbb{R}^{(M+1)\times (M+1)}$ and $[\mathbf{Q}_t]_{ij}=q(\mathbf{x}_t=j|\mathbf{x}_{t-1}=i)$. To reduce ambiguity, $\mathbf{X}_t$ denotes the random variable and $\mathbf{X}_t=\mathbf{x}_t$ its realisation. The one-step forward process is defined as
+\begin{equation}
+    q(\mathbf{X}_t|\mathbf{X}_{t-1}=\mathbf{x}_{t-1})=\mathbf{x}_{t-1} \mathbf{Q}_t \in \mathbb{R}^{1\times (M+1)}.
+    \label{eq:one step transition}
+\end{equation}
+Notably, $\mathbf{x}_{t-1}$ represents a single token; we assume that the transition equation Eq.~(\ref{eq:one step transition}) is applied to each token independently. Similar to the continuous diffusion process, $t$-step transition can also be parameterized directly from $\mathbf{x}_0$ as
+\begin{equation}
+    q(\mathbf{X}_t|\mathbf{X}_0=\mathbf{x}_0)=\mathbf{x}_0 \bar{\mathbf{Q}}_t\in \mathbb{R}^{1\times (M+1)},\quad \text{with} \quad \bar{\mathbf{Q}}_t=\mathbf{Q}_1\mathbf{Q}_2...\mathbf{Q}_t.
+    \label{eq:t step transition}
+\end{equation}
+There are multiple choices for the transition matrix $\mathbf{Q}_t$. Here we follow Mask-and-replace diffusion strategy from VQ-Diffusion~\cite{gu2022vector}:
+\begin{equation*}
+    \mathbf{Q}_t=
+    \begin{pmatrix}
+        \alpha_t+\beta_t & \beta_t & \beta_t & \dots & 0 \\
+        \beta_t & \alpha_t+\beta_t & \beta_t & \dots & 0 \\
+        \beta_t & \beta_t & \alpha_t+\beta_t & \dots & 0 \\
+        \vdots & \vdots & \vdots & \ddots & \dots \\
+        \gamma_t & \gamma_t & \gamma_t & \dots & 1 \\
+    \end{pmatrix}
+\end{equation*}
+This transition matrix can be interpreted as follows: an additional [MASK] token is introduced, each token has a probability of $\gamma_t$ to be replaced by [MASK] token, a probability of $\beta_t$ to transfer to another token in the vocabulary, and a probability of $\alpha_t=1-M\beta_t-\gamma_t$ to be unchanged. 
+
+\subsubsection{Discrete Diffusion Reverse Process}
+ Given the max timestep $T$ (a hyperparameter). Starting from the random tokens (noise) $\mathbf{x}_t$ at timestep $t=T$, the discrete diffusion reverse process removes the [MASK] and corrects wrong tokens progressively. The one-step reverse process is formulated as
+\begin{align}
+q(\mathbf{X}_{t-1}|\mathbf{X}_t=\mathbf{x}_t,\mathbf{y})&=\frac{q(\mathbf{X}_{t-1},\mathbf{X}_t=\mathbf{x}_t|\mathbf{y})}{q(\mathbf{X}_t=\mathbf{x}_t|\mathbf{y})}\notag \\
+&=\sum_{\mathbf{x}_0}q(\mathbf{X}_{t-1}|\mathbf{X}_t=\mathbf{x}_t,\mathbf{X}_0=\mathbf{x}_0,\mathbf{y})q(\mathbf{X}_0=\mathbf{x}_0|\mathbf{X}_t=\mathbf{x}_t,\mathbf{y})\notag\\
+&\approx\sum_{\mathbf{x}_0}\underbrace{q(\mathbf{X}_{t-1}|\mathbf{X}_t=\mathbf{x}_t,\mathbf{X}_0=\hat{\mathbf{x}}_0)}_{\text{Posterior}}\underbrace{p_{\theta}(\mathbf{X}_0=\hat{\mathbf{x}}_0|\mathbf{X}_t=\mathbf{x}_t,\mathbf{y})}_{\text{Neural Network}}.
+\label{eq:reverse process}
+\end{align}
+The approximation holds because $q(\mathbf{X}_0=\mathbf{x}_0|\mathbf{x}_t=\mathbf{x}_t,\mathbf{y})$ is not accessible but can be approximated with neural network $p_{\theta}(\mathbf{X}_0=\hat{\mathbf{x}}_0|\mathbf{X}_t=\mathbf{x}_t,\mathbf{y})$.  $\hat{\mathbf{x}}_0$ represents $\hat{\mathbf{x}}_0(\mathbf{x}_t,\mathbf{y})$ for simplicity. $\hat{\mathbf{x}}_0(\mathbf{x}_t,\mathbf{y})$ is the noiseless token at time $0$ predicted by neural network conditioned on $\mathbf{x}_t$ and $\mathbf{y}$.The posterior is
+\begin{align*}
+    q(\mathbf{X}_{t-1}|\mathbf{X}_t=\mathbf{x}_t,\hat{\mathbf{X}}_0=\hat{\mathbf{x}}_0)&=\frac{q(\mathbf{X}_t=\mathbf{x}_t|\mathbf{X}_{t-1},\hat{\mathbf{X}}_0=\hat{\mathbf{x}}_0)q(\mathbf{X}_{t-1}|\hat{\mathbf{X}}_0=\hat{\mathbf{x}}_0)}{q(\mathbf{X}_t=\mathbf{x}_t|\hat{\mathbf{X}}_0=\hat{\mathbf{x}}_0)} \notag \\
+    &=\frac{\mathbf{x}_t \mathbf{Q}_t^\intercal \odot \hat{\mathbf{x}}_0\bar{\mathbf{Q}}_{t-1}}{\hat{\mathbf{x}}_0 \bar{\mathbf{Q}}_t\mathbf{x}_t^\intercal},
+\end{align*}
+where $\odot$ denotes element-wise multiplication.
+In sum, given the max timestep $T$, the reverse process samples a random token sequence $\mathbf{x}_t$ at timestep $t=T$ and extracts discrete image features $\mathbf{y}$. Subsequently, for each timestep from $t=T$ to $t=1$, the sequence $\mathbf{x}_{t-1}$ is computed recursively based on the current state $\mathbf{x}_{t}$ and features $\mathbf{y}$ according to Eq.~(\ref{eq:reverse process}). This iterative refinement continues until the final noiseless output $\mathbf{x}_{0}$.
+
+\subsubsection{Loss Function}
+We follow D3PM~\cite{austin2021structured} to minimize the variance lower bound plus an auxiliary loss which encourages good predictions of the data $\mathbf{x}_0$:
+\begin{align}
+    L=\mathbb{E}[D_{KL}(q(\mathbf{x}_{t-1}|\mathbf{x}_t,\mathbf{x}_0)\Vert p_\theta(\mathbf{x}_{t-1}|\mathbf{x}_t))]+\lambda\mathbb{E}[\log p_\theta(\mathbf{x}_0|\mathbf{x}_t,\mathbf{y})],
+    \label{eq:loss function}
+\end{align}
+where $D_{KL}$ denotes the Kullback-Leibler divergence.
+
+\subsection{Masked Condition Strategy}
+Diffusion models enable sampling random data points from the learned distribution $p(\mathbf{x})$. To control the generated data explicitly (e.g., generate relevant captions for a given image), guidance methods have been studied in the context of image generation. In the following, we first introduce classifier-free guidance~\cite{ho2021classifier} (Definition~\ref{def:classifier-free guidance}). Then we describe Masked Condition Strategy (MCS) (Definition~\ref{def:masked condition strategy}), our simple but effective guidance method to achieve fine-grained visual-language alignment.
+\begin{definition}[Classifier-free Guidance~\cite{ho2021classifier}]
+    \label{def:classifier-free guidance}
+    Given a conditional model $p(\mathbf{x}_t|\mathbf{y})$ and an unconditional model $p(\mathbf{x}_t)$, the classifier-free guidance combines their score functions via a linear interpolation controlled by a guidance scale $\gamma \geq 0$:
+    \begin{align*}
+    \nabla_{\mathbf{x}_t} \log p(\mathbf{x}_t|\mathbf{y})
+    :&=(1-\gamma)\nabla_{\mathbf{x}_t} \log p(\mathbf{x}_t)+\gamma\nabla_{\mathbf{x}_t}\log p(\mathbf{x}_t|\mathbf{y}), 
+    \end{align*}
+    where $\mathbf{x}_t$ is the noised sample at timestep $t$ and $\mathbf{y}$ is the condition.
+\end{definition}
+
+A higher $\gamma$ value indicates that the model takes more account of conditional information, with $\gamma=1$ representing a fully conditional diffusion model. In the training step, the conditional and unconditional models are trained in one model by randomly replacing $P_{\text{cond}}$ of the condition with zeros. It has shown the trade-off between visual-language alignment and language fidelity in image captioning~\cite{kornblith2023classifier}. 
+
+Classifier-free guidance achieves coarse-grained visual-language alignment, which fails to capture localized semantics. MCS achieves fine-grained visual-language alignment by not removing the entire condition information, but masks partial condition information. To achieve this, each condition feature $y_i \in \mathbf{y}=\{y_1,y_2,...,y_N\}$ has a probability $P_{\text{mask}}$ to be masked:
+\begin{equation}
+    \label{eq:mask rate}
+    y_i = \begin{cases}
+        [\text{MASK}], & p \leq P_{\text{mask}} \\
+        y_i,          & p > P_{\text{mask}}
+    \end{cases}
+\end{equation}
+where $p$ is a random number sampled from $U(0,1)$. 
+\begin{definition}[Masked Condition Strategy (MCS)]
+    \label{def:masked condition strategy}
+    Given a partial conditional model $p(\mathbf{x}_t|\mathbf{y}_{[M]},\mathbf{y}_{o})$ and a conditional model $p(\mathbf{x}_t|\mathbf{y})$, the MCS combines their score functions via a linear interpolation controlled by a guidance scale $\gamma \geq 0$:
+    \begin{align*}
+    \nabla_{\mathbf{x}_t}\log p(\mathbf{x}_t|\mathbf{y})&:= \gamma\nabla_{\mathbf{x}_t}\log p(\mathbf{x}_t|\mathbf{y_{[M]},y_{o}}) +(1-\gamma)\nabla_{\mathbf{x}_t}\log p(\mathbf{x}_t|\mathbf{y}),
+\end{align*}
+    where $\mathbf{y}_{[M]}$ denotes the masked condition feature and $\mathbf{y}_{o}$ represents the condition feature not been masked.
+\end{definition}
+
+Similar to classifier-free guidance, $\gamma$ controls how much we care about the condition information. As Algorithm 1 shows, in the training period, the two models $\nabla_{\mathbf{x}_t}\log p(\mathbf{x}_t|\mathbf{y})$ and $\nabla_{\mathbf{x}_t}\log p(\mathbf{x}_t|\mathbf{y_{[M]},y_{o}})$ are trained in one model by masking the condition in some of the data in the dataset while leaving others fully conditioned.
+
+By masking partial condition information, the model is trained to align different image features with text at each time step. Hence, this strategy forces the neural network to establish fine-grained visual-language alignment.
+\begin{algorithm}
+    \caption{Training of the MC-Diffusion with MCS}
+    \begin{algorithmic}
+    \REQUIRE{Condition rate $P_{\text{cond}}\in [0,1]$ and mask rate $P_{\text{mask}}$}
+        \REPEAT
+            \STATE (image, caption)$\leftarrow$ sampled from the training dataset 
+            \STATE $t\sim U(\{1,...,T\})\leftarrow$ sample a time step $t$
+            \STATE $\mathbf{x}_0\leftarrow$ CLIP text embedding(caption), $\mathbf{y}\leftarrow$ VQ-VAE image Encoder(image)
+            \STATE $\mathbf{x}_t\leftarrow$ add noise to $\mathbf{x}_0$ \hfill $\triangleright$ Eq.~(\ref{eq:t step transition})
+            \STATE random number p $\leftarrow$ sampled from $U(0,1)$
+            \IF{$p<P_{\text{cond}}$}
+                \STATE $(\mathbf{y}_{[M]},\mathbf{y}_{o})\leftarrow$mask some entries in condition $\mathbf{y}$\hfill $\triangleright$ Eq.~(\ref{eq:mask rate})
+                \STATE $(\hat{\mathbf{x}}_0, \mathbf{x}_{t-1})\leftarrow$ discrete diffusion decoder ($\mathbf{y}_{[M]},\mathbf{y}_{o},\mathbf{x}_t$)\hfill $\triangleright$ Eq.~(\ref{eq:reverse process})
+                \STATE Loss $\leftarrow(\hat{\mathbf{x}}_0, \mathbf{x}_{t-1},\mathbf{x}_0)$\hfill $\triangleright$ Eq.~(\ref{eq:loss function})
+            \ELSE
+                \STATE $(\hat{\mathbf{x}}_0, \mathbf{x}_{t-1})\leftarrow$ discrete diffusion decoder ($\mathbf{y},\mathbf{x}_t$)
+                \STATE Loss $\leftarrow(\hat{\mathbf{x}}_0, \mathbf{x}_{t-1},\mathbf{x}_0)$\hfill $\triangleright$ Eq.~(\ref{eq:loss function})
+            \ENDIF
+            
+        \UNTIL{converged}
+    \end{algorithmic}
+\end{algorithm}
+\subsubsection{Further Explanation on Masked Condition Strategy} If we further make some derivation on our MCS:
+\begin{align*}
+    \nabla_{\mathbf{x}_t}\log p(\mathbf{x}_t|\mathbf{y})
+    &= \gamma\nabla_{\mathbf{x}_t}\log p(\mathbf{x}_t|\mathbf{y_{[M]},y_{o}})+(1-\gamma)\nabla_{\mathbf{x}_t}\log p(\mathbf{x}_t|\mathbf{y})\notag\\
+    &=\gamma[\underbrace{\nabla_{\mathbf{x}_t}p(\mathbf{y}_{[M]}|\mathbf{x}_t,\mathbf{y_{o}})}_{\text{Image Inpainting Model}}+\underbrace{\nabla_{\mathbf{x}_t}p(\mathbf{x}_t|\mathbf{y}_{o})}_{\text{Partial Conditioned Model}}]\notag\\
+    &\qquad+(1-\gamma)\nabla_{\mathbf{x}_t}\log p(\mathbf{x}_t|\mathbf{y}).
+\end{align*}
+We can alternatively view the MCS as implicitly learning an image inpainting model $\nabla_{\mathbf{x}_t}p(\mathbf{y}_{[M]}|\mathbf{x}_t,\mathbf{y_{o}})$, a partial conditioned model $\nabla_{\mathbf{x}_t}p(\mathbf{x}_t|\mathbf{y}_{o})$ and a fully conditioned model $\nabla_{\mathbf{x}_t}\log p(\mathbf{x}_t|\mathbf{y})$. The implicit image inpainting model predicts the masked image features $\mathbf{y}_{[M]}$ using the non-masked image features $\mathbf{y}_{o}$ and the caption $\mathbf{x}_{t}$, which enables fine-grained visual-language alignment. The partial caption model and the fully conditioned model learn to generate the caption with different amounts of conditional information, which improves the performance of the denoising neural
+network.
+
+\section{Experiments}
+\subsection{Implementation Details}
+Experiments are conducted on the CUB-200~\cite{WahCUB_200_2011} dataset. It contains over 8k training images and 3k
+test images. Each image includes 10 captions. The average caption length is 14.2 tokens. VQ-VAE image encoder comes from the VQGAN~\cite{esser2021taming} with Codebook size $K=2886$. It extracts 32$\times$32 discrete features from 256$\times$256 images. Our diffusion decoder contains 18 transformer blocks with dimension $d=512$. The model includes 122M trainable parameters. As for classifier-free guidance and MCS, we set the condition rate $P_{\text{cond}}$ and condition mask rate $P_{\text{mask}}$ to 0.1. We set the diffusion step $T=100$. MC-Diffusion is optimized by AdamW~\cite{loshchilov2017decoupled} with parameter $\beta=(0.9,0.96)$. The beginning learning rate is 1.0e-6 and increases to 4.5e-4 after 1000 warmup steps. The batch size is 128, and the training epoch is set to 200.
+
+\subsection{Evaluation Metrics}
+\subsubsection{Reference-based Metrics}
+Reference-based metrics evaluate the similarity between the generated and ground-truth captions. BLEU~\cite{papineni2002bleu} and ROUGE~\cite{lin2004rouge} compare the overlapping n-grams, and Meteor~\cite{banerjee2005meteor} further considers the accuracy and recall over the entire corpus. CIDEr~\cite{vedantam2015cider} uses Term Frequency-Inverse Document Frequency (TF-IDF) to assess the importance of each token. Unlike the above-mentioned metrics, SPICE~\cite{anderson2016spice} and RefCLIPScore~\cite{hessel2021CLIPScore} assess the underlying connection with pre-trained models. 
+
+\subsubsection{Reference-free Metric}
+Reference-free metric computes the similarity between the generated caption and the image. CLIPScore~\cite{hessel2021CLIPScore} leverages the CLIP ViT-B/32~\cite{radford2021learning} model to extract CLIP embeddings of the generated caption $\mathbf{c}$ and image  $\mathbf{i}$. CLIPScore is defined as $\text{CLIPScore}=2.5\times\max(\cos(\mathbf{c},\mathbf{i}),0)$.
+
+\subsection{Baselines}
+Source Pre-trained and DCC~\cite{vinyals2015show} are two autoregressive baselines with an long short-term memory (LSTM) \cite{graves2012long,zhang2019multi} text decoder. ATCIC~\cite{chen2017show} is the state-of-the-art model on the CUB-200 dataset. We select Bit Diffusion~\cite{chen2022analog} as non-autoregressive baseline. All autoregressive approaches are pre-trained on the MSCOCO dataset~\cite{lin2014microsoft}, while MC-Diffusion only contains a pre-trained VQ-VAE image encoder. Furthermore, we compare MCS with classifier-free guidance with different guidance scales $\gamma$.
+
+\subsection{Results}
+\subsubsection{Performance Comparisons}
+Table~\ref{table:cub200 comparison} shows the performance comparison without the MCS. MC-Diffusion outperforms autoregressive baselines across all metrics. Specifically, the Meteor and SPICE are 103.0\% and 12.2\%, demonstrating an improvement of 1.8\% and 1.1\% compared to autoregressive baselines, respectively. Compared with Bit Diffusion, MC-Diffusion has a similar performance on reference-based metrics while achieving higher CLIPScore, meaning better visual-language alignment. Nevertheless, our MC-Diffusion still can't beat the state-of-the-art model ATCIC with an autoregressive structure. 
+
+\begin{table}[htbp]
+    \caption{Result comparison on CUB-200 dataset.}
+    \label{table:cub200 comparison}
+    \centering
+         \setlength{\tabcolsep}{3pt}
+    \begin{tabular}{llllllll}
+        \toprule
+        Model         & BLEU-4  & Meteor  & ROUGE   & CIDEr  & SPICE  & RefCLIPS & CLIPScore \\
+        \midrule
+        \multicolumn{8}{c}{\textbf{Autoregressive Methods}} \\  
+        \midrule
+        Source Pre-trained  & 6.1     & 12.9    & 33.0      & 3.0      & 4.6    & -        & -         \\
+        DCC             & 21.4    & 23.8    & 46.4    & 11.9   & 11.1   & -        & -         \\
+        ATCIC           & \textbf{32.8} & \textbf{27.6} & \textbf{58.6} & 24.8   & \underline{13.2} & -        & -         \\
+        \midrule
+        \multicolumn{8}{c}{\textbf{Non-Autoregressive Methods}} \\ 
+        \midrule
+        Bit Diffusion & \underline{30.4} & \underline{26.1} & 53.0 & \underline{99.4} & \underline{16.1} & \textbf{83.3} & 64.7 \\
+        MC-Diffusion    & 28.1    & 25.6    & \underline{54.1}    & \textbf{103} & 12.2   & 79.2     & \textbf{68.0}      \\
+        \bottomrule
+    \end{tabular}
+\end{table}
+\begin{table}[htbp]
+    \caption{Examples of image captioning results generated by MC-Diffusion}
+    \centering
+    \begin{tabular}{c|l}
+        \hline
+        \multirow{5}{*}{\includegraphics[width=0.19\textwidth]{figs/Black_Footed_Albatross_0009_34.jpg}} & \textbf{MC-Diffusion:} this bird is brown and white in color in with \\
+        & a all and black back and beak.\\
+        & \textbf{GT1:} this bird has wings that are black and has a long black bill\\
+        & \textbf{GT2:} grey bird with black flat beak with grey and white big wings\\
+        & \textbf{GT3:} the dark brown bird has black eye ring and black rectrices.\\
+        \\
+        \hline
+        \multirow{5}{*}{\includegraphics[width=0.19\textwidth]{figs/Grasshopper_Sparrow_0069_116332.jpg}} & \textbf{MC-Diffusion:} this small bird has a yellow coloring belly , \\
+        & and a light black specks throughout it !\\
+        & \textbf{GT1:} this bird is brown in color, with a curved beak.\\
+        & \textbf{GT2:} this bird has a brown crown, brown primaries, and a brown belly.\\
+        & \textbf{GT3:} a small yellow bird with dark spots on its crown and wings\\
+        \\
+        \hline
+        \multirow{5}{*}{\includegraphics[width=0.19\textwidth]{figs/Bohemian_Waxwing_0098_178009.jpg}} & \textbf{MC-Diffusion:} a small bird with red and face has \\
+        &black feathers covering top with .\\
+        & \textbf{GT1:} this bird has a grey crown, grey primaries, and a grey belly.\\
+        & \textbf{GT2:} this is a grey bird with orange on the crown and cheek patches.\\
+        & \textbf{GT3:} the bird has black throat, gray breast, feet, belly and abdomen, \\
+        &it has small beak when compared to its body size.\\
+        \hline
+        \multirow{5}{*}{\includegraphics[width=0.19\textwidth]{figs/White_Breasted_Kingfisher_0015_73192.jpg}} & \textbf{MC-Diffusion:}medium a sized bird with white \\
+        &and brown feathers and a large black beak .\\
+        & \textbf{GT1:} this bird has wings that are blue and has a long bill\\
+        & \textbf{GT2:} this bird has wings that are black and blue and has a long bill\\
+        & \textbf{GT3:} this bird has a brown head a brown body blue wings and a \\
+        &white color around it's neck he also has a very large beak\\
+        \hline
+    \end{tabular}
+    \label{table:example captions}
+\end{table}
+\begin{table}[htbp]
+    \caption{Classifier-free result with different guidance scale $\gamma$}
+    \label{table:classifier}
+     \centering
+     \setlength{\tabcolsep}{5pt}
+     \renewcommand{\arraystretch}{1.1}
+     \begin{tabular}{llllllll}
+     \toprule                 
+    Method      & BLEU-4 & Meteor & ROUGE & CIDEr & SPICE & RefCLIPS&CLIPScore\\
+    \midrule
+    $\gamma=1$  & \textbf{27.0} & \textbf{25.1} & \textbf{53.4} & \textbf{103} & \textbf{12.4}  & \textbf{78.9} &67.5   \\
+    $\gamma=1.5$& 24.7 & 24.5 & 51.0 & 95 & 11.7  &78.5&68.9    \\
+    $\gamma=2$  & 23.0 & 23.2 & 49.6 & 86 & 10.5 &77.9&69.5\\
+    $\gamma=3$ & 21.9 & 22.5& 47.1& 83 & 9.9 &77.8&\textbf{69.7}\\
+    $\gamma=4$& 19.5 & 22.2 & 46.3 & 82 & 9.7 & 77.4 & 68.3\\
+    \bottomrule
+  \end{tabular}
+\end{table}
+\begin{table}[ht]
+    \caption{Masked condition result with different guidance scale $\gamma$}
+    \label{table:masked}
+     \centering
+     \setlength{\tabcolsep}{5pt}
+     \renewcommand{\arraystretch}{1.1}
+     \begin{tabular}{llllllll}
+     \toprule                 
+    Method      & BLEU-4 & Meteor & ROUGE & CIDEr & SPICE & RefCLIPS&CLIPScore\\
+    \midrule
+    $\gamma=1$  & \textbf{27.3} & \textbf{24.9} & \textbf{53.9} & \textbf{102} & \textbf{12.2}  & \textbf{79.2} &68.5   \\
+    $\gamma=1.5$& 25.6 & 24.1 & 52.7 & 96 & 11.5  &78.9&69.3    \\
+    $\gamma=2$  & 24.2 & 23.2 & 50.1 & 93 & 11.0 &78.5&69.4\\
+    $\gamma=3$ & 23.7 & 23.0& 49.2& 91 & 10.7 &78.2&\textbf{69.5}\\
+    $\gamma=4$& 22.4 & 22.9 & 48.9 & 90 & 10.6 & 77.7 & 69.4\\
+    \bottomrule
+  \end{tabular}
+\end{table}
+
+\begin{figure}
+    \begin{minipage}[b]{0.496\textwidth}
+        \centering
+        \includegraphics[width=\textwidth]{figs/bleu4.png}
+    \end{minipage}
+    \hfill
+    \begin{minipage}[b]{0.496\textwidth}
+        \centering
+        \includegraphics[width=\textwidth]{figs/meteor.png}
+    \end{minipage}
+
+    \vspace{1em} 
+    \begin{minipage}[b]{0.496\textwidth}
+        \centering
+        \includegraphics[width=\textwidth]{figs/rouge.png}
+    \end{minipage}
+    \hfill
+    \begin{minipage}[b]{0.496\textwidth}
+        \centering
+        \includegraphics[width=\textwidth]{figs/cider.png}
+    \end{minipage}
+
+    \vspace{1em}
+    \begin{minipage}[b]{0.496\textwidth}
+        \centering
+        \includegraphics[width=\textwidth]{figs/spice.png}
+    \end{minipage}
+    \hfill
+    \begin{minipage}[b]{0.496\textwidth}
+        \centering
+        \includegraphics[width=\textwidth]{figs/refclips.png}
+    \end{minipage}
+    \caption{Performance comparison on different guidance scales $\gamma$. In each subplot, the vertical axis represents the reference-free metric CLIPScore, while the horizontal axis represents various reference-based metrics. As the reference-based metrics increase, it can be significantly observed that the MCS shows a much smaller decline in the reference-free metric (CLIPScore) compared to classifier-free guidance.}
+    \label{fig:exp_classifeir_masked}
+\end{figure}
+
+Table~\ref{table:example captions} further illustrates some examples generated by MC-Diffusion. MC-Diffusion can produce more descriptive and longer captions compared to ground-truth captions. As shown in the second image, none of the ground-truth captions point out that the bird has black feathers covering the top, except MC-Diffusion. However, the text generated by MC-Diffusion may contain more grammatical errors (e.g., ``in with a all'' in the first image caption result of Table~\ref{table:example captions}) and have less fluent sentence structure.
+
+\subsubsection{Masked Condition Strategy}
+Table~\ref{table:classifier} and Table~\ref{table:masked} compare the results of classifier-free guidance and MCS on the same MC-Diffusion with different guidance scales $\gamma$. As the guidance scale $\gamma$ increases, if $\gamma\leq 3$, both classifier-free guidance and MCS exhibit a trade-off between the reference-based and reference-free metric. However, when $\gamma>3$, the higher guidance scale may result in higher distribution shift, deteriorating both reference-based and reference-free metrics. To compare classifier-free guidance and MCS more intuitively, we plot the results in the tables as Figure~\ref{fig:exp_classifeir_masked}. As the reference-based metrics increase, it can be significantly observed that the MCS shows a much smaller decline in the reference-free metric (CLIPScore) compared to classifier-free guidance. This improvement can be attributed to the partial masking of the image features. It enables finer-grained visual-language alignment while demonstrating superior capability in model guidance.
+
+\section{Conclusion}
+In this work, we dive into the idea of devising the visual-language alignment in diffusion models for image captioning. We propose a masked conditional diffusion model (MC-Diffusion) to establish discrete-to-discrete alignment. The Masked Condition Strategy (MCS) is further proposed to achieve fine-grained visual-language alignment. We validate the MC-Diffusion against the baselines and state-of-the-art methods on the CUB-200 dataset. We also compare the performance of the MCS and classifier-free guidance on different guidance scales. We are happy to see that MC-Diffusion achieves a higher CLIPScore (better visual-language alignment) while MCS improves reference-based metrics with minimal hurt on CLIPScore. For future work, since classifier-free guidance also presents a trade-off between image fidelity and diversity in the text-to-image task, we can test whether the MCS performs better in this aspect as well.
+\newpage
+%\begin{credits}
+%\subsubsection{\discintname}
+%The authors have no competing interests to declare that are relevant to the content of this article.
+%\end{credits}
+%
+% ---- Bibliography ----
+%
+% BibTeX users should specify bibliography style 'splncs04'.
+% References will then be sorted and formatted in the correct style.
+%
+\bibliographystyle{splncs04}
+\bibliography{mybibliography}
+%
+
+\end{document}

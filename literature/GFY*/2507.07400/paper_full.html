@@ -1,0 +1,992 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta content="text/html; charset=utf-8" http-equiv="content-type"/>
+<title>KVFlow: Efficient Prefix Caching for Accelerating LLM-Based Multi-Agent Workflows</title>
+<!--Generated on Thu Jul 10 03:29:19 2025 by LaTeXML (version 0.8.8) http://dlmf.nist.gov/LaTeXML/.-->
+<meta content="width=device-width, initial-scale=1, shrink-to-fit=no" name="viewport"/>
+<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet" type="text/css"/>
+<link href="/static/browse/0.3.4/css/ar5iv.0.7.9.min.css" rel="stylesheet" type="text/css"/>
+<link href="/static/browse/0.3.4/css/ar5iv-fonts.0.7.9.min.css" rel="stylesheet" type="text/css"/>
+<link href="/static/browse/0.3.4/css/latexml_styles.css" rel="stylesheet" type="text/css"/>
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.3.3/html2canvas.min.js"></script>
+<script src="/static/browse/0.3.4/js/addons_new.js"></script>
+<script src="/static/browse/0.3.4/js/feedbackOverlay.js"></script>
+<base href="/html/2507.07400v1/"/></head>
+<body>
+<nav class="ltx_page_navbar">
+<nav class="ltx_TOC">
+<ol class="ltx_toclist">
+<li class="ltx_tocentry ltx_tocentry_section"><a class="ltx_ref" href="https://arxiv.org/html/2507.07400v1#S1" title="In KVFlow: Efficient Prefix Caching for Accelerating LLM-Based Multi-Agent Workflows"><span class="ltx_text ltx_ref_title"><span class="ltx_tag ltx_tag_ref">1 </span>Introduction</span></a></li>
+<li class="ltx_tocentry ltx_tocentry_section">
+<a class="ltx_ref" href="https://arxiv.org/html/2507.07400v1#S2" title="In KVFlow: Efficient Prefix Caching for Accelerating LLM-Based Multi-Agent Workflows"><span class="ltx_text ltx_ref_title"><span class="ltx_tag ltx_tag_ref">2 </span>Background</span></a>
+<ol class="ltx_toclist ltx_toclist_section">
+<li class="ltx_tocentry ltx_tocentry_paragraph"><a class="ltx_ref" href="https://arxiv.org/html/2507.07400v1#S2.SS0.SSS0.Px1" title="In 2 Background ‣ KVFlow: Efficient Prefix Caching for Accelerating LLM-Based Multi-Agent Workflows"><span class="ltx_text ltx_ref_title">Prefix Caching in LLM Serving Systems.</span></a></li>
+<li class="ltx_tocentry ltx_tocentry_paragraph"><a class="ltx_ref" href="https://arxiv.org/html/2507.07400v1#S2.SS0.SSS0.Px2" title="In 2 Background ‣ KVFlow: Efficient Prefix Caching for Accelerating LLM-Based Multi-Agent Workflows"><span class="ltx_text ltx_ref_title">Agentic Workflow.</span></a></li>
+</ol>
+</li>
+<li class="ltx_tocentry ltx_tocentry_section">
+<a class="ltx_ref" href="https://arxiv.org/html/2507.07400v1#S3" title="In KVFlow: Efficient Prefix Caching for Accelerating LLM-Based Multi-Agent Workflows"><span class="ltx_text ltx_ref_title"><span class="ltx_tag ltx_tag_ref">3 </span>Design of KVFlow</span></a>
+<ol class="ltx_toclist ltx_toclist_section">
+<li class="ltx_tocentry ltx_tocentry_subsection">
+<a class="ltx_ref" href="https://arxiv.org/html/2507.07400v1#S3.SS1" title="In 3 Design of KVFlow ‣ KVFlow: Efficient Prefix Caching for Accelerating LLM-Based Multi-Agent Workflows"><span class="ltx_text ltx_ref_title"><span class="ltx_tag ltx_tag_ref">3.1 </span>Workflow-Aware Eviction Policy</span></a>
+<ol class="ltx_toclist ltx_toclist_subsection">
+<li class="ltx_tocentry ltx_tocentry_paragraph"><a class="ltx_ref" href="https://arxiv.org/html/2507.07400v1#S3.SS1.SSS0.Px1" title="In 3.1 Workflow-Aware Eviction Policy ‣ 3 Design of KVFlow ‣ KVFlow: Efficient Prefix Caching for Accelerating LLM-Based Multi-Agent Workflows"><span class="ltx_text ltx_ref_title">Agent Step Graph and Steps-to-Execution.</span></a></li>
+<li class="ltx_tocentry ltx_tocentry_paragraph"><a class="ltx_ref" href="https://arxiv.org/html/2507.07400v1#S3.SS1.SSS0.Px2" title="In 3.1 Workflow-Aware Eviction Policy ‣ 3 Design of KVFlow ‣ KVFlow: Efficient Prefix Caching for Accelerating LLM-Based Multi-Agent Workflows"><span class="ltx_text ltx_ref_title">Workflow-Aware Eviction Priority Assignment.</span></a></li>
+</ol>
+</li>
+<li class="ltx_tocentry ltx_tocentry_subsection">
+<a class="ltx_ref" href="https://arxiv.org/html/2507.07400v1#S3.SS2" title="In 3 Design of KVFlow ‣ KVFlow: Efficient Prefix Caching for Accelerating LLM-Based Multi-Agent Workflows"><span class="ltx_text ltx_ref_title"><span class="ltx_tag ltx_tag_ref">3.2 </span>Overlapped KV Prefetching</span></a>
+<ol class="ltx_toclist ltx_toclist_subsection">
+<li class="ltx_tocentry ltx_tocentry_paragraph"><a class="ltx_ref" href="https://arxiv.org/html/2507.07400v1#S3.SS2.SSS0.Px1" title="In 3.2 Overlapped KV Prefetching ‣ 3 Design of KVFlow ‣ KVFlow: Efficient Prefix Caching for Accelerating LLM-Based Multi-Agent Workflows"><span class="ltx_text ltx_ref_title">Proactive Prefetching.</span></a></li>
+<li class="ltx_tocentry ltx_tocentry_paragraph"><a class="ltx_ref" href="https://arxiv.org/html/2507.07400v1#S3.SS2.SSS0.Px2" title="In 3.2 Overlapped KV Prefetching ‣ 3 Design of KVFlow ‣ KVFlow: Efficient Prefix Caching for Accelerating LLM-Based Multi-Agent Workflows"><span class="ltx_text ltx_ref_title">Status-Aware Scheduling.</span></a></li>
+</ol>
+</li>
+<li class="ltx_tocentry ltx_tocentry_subsection">
+<a class="ltx_ref" href="https://arxiv.org/html/2507.07400v1#S3.SS3" title="In 3 Design of KVFlow ‣ KVFlow: Efficient Prefix Caching for Accelerating LLM-Based Multi-Agent Workflows"><span class="ltx_text ltx_ref_title"><span class="ltx_tag ltx_tag_ref">3.3 </span>Implementation</span></a>
+<ol class="ltx_toclist ltx_toclist_subsection">
+<li class="ltx_tocentry ltx_tocentry_paragraph"><a class="ltx_ref" href="https://arxiv.org/html/2507.07400v1#S3.SS3.SSS0.Px1" title="In 3.3 Implementation ‣ 3 Design of KVFlow ‣ KVFlow: Efficient Prefix Caching for Accelerating LLM-Based Multi-Agent Workflows"><span class="ltx_text ltx_ref_title">Step Information Capture.</span></a></li>
+<li class="ltx_tocentry ltx_tocentry_paragraph"><a class="ltx_ref" href="https://arxiv.org/html/2507.07400v1#S3.SS3.SSS0.Px2" title="In 3.3 Implementation ‣ 3 Design of KVFlow ‣ KVFlow: Efficient Prefix Caching for Accelerating LLM-Based Multi-Agent Workflows"><span class="ltx_text ltx_ref_title">Client Tracking.</span></a></li>
+</ol>
+</li>
+</ol>
+</li>
+<li class="ltx_tocentry ltx_tocentry_section">
+<a class="ltx_ref" href="https://arxiv.org/html/2507.07400v1#S4" title="In KVFlow: Efficient Prefix Caching for Accelerating LLM-Based Multi-Agent Workflows"><span class="ltx_text ltx_ref_title"><span class="ltx_tag ltx_tag_ref">4 </span>Evaluation</span></a>
+<ol class="ltx_toclist ltx_toclist_section">
+<li class="ltx_tocentry ltx_tocentry_subsection">
+<a class="ltx_ref" href="https://arxiv.org/html/2507.07400v1#S4.SS1" title="In 4 Evaluation ‣ KVFlow: Efficient Prefix Caching for Accelerating LLM-Based Multi-Agent Workflows"><span class="ltx_text ltx_ref_title"><span class="ltx_tag ltx_tag_ref">4.1 </span>Single-Workflow Latency</span></a>
+<ol class="ltx_toclist ltx_toclist_subsection">
+<li class="ltx_tocentry ltx_tocentry_paragraph"><a class="ltx_ref" href="https://arxiv.org/html/2507.07400v1#S4.SS1.SSS0.Px1" title="In 4.1 Single-Workflow Latency ‣ 4 Evaluation ‣ KVFlow: Efficient Prefix Caching for Accelerating LLM-Based Multi-Agent Workflows"><span class="ltx_text ltx_ref_title">Models and testbeds.</span></a></li>
+<li class="ltx_tocentry ltx_tocentry_paragraph"><a class="ltx_ref" href="https://arxiv.org/html/2507.07400v1#S4.SS1.SSS0.Px2" title="In 4.1 Single-Workflow Latency ‣ 4 Evaluation ‣ KVFlow: Efficient Prefix Caching for Accelerating LLM-Based Multi-Agent Workflows"><span class="ltx_text ltx_ref_title">Baselines.</span></a></li>
+<li class="ltx_tocentry ltx_tocentry_paragraph"><a class="ltx_ref" href="https://arxiv.org/html/2507.07400v1#S4.SS1.SSS0.Px3" title="In 4.1 Single-Workflow Latency ‣ 4 Evaluation ‣ KVFlow: Efficient Prefix Caching for Accelerating LLM-Based Multi-Agent Workflows"><span class="ltx_text ltx_ref_title">Evaluation methods.</span></a></li>
+<li class="ltx_tocentry ltx_tocentry_paragraph"><a class="ltx_ref" href="https://arxiv.org/html/2507.07400v1#S4.SS1.SSS0.Px4" title="In 4.1 Single-Workflow Latency ‣ 4 Evaluation ‣ KVFlow: Efficient Prefix Caching for Accelerating LLM-Based Multi-Agent Workflows"><span class="ltx_text ltx_ref_title">Results.</span></a></li>
+</ol>
+</li>
+<li class="ltx_tocentry ltx_tocentry_subsection">
+<a class="ltx_ref" href="https://arxiv.org/html/2507.07400v1#S4.SS2" title="In 4 Evaluation ‣ KVFlow: Efficient Prefix Caching for Accelerating LLM-Based Multi-Agent Workflows"><span class="ltx_text ltx_ref_title"><span class="ltx_tag ltx_tag_ref">4.2 </span>High-Concurrency Workflow Performance</span></a>
+<ol class="ltx_toclist ltx_toclist_subsection">
+<li class="ltx_tocentry ltx_tocentry_paragraph"><a class="ltx_ref" href="https://arxiv.org/html/2507.07400v1#S4.SS2.SSS0.Px1" title="In 4.2 High-Concurrency Workflow Performance ‣ 4 Evaluation ‣ KVFlow: Efficient Prefix Caching for Accelerating LLM-Based Multi-Agent Workflows"><span class="ltx_text ltx_ref_title">Results.</span></a></li>
+<li class="ltx_tocentry ltx_tocentry_paragraph"><a class="ltx_ref" href="https://arxiv.org/html/2507.07400v1#S4.SS2.SSS0.Px2" title="In 4.2 High-Concurrency Workflow Performance ‣ 4 Evaluation ‣ KVFlow: Efficient Prefix Caching for Accelerating LLM-Based Multi-Agent Workflows"><span class="ltx_text ltx_ref_title">Realistic Workflow Simulation.</span></a></li>
+</ol>
+</li>
+</ol>
+</li>
+<li class="ltx_tocentry ltx_tocentry_section">
+<a class="ltx_ref" href="https://arxiv.org/html/2507.07400v1#S5" title="In KVFlow: Efficient Prefix Caching for Accelerating LLM-Based Multi-Agent Workflows"><span class="ltx_text ltx_ref_title"><span class="ltx_tag ltx_tag_ref">5 </span>Related Work</span></a>
+<ol class="ltx_toclist ltx_toclist_section">
+<li class="ltx_tocentry ltx_tocentry_paragraph"><a class="ltx_ref" href="https://arxiv.org/html/2507.07400v1#S5.SS0.SSS0.Px1" title="In 5 Related Work ‣ KVFlow: Efficient Prefix Caching for Accelerating LLM-Based Multi-Agent Workflows"><span class="ltx_text ltx_ref_title">LLM Serving Optimizations.</span></a></li>
+<li class="ltx_tocentry ltx_tocentry_paragraph"><a class="ltx_ref" href="https://arxiv.org/html/2507.07400v1#S5.SS0.SSS0.Px2" title="In 5 Related Work ‣ KVFlow: Efficient Prefix Caching for Accelerating LLM-Based Multi-Agent Workflows"><span class="ltx_text ltx_ref_title">Agentic Workflow Frameworks</span></a></li>
+</ol>
+</li>
+<li class="ltx_tocentry ltx_tocentry_section"><a class="ltx_ref" href="https://arxiv.org/html/2507.07400v1#S6" title="In KVFlow: Efficient Prefix Caching for Accelerating LLM-Based Multi-Agent Workflows"><span class="ltx_text ltx_ref_title"><span class="ltx_tag ltx_tag_ref">6 </span>Conclusion</span></a></li>
+</ol></nav>
+</nav>
+<div class="ltx_page_main">
+<div class="ltx_page_content">
+<article class="ltx_document ltx_authors_1line">
+<h1 class="ltx_title ltx_title_document">KVFlow: Efficient Prefix Caching for Accelerating LLM-Based Multi-Agent Workflows</h1>
+<div class="ltx_authors">
+<span class="ltx_creator ltx_role_author">
+<span class="ltx_personname">Zaifeng Pan<sup class="ltx_sup" id="id14.12.id1">1</sup>  Ajjkumar Patel<sup class="ltx_sup" id="id15.13.id2">1</sup>  Zhengding Hu<sup class="ltx_sup" id="id16.14.id3">1</sup>  Yipeng Shen<sup class="ltx_sup" id="id17.15.id4">1</sup>  Yue Guan<sup class="ltx_sup" id="id18.16.id5">1</sup>  
+<br class="ltx_break"/><span class="ltx_text ltx_font_bold" id="id6.6.1">Wan-Lu Li<sup class="ltx_sup" id="id6.6.1.1"><span class="ltx_text ltx_font_medium" id="id6.6.1.1.1">1</span></sup></span>  <span class="ltx_text ltx_font_bold" id="id7.7.2">Lianhui Qin<sup class="ltx_sup" id="id7.7.2.1"><span class="ltx_text ltx_font_medium" id="id7.7.2.1.1">1</span></sup></span>  <span class="ltx_text ltx_font_bold" id="id8.8.3">Yida Wang<sup class="ltx_sup" id="id8.8.3.1"><span class="ltx_text ltx_font_medium" id="id8.8.3.1.1">2</span></sup></span>  <span class="ltx_text ltx_font_bold" id="id9.9.4">Yufei Ding<sup class="ltx_sup" id="id9.9.4.1"><span class="ltx_text ltx_font_medium" id="id9.9.4.1.1">1</span></sup></span>  
+<br class="ltx_break"/>
+<br class="ltx_break"/><sup class="ltx_sup" id="id19.17.id6">1</sup> UCSD  <sup class="ltx_sup" id="id20.18.id7">2</sup> AWS
+</span><span class="ltx_author_notes">Corresponding author</span></span>
+</div>
+<div class="ltx_abstract">
+<h6 class="ltx_title ltx_title_abstract">Abstract</h6>
+<p class="ltx_p" id="id13.2">Large language model (LLM) based agentic workflows have become a popular paradigm for coordinating multiple specialized agents to solve complex tasks. To improve serving efficiency, existing LLM systems employ prefix caching to reuse key-value (KV) tensors corresponding to agents’ fixed prompts, thereby avoiding redundant computation across repeated invocations. However, current systems typically evict KV caches using a Least Recently Used (LRU) policy, which fails to anticipate future agent usage and often discards KV caches shortly before their reuse. This leads to frequent cache misses and substantial recomputation or swapping overhead.
+We present KVFlow, a workflow-aware KV cache management framework tailored for agentic workloads. KVFlow abstracts the agent execution schedule as an Agent Step Graph and assigns each agent a steps-to-execution value that estimates its temporal proximity to future activation. These values guide a fine-grained eviction policy at the KV node level, allowing KVFlow to preserve entries likely to be reused and efficiently manage shared prefixes in tree-structured caches.
+Moreover, KVFlow introduces a fully overlapped KV prefetching mechanism, which proactively loads required tensors from CPU to GPU in background threads for agents scheduled in the next step, thereby avoiding cache miss stalls during generation.
+Compared to SGLang with hierarchical radix cache, KVFlow achieves up to 1.83<math alttext="\times" class="ltx_Math" display="inline" id="id12.1.m1.1"><semantics id="id12.1.m1.1a"><mo id="id12.1.m1.1.1" xref="id12.1.m1.1.1.cmml">×</mo><annotation-xml encoding="MathML-Content" id="id12.1.m1.1b"><times id="id12.1.m1.1.1.cmml" xref="id12.1.m1.1.1"></times></annotation-xml><annotation encoding="application/x-tex" id="id12.1.m1.1c">\times</annotation><annotation encoding="application/x-llamapun" id="id12.1.m1.1d">×</annotation></semantics></math> speedup for single workflows with large prompts, and up to 2.19<math alttext="\times" class="ltx_Math" display="inline" id="id13.2.m2.1"><semantics id="id13.2.m2.1a"><mo id="id13.2.m2.1.1" xref="id13.2.m2.1.1.cmml">×</mo><annotation-xml encoding="MathML-Content" id="id13.2.m2.1b"><times id="id13.2.m2.1.1.cmml" xref="id13.2.m2.1.1"></times></annotation-xml><annotation encoding="application/x-tex" id="id13.2.m2.1c">\times</annotation><annotation encoding="application/x-llamapun" id="id13.2.m2.1d">×</annotation></semantics></math> speedup for scenarios with many concurrent workflows.</p>
+</div>
+<section class="ltx_section" id="S1">
+<h2 class="ltx_title ltx_title_section">
+<span class="ltx_tag ltx_tag_section">1 </span>Introduction</h2>
+<div class="ltx_para" id="S1.p1">
+<p class="ltx_p" id="S1.p1.1">LLM-based agentic workflows coordinate multiple specialized agents, each defined by a fixed prompt and responsible for a specific subtask, to solve complex problems in a modular and interpretable way <cite class="ltx_cite ltx_citemacro_cite"><a class="ltx_ref" href="https://arxiv.org/html/2507.07400v1#bib.bib1" title="">yao2023react </a>; <a class="ltx_ref" href="https://arxiv.org/html/2507.07400v1#bib.bib2" title="">shinn2023reflexion </a>; <a class="ltx_ref" href="https://arxiv.org/html/2507.07400v1#bib.bib3" title="">hong2023metagpt </a>; <a class="ltx_ref" href="https://arxiv.org/html/2507.07400v1#bib.bib4" title="">li2023camel </a>; <a class="ltx_ref" href="https://arxiv.org/html/2507.07400v1#bib.bib5" title="">wang2024peer </a></cite>. For example, MetaGPT <cite class="ltx_cite ltx_citemacro_cite"><a class="ltx_ref" href="https://arxiv.org/html/2507.07400v1#bib.bib3" title="">hong2023metagpt </a></cite> structures agent collaboration around software engineering roles such as Product Manager and Engineer. While this design improves reusability and coherence, it also leads to high inference latency due to the need to repeatedly invoke LLMs for each agent throughout the workflow.</p>
+</div>
+<div class="ltx_para" id="S1.p2">
+<p class="ltx_p" id="S1.p2.1">To alleviate this overhead, existing agentic frameworks and applications <cite class="ltx_cite ltx_citemacro_cite"><a class="ltx_ref" href="https://arxiv.org/html/2507.07400v1#bib.bib3" title="">hong2023metagpt </a>; <a class="ltx_ref" href="https://arxiv.org/html/2507.07400v1#bib.bib6" title="">wu2023autogen </a>; <a class="ltx_ref" href="https://arxiv.org/html/2507.07400v1#bib.bib7" title="">zhuge2024gptswarm </a>; <a class="ltx_ref" href="https://arxiv.org/html/2507.07400v1#bib.bib8" title="">zhang2024aflow </a>; <a class="ltx_ref" href="https://arxiv.org/html/2507.07400v1#bib.bib9" title="">pan2024very </a>; <a class="ltx_ref" href="https://arxiv.org/html/2507.07400v1#bib.bib10" title="">he2025cognify </a></cite> rely on LLM serving systems <cite class="ltx_cite ltx_citemacro_cite"><a class="ltx_ref" href="https://arxiv.org/html/2507.07400v1#bib.bib11" title="">vllm </a>; <a class="ltx_ref" href="https://arxiv.org/html/2507.07400v1#bib.bib12" title="">sglang </a>; <a class="ltx_ref" href="https://arxiv.org/html/2507.07400v1#bib.bib13" title="">trtllm </a></cite> equipped with system-level optimizations. A prevalent technique is prefix caching <cite class="ltx_cite ltx_citemacro_cite"><a class="ltx_ref" href="https://arxiv.org/html/2507.07400v1#bib.bib12" title="">sglang </a>; <a class="ltx_ref" href="https://arxiv.org/html/2507.07400v1#bib.bib14" title="">vllm_prefix_cache </a></cite>, which reuses the key-value (KV) tensors produced by self-attention layers for static prompt tokens across decoding steps and requests. This is particularly beneficial in agentic workflows, where each agent is initialized with a fixed prompt specifying its name, responsibilities, and behavioral traits. Since these prompts remain constant across iterations, prefix caching avoids redundant computation on static content and significantly reduces per-agent inference latency.</p>
+</div>
+<div class="ltx_para" id="S1.p3">
+<p class="ltx_p" id="S1.p3.1">However, prefix caching alone is insufficient in the presence of limited GPU memory. Existing systems typically adopt a Least Recently Used (LRU) policy to evict KV caches that have not been accessed recently. We observe that this strategy can lead to suboptimal performance in agentic workflows. For instance, as illustrated in Figure <a class="ltx_ref" href="https://arxiv.org/html/2507.07400v1#S1.F1" title="Figure 1 ‣ 1 Introduction ‣ KVFlow: Efficient Prefix Caching for Accelerating LLM-Based Multi-Agent Workflows"><span class="ltx_text ltx_ref_tag">1</span></a>, consider a workflow <cite class="ltx_cite ltx_citemacro_cite"><a class="ltx_ref" href="https://arxiv.org/html/2507.07400v1#bib.bib5" title="">wang2024peer </a></cite> where four agents are organized into a sequential execution pipeline that is invoked iteratively. During the execution of the Executor agent shown in the figure, the LRU policy identifies the Expresser’s KV cache as the eviction candidate since it has not been accessed recently. This results in a cache miss when the workflow proceeds to the Expresser agent, despite its imminent reuse. Such eviction behavior introduces unnecessary recomputation and degrades the overall efficiency of agentic execution.</p>
+</div>
+<div class="ltx_para" id="S1.p4">
+<p class="ltx_p" id="S1.p4.1">To address the limitations of existing LLM serving systems in agentic workflows, we present KVFlow, a workflow-aware KV cache management framework.
+We first introduce the <span class="ltx_text ltx_font_italic" id="S1.p4.1.1">Agent Step Graph</span>, a flexible abstraction that captures execution dependencies among agents and supports a wide range of workflow structures, including conditional branching and synchronization barriers.
+Each agent node in the graph is associated with a computed <span class="ltx_text ltx_font_italic" id="S1.p4.1.2">steps-to-execution</span> value, which estimates how soon the agent is expected to run.
+This value is derived through step aggregation functions that propagate across the graph, enabling KVFlow to reason about dynamic and structured execution patterns.</p>
+</div>
+<div class="ltx_para" id="S1.p5">
+<p class="ltx_p" id="S1.p5.1">At runtime, KVFlow leverages this information to optimize cache behavior in two key ways. First, instead of using LRU, KVFlow adopts a workflow-aware eviction strategy that prioritizes evicting KV caches belonging to agents with large steps-to-execution. Since multiple agents can share common prefixes through a tree-structured cache, we further assign eviction priorities at the cache node level to enable fine-grained and efficient management. Second, KVFlow introduces a fully overlapped KV prefetching mechanism that proactively loads required KV tensors from CPU to GPU ahead of time, as we can predict the next invoked agents from the Agent Step Graph.
+This effectively eliminates prefix cache misses without stalling generation.
+Together, these optimizations significantly improve cache efficiency and reduce latency in executing agentic workflows.</p>
+</div>
+<figure class="ltx_figure" id="S1.F1"><img alt="Refer to caption" class="ltx_graphics ltx_centering ltx_img_landscape" height="236" id="S1.F1.g1" src="x1.png" width="681"/>
+<figcaption class="ltx_caption ltx_centering"><span class="ltx_tag ltx_tag_figure">Figure 1: </span>A cyclic agentic workflow abstraction consisting of four agents, Planner, Executor, Expresser, and Reviewer, adapted from <cite class="ltx_cite ltx_citemacro_cite"><a class="ltx_ref" href="https://arxiv.org/html/2507.07400v1#bib.bib5" title="">wang2024peer </a></cite>. At timestamp 13, the Executor is active and its KV cache is updated, which causes the Expresser’s cache to be evicted due to the LRU policy. At timestamp 14, when the Expresser becomes active again, a cache miss occurs and results in increased prefill latency.</figcaption>
+</figure>
+<div class="ltx_para" id="S1.p6">
+<p class="ltx_p" id="S1.p6.1">In summary, this paper makes the following contributions:</p>
+</div>
+<div class="ltx_para" id="S1.p7">
+<ul class="ltx_itemize" id="S1.I1">
+<li class="ltx_item" id="S1.I1.i1" style="list-style-type:none;">
+<span class="ltx_tag ltx_tag_item">•</span>
+<div class="ltx_para" id="S1.I1.i1.p1">
+<p class="ltx_p" id="S1.I1.i1.p1.1">We identify a fundamental inefficiency in existing LLM serving systems, where the widely used LRU-based KV cache eviction strategy leads to suboptimal performance under agentic workflows.</p>
+</div>
+</li>
+<li class="ltx_item" id="S1.I1.i2" style="list-style-type:none;">
+<span class="ltx_tag ltx_tag_item">•</span>
+<div class="ltx_para" id="S1.I1.i2.p1">
+<p class="ltx_p" id="S1.I1.i2.p1.1">We propose KVFlow, a workflow-aware KV cache management optimization that prioritizes eviction based on agent execution order and eliminates cache miss overhead via fully overlapped prefetching.</p>
+</div>
+</li>
+<li class="ltx_item" id="S1.I1.i3" style="list-style-type:none;">
+<span class="ltx_tag ltx_tag_item">•</span>
+<div class="ltx_para" id="S1.I1.i3.p1">
+<p class="ltx_p" id="S1.I1.i3.p1.2">We conduct a comprehensive evaluation for KVFlow, showing that it significantly reduces cache miss overhead, achieving up to 1.83<math alttext="\times" class="ltx_Math" display="inline" id="S1.I1.i3.p1.1.m1.1"><semantics id="S1.I1.i3.p1.1.m1.1a"><mo id="S1.I1.i3.p1.1.m1.1.1" xref="S1.I1.i3.p1.1.m1.1.1.cmml">×</mo><annotation-xml encoding="MathML-Content" id="S1.I1.i3.p1.1.m1.1b"><times id="S1.I1.i3.p1.1.m1.1.1.cmml" xref="S1.I1.i3.p1.1.m1.1.1"></times></annotation-xml><annotation encoding="application/x-tex" id="S1.I1.i3.p1.1.m1.1c">\times</annotation><annotation encoding="application/x-llamapun" id="S1.I1.i3.p1.1.m1.1d">×</annotation></semantics></math> and 2.19<math alttext="\times" class="ltx_Math" display="inline" id="S1.I1.i3.p1.2.m2.1"><semantics id="S1.I1.i3.p1.2.m2.1a"><mo id="S1.I1.i3.p1.2.m2.1.1" xref="S1.I1.i3.p1.2.m2.1.1.cmml">×</mo><annotation-xml encoding="MathML-Content" id="S1.I1.i3.p1.2.m2.1b"><times id="S1.I1.i3.p1.2.m2.1.1.cmml" xref="S1.I1.i3.p1.2.m2.1.1"></times></annotation-xml><annotation encoding="application/x-tex" id="S1.I1.i3.p1.2.m2.1c">\times</annotation><annotation encoding="application/x-llamapun" id="S1.I1.i3.p1.2.m2.1d">×</annotation></semantics></math> speedups over SGLang with hierarchical radix cache under single workflows with large prompts and many concurrent workflows, respectively.</p>
+</div>
+</li>
+</ul>
+</div>
+</section>
+<section class="ltx_section" id="S2">
+<h2 class="ltx_title ltx_title_section">
+<span class="ltx_tag ltx_tag_section">2 </span>Background</h2>
+<section class="ltx_paragraph" id="S2.SS0.SSS0.Px1">
+<h4 class="ltx_title ltx_title_paragraph">Prefix Caching in LLM Serving Systems.</h4>
+<div class="ltx_para" id="S2.SS0.SSS0.Px1.p1">
+<p class="ltx_p" id="S2.SS0.SSS0.Px1.p1.1">To facilitate fine-grained prefix reuse and eliminate redundant storage, modern LLM serving systems <cite class="ltx_cite ltx_citemacro_cite"><a class="ltx_ref" href="https://arxiv.org/html/2507.07400v1#bib.bib11" title="">vllm </a>; <a class="ltx_ref" href="https://arxiv.org/html/2507.07400v1#bib.bib12" title="">sglang </a></cite> organize the KV cache into a tree structure on the GPU, where each node stores a segment of tokens and its corresponding KV tensors. Upon receiving a new request, the system matches the prefix from the root of the tree and concatenates the KV tensors along the matched path to reconstruct the full cached prefix.
+When GPU memory becomes insufficient, the system evicts nodes based on an LRU policy.
+Memory exhaustion can arise for two reasons. One common scenario is a high volume of concurrent user requests, each executing different agentic workflows, which leads to a large number of active KV cache entries. Another scenario occurs when the agent prompts are very large while the hardware capacity is limited.
+As shown in Figure <a class="ltx_ref" href="https://arxiv.org/html/2507.07400v1#S2.F2" title="Figure 2 ‣ Prefix Caching in LLM Serving Systems. ‣ 2 Background ‣ KVFlow: Efficient Prefix Caching for Accelerating LLM-Based Multi-Agent Workflows"><span class="ltx_text ltx_ref_tag">2</span></a>(a), the KV cache size for a single request grows rapidly with the prefix length, leading to increased memory pressure at longer contexts.
+Additionally, CPU memory can be configured as a secondary cache layer to back up evicted KV tensors, allowing cache swapping over PCIe. Despite the PCIe latency, swapping remains significantly faster than recomputing the KV tensors <cite class="ltx_cite ltx_citemacro_cite"><a class="ltx_ref" href="https://arxiv.org/html/2507.07400v1#bib.bib15" title="">jin2024ragcache </a>; <a class="ltx_ref" href="https://arxiv.org/html/2507.07400v1#bib.bib16" title="">gao2024cost </a></cite>. Figure <a class="ltx_ref" href="https://arxiv.org/html/2507.07400v1#S2.F2" title="Figure 2 ‣ Prefix Caching in LLM Serving Systems. ‣ 2 Background ‣ KVFlow: Efficient Prefix Caching for Accelerating LLM-Based Multi-Agent Workflows"><span class="ltx_text ltx_ref_tag">2</span></a>(b) compares the time required for PCIe-based KV cache transmission with the prefill computation time, confirming that offloading to CPU memory is an efficient strategy under memory pressure.</p>
+</div>
+<figure class="ltx_figure" id="S2.F2">
+<div class="ltx_flex_figure">
+<div class="ltx_flex_cell ltx_flex_size_1">
+<figure class="ltx_figure ltx_figure_panel ltx_minipage ltx_align_center ltx_align_top" id="S2.F2.sf1" style="width:208.1pt;"><img alt="Refer to caption" class="ltx_graphics ltx_img_landscape" height="498" id="S2.F2.sf1.g1" src="x2.png" width="830"/>
+<figcaption class="ltx_caption"><span class="ltx_tag ltx_tag_figure"><span class="ltx_text" id="S2.F2.sf1.2.1.1" style="font-size:80%;">(a)</span> </span><span class="ltx_text" id="S2.F2.sf1.3.2" style="font-size:80%;">Llama-3.1-8B KV cache size</span></figcaption>
+</figure>
+</div>
+<div class="ltx_flex_break"></div>
+<div class="ltx_flex_cell ltx_flex_size_1">
+<figure class="ltx_figure ltx_figure_panel ltx_minipage ltx_align_center ltx_align_top" id="S2.F2.sf2" style="width:208.1pt;"><img alt="Refer to caption" class="ltx_graphics ltx_img_landscape" height="498" id="S2.F2.sf2.g1" src="x3.png" width="830"/>
+<figcaption class="ltx_caption"><span class="ltx_tag ltx_tag_figure"><span class="ltx_text" id="S2.F2.sf2.2.1.1" style="font-size:80%;">(b)</span> </span><span class="ltx_text" id="S2.F2.sf2.3.2" style="font-size:80%;">Llama-3.1-8B prefill latency and KV cache transmission time over PCIe (batch size = 1)</span></figcaption>
+</figure>
+</div>
+</div>
+<figcaption class="ltx_caption ltx_centering"><span class="ltx_tag ltx_tag_figure">Figure 2: </span>KV cache characteristics with varying context lengths. (a) KV cache size grows linearly with the number of tokens, leading to increasing memory usage. (b) The transmission time of the KV cache over PCIe remains much shorter than the time required for recomputation.</figcaption>
+</figure>
+</section>
+<section class="ltx_paragraph" id="S2.SS0.SSS0.Px2">
+<h4 class="ltx_title ltx_title_paragraph">Agentic Workflow.</h4>
+<div class="ltx_para" id="S2.SS0.SSS0.Px2.p1">
+<p class="ltx_p" id="S2.SS0.SSS0.Px2.p1.1">An agentic workflow <cite class="ltx_cite ltx_citemacro_cite"><a class="ltx_ref" href="https://arxiv.org/html/2507.07400v1#bib.bib8" title="">zhang2024aflow </a>; <a class="ltx_ref" href="https://arxiv.org/html/2507.07400v1#bib.bib10" title="">he2025cognify </a>; <a class="ltx_ref" href="https://arxiv.org/html/2507.07400v1#bib.bib9" title="">pan2024very </a>; <a class="ltx_ref" href="https://arxiv.org/html/2507.07400v1#bib.bib7" title="">zhuge2024gptswarm </a></cite> is an LLM application paradigm that structures multiple agents into an execution graph to collaboratively solve complex tasks. Compared to fully autonomous agents <cite class="ltx_cite ltx_citemacro_cite"><a class="ltx_ref" href="https://arxiv.org/html/2507.07400v1#bib.bib17" title="">park2023generative </a>; <a class="ltx_ref" href="https://arxiv.org/html/2507.07400v1#bib.bib18" title="">wang2024survey </a>; <a class="ltx_ref" href="https://arxiv.org/html/2507.07400v1#bib.bib19" title="">zhou2023webarena </a></cite>, agentic workflows leverage human domain expertise to achieve more consistent and robust performance across diverse tasks <cite class="ltx_cite ltx_citemacro_cite"><a class="ltx_ref" href="https://arxiv.org/html/2507.07400v1#bib.bib3" title="">hong2023metagpt </a>; <a class="ltx_ref" href="https://arxiv.org/html/2507.07400v1#bib.bib20" title="">ridnik2024code </a>; <a class="ltx_ref" href="https://arxiv.org/html/2507.07400v1#bib.bib21" title="">wang2023unleashing </a>; <a class="ltx_ref" href="https://arxiv.org/html/2507.07400v1#bib.bib22" title="">zhao2024mage </a>; <a class="ltx_ref" href="https://arxiv.org/html/2507.07400v1#bib.bib23" title="">qian2023chatdev </a>; <a class="ltx_ref" href="https://arxiv.org/html/2507.07400v1#bib.bib24" title="">du2023improving </a></cite>.
+The execution of each agent typically involves one or multiple LLM calls, with prompts composed of a <span class="ltx_text ltx_font_italic" id="S2.SS0.SSS0.Px2.p1.1.1">fixed</span> part and a task-specific <span class="ltx_text ltx_font_italic" id="S2.SS0.SSS0.Px2.p1.1.2">dynamic</span> part. The fixed part usually encodes the agent’s role, behavioral instructions, task description, and few-shot learning examples, and can be substantially large.
+For example, the fixed prompts of the TestBench Agent and the RTL Generator Agent in <cite class="ltx_cite ltx_citemacro_cite"><a class="ltx_ref" href="https://arxiv.org/html/2507.07400v1#bib.bib22" title="">zhao2024mage </a></cite> contain lengthy few-shot learning examples, with over 3000 and 1000 tokens, respectively.
+Consequently, caching the corresponding KV of the fixed parts can significantly reduce prefill latency and improve the overall workflow execution efficiency.
+In contrast, the dynamic parts often contain the input questions or instructions from users, which are less valuable for caching.</p>
+</div>
+</section>
+</section>
+<section class="ltx_section" id="S3">
+<h2 class="ltx_title ltx_title_section">
+<span class="ltx_tag ltx_tag_section">3 </span>Design of KVFlow</h2>
+<div class="ltx_para" id="S3.p1">
+<p class="ltx_p" id="S3.p1.1">In this section, we present the design of KVFlow, which enhances prefix cache management for agentic workflows through two key techniques. First, we introduce a workflow-aware eviction policy that prioritizes KV nodes based on future usage, improving over the default LRU strategy. Second, we propose an overlapped KV prefetching mechanism that hides CPU-GPU transfer latency via proactive loading and status-aware scheduling.</p>
+</div>
+<section class="ltx_subsection" id="S3.SS1">
+<h3 class="ltx_title ltx_title_subsection">
+<span class="ltx_tag ltx_tag_subsection">3.1 </span>Workflow-Aware Eviction Policy</h3>
+<div class="ltx_para" id="S3.SS1.p1">
+<p class="ltx_p" id="S3.SS1.p1.1">Existing LLM serving systems typically adopt an LRU eviction policy, which becomes suboptimal under agentic workflows. Specifically, an agent that is about to execute may have been idle for a long time, while an agent that has just completed its execution might not be needed again in the near future. Moreover, the suffixes dynamically generated by a recently executed agent often vary rapidly with task progress and are unlikely to be reused, yet they are still temporarily retained in the cache. With workflow information, we can predict the upcoming execution sequence of agents, enabling more informed eviction decisions and avoiding the inefficiencies caused by LRU.</p>
+</div>
+<figure class="ltx_figure" id="S3.F3">
+<div class="ltx_flex_figure">
+<div class="ltx_flex_cell ltx_flex_size_1">
+<figure class="ltx_figure ltx_figure_panel ltx_minipage ltx_align_center ltx_align_bottom" id="S3.F3.sf1" style="width:212.5pt;"><img alt="Refer to caption" class="ltx_graphics ltx_img_landscape" height="644" id="S3.F3.sf1.g1" src="x4.png" width="830"/>
+<figcaption class="ltx_caption"><span class="ltx_tag ltx_tag_figure"><span class="ltx_text" id="S3.F3.sf1.2.1.1" style="font-size:80%;">(a)</span> </span><span class="ltx_text" id="S3.F3.sf1.3.2" style="font-size:80%;">Agents with their steps-to-execution in two different Agent Step Graphs</span></figcaption>
+</figure>
+</div>
+<div class="ltx_flex_break"></div>
+<div class="ltx_flex_cell ltx_flex_size_1">
+<figure class="ltx_figure ltx_figure_panel ltx_minipage ltx_align_center ltx_align_bottom" id="S3.F3.sf2" style="width:190.8pt;"><img alt="Refer to caption" class="ltx_graphics ltx_img_landscape" height="450" id="S3.F3.sf2.g1" src="x5.png" width="598"/>
+<figcaption class="ltx_caption"><span class="ltx_tag ltx_tag_figure"><span class="ltx_text" id="S3.F3.sf2.2.1.1" style="font-size:80%;">(b)</span> </span><span class="ltx_text" id="S3.F3.sf2.3.2" style="font-size:80%;">Eviction priority assignment for each KV node within a cache tree, where multiple agents can share partial prefix prompts.</span></figcaption>
+</figure>
+</div>
+</div>
+<figcaption class="ltx_caption ltx_centering"><span class="ltx_tag ltx_tag_figure">Figure 3: </span>Illustration of the workflow-aware eviction policy. (a) Each agentic workflow is abstracted as an Agent Step Graph, where steps-to-execution values are computed using step aggregation functions over dependency edges. (b) These values are propagated through the cache tree to assign eviction priorities at the KV node level. Nodes with smaller steps-to-execution are retained longer, reducing the chance of premature eviction.</figcaption>
+</figure>
+<section class="ltx_paragraph" id="S3.SS1.SSS0.Px1">
+<h4 class="ltx_title ltx_title_paragraph">Agent Step Graph and Steps-to-Execution.</h4>
+<div class="ltx_para" id="S3.SS1.SSS0.Px1.p1">
+<p class="ltx_p" id="S3.SS1.SSS0.Px1.p1.1">To make eviction decisions based on workflow structure, we first need to capture the dependency relationships among agents. However, agent interactions in real-world workflows are highly diverse. As illustrated in Figure <a class="ltx_ref" href="https://arxiv.org/html/2507.07400v1#S3.F3" title="Figure 3 ‣ 3.1 Workflow-Aware Eviction Policy ‣ 3 Design of KVFlow ‣ KVFlow: Efficient Prefix Caching for Accelerating LLM-Based Multi-Agent Workflows"><span class="ltx_text ltx_ref_tag">3</span></a>(a), the two workflows differ significantly: in the upper example, the Expresser agent depends on both Executor1 and Executor2; in contrast, the lower workflow contains conditional branches, where Expresser can be triggered after either executor completes. Traditional abstractions such as control-flow graphs (CFGs) or DAGs are insufficient to uniformly capture such diverse execution semantics.</p>
+</div>
+<div class="ltx_para" id="S3.SS1.SSS0.Px1.p2">
+<p class="ltx_p" id="S3.SS1.SSS0.Px1.p2.1">To address this, we introduce the <em class="ltx_emph ltx_font_italic" id="S3.SS1.SSS0.Px1.p2.1.1">Agent Step Graph</em> abstraction, where each node corresponds to an agent invocation and edges encode dependency relations. Unlike conventional graphs, each node in the Agent Step Graph is associated with a <em class="ltx_emph ltx_font_italic" id="S3.SS1.SSS0.Px1.p2.1.2">step aggregation function</em> that determines how its steps-to-execution is derived from its predecessors. For prefix cache management, we focus solely on the earliest possible execution step of each agent and abstract away the specific type of dependency.</p>
+</div>
+<div class="ltx_para" id="S3.SS1.SSS0.Px1.p3">
+<p class="ltx_p" id="S3.SS1.SSS0.Px1.p3.2">For example, in the upper workflow of Figure <a class="ltx_ref" href="https://arxiv.org/html/2507.07400v1#S3.F3" title="Figure 3 ‣ 3.1 Workflow-Aware Eviction Policy ‣ 3 Design of KVFlow ‣ KVFlow: Efficient Prefix Caching for Accelerating LLM-Based Multi-Agent Workflows"><span class="ltx_text ltx_ref_tag">3</span></a>(a), the Expresser agent requires both upstream executors to complete, so its step value is computed as <math alttext="\max(E1,E2)+1" class="ltx_Math" display="inline" id="S3.SS1.SSS0.Px1.p3.1.m1.3"><semantics id="S3.SS1.SSS0.Px1.p3.1.m1.3a"><mrow id="S3.SS1.SSS0.Px1.p3.1.m1.3.3" xref="S3.SS1.SSS0.Px1.p3.1.m1.3.3.cmml"><mrow id="S3.SS1.SSS0.Px1.p3.1.m1.3.3.2.2" xref="S3.SS1.SSS0.Px1.p3.1.m1.3.3.2.3.cmml"><mi id="S3.SS1.SSS0.Px1.p3.1.m1.1.1" xref="S3.SS1.SSS0.Px1.p3.1.m1.1.1.cmml">max</mi><mo id="S3.SS1.SSS0.Px1.p3.1.m1.3.3.2.2a" xref="S3.SS1.SSS0.Px1.p3.1.m1.3.3.2.3.cmml">⁡</mo><mrow id="S3.SS1.SSS0.Px1.p3.1.m1.3.3.2.2.2" xref="S3.SS1.SSS0.Px1.p3.1.m1.3.3.2.3.cmml"><mo id="S3.SS1.SSS0.Px1.p3.1.m1.3.3.2.2.2.3" stretchy="false" xref="S3.SS1.SSS0.Px1.p3.1.m1.3.3.2.3.cmml">(</mo><mrow id="S3.SS1.SSS0.Px1.p3.1.m1.2.2.1.1.1.1" xref="S3.SS1.SSS0.Px1.p3.1.m1.2.2.1.1.1.1.cmml"><mi id="S3.SS1.SSS0.Px1.p3.1.m1.2.2.1.1.1.1.2" xref="S3.SS1.SSS0.Px1.p3.1.m1.2.2.1.1.1.1.2.cmml">E</mi><mo id="S3.SS1.SSS0.Px1.p3.1.m1.2.2.1.1.1.1.1" xref="S3.SS1.SSS0.Px1.p3.1.m1.2.2.1.1.1.1.1.cmml">⁢</mo><mn id="S3.SS1.SSS0.Px1.p3.1.m1.2.2.1.1.1.1.3" xref="S3.SS1.SSS0.Px1.p3.1.m1.2.2.1.1.1.1.3.cmml">1</mn></mrow><mo id="S3.SS1.SSS0.Px1.p3.1.m1.3.3.2.2.2.4" xref="S3.SS1.SSS0.Px1.p3.1.m1.3.3.2.3.cmml">,</mo><mrow id="S3.SS1.SSS0.Px1.p3.1.m1.3.3.2.2.2.2" xref="S3.SS1.SSS0.Px1.p3.1.m1.3.3.2.2.2.2.cmml"><mi id="S3.SS1.SSS0.Px1.p3.1.m1.3.3.2.2.2.2.2" xref="S3.SS1.SSS0.Px1.p3.1.m1.3.3.2.2.2.2.2.cmml">E</mi><mo id="S3.SS1.SSS0.Px1.p3.1.m1.3.3.2.2.2.2.1" xref="S3.SS1.SSS0.Px1.p3.1.m1.3.3.2.2.2.2.1.cmml">⁢</mo><mn id="S3.SS1.SSS0.Px1.p3.1.m1.3.3.2.2.2.2.3" xref="S3.SS1.SSS0.Px1.p3.1.m1.3.3.2.2.2.2.3.cmml">2</mn></mrow><mo id="S3.SS1.SSS0.Px1.p3.1.m1.3.3.2.2.2.5" stretchy="false" xref="S3.SS1.SSS0.Px1.p3.1.m1.3.3.2.3.cmml">)</mo></mrow></mrow><mo id="S3.SS1.SSS0.Px1.p3.1.m1.3.3.3" xref="S3.SS1.SSS0.Px1.p3.1.m1.3.3.3.cmml">+</mo><mn id="S3.SS1.SSS0.Px1.p3.1.m1.3.3.4" xref="S3.SS1.SSS0.Px1.p3.1.m1.3.3.4.cmml">1</mn></mrow><annotation-xml encoding="MathML-Content" id="S3.SS1.SSS0.Px1.p3.1.m1.3b"><apply id="S3.SS1.SSS0.Px1.p3.1.m1.3.3.cmml" xref="S3.SS1.SSS0.Px1.p3.1.m1.3.3"><plus id="S3.SS1.SSS0.Px1.p3.1.m1.3.3.3.cmml" xref="S3.SS1.SSS0.Px1.p3.1.m1.3.3.3"></plus><apply id="S3.SS1.SSS0.Px1.p3.1.m1.3.3.2.3.cmml" xref="S3.SS1.SSS0.Px1.p3.1.m1.3.3.2.2"><max id="S3.SS1.SSS0.Px1.p3.1.m1.1.1.cmml" xref="S3.SS1.SSS0.Px1.p3.1.m1.1.1"></max><apply id="S3.SS1.SSS0.Px1.p3.1.m1.2.2.1.1.1.1.cmml" xref="S3.SS1.SSS0.Px1.p3.1.m1.2.2.1.1.1.1"><times id="S3.SS1.SSS0.Px1.p3.1.m1.2.2.1.1.1.1.1.cmml" xref="S3.SS1.SSS0.Px1.p3.1.m1.2.2.1.1.1.1.1"></times><ci id="S3.SS1.SSS0.Px1.p3.1.m1.2.2.1.1.1.1.2.cmml" xref="S3.SS1.SSS0.Px1.p3.1.m1.2.2.1.1.1.1.2">𝐸</ci><cn id="S3.SS1.SSS0.Px1.p3.1.m1.2.2.1.1.1.1.3.cmml" type="integer" xref="S3.SS1.SSS0.Px1.p3.1.m1.2.2.1.1.1.1.3">1</cn></apply><apply id="S3.SS1.SSS0.Px1.p3.1.m1.3.3.2.2.2.2.cmml" xref="S3.SS1.SSS0.Px1.p3.1.m1.3.3.2.2.2.2"><times id="S3.SS1.SSS0.Px1.p3.1.m1.3.3.2.2.2.2.1.cmml" xref="S3.SS1.SSS0.Px1.p3.1.m1.3.3.2.2.2.2.1"></times><ci id="S3.SS1.SSS0.Px1.p3.1.m1.3.3.2.2.2.2.2.cmml" xref="S3.SS1.SSS0.Px1.p3.1.m1.3.3.2.2.2.2.2">𝐸</ci><cn id="S3.SS1.SSS0.Px1.p3.1.m1.3.3.2.2.2.2.3.cmml" type="integer" xref="S3.SS1.SSS0.Px1.p3.1.m1.3.3.2.2.2.2.3">2</cn></apply></apply><cn id="S3.SS1.SSS0.Px1.p3.1.m1.3.3.4.cmml" type="integer" xref="S3.SS1.SSS0.Px1.p3.1.m1.3.3.4">1</cn></apply></annotation-xml><annotation encoding="application/x-tex" id="S3.SS1.SSS0.Px1.p3.1.m1.3c">\max(E1,E2)+1</annotation><annotation encoding="application/x-llamapun" id="S3.SS1.SSS0.Px1.p3.1.m1.3d">roman_max ( italic_E 1 , italic_E 2 ) + 1</annotation></semantics></math>. In the lower workflow, either path suffices, so the step value becomes <math alttext="\min(E1,E2)+1" class="ltx_Math" display="inline" id="S3.SS1.SSS0.Px1.p3.2.m2.3"><semantics id="S3.SS1.SSS0.Px1.p3.2.m2.3a"><mrow id="S3.SS1.SSS0.Px1.p3.2.m2.3.3" xref="S3.SS1.SSS0.Px1.p3.2.m2.3.3.cmml"><mrow id="S3.SS1.SSS0.Px1.p3.2.m2.3.3.2.2" xref="S3.SS1.SSS0.Px1.p3.2.m2.3.3.2.3.cmml"><mi id="S3.SS1.SSS0.Px1.p3.2.m2.1.1" xref="S3.SS1.SSS0.Px1.p3.2.m2.1.1.cmml">min</mi><mo id="S3.SS1.SSS0.Px1.p3.2.m2.3.3.2.2a" xref="S3.SS1.SSS0.Px1.p3.2.m2.3.3.2.3.cmml">⁡</mo><mrow id="S3.SS1.SSS0.Px1.p3.2.m2.3.3.2.2.2" xref="S3.SS1.SSS0.Px1.p3.2.m2.3.3.2.3.cmml"><mo id="S3.SS1.SSS0.Px1.p3.2.m2.3.3.2.2.2.3" stretchy="false" xref="S3.SS1.SSS0.Px1.p3.2.m2.3.3.2.3.cmml">(</mo><mrow id="S3.SS1.SSS0.Px1.p3.2.m2.2.2.1.1.1.1" xref="S3.SS1.SSS0.Px1.p3.2.m2.2.2.1.1.1.1.cmml"><mi id="S3.SS1.SSS0.Px1.p3.2.m2.2.2.1.1.1.1.2" xref="S3.SS1.SSS0.Px1.p3.2.m2.2.2.1.1.1.1.2.cmml">E</mi><mo id="S3.SS1.SSS0.Px1.p3.2.m2.2.2.1.1.1.1.1" xref="S3.SS1.SSS0.Px1.p3.2.m2.2.2.1.1.1.1.1.cmml">⁢</mo><mn id="S3.SS1.SSS0.Px1.p3.2.m2.2.2.1.1.1.1.3" xref="S3.SS1.SSS0.Px1.p3.2.m2.2.2.1.1.1.1.3.cmml">1</mn></mrow><mo id="S3.SS1.SSS0.Px1.p3.2.m2.3.3.2.2.2.4" xref="S3.SS1.SSS0.Px1.p3.2.m2.3.3.2.3.cmml">,</mo><mrow id="S3.SS1.SSS0.Px1.p3.2.m2.3.3.2.2.2.2" xref="S3.SS1.SSS0.Px1.p3.2.m2.3.3.2.2.2.2.cmml"><mi id="S3.SS1.SSS0.Px1.p3.2.m2.3.3.2.2.2.2.2" xref="S3.SS1.SSS0.Px1.p3.2.m2.3.3.2.2.2.2.2.cmml">E</mi><mo id="S3.SS1.SSS0.Px1.p3.2.m2.3.3.2.2.2.2.1" xref="S3.SS1.SSS0.Px1.p3.2.m2.3.3.2.2.2.2.1.cmml">⁢</mo><mn id="S3.SS1.SSS0.Px1.p3.2.m2.3.3.2.2.2.2.3" xref="S3.SS1.SSS0.Px1.p3.2.m2.3.3.2.2.2.2.3.cmml">2</mn></mrow><mo id="S3.SS1.SSS0.Px1.p3.2.m2.3.3.2.2.2.5" stretchy="false" xref="S3.SS1.SSS0.Px1.p3.2.m2.3.3.2.3.cmml">)</mo></mrow></mrow><mo id="S3.SS1.SSS0.Px1.p3.2.m2.3.3.3" xref="S3.SS1.SSS0.Px1.p3.2.m2.3.3.3.cmml">+</mo><mn id="S3.SS1.SSS0.Px1.p3.2.m2.3.3.4" xref="S3.SS1.SSS0.Px1.p3.2.m2.3.3.4.cmml">1</mn></mrow><annotation-xml encoding="MathML-Content" id="S3.SS1.SSS0.Px1.p3.2.m2.3b"><apply id="S3.SS1.SSS0.Px1.p3.2.m2.3.3.cmml" xref="S3.SS1.SSS0.Px1.p3.2.m2.3.3"><plus id="S3.SS1.SSS0.Px1.p3.2.m2.3.3.3.cmml" xref="S3.SS1.SSS0.Px1.p3.2.m2.3.3.3"></plus><apply id="S3.SS1.SSS0.Px1.p3.2.m2.3.3.2.3.cmml" xref="S3.SS1.SSS0.Px1.p3.2.m2.3.3.2.2"><min id="S3.SS1.SSS0.Px1.p3.2.m2.1.1.cmml" xref="S3.SS1.SSS0.Px1.p3.2.m2.1.1"></min><apply id="S3.SS1.SSS0.Px1.p3.2.m2.2.2.1.1.1.1.cmml" xref="S3.SS1.SSS0.Px1.p3.2.m2.2.2.1.1.1.1"><times id="S3.SS1.SSS0.Px1.p3.2.m2.2.2.1.1.1.1.1.cmml" xref="S3.SS1.SSS0.Px1.p3.2.m2.2.2.1.1.1.1.1"></times><ci id="S3.SS1.SSS0.Px1.p3.2.m2.2.2.1.1.1.1.2.cmml" xref="S3.SS1.SSS0.Px1.p3.2.m2.2.2.1.1.1.1.2">𝐸</ci><cn id="S3.SS1.SSS0.Px1.p3.2.m2.2.2.1.1.1.1.3.cmml" type="integer" xref="S3.SS1.SSS0.Px1.p3.2.m2.2.2.1.1.1.1.3">1</cn></apply><apply id="S3.SS1.SSS0.Px1.p3.2.m2.3.3.2.2.2.2.cmml" xref="S3.SS1.SSS0.Px1.p3.2.m2.3.3.2.2.2.2"><times id="S3.SS1.SSS0.Px1.p3.2.m2.3.3.2.2.2.2.1.cmml" xref="S3.SS1.SSS0.Px1.p3.2.m2.3.3.2.2.2.2.1"></times><ci id="S3.SS1.SSS0.Px1.p3.2.m2.3.3.2.2.2.2.2.cmml" xref="S3.SS1.SSS0.Px1.p3.2.m2.3.3.2.2.2.2.2">𝐸</ci><cn id="S3.SS1.SSS0.Px1.p3.2.m2.3.3.2.2.2.2.3.cmml" type="integer" xref="S3.SS1.SSS0.Px1.p3.2.m2.3.3.2.2.2.2.3">2</cn></apply></apply><cn id="S3.SS1.SSS0.Px1.p3.2.m2.3.3.4.cmml" type="integer" xref="S3.SS1.SSS0.Px1.p3.2.m2.3.3.4">1</cn></apply></annotation-xml><annotation encoding="application/x-tex" id="S3.SS1.SSS0.Px1.p3.2.m2.3c">\min(E1,E2)+1</annotation><annotation encoding="application/x-llamapun" id="S3.SS1.SSS0.Px1.p3.2.m2.3d">roman_min ( italic_E 1 , italic_E 2 ) + 1</annotation></semantics></math>. By applying these aggregation functions recursively, the Agent Step Graph enables unified computation of steps-to-execution across arbitrary multi-agent workflows.</p>
+</div>
+</section>
+<section class="ltx_paragraph" id="S3.SS1.SSS0.Px2">
+<h4 class="ltx_title ltx_title_paragraph">Workflow-Aware Eviction Priority Assignment.</h4>
+<div class="ltx_para" id="S3.SS1.SSS0.Px2.p1">
+<p class="ltx_p" id="S3.SS1.SSS0.Px2.p1.1">Based on the steps-to-execution in the Agent Step Graph, we design a fine-grained eviction strategy that assigns priorities to KV cache nodes. As illustrated in Figure <a class="ltx_ref" href="https://arxiv.org/html/2507.07400v1#S3.F3" title="Figure 3 ‣ 3.1 Workflow-Aware Eviction Policy ‣ 3 Design of KVFlow ‣ KVFlow: Efficient Prefix Caching for Accelerating LLM-Based Multi-Agent Workflows"><span class="ltx_text ltx_ref_tag">3</span></a>(b), agents with larger steps-to-execution are more likely to be evicted. Importantly, since agents may share common prefix segments in a tree-structured cache layout, we assign eviction priorities at the cache node level rather than at the agent level.</p>
+</div>
+<div class="ltx_para" id="S3.SS1.SSS0.Px2.p2">
+<p class="ltx_p" id="S3.SS1.SSS0.Px2.p2.1">Specifically, we assign priorities only to the fixed prompt portion of each agent; all varying suffixes are always given the highest eviction priority to facilitate early eviction. For each agent, its steps-to-execution value is assigned to the last node of its fixed prompt and propagated upwards through the tree. When a node aggregates inputs from multiple agents, we assign it the minimum (i.e., least evictable) priority among its children, ensuring that shared nodes are retained as long as they are useful to any agent in the near future.</p>
+</div>
+<div class="ltx_para" id="S3.SS1.SSS0.Px2.p3">
+<p class="ltx_p" id="S3.SS1.SSS0.Px2.p3.1">This propagation scheme yields a priority map over the cache tree that dynamically reflects workflow-driven reuse potential. When GPU memory becomes constrained, KVFlow first evicts varying suffixes, and then incrementally evicts prefix KV nodes in descending order of their assigned priority, favoring eviction of those unlikely to be reused soon. This design naturally accommodates multiple concurrent workflows, with conflicts at shared nodes resolved by choosing the lowest (most conservative) priority across workflows.</p>
+</div>
+</section>
+</section>
+<section class="ltx_subsection" id="S3.SS2">
+<h3 class="ltx_title ltx_title_subsection">
+<span class="ltx_tag ltx_tag_subsection">3.2 </span>Overlapped KV Prefetching</h3>
+<div class="ltx_para" id="S3.SS2.p1">
+<p class="ltx_p" id="S3.SS2.p1.1">While the workflow-aware eviction strategy avoids prematurely evicting agents that are about to execute, cache misses can still occur when an agent needs to run again after its KV cache has been evicted. This is particularly costly for long prompts, as recomputing the KV cache from scratch incurs significant overhead. To mitigate this, we treat CPU memory as a secondary cache for storing the fixed prompt KV of evicted agents.</p>
+</div>
+<div class="ltx_para" id="S3.SS2.p2">
+<p class="ltx_p" id="S3.SS2.p2.1">When CPU caching is available, existing systems typically adopt a <span class="ltx_text ltx_font_italic" id="S3.SS2.p2.1.1">reactive loading</span> strategy, as illustrated in the top timeline of Figure <a class="ltx_ref" href="https://arxiv.org/html/2507.07400v1#S3.F4" title="Figure 4 ‣ Proactive Prefetching. ‣ 3.2 Overlapped KV Prefetching ‣ 3 Design of KVFlow ‣ KVFlow: Efficient Prefix Caching for Accelerating LLM-Based Multi-Agent Workflows"><span class="ltx_text ltx_ref_tag">4</span></a>. For instance, if Executor 1’s prefix cache has been offloaded to CPU memory, the system reactively loads it back only when Executor 1 is scheduled, thereby avoiding recomputation. However, CPU-to-GPU data transfers still introduce noticeable latency, especially for long prefixes.</p>
+</div>
+<section class="ltx_paragraph" id="S3.SS2.SSS0.Px1">
+<h4 class="ltx_title ltx_title_paragraph">Proactive Prefetching.</h4>
+<div class="ltx_para" id="S3.SS2.SSS0.Px1.p1">
+<p class="ltx_p" id="S3.SS2.SSS0.Px1.p1.1">To reduce this transfer overhead, we propose a <span class="ltx_text ltx_font_italic" id="S3.SS2.SSS0.Px1.p1.1.1">proactive prefetching</span> mechanism that leverages workflow information to asynchronously load the required KV cache in advance. As shown in the second timeline of Figure <a class="ltx_ref" href="https://arxiv.org/html/2507.07400v1#S3.F4" title="Figure 4 ‣ Proactive Prefetching. ‣ 3.2 Overlapped KV Prefetching ‣ 3 Design of KVFlow ‣ KVFlow: Efficient Prefix Caching for Accelerating LLM-Based Multi-Agent Workflows"><span class="ltx_text ltx_ref_tag">4</span></a>, while Planner is executing, the system anticipates that Executor 1 will be invoked next and proactively prefetches its KV cache from CPU to GPU. Since the execution of agents primarily involves model forward on the GPU and next token sampling (with model outputs transferred from the GPU to the CPU),
+and KV loading involves CPU-to-GPU transfer, the two operations utilize different hardware resources and can proceed in parallel without interference. Notably, PCIe enables full-duplex transfers, allowing bidirectional communication between CPU and GPU without contention.
+When the workflow contains branching, the system conservatively prefetches all agents that may be executed next based on the Step Graph, within a predefined limit on the number of concurrent prefetches.</p>
+</div>
+<figure class="ltx_figure" id="S3.F4"><img alt="Refer to caption" class="ltx_graphics ltx_centering ltx_img_landscape" height="232" id="S3.F4.g1" src="x6.png" width="747"/>
+<figcaption class="ltx_caption ltx_centering"><span class="ltx_tag ltx_tag_figure">Figure 4: </span>Illustration of overlapped KV prefetching. Compared to reactive loading, KVFlow combines proactive prefetching that loads upcoming agents in advance with status-aware scheduling, minimizing the CPU-GPU transfer overhead. *The in-GPU agents can be within the same workflow or from another concurrent one.</figcaption>
+</figure>
+<div class="ltx_para" id="S3.SS2.SSS0.Px1.p2">
+<p class="ltx_p" id="S3.SS2.SSS0.Px1.p2.1">However, prefetching alone is not always sufficient. When the current agent’s execution time is shorter than the prefetch duration, generation may still be blocked by incomplete KV loading. This is common in high-concurrency settings, where multiple workflows compete for CPU-GPU bandwidth and cause queuing delays. This scenario is depicted in the second timeline of Figure <a class="ltx_ref" href="https://arxiv.org/html/2507.07400v1#S3.F4" title="Figure 4 ‣ Proactive Prefetching. ‣ 3.2 Overlapped KV Prefetching ‣ 3 Design of KVFlow ‣ KVFlow: Efficient Prefix Caching for Accelerating LLM-Based Multi-Agent Workflows"><span class="ltx_text ltx_ref_tag">4</span></a>, where Executor 1’s generation is stalled despite prefetching.</p>
+</div>
+</section>
+<section class="ltx_paragraph" id="S3.SS2.SSS0.Px2">
+<h4 class="ltx_title ltx_title_paragraph">Status-Aware Scheduling.</h4>
+<div class="ltx_para" id="S3.SS2.SSS0.Px2.p1">
+<p class="ltx_p" id="S3.SS2.SSS0.Px2.p1.1">To further reduce GPU idle time, we enhance the request scheduling policy with status awareness. In each scheduling step, if a request’s prefix cache is still in the loading process, the scheduler temporarily skips it and prioritizes other ready requests, such as Executor 2 in Figure <a class="ltx_ref" href="https://arxiv.org/html/2507.07400v1#S3.F4" title="Figure 4 ‣ Proactive Prefetching. ‣ 3.2 Overlapped KV Prefetching ‣ 3 Design of KVFlow ‣ KVFlow: Efficient Prefix Caching for Accelerating LLM-Based Multi-Agent Workflows"><span class="ltx_text ltx_ref_tag">4</span></a>
+or those from other concurrent workflows. To support this, we associate each cache node with a status variable, which can be one of four states: <span class="ltx_text ltx_font_italic" id="S3.SS2.SSS0.Px2.p1.1.1">in GPU memory</span>, <span class="ltx_text ltx_font_italic" id="S3.SS2.SSS0.Px2.p1.1.2">backup in CPU</span>, <span class="ltx_text ltx_font_italic" id="S3.SS2.SSS0.Px2.p1.1.3">loading</span>, or <span class="ltx_text ltx_font_italic" id="S3.SS2.SSS0.Px2.p1.1.4">offloading</span>. The scheduler inspects all nodes required by a request, skips any with <span class="ltx_text ltx_font_italic" id="S3.SS2.SSS0.Px2.p1.1.5">loading</span> status to avoid redundant load attempts, and only dispatches the request once all dependencies are available. Upon completion, the background load thread updates the status of the cache nodes, informing readiness to the scheduler. Similarly, nodes in the <span class="ltx_text ltx_font_italic" id="S3.SS2.SSS0.Px2.p1.1.6">offloading</span> state are excluded from eviction decisions to avoid race conditions during memory reclaiming.</p>
+</div>
+<div class="ltx_para" id="S3.SS2.SSS0.Px2.p2">
+<p class="ltx_p" id="S3.SS2.SSS0.Px2.p2.1">As illustrated in the third timeline of Figure <a class="ltx_ref" href="https://arxiv.org/html/2507.07400v1#S3.F4" title="Figure 4 ‣ Proactive Prefetching. ‣ 3.2 Overlapped KV Prefetching ‣ 3 Design of KVFlow ‣ KVFlow: Efficient Prefix Caching for Accelerating LLM-Based Multi-Agent Workflows"><span class="ltx_text ltx_ref_tag">4</span></a>, by combining proactive prefetching with status-aware scheduling, KVFlow effectively eliminates cache misses and fully overlaps GPU computation with prefetching, thereby hiding the CPU-GPU transfer latency.</p>
+</div>
+</section>
+</section>
+<section class="ltx_subsection" id="S3.SS3">
+<h3 class="ltx_title ltx_title_subsection">
+<span class="ltx_tag ltx_tag_subsection">3.3 </span>Implementation</h3>
+<div class="ltx_para" id="S3.SS3.p1">
+<p class="ltx_p" id="S3.SS3.p1.1">We implement the prototype of KVFlow based on SGLang v0.4.4 <cite class="ltx_cite ltx_citemacro_cite"><a class="ltx_ref" href="https://arxiv.org/html/2507.07400v1#bib.bib12" title="">sglang </a></cite>, an efficient LLM serving system that provides both a backend for LLM execution and a frontend interface for application development. SGLang’s backend manages the prefix KV cache using a radix tree. We extend this mechanism to support our workflow-aware eviction policy and fully overlapped KV prefetching. In addition, we modify both the frontend and backend of SGLang to support the transmission of agentic workflow information. While our current prototype is integrated into SGLang’s frontend API, our method is not limited to SGLang. It can be adapted to other agentic workflow frameworks by modifying the HTTP requests that the frontend sends to the server.</p>
+</div>
+<section class="ltx_paragraph" id="S3.SS3.SSS0.Px1">
+<h4 class="ltx_title ltx_title_paragraph">Step Information Capture.</h4>
+<div class="ltx_para" id="S3.SS3.SSS0.Px1.p1">
+<p class="ltx_p" id="S3.SS3.SSS0.Px1.p1.1">Capturing the steps-to-execution information generated from the Agent Step Graph is essential for guiding our optimizations at runtime.
+In our implementation, we assume that each <span class="ltx_text ltx_font_typewriter" id="S3.SS3.SSS0.Px1.p1.1.1">sgl.function</span> corresponds to an independent agent. During execution, we perform a just-in-time substitution of the LLM call to embed workflow metadata into the HTTP request. This metadata includes the identity of the current agent and the steps-to-execution of all agents within the Agent Step Graph, indicating which agents may be invoked in subsequent steps. Upon receiving this information, the backend can update eviction priorities in the KV cache tree accordingly and trigger prefetching if the evictable GPU memory is large enough.</p>
+</div>
+<div class="ltx_para" id="S3.SS3.SSS0.Px1.p2">
+<p class="ltx_p" id="S3.SS3.SSS0.Px1.p2.1">Besides capturing the step graph topology, we also need to track the last KV nodes of each agent’s fixed prompt, as shown in Figure <a class="ltx_ref" href="https://arxiv.org/html/2507.07400v1#S3.F3" title="Figure 3 ‣ 3.1 Workflow-Aware Eviction Policy ‣ 3 Design of KVFlow ‣ KVFlow: Efficient Prefix Caching for Accelerating LLM-Based Multi-Agent Workflows"><span class="ltx_text ltx_ref_tag">3</span></a>. Distinguishing the fixed and dynamic parts of the prompt within a request presents a challenge. We offer two alternative solutions. First, we introduce a primitive interface that allows users to explicitly mark the end position of the fixed part. Second, we design a heuristic approach that tracks the agent’s cache hit history and treats the consistently hit prefix as the fixed part.</p>
+</div>
+</section>
+<section class="ltx_paragraph" id="S3.SS3.SSS0.Px2">
+<h4 class="ltx_title ltx_title_paragraph">Client Tracking.</h4>
+<div class="ltx_para" id="S3.SS3.SSS0.Px2.p1">
+<p class="ltx_p" id="S3.SS3.SSS0.Px2.p1.1">In serving scenarios, multiple agentic workflows may execute concurrently on the same backend instance. Existing serving systems do not distinguish between request sources, potentially leading to naming conflicts. For example, two different workflows might both define an agent named “Planner”. To address this, we assign a unique client ID to each application. The client ID is attached to every request sent to the backend, allowing the system to disambiguate agent identities and avoid interference between workflows originating from different clients.</p>
+</div>
+</section>
+</section>
+</section>
+<section class="ltx_section" id="S4">
+<h2 class="ltx_title ltx_title_section">
+<span class="ltx_tag ltx_tag_section">4 </span>Evaluation</h2>
+<div class="ltx_para" id="S4.p1">
+<p class="ltx_p" id="S4.p1.1">We evaluate KVFlow across a range of microbenchmarks to understand its performance under different caching and execution conditions. Our experiments aim to answer the following key questions:
+(1) Can KVFlow reduce end-to-end latency for individual workflows with large prompt prefixes and limited GPU memory?
+(2) How does KVFlow perform under high concurrency, where multiple workflows run in parallel?
+To answer these questions, we first analyze single-workflow latency in Section <a class="ltx_ref" href="https://arxiv.org/html/2507.07400v1#S4.SS1" title="4.1 Single-Workflow Latency ‣ 4 Evaluation ‣ KVFlow: Efficient Prefix Caching for Accelerating LLM-Based Multi-Agent Workflows"><span class="ltx_text ltx_ref_tag">4.1</span></a>, and then study multi-workflow execution in Section <a class="ltx_ref" href="https://arxiv.org/html/2507.07400v1#S4.SS2" title="4.2 High-Concurrency Workflow Performance ‣ 4 Evaluation ‣ KVFlow: Efficient Prefix Caching for Accelerating LLM-Based Multi-Agent Workflows"><span class="ltx_text ltx_ref_tag">4.2</span></a>.</p>
+</div>
+<div class="ltx_para" id="S4.p2">
+<p class="ltx_p" id="S4.p2.1">Since KVFlow only modifies system-level cache management without affecting the model weights, prompts, or decoding logic, it is guaranteed to preserve the semantic correctness of the output. Therefore, our evaluation focuses exclusively on system performance metrics like the latency.</p>
+</div>
+<section class="ltx_subsection" id="S4.SS1">
+<h3 class="ltx_title ltx_title_subsection">
+<span class="ltx_tag ltx_tag_subsection">4.1 </span>Single-Workflow Latency</h3>
+<div class="ltx_para" id="S4.SS1.p1">
+<p class="ltx_p" id="S4.SS1.p1.1">We begin by evaluating the latency of executing a single agentic workflow under batch size = 1. This single-request latency reflects interactive usage scenarios where workflows are triggered individually by a user, such as in notebooks or development tools. Unlike online serving systems that rely on batching for throughput, these settings prioritize responsiveness for individual requests.</p>
+</div>
+<div class="ltx_para" id="S4.SS1.p2">
+<p class="ltx_p" id="S4.SS1.p2.1">We benchmark a sequential agentic workflow composed of 10 agents. As described in Section <a class="ltx_ref" href="https://arxiv.org/html/2507.07400v1#S2" title="2 Background ‣ KVFlow: Efficient Prefix Caching for Accelerating LLM-Based Multi-Agent Workflows"><span class="ltx_text ltx_ref_tag">2</span></a>, each agent’s input prompt consists of a fixed prefix (shared across invocations) and a dynamic suffix (which varies across runs). We generate synthetic input prompts by randomly sampling token sequences with controlled lengths for both parts.</p>
+</div>
+<section class="ltx_paragraph" id="S4.SS1.SSS0.Px1">
+<h4 class="ltx_title ltx_title_paragraph">Models and testbeds.</h4>
+<div class="ltx_para" id="S4.SS1.SSS0.Px1.p1">
+<p class="ltx_p" id="S4.SS1.SSS0.Px1.p1.1">We conduct experiments on two setups: (1) Llama-3.1-8B on an NVIDIA A10G GPU with 24GB memory and 2GB/s PCIe Gen1 bandwidth; and (2) Qwen2.5-32B on an NVIDIA H100 GPU with 80GB memory and 64 GB/s PCIe Gen5 bandwidth. The Llama model uses 32 attention heads and 8 KV heads, while Qwen uses 40 attention heads and 8 KV heads. We adopt deterministic decoding (temperature = 0, greedy sampling) to ensure consistent latency measurements.
+We select these two settings to represent scenarios with tight GPU memory constraints.</p>
+</div>
+</section>
+<section class="ltx_paragraph" id="S4.SS1.SSS0.Px2">
+<h4 class="ltx_title ltx_title_paragraph">Baselines.</h4>
+<div class="ltx_para" id="S4.SS1.SSS0.Px2.p1">
+<p class="ltx_p" id="S4.SS1.SSS0.Px2.p1.2">We compare KVFlow against two SGLang configurations. The first, denoted as <span class="ltx_text ltx_font_bold" id="S4.SS1.SSS0.Px2.p1.2.1">SGLang</span>, maintains a radix-structured KV cache in GPU memory without CPU backup. When GPU memory is insufficient, prefix nodes are evicted and must be recomputed from scratch upon reuse. For the second configuration, denoted as <span class="ltx_text ltx_font_bold" id="S4.SS1.SSS0.Px2.p1.2.2">SGLang w/ HiCache</span>, we enable the hierarchical radix cache in SGLang, which is SGLang’s default CPU-based cache extension. It extends SGLang’s radix tree by asynchronously backing up frequently used cache nodes to host memory.
+If a node is accessed after eviction, it is loaded back from the CPU instead of being recomputed. To further reduce CPU-GPU transfer cost, SGLang with HiCache overlaps the GPU computation of layer <math alttext="l" class="ltx_Math" display="inline" id="S4.SS1.SSS0.Px2.p1.1.m1.1"><semantics id="S4.SS1.SSS0.Px2.p1.1.m1.1a"><mi id="S4.SS1.SSS0.Px2.p1.1.m1.1.1" xref="S4.SS1.SSS0.Px2.p1.1.m1.1.1.cmml">l</mi><annotation-xml encoding="MathML-Content" id="S4.SS1.SSS0.Px2.p1.1.m1.1b"><ci id="S4.SS1.SSS0.Px2.p1.1.m1.1.1.cmml" xref="S4.SS1.SSS0.Px2.p1.1.m1.1.1">𝑙</ci></annotation-xml><annotation encoding="application/x-tex" id="S4.SS1.SSS0.Px2.p1.1.m1.1c">l</annotation><annotation encoding="application/x-llamapun" id="S4.SS1.SSS0.Px2.p1.1.m1.1d">italic_l</annotation></semantics></math> with the loading of layer <math alttext="l{+}1" class="ltx_Math" display="inline" id="S4.SS1.SSS0.Px2.p1.2.m2.1"><semantics id="S4.SS1.SSS0.Px2.p1.2.m2.1a"><mrow id="S4.SS1.SSS0.Px2.p1.2.m2.1.1" xref="S4.SS1.SSS0.Px2.p1.2.m2.1.1.cmml"><mi id="S4.SS1.SSS0.Px2.p1.2.m2.1.1.2" xref="S4.SS1.SSS0.Px2.p1.2.m2.1.1.2.cmml">l</mi><mo id="S4.SS1.SSS0.Px2.p1.2.m2.1.1.1" xref="S4.SS1.SSS0.Px2.p1.2.m2.1.1.1.cmml">+</mo><mn id="S4.SS1.SSS0.Px2.p1.2.m2.1.1.3" xref="S4.SS1.SSS0.Px2.p1.2.m2.1.1.3.cmml">1</mn></mrow><annotation-xml encoding="MathML-Content" id="S4.SS1.SSS0.Px2.p1.2.m2.1b"><apply id="S4.SS1.SSS0.Px2.p1.2.m2.1.1.cmml" xref="S4.SS1.SSS0.Px2.p1.2.m2.1.1"><plus id="S4.SS1.SSS0.Px2.p1.2.m2.1.1.1.cmml" xref="S4.SS1.SSS0.Px2.p1.2.m2.1.1.1"></plus><ci id="S4.SS1.SSS0.Px2.p1.2.m2.1.1.2.cmml" xref="S4.SS1.SSS0.Px2.p1.2.m2.1.1.2">𝑙</ci><cn id="S4.SS1.SSS0.Px2.p1.2.m2.1.1.3.cmml" type="integer" xref="S4.SS1.SSS0.Px2.p1.2.m2.1.1.3">1</cn></apply></annotation-xml><annotation encoding="application/x-tex" id="S4.SS1.SSS0.Px2.p1.2.m2.1c">l{+}1</annotation><annotation encoding="application/x-llamapun" id="S4.SS1.SSS0.Px2.p1.2.m2.1d">italic_l + 1</annotation></semantics></math>, forming a simple two-stage pipeline.</p>
+</div>
+<figure class="ltx_figure" id="S4.F5">
+<div class="ltx_flex_figure">
+<div class="ltx_flex_cell ltx_flex_size_1">
+<figure class="ltx_figure ltx_figure_panel ltx_minipage ltx_align_center ltx_align_top" id="S4.F5.sf1" style="width:208.1pt;"><img alt="Refer to caption" class="ltx_graphics ltx_img_landscape" height="475" id="S4.F5.sf1.g1" src="x7.png" width="830"/>
+<figcaption class="ltx_caption"><span class="ltx_tag ltx_tag_figure"><span class="ltx_text" id="S4.F5.sf1.2.1.1" style="font-size:80%;">(a)</span> </span><span class="ltx_text" id="S4.F5.sf1.3.2" style="font-size:80%;">Llama-3.1-8B on an A10G</span></figcaption>
+</figure>
+</div>
+<div class="ltx_flex_break"></div>
+<div class="ltx_flex_cell ltx_flex_size_1">
+<figure class="ltx_figure ltx_figure_panel ltx_minipage ltx_align_center ltx_align_top" id="S4.F5.sf2" style="width:208.1pt;"><img alt="Refer to caption" class="ltx_graphics ltx_img_landscape" height="471" id="S4.F5.sf2.g1" src="x8.png" width="830"/>
+<figcaption class="ltx_caption"><span class="ltx_tag ltx_tag_figure"><span class="ltx_text" id="S4.F5.sf2.2.1.1" style="font-size:80%;">(b)</span> </span><span class="ltx_text" id="S4.F5.sf2.3.2" style="font-size:80%;">Qwen2.5-32B on an H100</span></figcaption>
+</figure>
+</div>
+</div>
+<figcaption class="ltx_caption ltx_centering"><span class="ltx_tag ltx_tag_figure">Figure 5: </span>Speedup over SGLang (GPU-only cache) for a 10-agent sequential workflow. Horizontal axis: <span class="ltx_text ltx_font_italic" id="S4.F5.2.1">Fixed part token / Dynamic part token / Output token</span>.</figcaption>
+</figure>
+</section>
+<section class="ltx_paragraph" id="S4.SS1.SSS0.Px3">
+<h4 class="ltx_title ltx_title_paragraph">Evaluation methods.</h4>
+<div class="ltx_para" id="S4.SS1.SSS0.Px3.p1">
+<p class="ltx_p" id="S4.SS1.SSS0.Px3.p1.1">We first warm up the cache by executing each agent’s fixed prompt multiple times, ensuring its prefix cache is constructed and backed up to CPU memory (for HiCache). We then execute the 10-agent workflow ten times, each with a varying dynamic suffix. Latency is averaged over all runs. This simulates realistic usage patterns with repeated workflow invocations or loop-like behavior <cite class="ltx_cite ltx_citemacro_cite"><a class="ltx_ref" href="https://arxiv.org/html/2507.07400v1#bib.bib5" title="">wang2024peer </a></cite>.</p>
+</div>
+</section>
+<section class="ltx_paragraph" id="S4.SS1.SSS0.Px4">
+<h4 class="ltx_title ltx_title_paragraph">Results.</h4>
+<div class="ltx_para" id="S4.SS1.SSS0.Px4.p1">
+<p class="ltx_p" id="S4.SS1.SSS0.Px4.p1.1">Figure <a class="ltx_ref" href="https://arxiv.org/html/2507.07400v1#S4.F5" title="Figure 5 ‣ Baselines. ‣ 4.1 Single-Workflow Latency ‣ 4 Evaluation ‣ KVFlow: Efficient Prefix Caching for Accelerating LLM-Based Multi-Agent Workflows"><span class="ltx_text ltx_ref_tag">5</span></a> shows the speedup over SGLang (GPU-only cache) under different prompt configurations <span class="ltx_text ltx_font_italic" id="S4.SS1.SSS0.Px4.p1.1.1">Fixed / Dynamic / Output</span>. We intentionally test large fixed prefix sizes (e.g., 8192 tokens) to exceed GPU memory and force evictions.</p>
+</div>
+<div class="ltx_para" id="S4.SS1.SSS0.Px4.p2">
+<p class="ltx_p" id="S4.SS1.SSS0.Px4.p2.2">Across all settings, KVFlow consistently achieves the highest speedup. For instance, under 8192/32/32 on A10G, KVFlow outperforms SGLang w/ HiCache by 1.83<math alttext="\times" class="ltx_Math" display="inline" id="S4.SS1.SSS0.Px4.p2.1.m1.1"><semantics id="S4.SS1.SSS0.Px4.p2.1.m1.1a"><mo id="S4.SS1.SSS0.Px4.p2.1.m1.1.1" xref="S4.SS1.SSS0.Px4.p2.1.m1.1.1.cmml">×</mo><annotation-xml encoding="MathML-Content" id="S4.SS1.SSS0.Px4.p2.1.m1.1b"><times id="S4.SS1.SSS0.Px4.p2.1.m1.1.1.cmml" xref="S4.SS1.SSS0.Px4.p2.1.m1.1.1"></times></annotation-xml><annotation encoding="application/x-tex" id="S4.SS1.SSS0.Px4.p2.1.m1.1c">\times</annotation><annotation encoding="application/x-llamapun" id="S4.SS1.SSS0.Px4.p2.1.m1.1d">×</annotation></semantics></math>, and the GPU-only SGLang baseline by 2.91<math alttext="\times" class="ltx_Math" display="inline" id="S4.SS1.SSS0.Px4.p2.2.m2.1"><semantics id="S4.SS1.SSS0.Px4.p2.2.m2.1a"><mo id="S4.SS1.SSS0.Px4.p2.2.m2.1.1" xref="S4.SS1.SSS0.Px4.p2.2.m2.1.1.cmml">×</mo><annotation-xml encoding="MathML-Content" id="S4.SS1.SSS0.Px4.p2.2.m2.1b"><times id="S4.SS1.SSS0.Px4.p2.2.m2.1.1.cmml" xref="S4.SS1.SSS0.Px4.p2.2.m2.1.1"></times></annotation-xml><annotation encoding="application/x-tex" id="S4.SS1.SSS0.Px4.p2.2.m2.1c">\times</annotation><annotation encoding="application/x-llamapun" id="S4.SS1.SSS0.Px4.p2.2.m2.1d">×</annotation></semantics></math>. This confirms that our workflow-aware eviction and prefetch strategy effectively hides the CPU-GPU transfer overhead. While HiCache reduces recomputation overhead, it still suffers from pipeline cold-start and limited overlap when compute is shorter than transfer.</p>
+</div>
+<div class="ltx_para" id="S4.SS1.SSS0.Px4.p3">
+<p class="ltx_p" id="S4.SS1.SSS0.Px4.p3.1">We also observe that SGLang w/ HiCache generally performs better than the GPU-only SGLang baseline, as loading from CPU is typically faster than recomputing. However, in some large-context settings on H100 (e.g., 8192/32/32), HiCache shows marginal or degraded performance. This may stem from suboptimal scheduling in SGLang’s pipelining logic, where CPU-GPU transfer is not effectively overlapped under memory contention or high transfer volume.</p>
+</div>
+<div class="ltx_para" id="S4.SS1.SSS0.Px4.p4">
+<p class="ltx_p" id="S4.SS1.SSS0.Px4.p4.1">As the number of output tokens increases, the relative gain from KVFlow diminishes. The reason is that in these settings, the LLM decoding latency dominates total runtime, reducing the proportion of time affected by cache loading.
+There are many works optimizing the time-consuming decoding steps for the auto-regressive LLMs, including speculative decoding <cite class="ltx_cite ltx_citemacro_cite"><a class="ltx_ref" href="https://arxiv.org/html/2507.07400v1#bib.bib25" title="">chen2023accelerating </a>; <a class="ltx_ref" href="https://arxiv.org/html/2507.07400v1#bib.bib26" title="">leviathan2023fast </a>; <a class="ltx_ref" href="https://arxiv.org/html/2507.07400v1#bib.bib27" title="">saxena2023prompt </a></cite>, KV cache sparsity <cite class="ltx_cite ltx_citemacro_cite"><a class="ltx_ref" href="https://arxiv.org/html/2507.07400v1#bib.bib28" title="">xiao2023streamingllm </a></cite>, and early exit <cite class="ltx_cite ltx_citemacro_cite"><a class="ltx_ref" href="https://arxiv.org/html/2507.07400v1#bib.bib29" title="">fu2024efficiently </a></cite>, which are orthogonal to our work and can be co-applied with KVFlow.</p>
+</div>
+<div class="ltx_para" id="S4.SS1.SSS0.Px4.p5">
+<p class="ltx_p" id="S4.SS1.SSS0.Px4.p5.2">Meanwhile, the speedup from KVFlow increases with fixed prompt length. When fixed tokens are set to 8192, the average speedup reaches 1.48<math alttext="\times" class="ltx_Math" display="inline" id="S4.SS1.SSS0.Px4.p5.1.m1.1"><semantics id="S4.SS1.SSS0.Px4.p5.1.m1.1a"><mo id="S4.SS1.SSS0.Px4.p5.1.m1.1.1" xref="S4.SS1.SSS0.Px4.p5.1.m1.1.1.cmml">×</mo><annotation-xml encoding="MathML-Content" id="S4.SS1.SSS0.Px4.p5.1.m1.1b"><times id="S4.SS1.SSS0.Px4.p5.1.m1.1.1.cmml" xref="S4.SS1.SSS0.Px4.p5.1.m1.1.1"></times></annotation-xml><annotation encoding="application/x-tex" id="S4.SS1.SSS0.Px4.p5.1.m1.1c">\times</annotation><annotation encoding="application/x-llamapun" id="S4.SS1.SSS0.Px4.p5.1.m1.1d">×</annotation></semantics></math>, compared to only 1.28<math alttext="\times" class="ltx_Math" display="inline" id="S4.SS1.SSS0.Px4.p5.2.m2.1"><semantics id="S4.SS1.SSS0.Px4.p5.2.m2.1a"><mo id="S4.SS1.SSS0.Px4.p5.2.m2.1.1" xref="S4.SS1.SSS0.Px4.p5.2.m2.1.1.cmml">×</mo><annotation-xml encoding="MathML-Content" id="S4.SS1.SSS0.Px4.p5.2.m2.1b"><times id="S4.SS1.SSS0.Px4.p5.2.m2.1.1.cmml" xref="S4.SS1.SSS0.Px4.p5.2.m2.1.1"></times></annotation-xml><annotation encoding="application/x-tex" id="S4.SS1.SSS0.Px4.p5.2.m2.1c">\times</annotation><annotation encoding="application/x-llamapun" id="S4.SS1.SSS0.Px4.p5.2.m2.1d">×</annotation></semantics></math> at fixed = 4096. This is because the cache miss incurs higher overhead as the prefix length grows, and KVFlow’s proactive cache management becomes increasingly beneficial.</p>
+</div>
+</section>
+</section>
+<section class="ltx_subsection" id="S4.SS2">
+<h3 class="ltx_title ltx_title_subsection">
+<span class="ltx_tag ltx_tag_subsection">4.2 </span>High-Concurrency Workflow Performance</h3>
+<div class="ltx_para" id="S4.SS2.p1">
+<p class="ltx_p" id="S4.SS2.p1.1">We further evaluate system performance under high concurrency by simultaneously launching multiple independent workflows on a single H100 GPU. These workflows are assumed to be non-interacting and non-sharing. As shown in Figure <a class="ltx_ref" href="https://arxiv.org/html/2507.07400v1#S4.F8" title="Figure 8 ‣ 4.2 High-Concurrency Workflow Performance ‣ 4 Evaluation ‣ KVFlow: Efficient Prefix Caching for Accelerating LLM-Based Multi-Agent Workflows"><span class="ltx_text ltx_ref_tag">8</span></a>, we benchmark four configurations, each labeled by the fixed prompt length per agent and the number of concurrent workflows. The dynamic and output token lengths are fixed at 256. For each setting, we choose a proper concurrency that the GPU can accommodate without exhausting memory for prefix caching. If concurrency is too high, all available memory is consumed by active requests, and the system can no longer maintain reusable prefix caches, placing it beyond the scope of our optimization.</p>
+</div>
+<figure class="ltx_figure" id="S4.F8">
+<div class="ltx_flex_figure">
+<div class="ltx_flex_cell ltx_flex_size_3">
+<figure class="ltx_figure ltx_figure_panel ltx_minipage ltx_align_center ltx_align_top" id="S4.F8.1" style="width:173.4pt;"><img alt="Refer to caption" class="ltx_graphics ltx_img_landscape" height="500" id="S4.F8.1.g1" src="x9.png" width="831"/>
+<figcaption class="ltx_caption ltx_centering"><span class="ltx_tag ltx_tag_figure">Figure 6: </span>High-concurrency workflow performance comparison under different fixed-prompt/concurrency settings on an H100.</figcaption>
+</figure>
+</div>
+<div class="ltx_flex_cell ltx_flex_size_3">
+<figure class="ltx_figure ltx_figure_panel ltx_minipage ltx_align_center ltx_align_top" id="S4.F8.2" style="width:130.1pt;"><img alt="Refer to caption" class="ltx_graphics ltx_centering ltx_img_landscape" height="448" id="S4.F8.2.g1" src="x10.png" width="598"/>
+<figcaption class="ltx_caption ltx_centering"><span class="ltx_tag ltx_tag_figure">Figure 7: </span>Token distribution for fixed, dynamic, and output parts across PEER-style workflows.</figcaption>
+</figure>
+</div>
+<div class="ltx_flex_cell ltx_flex_size_3">
+<figure class="ltx_figure ltx_figure_panel ltx_minipage ltx_align_center ltx_align_top" id="S4.F8.3" style="width:112.7pt;"><img alt="Refer to caption" class="ltx_graphics ltx_img_square" height="817" id="S4.F8.3.g1" src="x11.png" width="829"/>
+<figcaption class="ltx_caption ltx_centering"><span class="ltx_tag ltx_tag_figure">Figure 8: </span>Speedup of KVFlow over SGLang and HiCache on PEER-style multi-agent applications.</figcaption>
+</figure>
+</div>
+</div>
+</figure>
+<section class="ltx_paragraph" id="S4.SS2.SSS0.Px1">
+<h4 class="ltx_title ltx_title_paragraph">Results.</h4>
+<div class="ltx_para" id="S4.SS2.SSS0.Px1.p1">
+<p class="ltx_p" id="S4.SS2.SSS0.Px1.p1.3">According to Figure <a class="ltx_ref" href="https://arxiv.org/html/2507.07400v1#S4.F8" title="Figure 8 ‣ 4.2 High-Concurrency Workflow Performance ‣ 4 Evaluation ‣ KVFlow: Efficient Prefix Caching for Accelerating LLM-Based Multi-Agent Workflows"><span class="ltx_text ltx_ref_tag">8</span></a>, across all settings, KVFlow consistently outperforms both SGLang and HiCache, achieving an up to 1.25<math alttext="\times" class="ltx_Math" display="inline" id="S4.SS2.SSS0.Px1.p1.1.m1.1"><semantics id="S4.SS2.SSS0.Px1.p1.1.m1.1a"><mo id="S4.SS2.SSS0.Px1.p1.1.m1.1.1" xref="S4.SS2.SSS0.Px1.p1.1.m1.1.1.cmml">×</mo><annotation-xml encoding="MathML-Content" id="S4.SS2.SSS0.Px1.p1.1.m1.1b"><times id="S4.SS2.SSS0.Px1.p1.1.m1.1.1.cmml" xref="S4.SS2.SSS0.Px1.p1.1.m1.1.1"></times></annotation-xml><annotation encoding="application/x-tex" id="S4.SS2.SSS0.Px1.p1.1.m1.1c">\times</annotation><annotation encoding="application/x-llamapun" id="S4.SS2.SSS0.Px1.p1.1.m1.1d">×</annotation></semantics></math> speedup.
+The performance improvement of KVFlow with 1024 fixed prompt tokens is higher than 512, as the cache miss overhead is higher.
+Notably, HiCache performs particularly poorly under high concurrency, even falling behind SGLang in multiple cases. For example, it only achieves 0.57<math alttext="\times" class="ltx_Math" display="inline" id="S4.SS2.SSS0.Px1.p1.2.m2.1"><semantics id="S4.SS2.SSS0.Px1.p1.2.m2.1a"><mo id="S4.SS2.SSS0.Px1.p1.2.m2.1.1" xref="S4.SS2.SSS0.Px1.p1.2.m2.1.1.cmml">×</mo><annotation-xml encoding="MathML-Content" id="S4.SS2.SSS0.Px1.p1.2.m2.1b"><times id="S4.SS2.SSS0.Px1.p1.2.m2.1.1.cmml" xref="S4.SS2.SSS0.Px1.p1.2.m2.1.1"></times></annotation-xml><annotation encoding="application/x-tex" id="S4.SS2.SSS0.Px1.p1.2.m2.1c">\times</annotation><annotation encoding="application/x-llamapun" id="S4.SS2.SSS0.Px1.p1.2.m2.1d">×</annotation></semantics></math> performance of SGLang without CPU-based cache under 1024 fixed prompt tokens with 64 concurrent workflows. We suspect this is due to frequent cache misses triggering reactive load-back operations, which disrupt SGLang’s schedule-compute pipeline. Additionally, due to the fragmented layout of KV storage in SGLang, the PCIe bandwidth cannot be fully utilized. While KVFlow also does not resolve the fragmentation issue, it achieves much better overlap of PCIe transfers and GPU compute through more reasonable evictions and proactive prefetching.
+As a result, it yields an up to 2.19<math alttext="\times" class="ltx_Math" display="inline" id="S4.SS2.SSS0.Px1.p1.3.m3.1"><semantics id="S4.SS2.SSS0.Px1.p1.3.m3.1a"><mo id="S4.SS2.SSS0.Px1.p1.3.m3.1.1" xref="S4.SS2.SSS0.Px1.p1.3.m3.1.1.cmml">×</mo><annotation-xml encoding="MathML-Content" id="S4.SS2.SSS0.Px1.p1.3.m3.1b"><times id="S4.SS2.SSS0.Px1.p1.3.m3.1.1.cmml" xref="S4.SS2.SSS0.Px1.p1.3.m3.1.1"></times></annotation-xml><annotation encoding="application/x-tex" id="S4.SS2.SSS0.Px1.p1.3.m3.1c">\times</annotation><annotation encoding="application/x-llamapun" id="S4.SS2.SSS0.Px1.p1.3.m3.1d">×</annotation></semantics></math> performance gain over the naive LRU-based HiCache with reactive loading.</p>
+</div>
+</section>
+<section class="ltx_paragraph" id="S4.SS2.SSS0.Px2">
+<h4 class="ltx_title ltx_title_paragraph">Realistic Workflow Simulation.</h4>
+<div class="ltx_para" id="S4.SS2.SSS0.Px2.p1">
+<p class="ltx_p" id="S4.SS2.SSS0.Px2.p1.1">To better reflect real-world deployment scenarios, we simulate agentic workflows based on the PEER <cite class="ltx_cite ltx_citemacro_cite"><a class="ltx_ref" href="https://arxiv.org/html/2507.07400v1#bib.bib5" title="">wang2024peer </a></cite> framework. In our setup, each workflow consists of four agents, instantiated using the workflow templates provided by PEER. For each agent, we sample a role and an instruction, and prompt an LLM to generate the agent’s prompt. Due to the inherent randomness in LLM sampling, the generated prompts exhibit variability even when the roles and instructions are similar. Meanwhile, since all agents operate under the same application context, their prompts often share partially overlapping prefixes. This results in workflows that are both diverse and partially redundant, reflecting the common characteristics of real-world multi-agent applications.</p>
+</div>
+<div class="ltx_para" id="S4.SS2.SSS0.Px2.p2">
+<p class="ltx_p" id="S4.SS2.SSS0.Px2.p2.2">We use the Financial QA dataset from PEER as the workflow input. The resulting workloads are moderate in scale, with agent prompts typically ranging from a few dozen to several hundred tokens.
+Figure <a class="ltx_ref" href="https://arxiv.org/html/2507.07400v1#S4.F8" title="Figure 8 ‣ 4.2 High-Concurrency Workflow Performance ‣ 4 Evaluation ‣ KVFlow: Efficient Prefix Caching for Accelerating LLM-Based Multi-Agent Workflows"><span class="ltx_text ltx_ref_tag">8</span></a> shows the distribution of fixed, dynamic, and output token lengths across all agents.
+Figure <a class="ltx_ref" href="https://arxiv.org/html/2507.07400v1#S4.F8" title="Figure 8 ‣ 4.2 High-Concurrency Workflow Performance ‣ 4 Evaluation ‣ KVFlow: Efficient Prefix Caching for Accelerating LLM-Based Multi-Agent Workflows"><span class="ltx_text ltx_ref_tag">8</span></a> presents the performance comparison between KVFlow, SGLang, and SGLang with HiCache. KVFlow achieves clear improvements over both SGLang and HiCache, resulting in up to 1.12<math alttext="\times" class="ltx_Math" display="inline" id="S4.SS2.SSS0.Px2.p2.1.m1.1"><semantics id="S4.SS2.SSS0.Px2.p2.1.m1.1a"><mo id="S4.SS2.SSS0.Px2.p2.1.m1.1.1" xref="S4.SS2.SSS0.Px2.p2.1.m1.1.1.cmml">×</mo><annotation-xml encoding="MathML-Content" id="S4.SS2.SSS0.Px2.p2.1.m1.1b"><times id="S4.SS2.SSS0.Px2.p2.1.m1.1.1.cmml" xref="S4.SS2.SSS0.Px2.p2.1.m1.1.1"></times></annotation-xml><annotation encoding="application/x-tex" id="S4.SS2.SSS0.Px2.p2.1.m1.1c">\times</annotation><annotation encoding="application/x-llamapun" id="S4.SS2.SSS0.Px2.p2.1.m1.1d">×</annotation></semantics></math> and 1.08<math alttext="\times" class="ltx_Math" display="inline" id="S4.SS2.SSS0.Px2.p2.2.m2.1"><semantics id="S4.SS2.SSS0.Px2.p2.2.m2.1a"><mo id="S4.SS2.SSS0.Px2.p2.2.m2.1.1" xref="S4.SS2.SSS0.Px2.p2.2.m2.1.1.cmml">×</mo><annotation-xml encoding="MathML-Content" id="S4.SS2.SSS0.Px2.p2.2.m2.1b"><times id="S4.SS2.SSS0.Px2.p2.2.m2.1.1.cmml" xref="S4.SS2.SSS0.Px2.p2.2.m2.1.1"></times></annotation-xml><annotation encoding="application/x-tex" id="S4.SS2.SSS0.Px2.p2.2.m2.1c">\times</annotation><annotation encoding="application/x-llamapun" id="S4.SS2.SSS0.Px2.p2.2.m2.1d">×</annotation></semantics></math> speedups. The results demonstrate the strong practical potential of KVFlow for multi-application serving in realistic deployment settings.</p>
+</div>
+</section>
+</section>
+</section>
+<section class="ltx_section" id="S5">
+<h2 class="ltx_title ltx_title_section">
+<span class="ltx_tag ltx_tag_section">5 </span>Related Work</h2>
+<section class="ltx_paragraph" id="S5.SS0.SSS0.Px1">
+<h4 class="ltx_title ltx_title_paragraph">LLM Serving Optimizations.</h4>
+<div class="ltx_para" id="S5.SS0.SSS0.Px1.p1">
+<p class="ltx_p" id="S5.SS0.SSS0.Px1.p1.1">A broad line of work improves online LLM serving by optimizing request scheduling, including continuous batching (also known as iteration-level scheduling) <cite class="ltx_cite ltx_citemacro_cite"><a class="ltx_ref" href="https://arxiv.org/html/2507.07400v1#bib.bib30" title="">yu2022orca </a></cite>, multi-level feedback queues to mitigate head-of-line blocking <cite class="ltx_cite ltx_citemacro_cite"><a class="ltx_ref" href="https://arxiv.org/html/2507.07400v1#bib.bib31" title="">wu2023fast </a></cite>, quality-of-experience aware schedulers tailored to streaming scenarios <cite class="ltx_cite ltx_citemacro_cite"><a class="ltx_ref" href="https://arxiv.org/html/2507.07400v1#bib.bib32" title="">liu2024andes </a></cite>, etc.
+Another set of efforts focus on KV cache management. vLLM proposes PagedAttention <cite class="ltx_cite ltx_citemacro_cite"><a class="ltx_ref" href="https://arxiv.org/html/2507.07400v1#bib.bib11" title="">vllm </a></cite> to reduce memory fragmentation via paged storage of KV tensors, while SGLang introduces RadixAttention <cite class="ltx_cite ltx_citemacro_cite"><a class="ltx_ref" href="https://arxiv.org/html/2507.07400v1#bib.bib12" title="">sglang </a></cite> to eliminate redundancy in prefix caching.
+Several works also target chatbot scenarios with specialized prefix caching strategies <cite class="ltx_cite ltx_citemacro_cite"><a class="ltx_ref" href="https://arxiv.org/html/2507.07400v1#bib.bib16" title="">gao2024cost </a>; <a class="ltx_ref" href="https://arxiv.org/html/2507.07400v1#bib.bib33" title="">yu2025stateful </a></cite>. InferCept <cite class="ltx_cite ltx_citemacro_cite"><a class="ltx_ref" href="https://arxiv.org/html/2507.07400v1#bib.bib34" title="">abhyankar2024infercept </a></cite> predicts tool calling durations and uses a cost model to decide whether to retain, swap, or discard the KV cache of intercepted requests.
+These optimizations are orthogonal to KVFlow, which focuses on workflows formed by multiple agents.
+While Autellix <cite class="ltx_cite ltx_citemacro_cite"><a class="ltx_ref" href="https://arxiv.org/html/2507.07400v1#bib.bib35" title="">luo2025autellix </a></cite> and ParrotServe <cite class="ltx_cite ltx_citemacro_cite"><a class="ltx_ref" href="https://arxiv.org/html/2507.07400v1#bib.bib36" title="">lin2024parrot </a></cite> explore request scheduling in agentic workflows, they do not consider prefix cache management, making their objectives complementary to ours.</p>
+</div>
+</section>
+<section class="ltx_paragraph" id="S5.SS0.SSS0.Px2">
+<h4 class="ltx_title ltx_title_paragraph">Agentic Workflow Frameworks</h4>
+<div class="ltx_para" id="S5.SS0.SSS0.Px2.p1">
+<p class="ltx_p" id="S5.SS0.SSS0.Px2.p1.1">Recent works have proposed diverse multi-agent frameworks <cite class="ltx_cite ltx_citemacro_cite"><a class="ltx_ref" href="https://arxiv.org/html/2507.07400v1#bib.bib3" title="">hong2023metagpt </a>; <a class="ltx_ref" href="https://arxiv.org/html/2507.07400v1#bib.bib4" title="">li2023camel </a>; <a class="ltx_ref" href="https://arxiv.org/html/2507.07400v1#bib.bib6" title="">wu2023autogen </a>; <a class="ltx_ref" href="https://arxiv.org/html/2507.07400v1#bib.bib7" title="">zhuge2024gptswarm </a>; <a class="ltx_ref" href="https://arxiv.org/html/2507.07400v1#bib.bib37" title="">langgraph </a>; <a class="ltx_ref" href="https://arxiv.org/html/2507.07400v1#bib.bib38" title="">anthropic_agent </a>; <a class="ltx_ref" href="https://arxiv.org/html/2507.07400v1#bib.bib39" title="">gao2024agentscope </a></cite> that organize agents into structured roles to collaboratively solve complex tasks.
+These frameworks provide built-in mechanisms for message passing and dependency construction between agents, convenient integration of tool usage and reasoning methods within agent actions, predefined abstractions for common agent roles and behaviors, and efficient multi-threaded execution to support concurrent agent collaboration.
+Some of these systems abstract the agentic workflow as a computation graph, where nodes represent LLM-invoking agents and edges denote control flow or message dependencies. This abstraction enables the application of graph-level transformations, such as edge pruning <cite class="ltx_cite ltx_citemacro_cite"><a class="ltx_ref" href="https://arxiv.org/html/2507.07400v1#bib.bib40" title="">zhang2024cut </a></cite>, operator insertion <cite class="ltx_cite ltx_citemacro_cite"><a class="ltx_ref" href="https://arxiv.org/html/2507.07400v1#bib.bib8" title="">zhang2024aflow </a></cite>, or topology optimization <cite class="ltx_cite ltx_citemacro_cite"><a class="ltx_ref" href="https://arxiv.org/html/2507.07400v1#bib.bib7" title="">zhuge2024gptswarm </a>; <a class="ltx_ref" href="https://arxiv.org/html/2507.07400v1#bib.bib10" title="">he2025cognify </a></cite>, to improve application correctness or quality.
+However, these frameworks remain focused on application-layer construction and rely on conventional LLM serving infrastructures to handle generation. In contrast, our work leverages the structure of agentic workflows to optimize the serving system itself, targeting backend efficiency under multi-agent execution workloads.</p>
+</div>
+</section>
+</section>
+<section class="ltx_section" id="S6">
+<h2 class="ltx_title ltx_title_section">
+<span class="ltx_tag ltx_tag_section">6 </span>Conclusion</h2>
+<div class="ltx_para" id="S6.p1">
+<p class="ltx_p" id="S6.p1.1">We present KVFlow, a workflow-aware KV cache management framework for optimizing LLM serving in agentic workflows. By abstracting agent execution as a Step Graph and computing each agent’s steps-to-execution, KVFlow enables a principled eviction strategy that anticipates future usage. It further introduces a fully overlapped KV prefetching mechanism to proactively eliminate cache miss stalls. Our evaluations show that KVFlow significantly improves serving efficiency over existing systems in workflows with long prompts or high concurrency.
+While prior work on multi-agent systems has predominantly focused on designing frontend application logic and interaction protocols, KVFlow highlights the importance of workflow semantics in enabling system-level optimizations.</p>
+</div>
+</section>
+<section class="ltx_bibliography" id="bib">
+<h2 class="ltx_title ltx_title_bibliography">References</h2>
+<ul class="ltx_biblist">
+<li class="ltx_bibitem" id="bib.bib1">
+<span class="ltx_tag ltx_role_refnum ltx_tag_bibitem">[1]</span>
+<span class="ltx_bibblock">
+Shunyu Yao, Jeffrey Zhao, Dian Yu, Nan Du, Izhak Shafran, Karthik Narasimhan, and Yuan Cao.
+
+</span>
+<span class="ltx_bibblock">React: Synergizing reasoning and acting in language models.
+
+</span>
+<span class="ltx_bibblock">In <span class="ltx_text ltx_font_italic" id="bib.bib1.1.1">International Conference on Learning Representations (ICLR)</span>, 2023.
+
+</span>
+</li>
+<li class="ltx_bibitem" id="bib.bib2">
+<span class="ltx_tag ltx_role_refnum ltx_tag_bibitem">[2]</span>
+<span class="ltx_bibblock">
+Noah Shinn, Federico Cassano, Ashwin Gopinath, Karthik Narasimhan, and Shunyu Yao.
+
+</span>
+<span class="ltx_bibblock">Reflexion: Language agents with verbal reinforcement learning.
+
+</span>
+<span class="ltx_bibblock"><span class="ltx_text ltx_font_italic" id="bib.bib2.1.1">Advances in Neural Information Processing Systems</span>, 36:8634–8652, 2023.
+
+</span>
+</li>
+<li class="ltx_bibitem" id="bib.bib3">
+<span class="ltx_tag ltx_role_refnum ltx_tag_bibitem">[3]</span>
+<span class="ltx_bibblock">
+Sirui Hong, Xiawu Zheng, Jonathan Chen, Yuheng Cheng, Jinlin Wang, Ceyao Zhang, Zili Wang, Steven Ka Shing Yau, Zijuan Lin, Liyang Zhou, et al.
+
+</span>
+<span class="ltx_bibblock">Metagpt: Meta programming for multi-agent collaborative framework.
+
+</span>
+<span class="ltx_bibblock"><span class="ltx_text ltx_font_italic" id="bib.bib3.1.1">arXiv preprint arXiv:2308.00352</span>, 3(4):6, 2023.
+
+</span>
+</li>
+<li class="ltx_bibitem" id="bib.bib4">
+<span class="ltx_tag ltx_role_refnum ltx_tag_bibitem">[4]</span>
+<span class="ltx_bibblock">
+Guohao Li, Hasan Hammoud, Hani Itani, Dmitrii Khizbullin, and Bernard Ghanem.
+
+</span>
+<span class="ltx_bibblock">Camel: Communicative agents for" mind" exploration of large language model society.
+
+</span>
+<span class="ltx_bibblock"><span class="ltx_text ltx_font_italic" id="bib.bib4.1.1">Advances in Neural Information Processing Systems</span>, 36:51991–52008, 2023.
+
+</span>
+</li>
+<li class="ltx_bibitem" id="bib.bib5">
+<span class="ltx_tag ltx_role_refnum ltx_tag_bibitem">[5]</span>
+<span class="ltx_bibblock">
+Yiying Wang, Xiaojing Li, Binzhu Wang, Yueyang Zhou, Yingru Lin, Han Ji, Hong Chen, Jinshi Zhang, Fei Yu, Zewei Zhao, et al.
+
+</span>
+<span class="ltx_bibblock">Peer: Expertizing domain-specific tasks with a multi-agent framework and tuning methods.
+
+</span>
+<span class="ltx_bibblock"><span class="ltx_text ltx_font_italic" id="bib.bib5.1.1">arXiv preprint arXiv:2407.06985</span>, 2024.
+
+</span>
+</li>
+<li class="ltx_bibitem" id="bib.bib6">
+<span class="ltx_tag ltx_role_refnum ltx_tag_bibitem">[6]</span>
+<span class="ltx_bibblock">
+Qingyun Wu, Gagan Bansal, Jieyu Zhang, Yiran Wu, Beibin Li, Erkang Zhu, Li Jiang, Xiaoyun Zhang, Shaokun Zhang, Jiale Liu, et al.
+
+</span>
+<span class="ltx_bibblock">Autogen: Enabling next-gen llm applications via multi-agent conversation.
+
+</span>
+<span class="ltx_bibblock"><span class="ltx_text ltx_font_italic" id="bib.bib6.1.1">arXiv preprint arXiv:2308.08155</span>, 2023.
+
+</span>
+</li>
+<li class="ltx_bibitem" id="bib.bib7">
+<span class="ltx_tag ltx_role_refnum ltx_tag_bibitem">[7]</span>
+<span class="ltx_bibblock">
+Mingchen Zhuge, Wenyi Wang, Louis Kirsch, Francesco Faccio, Dmitrii Khizbullin, and Jürgen Schmidhuber.
+
+</span>
+<span class="ltx_bibblock">Gptswarm: Language agents as optimizable graphs.
+
+</span>
+<span class="ltx_bibblock">In <span class="ltx_text ltx_font_italic" id="bib.bib7.1.1">Forty-first International Conference on Machine Learning</span>, 2024.
+
+</span>
+</li>
+<li class="ltx_bibitem" id="bib.bib8">
+<span class="ltx_tag ltx_role_refnum ltx_tag_bibitem">[8]</span>
+<span class="ltx_bibblock">
+Jiayi Zhang, Jinyu Xiang, Zhaoyang Yu, Fengwei Teng, Xionghui Chen, Jiaqi Chen, Mingchen Zhuge, Xin Cheng, Sirui Hong, Jinlin Wang, et al.
+
+</span>
+<span class="ltx_bibblock">Aflow: Automating agentic workflow generation.
+
+</span>
+<span class="ltx_bibblock"><span class="ltx_text ltx_font_italic" id="bib.bib8.1.1">arXiv preprint arXiv:2410.10762</span>, 2024.
+
+</span>
+</li>
+<li class="ltx_bibitem" id="bib.bib9">
+<span class="ltx_tag ltx_role_refnum ltx_tag_bibitem">[9]</span>
+<span class="ltx_bibblock">
+Xuchen Pan, Dawei Gao, Yuexiang Xie, Yushuo Chen, Zhewei Wei, Yaliang Li, Bolin Ding, Ji-Rong Wen, and Jingren Zhou.
+
+</span>
+<span class="ltx_bibblock">Very large-scale multi-agent simulation in agentscope.
+
+</span>
+<span class="ltx_bibblock"><span class="ltx_text ltx_font_italic" id="bib.bib9.1.1">arXiv preprint arXiv:2407.17789</span>, 2024.
+
+</span>
+</li>
+<li class="ltx_bibitem" id="bib.bib10">
+<span class="ltx_tag ltx_role_refnum ltx_tag_bibitem">[10]</span>
+<span class="ltx_bibblock">
+Zijian He, Reyna Abhyankar, Vikranth Srivatsa, and Yiying Zhang.
+
+</span>
+<span class="ltx_bibblock">Cognify: Supercharging gen-ai workflows with hierarchical autotuning.
+
+</span>
+<span class="ltx_bibblock"><span class="ltx_text ltx_font_italic" id="bib.bib10.1.1">arXiv preprint arXiv:2502.08056</span>, 2025.
+
+</span>
+</li>
+<li class="ltx_bibitem" id="bib.bib11">
+<span class="ltx_tag ltx_role_refnum ltx_tag_bibitem">[11]</span>
+<span class="ltx_bibblock">
+Woosuk Kwon, Zhuohan Li, Siyuan Zhuang, Ying Sheng, Lianmin Zheng, Cody Hao Yu, Joseph Gonzalez, Hao Zhang, and Ion Stoica.
+
+</span>
+<span class="ltx_bibblock">Efficient memory management for large language model serving with pagedattention.
+
+</span>
+<span class="ltx_bibblock">In <span class="ltx_text ltx_font_italic" id="bib.bib11.1.1">Proceedings of the 29th Symposium on Operating Systems Principles</span>, pages 611–626, 2023.
+
+</span>
+</li>
+<li class="ltx_bibitem" id="bib.bib12">
+<span class="ltx_tag ltx_role_refnum ltx_tag_bibitem">[12]</span>
+<span class="ltx_bibblock">
+Lianmin Zheng, Liangsheng Yin, Zhiqiang Xie, Jeff Huang, Chuyue Sun, Cody Hao Yu, Shiyi Cao, Christos Kozyrakis, Ion Stoica, Joseph E. Gonzalez, Clark W. Barrett, and Ying Sheng.
+
+</span>
+<span class="ltx_bibblock">Sglang: Efficient execution of structured language model programs.
+
+</span>
+<span class="ltx_bibblock"><span class="ltx_text ltx_font_italic" id="bib.bib12.1.1">Advances in Neural Information Processing Systems</span>, 37:62557–62583, 2024.
+
+</span>
+</li>
+<li class="ltx_bibitem" id="bib.bib13">
+<span class="ltx_tag ltx_role_refnum ltx_tag_bibitem">[13]</span>
+<span class="ltx_bibblock">
+NVIDIA.
+
+</span>
+<span class="ltx_bibblock">TensorRT-LLM.
+
+</span>
+<span class="ltx_bibblock"><a class="ltx_ref ltx_url ltx_font_typewriter" href="https://github.com/NVIDIA/TensorRT-LLM" title="">https://github.com/NVIDIA/TensorRT-LLM</a>, 2025.
+
+</span>
+</li>
+<li class="ltx_bibitem" id="bib.bib14">
+<span class="ltx_tag ltx_role_refnum ltx_tag_bibitem">[14]</span>
+<span class="ltx_bibblock">
+vLLM Team.
+
+</span>
+<span class="ltx_bibblock">Automatic Prefix Caching.
+
+</span>
+<span class="ltx_bibblock"><a class="ltx_ref ltx_url ltx_font_typewriter" href="https://docs.vllm.ai/en/latest/features/automatic_prefix_caching.html" title="">https://docs.vllm.ai/en/latest/features/automatic_prefix_caching.html</a>, 2025.
+
+</span>
+</li>
+<li class="ltx_bibitem" id="bib.bib15">
+<span class="ltx_tag ltx_role_refnum ltx_tag_bibitem">[15]</span>
+<span class="ltx_bibblock">
+Chao Jin, Zili Zhang, Xuanlin Jiang, Fangyue Liu, Xin Liu, Xuanzhe Liu, and Xin Jin.
+
+</span>
+<span class="ltx_bibblock">Ragcache: Efficient knowledge caching for retrieval-augmented generation.
+
+</span>
+<span class="ltx_bibblock"><span class="ltx_text ltx_font_italic" id="bib.bib15.1.1">arXiv preprint arXiv:2404.12457</span>, 2024.
+
+</span>
+</li>
+<li class="ltx_bibitem" id="bib.bib16">
+<span class="ltx_tag ltx_role_refnum ltx_tag_bibitem">[16]</span>
+<span class="ltx_bibblock">
+Bin Gao, Zhuomin He, Puru Sharma, Qingxuan Kang, Djordje Jevdjic, Junbo Deng, Xingkun Yang, Zhou Yu, and Pengfei Zuo.
+
+</span>
+<span class="ltx_bibblock"><math alttext="\{" class="ltx_Math" display="inline" id="bib.bib16.1.m1.1"><semantics id="bib.bib16.1.m1.1a"><mo id="bib.bib16.1.m1.1.1" stretchy="false" xref="bib.bib16.1.m1.1.1.cmml">{</mo><annotation-xml encoding="MathML-Content" id="bib.bib16.1.m1.1b"><ci id="bib.bib16.1.m1.1.1.cmml" xref="bib.bib16.1.m1.1.1">{</ci></annotation-xml><annotation encoding="application/x-tex" id="bib.bib16.1.m1.1c">\{</annotation><annotation encoding="application/x-llamapun" id="bib.bib16.1.m1.1d">{</annotation></semantics></math>Cost-Efficient<math alttext="\}" class="ltx_Math" display="inline" id="bib.bib16.2.m2.1"><semantics id="bib.bib16.2.m2.1a"><mo id="bib.bib16.2.m2.1.1" stretchy="false" xref="bib.bib16.2.m2.1.1.cmml">}</mo><annotation-xml encoding="MathML-Content" id="bib.bib16.2.m2.1b"><ci id="bib.bib16.2.m2.1.1.cmml" xref="bib.bib16.2.m2.1.1">}</ci></annotation-xml><annotation encoding="application/x-tex" id="bib.bib16.2.m2.1c">\}</annotation><annotation encoding="application/x-llamapun" id="bib.bib16.2.m2.1d">}</annotation></semantics></math> large language model serving for multi-turn conversations with <math alttext="\{" class="ltx_Math" display="inline" id="bib.bib16.3.m3.1"><semantics id="bib.bib16.3.m3.1a"><mo id="bib.bib16.3.m3.1.1" stretchy="false" xref="bib.bib16.3.m3.1.1.cmml">{</mo><annotation-xml encoding="MathML-Content" id="bib.bib16.3.m3.1b"><ci id="bib.bib16.3.m3.1.1.cmml" xref="bib.bib16.3.m3.1.1">{</ci></annotation-xml><annotation encoding="application/x-tex" id="bib.bib16.3.m3.1c">\{</annotation><annotation encoding="application/x-llamapun" id="bib.bib16.3.m3.1d">{</annotation></semantics></math>CachedAttention<math alttext="\}" class="ltx_Math" display="inline" id="bib.bib16.4.m4.1"><semantics id="bib.bib16.4.m4.1a"><mo id="bib.bib16.4.m4.1.1" stretchy="false" xref="bib.bib16.4.m4.1.1.cmml">}</mo><annotation-xml encoding="MathML-Content" id="bib.bib16.4.m4.1b"><ci id="bib.bib16.4.m4.1.1.cmml" xref="bib.bib16.4.m4.1.1">}</ci></annotation-xml><annotation encoding="application/x-tex" id="bib.bib16.4.m4.1c">\}</annotation><annotation encoding="application/x-llamapun" id="bib.bib16.4.m4.1d">}</annotation></semantics></math>.
+
+</span>
+<span class="ltx_bibblock">In <span class="ltx_text ltx_font_italic" id="bib.bib16.5.1">2024 USENIX Annual Technical Conference (USENIX ATC 24)</span>, pages 111–126, 2024.
+
+</span>
+</li>
+<li class="ltx_bibitem" id="bib.bib17">
+<span class="ltx_tag ltx_role_refnum ltx_tag_bibitem">[17]</span>
+<span class="ltx_bibblock">
+Joon Sung Park, Joseph O’Brien, Carrie Jun Cai, Meredith Ringel Morris, Percy Liang, and Michael S Bernstein.
+
+</span>
+<span class="ltx_bibblock">Generative agents: Interactive simulacra of human behavior.
+
+</span>
+<span class="ltx_bibblock">In <span class="ltx_text ltx_font_italic" id="bib.bib17.1.1">Proceedings of the 36th annual acm symposium on user interface software and technology</span>, pages 1–22, 2023.
+
+</span>
+</li>
+<li class="ltx_bibitem" id="bib.bib18">
+<span class="ltx_tag ltx_role_refnum ltx_tag_bibitem">[18]</span>
+<span class="ltx_bibblock">
+Lei Wang, Chen Ma, Xueyang Feng, Zeyu Zhang, Hao Yang, Jingsen Zhang, Zhiyuan Chen, Jiakai Tang, Xu Chen, Yankai Lin, et al.
+
+</span>
+<span class="ltx_bibblock">A survey on large language model based autonomous agents.
+
+</span>
+<span class="ltx_bibblock"><span class="ltx_text ltx_font_italic" id="bib.bib18.1.1">Frontiers of Computer Science</span>, 18(6):186345, 2024.
+
+</span>
+</li>
+<li class="ltx_bibitem" id="bib.bib19">
+<span class="ltx_tag ltx_role_refnum ltx_tag_bibitem">[19]</span>
+<span class="ltx_bibblock">
+Shuyan Zhou, Frank F Xu, Hao Zhu, Xuhui Zhou, Robert Lo, Abishek Sridhar, Xianyi Cheng, Tianyue Ou, Yonatan Bisk, Daniel Fried, et al.
+
+</span>
+<span class="ltx_bibblock">Webarena: A realistic web environment for building autonomous agents.
+
+</span>
+<span class="ltx_bibblock"><span class="ltx_text ltx_font_italic" id="bib.bib19.1.1">arXiv preprint arXiv:2307.13854</span>, 2023.
+
+</span>
+</li>
+<li class="ltx_bibitem" id="bib.bib20">
+<span class="ltx_tag ltx_role_refnum ltx_tag_bibitem">[20]</span>
+<span class="ltx_bibblock">
+Tal Ridnik, Dedy Kredo, and Itamar Friedman.
+
+</span>
+<span class="ltx_bibblock">Code generation with alphacodium: From prompt engineering to flow engineering.
+
+</span>
+<span class="ltx_bibblock"><span class="ltx_text ltx_font_italic" id="bib.bib20.1.1">arXiv preprint arXiv:2401.08500</span>, 2024.
+
+</span>
+</li>
+<li class="ltx_bibitem" id="bib.bib21">
+<span class="ltx_tag ltx_role_refnum ltx_tag_bibitem">[21]</span>
+<span class="ltx_bibblock">
+Zhenhailong Wang, Shaoguang Mao, Wenshan Wu, Tao Ge, Furu Wei, and Heng Ji.
+
+</span>
+<span class="ltx_bibblock">Unleashing the emergent cognitive synergy in large language models: A task-solving agent through multi-persona self-collaboration.
+
+</span>
+<span class="ltx_bibblock"><span class="ltx_text ltx_font_italic" id="bib.bib21.1.1">arXiv preprint arXiv:2307.05300</span>, 2023.
+
+</span>
+</li>
+<li class="ltx_bibitem" id="bib.bib22">
+<span class="ltx_tag ltx_role_refnum ltx_tag_bibitem">[22]</span>
+<span class="ltx_bibblock">
+Yujie Zhao, Hejia Zhang, Hanxian Huang, Zhongming Yu, and Jishen Zhao.
+
+</span>
+<span class="ltx_bibblock">Mage: A multi-agent engine for automated rtl code generation.
+
+</span>
+<span class="ltx_bibblock"><span class="ltx_text ltx_font_italic" id="bib.bib22.1.1">arXiv preprint arXiv:2412.07822</span>, 2024.
+
+</span>
+</li>
+<li class="ltx_bibitem" id="bib.bib23">
+<span class="ltx_tag ltx_role_refnum ltx_tag_bibitem">[23]</span>
+<span class="ltx_bibblock">
+Chen Qian, Wei Liu, Hongzhang Liu, Nuo Chen, Yufan Dang, Jiahao Li, Cheng Yang, Weize Chen, Yusheng Su, Xin Cong, et al.
+
+</span>
+<span class="ltx_bibblock">Chatdev: Communicative agents for software development.
+
+</span>
+<span class="ltx_bibblock"><span class="ltx_text ltx_font_italic" id="bib.bib23.1.1">arXiv preprint arXiv:2307.07924</span>, 2023.
+
+</span>
+</li>
+<li class="ltx_bibitem" id="bib.bib24">
+<span class="ltx_tag ltx_role_refnum ltx_tag_bibitem">[24]</span>
+<span class="ltx_bibblock">
+Yilun Du, Shuang Li, Antonio Torralba, Joshua B Tenenbaum, and Igor Mordatch.
+
+</span>
+<span class="ltx_bibblock">Improving factuality and reasoning in language models through multiagent debate.
+
+</span>
+<span class="ltx_bibblock">In <span class="ltx_text ltx_font_italic" id="bib.bib24.1.1">Forty-first International Conference on Machine Learning</span>, 2023.
+
+</span>
+</li>
+<li class="ltx_bibitem" id="bib.bib25">
+<span class="ltx_tag ltx_role_refnum ltx_tag_bibitem">[25]</span>
+<span class="ltx_bibblock">
+Charlie Chen, Sebastian Borgeaud, Geoffrey Irving, Jean-Baptiste Lespiau, Laurent Sifre, and John Jumper.
+
+</span>
+<span class="ltx_bibblock">Accelerating large language model decoding with speculative sampling.
+
+</span>
+<span class="ltx_bibblock"><span class="ltx_text ltx_font_italic" id="bib.bib25.1.1">arXiv preprint arXiv:2302.01318</span>, 2023.
+
+</span>
+</li>
+<li class="ltx_bibitem" id="bib.bib26">
+<span class="ltx_tag ltx_role_refnum ltx_tag_bibitem">[26]</span>
+<span class="ltx_bibblock">
+Yaniv Leviathan, Matan Kalman, and Yossi Matias.
+
+</span>
+<span class="ltx_bibblock">Fast inference from transformers via speculative decoding.
+
+</span>
+<span class="ltx_bibblock">In <span class="ltx_text ltx_font_italic" id="bib.bib26.1.1">International Conference on Machine Learning</span>, pages 19274–19286. PMLR, 2023.
+
+</span>
+</li>
+<li class="ltx_bibitem" id="bib.bib27">
+<span class="ltx_tag ltx_role_refnum ltx_tag_bibitem">[27]</span>
+<span class="ltx_bibblock">
+Apoorv Saxena.
+
+</span>
+<span class="ltx_bibblock">Prompt lookup decoding, November 2023.
+
+</span>
+</li>
+<li class="ltx_bibitem" id="bib.bib28">
+<span class="ltx_tag ltx_role_refnum ltx_tag_bibitem">[28]</span>
+<span class="ltx_bibblock">
+Guangxuan Xiao, Yuandong Tian, Beidi Chen, Song Han, and Mike Lewis.
+
+</span>
+<span class="ltx_bibblock">Efficient streaming language models with attention sinks.
+
+</span>
+<span class="ltx_bibblock"><span class="ltx_text ltx_font_italic" id="bib.bib28.1.1">arXiv</span>, 2023.
+
+</span>
+</li>
+<li class="ltx_bibitem" id="bib.bib29">
+<span class="ltx_tag ltx_role_refnum ltx_tag_bibitem">[29]</span>
+<span class="ltx_bibblock">
+Yichao Fu, Junda Chen, Siqi Zhu, Zheyu Fu, Zhongdongming Dai, Aurick Qiao, and Hao Zhang.
+
+</span>
+<span class="ltx_bibblock">Efficiently serving llm reasoning programs with certaindex.
+
+</span>
+<span class="ltx_bibblock"><span class="ltx_text ltx_font_italic" id="bib.bib29.1.1">arXiv preprint arXiv:2412.20993</span>, 2024.
+
+</span>
+</li>
+<li class="ltx_bibitem" id="bib.bib30">
+<span class="ltx_tag ltx_role_refnum ltx_tag_bibitem">[30]</span>
+<span class="ltx_bibblock">
+Gyeong-In Yu, Joo Seong Jeong, Geon-Woo Kim, Soojeong Kim, and Byung-Gon Chun.
+
+</span>
+<span class="ltx_bibblock">Orca: A distributed serving system for <math alttext="\{" class="ltx_Math" display="inline" id="bib.bib30.1.m1.1"><semantics id="bib.bib30.1.m1.1a"><mo id="bib.bib30.1.m1.1.1" stretchy="false" xref="bib.bib30.1.m1.1.1.cmml">{</mo><annotation-xml encoding="MathML-Content" id="bib.bib30.1.m1.1b"><ci id="bib.bib30.1.m1.1.1.cmml" xref="bib.bib30.1.m1.1.1">{</ci></annotation-xml><annotation encoding="application/x-tex" id="bib.bib30.1.m1.1c">\{</annotation><annotation encoding="application/x-llamapun" id="bib.bib30.1.m1.1d">{</annotation></semantics></math>Transformer-Based<math alttext="\}" class="ltx_Math" display="inline" id="bib.bib30.2.m2.1"><semantics id="bib.bib30.2.m2.1a"><mo id="bib.bib30.2.m2.1.1" stretchy="false" xref="bib.bib30.2.m2.1.1.cmml">}</mo><annotation-xml encoding="MathML-Content" id="bib.bib30.2.m2.1b"><ci id="bib.bib30.2.m2.1.1.cmml" xref="bib.bib30.2.m2.1.1">}</ci></annotation-xml><annotation encoding="application/x-tex" id="bib.bib30.2.m2.1c">\}</annotation><annotation encoding="application/x-llamapun" id="bib.bib30.2.m2.1d">}</annotation></semantics></math> generative models.
+
+</span>
+<span class="ltx_bibblock">In <span class="ltx_text ltx_font_italic" id="bib.bib30.3.1">16th USENIX Symposium on Operating Systems Design and Implementation (OSDI 22)</span>, pages 521–538, 2022.
+
+</span>
+</li>
+<li class="ltx_bibitem" id="bib.bib31">
+<span class="ltx_tag ltx_role_refnum ltx_tag_bibitem">[31]</span>
+<span class="ltx_bibblock">
+Bingyang Wu, Yinmin Zhong, Zili Zhang, Shengyu Liu, Fangyue Liu, Yuanhang Sun, Gang Huang, Xuanzhe Liu, and Xin Jin.
+
+</span>
+<span class="ltx_bibblock">Fast distributed inference serving for large language models.
+
+</span>
+<span class="ltx_bibblock"><span class="ltx_text ltx_font_italic" id="bib.bib31.1.1">arXiv preprint arXiv:2305.05920</span>, 2023.
+
+</span>
+</li>
+<li class="ltx_bibitem" id="bib.bib32">
+<span class="ltx_tag ltx_role_refnum ltx_tag_bibitem">[32]</span>
+<span class="ltx_bibblock">
+Jiachen Liu, Jae-Won Chung, Zhiyu Wu, Fan Lai, Myungjin Lee, and Mosharaf Chowdhury.
+
+</span>
+<span class="ltx_bibblock">Andes: Defining and enhancing quality-of-experience in llm-based text streaming services.
+
+</span>
+<span class="ltx_bibblock"><span class="ltx_text ltx_font_italic" id="bib.bib32.1.1">arXiv preprint arXiv:2404.16283</span>, 2024.
+
+</span>
+</li>
+<li class="ltx_bibitem" id="bib.bib33">
+<span class="ltx_tag ltx_role_refnum ltx_tag_bibitem">[33]</span>
+<span class="ltx_bibblock">
+Lingfan Yu, Jinkun Lin, and Jinyang Li.
+
+</span>
+<span class="ltx_bibblock">Stateful large language model serving with pensieve.
+
+</span>
+<span class="ltx_bibblock">In <span class="ltx_text ltx_font_italic" id="bib.bib33.1.1">Proceedings of the Twentieth European Conference on Computer Systems</span>, pages 144–158, 2025.
+
+</span>
+</li>
+<li class="ltx_bibitem" id="bib.bib34">
+<span class="ltx_tag ltx_role_refnum ltx_tag_bibitem">[34]</span>
+<span class="ltx_bibblock">
+Reyna Abhyankar, Zijian He, Vikranth Srivatsa, Hao Zhang, and Yiying Zhang.
+
+</span>
+<span class="ltx_bibblock">Infercept: Efficient intercept support for augmented large language model inference.
+
+</span>
+<span class="ltx_bibblock"><span class="ltx_text ltx_font_italic" id="bib.bib34.1.1">arXiv preprint arXiv:2402.01869</span>, 2024.
+
+</span>
+</li>
+<li class="ltx_bibitem" id="bib.bib35">
+<span class="ltx_tag ltx_role_refnum ltx_tag_bibitem">[35]</span>
+<span class="ltx_bibblock">
+Michael Luo, Xiaoxiang Shi, Colin Cai, Tianjun Zhang, Justin Wong, Yichuan Wang, Chi Wang, Yanping Huang, Zhifeng Chen, Joseph E Gonzalez, et al.
+
+</span>
+<span class="ltx_bibblock">Autellix: An efficient serving engine for llm agents as general programs.
+
+</span>
+<span class="ltx_bibblock"><span class="ltx_text ltx_font_italic" id="bib.bib35.1.1">arXiv preprint arXiv:2502.13965</span>, 2025.
+
+</span>
+</li>
+<li class="ltx_bibitem" id="bib.bib36">
+<span class="ltx_tag ltx_role_refnum ltx_tag_bibitem">[36]</span>
+<span class="ltx_bibblock">
+Chaofan Lin, Zhenhua Han, Chengruidong Zhang, Yuqing Yang, Fan Yang, Chen Chen, and Lili Qiu.
+
+</span>
+<span class="ltx_bibblock">Parrot: Efficient serving of <math alttext="\{" class="ltx_Math" display="inline" id="bib.bib36.1.m1.1"><semantics id="bib.bib36.1.m1.1a"><mo id="bib.bib36.1.m1.1.1" stretchy="false" xref="bib.bib36.1.m1.1.1.cmml">{</mo><annotation-xml encoding="MathML-Content" id="bib.bib36.1.m1.1b"><ci id="bib.bib36.1.m1.1.1.cmml" xref="bib.bib36.1.m1.1.1">{</ci></annotation-xml><annotation encoding="application/x-tex" id="bib.bib36.1.m1.1c">\{</annotation><annotation encoding="application/x-llamapun" id="bib.bib36.1.m1.1d">{</annotation></semantics></math>LLM-based<math alttext="\}" class="ltx_Math" display="inline" id="bib.bib36.2.m2.1"><semantics id="bib.bib36.2.m2.1a"><mo id="bib.bib36.2.m2.1.1" stretchy="false" xref="bib.bib36.2.m2.1.1.cmml">}</mo><annotation-xml encoding="MathML-Content" id="bib.bib36.2.m2.1b"><ci id="bib.bib36.2.m2.1.1.cmml" xref="bib.bib36.2.m2.1.1">}</ci></annotation-xml><annotation encoding="application/x-tex" id="bib.bib36.2.m2.1c">\}</annotation><annotation encoding="application/x-llamapun" id="bib.bib36.2.m2.1d">}</annotation></semantics></math> applications with semantic variable.
+
+</span>
+<span class="ltx_bibblock">In <span class="ltx_text ltx_font_italic" id="bib.bib36.3.1">18th USENIX Symposium on Operating Systems Design and Implementation (OSDI 24)</span>, pages 929–945, 2024.
+
+</span>
+</li>
+<li class="ltx_bibitem" id="bib.bib37">
+<span class="ltx_tag ltx_role_refnum ltx_tag_bibitem">[37]</span>
+<span class="ltx_bibblock">
+LangChain.
+
+</span>
+<span class="ltx_bibblock">LangGraph.
+
+</span>
+<span class="ltx_bibblock"><a class="ltx_ref ltx_url ltx_font_typewriter" href="https://github.com/langchain-ai/langgraph" title="">https://github.com/langchain-ai/langgraph</a>, 2025.
+
+</span>
+</li>
+<li class="ltx_bibitem" id="bib.bib38">
+<span class="ltx_tag ltx_role_refnum ltx_tag_bibitem">[38]</span>
+<span class="ltx_bibblock">
+Anthropic.
+
+</span>
+<span class="ltx_bibblock">Building effective agents.
+
+</span>
+<span class="ltx_bibblock"><a class="ltx_ref ltx_url ltx_font_typewriter" href="https://www.anthropic.com/engineering/building-effective-agents" title="">https://www.anthropic.com/engineering/building-effective-agents</a>, 2024.
+
+</span>
+</li>
+<li class="ltx_bibitem" id="bib.bib39">
+<span class="ltx_tag ltx_role_refnum ltx_tag_bibitem">[39]</span>
+<span class="ltx_bibblock">
+Dawei Gao, Zitao Li, Xuchen Pan, Weirui Kuang, Zhijian Ma, Bingchen Qian, Fei Wei, Wenhao Zhang, Yuexiang Xie, Daoyuan Chen, et al.
+
+</span>
+<span class="ltx_bibblock">Agentscope: A flexible yet robust multi-agent platform.
+
+</span>
+<span class="ltx_bibblock"><span class="ltx_text ltx_font_italic" id="bib.bib39.1.1">arXiv preprint arXiv:2402.14034</span>, 2024.
+
+</span>
+</li>
+<li class="ltx_bibitem" id="bib.bib40">
+<span class="ltx_tag ltx_role_refnum ltx_tag_bibitem">[40]</span>
+<span class="ltx_bibblock">
+Guibin Zhang, Yanwei Yue, Zhixun Li, Sukwon Yun, Guancheng Wan, Kun Wang, Dawei Cheng, Jeffrey Xu Yu, and Tianlong Chen.
+
+</span>
+<span class="ltx_bibblock">Cut the crap: An economical communication pipeline for llm-based multi-agent systems.
+
+</span>
+<span class="ltx_bibblock"><span class="ltx_text ltx_font_italic" id="bib.bib40.1.1">arXiv preprint arXiv:2410.02506</span>, 2024.
+
+</span>
+</li>
+</ul>
+</section>
+</article>
+</div>
+<footer class="ltx_page_footer">
+<div class="ltx_page_logo">Generated  on Thu Jul 10 03:29:19 2025 by <a class="ltx_LaTeXML_logo" href="http://dlmf.nist.gov/LaTeXML/"><span style="letter-spacing:-0.2em; margin-right:0.1em;">L<span class="ltx_font_smallcaps" style="position:relative; bottom:2.2pt;">a</span>T<span class="ltx_font_smallcaps" style="font-size:120%;position:relative; bottom:-0.2ex;">e</span></span><span style="font-size:90%; position:relative; bottom:-0.2ex;">XML</span><img alt="Mascot Sammy" src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAsAAAAOCAYAAAD5YeaVAAAAAXNSR0IArs4c6QAAAAZiS0dEAP8A/wD/oL2nkwAAAAlwSFlzAAALEwAACxMBAJqcGAAAAAd0SU1FB9wKExQZLWTEaOUAAAAddEVYdENvbW1lbnQAQ3JlYXRlZCB3aXRoIFRoZSBHSU1Q72QlbgAAAdpJREFUKM9tkL+L2nAARz9fPZNCKFapUn8kyI0e4iRHSR1Kb8ng0lJw6FYHFwv2LwhOpcWxTjeUunYqOmqd6hEoRDhtDWdA8ApRYsSUCDHNt5ul13vz4w0vWCgUnnEc975arX6ORqN3VqtVZbfbTQC4uEHANM3jSqXymFI6yWazP2KxWAXAL9zCUa1Wy2tXVxheKA9YNoR8Pt+aTqe4FVVVvz05O6MBhqUIBGk8Hn8HAOVy+T+XLJfLS4ZhTiRJgqIoVBRFIoric47jPnmeB1mW/9rr9ZpSSn3Lsmir1fJZlqWlUonKsvwWwD8ymc/nXwVBeLjf7xEKhdBut9Hr9WgmkyGEkJwsy5eHG5vN5g0AKIoCAEgkEkin0wQAfN9/cXPdheu6P33fBwB4ngcAcByHJpPJl+fn54mD3Gg0NrquXxeLRQAAwzAYj8cwTZPwPH9/sVg8PXweDAauqqr2cDjEer1GJBLBZDJBs9mE4zjwfZ85lAGg2+06hmGgXq+j3+/DsixYlgVN03a9Xu8jgCNCyIegIAgx13Vfd7vdu+FweG8YRkjXdWy329+dTgeSJD3ieZ7RNO0VAXAPwDEAO5VKndi2fWrb9jWl9Esul6PZbDY9Go1OZ7PZ9z/lyuD3OozU2wAAAABJRU5ErkJggg=="/></a>
+</div></footer>
+</div>
+</body>
+</html>

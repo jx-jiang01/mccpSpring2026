@@ -1,0 +1,803 @@
+\iffalse
+\subsubsection{Lower Bound to the Achievable CCV}
+%We now establish a lower bound to the achievable violation penalty for 
+The following result shows that any online policy must incur a CCV of $\mathcal{X}(\sqrt{T}).$
+%The following result is straightforward.
+%\begin{framed}
+\begin{theorem}[(Lower bound on the Constraint Violations)]
+	Consider the constrained OCO problem with linear cost functions and affine constraints. Then any online policy will incur CCV $\mathbb{V}_T$ of at least $\mathcal{X}(\sqrt{T})$ over a horizon of length $T.$ 
+\end{theorem}
+%\end{framed}
+\begin{proof}
+	Assume that on round $t$, the adversary chooses a linear cost function $g_t(x)$ and an affine constraint $g_t(x) \leq b_t,$ where the constant $b_t$ will be specified later. Let $x^\star \in \mathcal{X}$ be the best-fixed action in hindsight, which minimizes the cumulative cost $\sum_{t=1}^T g_t(x).$ We now set the constant $b_t$ to be $b_t = g_t(x^\star), t \in [T].$ Clearly, $x^\star \in \mathcal{X}_T$ is a feasible point that satisfies all constraints up to time $T$. Hence, the CCV incurred by any online policy $\pi$ over the entire horizon $T$ is given by: 
+	\begin{eqnarray*}
+	\sup_{\mathcal{I}} \mathbb{V}_{\mathcal{I}} \geq \mathbb{V}_T = \sum_{t=1}^T \big(g_t(x_t) - b_t\big) = \sum_{t=1}^T g_t(x_t) - \sum_{t=1}^T g_t(x^\star) \equiv \textrm{Regret}_T(x^\star) \geq \mathcal{X}(\sqrt{T}), 
+	\end{eqnarray*} 
+	where the last inequality follows from the lower bound on the achievable regret for adversarially chosen linear cost functions over a convex domain. 
+\end{proof}
+
+\fi 
+\vspace{-0.1in}
+\subsection{Online Policy for COCO} \label{policy}
+\iffalse
+In this section, we propose a generalization of the \textsc{OCS} Meta-policy that is applicable for COCO and derive an upper bound on its regret and CCV.
+As in the $\ocs$, we keep track of the CCV through the same queueing process $\{Q(t)\}_{t \geq 1}$ that evolves as follows.
+% \footnote{Since the pre-processed constraint functions are non-negative, the $\max(0,\cdot)$ operation in Eqn.\ \eqref{q-ev} is superfluous.}:
+ \begin{eqnarray} \label{q-ev}
+ 	Q(t) = (Q(t-1)+ g_t(x_t))^+, ~Q(0)=0. \end{eqnarray}
+ 	%Since the pre-processed constraint functions are non-negative, the $\max(0,\cdot)$ operation in  \eqref{q-ev} is superfluous. 
+	Moreover, since $g_t(x_t)\geq 0$, we have $\mathbb{V}(t)= Q(t), \forall t.$
+ 	 As before, let us define the potential function $\Phi(t)\equiv Q^2(t).$ From  \eqref{q-bd2},
+ 	 \iffalse 
+ 	 Observe that for any real number $x$, we have $((x)^+)^2=xx^+.$ Hence, 
+ \begin{eqnarray*}
+ 	Q^2(t) &=& \big(Q(t-1)+ g_t(x_t)\big)Q(t) \\
+ 	&=& Q(t-1)Q(t)+ Q(t) g_t(x_t)\\
+ 	&\stackrel{(a)}{\leq}& \frac{1}{2}Q^2(t)+ \frac{1}{2}Q^2(t-1) + Q(t) g_t(x_t). 
+ \end{eqnarray*}
+ where in (a), we have used the AM-GM inequality. Rearranging the above inequality,
+% where $\max_{x \in \mathcal{X}} g_t^2(x)+ b_t^2 + 2|g_t(x)b_t| = \max_{x \in \mathcal{X}} (|g_t(x)|+|b_t|)^2\leq B.$ 
+\fi
+ the \emph{one-step drift} of the potential $\Phi(t)$ can be upper bounded as 
+ \begin{eqnarray} \label{dr-bd}
+ 	\Phi(t)-\Phi(t-1) = Q^2(t)-Q^2(t-1)\leq 2Q(t)g_t(x_t).
+ \end{eqnarray}
+ Now, motivated by the drift-plus-penalty framework in the stochastic network control theory \citep{neely2010stochastic}, we \emph{define} a surrogate cost function $\hat{f}_t:\mathcal{X} \to \mathbb{R}$ as follows:
+ \begin{eqnarray} \label{surrogate-def2}
+ 	\hat{f}_t(x) \equiv Vf_t(x) + 2Q(t) g_t(x), x \in \mathcal{X}, ~\forall t\geq 1,
+ \end{eqnarray}
+ where the first term corresponds to the cost and the second term is an upper bound to the drift of the quadratic potential function given by \eqref{dr-bd}. In the above,
+  $V>0$ is an adjustable parameter that will be fixed later. It can be immediately verified that the surrogate function $\hat{f}_t(\cdot)$ is convex for all $t \geq 1$. 
+ 
+  Next, we propose the \textbf{COCO Meta-Policy:} (Algorithm \ref{g-oco-policy}) to solve the COCO, that passes a sequence of surrogate cost functions $\{\hat{f}_t\}_{t\geq 1}$ to a base online convex optimization (OCO) subroutine with a data-dependent \emph{adaptive} regret-bound as given in Theorem \ref{data-dep-regret}. 
+
+ \begin{algorithm}
+\caption{The COCO Meta-policy}
+\label{g-oco-policy}
+\begin{algorithmic}[1]
+\State \algorithmicrequire{Sequence of cost functions $\{f_t\}_{t \geq 1}$ and constraint functions $\{g_{t}\}_{t\geq 1},$ a base OCO sub-routine $\Pi$ with an adaptive regret bound (see Theorem \ref{data-dep-regret}), admissible set $\mathcal{X}$, parameter $V>0$}
+\State \algorithmicensure{Sequence of admissible actions $\{x_t\}_{t\geq 1}$}
+\INIT $x_1=\bm{0}, Q(0)=0, ~\forall i \in [k].$ 
+
+\ForEach {each round $t \geq 1$}
+\State The adversary reveals the cost function $f_t$ and the constraint function $g_{t}.$
+
+\textbf{[Preprocessing]:} $g_t \gets \max(0, g_t).$ 
+\State [\textbf{Queue updates}] $Q(t) = Q(t-1)+ g_{t}(x_t)$.
+\State [\textbf{Surrogate cost}] Construct the surrogate cost function $\hat{f}_t(x) \equiv Vf_t(x) + 2Q(t) g_t(x)$.
+\State [\textbf{OCO step}] Pass $\hat{f}_t$ to the base OCO sub-routine $\Pi$, that outputs an action $x_{t+1} \in \mathcal{X}.$ \label{oco-step}
+\EndForEach
+\end{algorithmic}
+\end{algorithm}
+
+ %\begin{framed}
+ %\end{framed}
+  %The proposed policy is formally described in Algorithm \ref{g-oco-policy}. 
+ \iffalse
+ To clarify this point further, let us explicitly illustrate the order of events on round $t$. 
+\begin{enumerate}
+	\item The online policy chooses a feasible point $x_t \in \mathcal{X}.$ 
+	\item The adversary reveals the cost function $f_t$ and the constraint function $g_t.$ 
+	\item  We compute the cumulative violation $Q(t)$ (which is a non-negative number) using the recursion \eqref{q-ev}. Note that $Q(t)$ depends on the action $x_t$ on the current round $t$.
+	\item  The surrogate cost function $f_t'$ defined in  \eqref{surrogate-def} is passed to the policy.
+\end{enumerate}
+\fi
+ 
+
+\iffalse
+\hrule
+\fi
+
+
+
+%We will also assume that the cost functions are normalized so that $||f_t||_\infty \leq 1/2, \forall t.$
+%\begin{framed}
+%\textbf{Variants of the Constraint violation metric:} Our framework is flexible. Then we can consider a modified evolution for $Q(t):$
+%\begin{eqnarray*}
+%	Q(t)=\big(Q(t-1)+\psi(g_t(x)\big).~~, Q(0)=0\footnote{If $h>0,$ it is unnecessary to take $\max(0,\cdot)$ of $Q(t)$.}.
+%\end{eqnarray*}
+%Using the same analysis as before, we have 
+%\begin{eqnarray*}
+% 	\Phi(t)-\Phi(t-1) = Q^2(t)-Q^2(t-1)\leq 2Q(t)\psi(g_t(x_t)).
+% \end{eqnarray*}
+%  Motivated by the above calculations, we now define a surrogate cost function $f_t':\mathcal{X} \to \mathbb{R}$ as follows:
+% \begin{eqnarray} \label{surrogate-def}
+% 	f'_t(x) \equiv Vf_t(x) + 2Q(t) \psi(g_t(x)),
+% \end{eqnarray}
+%\end{framed}
+\vspace{-0.1in}
+Similar to the OCS Meta-Policy, the main tool for analyzing the COCO Meta-Policy is a regret decomposition inequality that we describe next.
+\subsection{Analysis: Regret Decomposition:}
+%We now derive the regret decomposition inequality for the \textsc{constrained OCO} Meta-policy, which will be central to our analysis. 
+Fix any feasible action $x^\star \in \mathcal{X}^\star.$ 
+ %Note that when Assumption \ref{slater} does not hold but Assumption \ref{feas} holds then we have $\eta^\star=0.$ 
+ Recalling $\Phi(t)= Q^2(t)$, for any round $\tau \in [T]$, we have  
+ %$\Phi(\tau)-\Phi(\tau-1) + V\big(f_\tau(x_\tau)-f_\tau(x^\star)\big)$
+ \begin{eqnarray} \nonumber
+ &&\Phi(\tau)-\Phi(\tau-1) + V\big(f_\tau(x_\tau)-f_\tau(x^\star)\big) \nonumber \\
+ 	 & \stackrel{\eqref{dr-bd}}{\leq} & \big(V f_\tau(x_\tau) + 2Q(\tau)g_\tau(x_\tau)\big) - Vf_\tau(x^\star),   \nonumber \\ \nonumber
+ 	&\stackrel{(a)}{\leq}  & \big(V f_\tau(x_\tau) + 2Q(\tau)g_\tau(x_\tau)\big) - \big(Vf_\tau(x^\star) + 2Q(\tau)g_\tau(x^\star)\big),\\  \label{drift_ineq}
+ 	&= & \hat{f}_{\tau}(x_\tau) - \hat{f}_\tau(x^\star), 
+ \end{eqnarray}
+ where in (a), we have used the feasibility of the action $x^\star \in \mathcal{X}^\star,$ which yields $g_\tau(x^\star)\leq 0$.\footnote{We actually have an equality in this step for the redefined non-negative clipped constraint functions.} 
+ %(\emph{i.e.,} $g_\tau(x^\star) \leq 0$ and that $\psi(z) \leq 0, \forall z\leq 0$). 
+ Summing up the inequalities \eqref{drift_ineq} from $\tau=t_1+1$ to $\tau=t_2$,  we relate the regret for learning  $\{f_t\}_{t\geq 1}$'s  with the regret  for learning  $\{\hat{f}_t\}_{t\geq 1}$'s:
+ \begin{eqnarray} \label{coco:coco:master_eqn}
+ 	\Phi(t_2)-\Phi(t_1) + V \textrm{Regret}_{t_1+1:t_2}(x^\star)\leq \textrm{Regret}_{t_1+1:t_2}'(x^\star), ~ \forall x^\star \in \mathcal{X}^\star. 
+ \end{eqnarray}
+%We emphasize that the regret on the RHS implicitly depends on the auxiliary variables $\{Q(t)\}_{t\geq 1},$ which are controlled by the online policy. In particular, b
+By setting $t_1=0$ and $t_2=t,$ and recalling that $\Phi(0)= Q(0)=0,$ \eqref{coco:coco:master_eqn} yields the key \emph{regret decomposition inequality}:
+\begin{eqnarray} \label{q-bd-eqn}
+	Q^2(t) + V\textrm{Regret}_t(x^\star) \leq \textrm{Regret}'_t(x^\star), ~ \forall x^\star \in \mathcal{X}^\star. 
+\end{eqnarray}
+Inequality \eqref{q-bd-eqn} is a general result and does not rely on the convexity of the cost/constraint functions.
+\iffalse
+\paragraph{Regret Decomposition:} 
+ Fix any $\eta^\star$-feasible admissible action $x^\star \in \mathcal{X}_\tau.$ Note that when Assumption \ref{slater} does not hold but Assumption \ref{feas} holds then we have $\eta^\star=0.$ Then, for any $\tau \in [T],$ we have 
+ \begin{eqnarray} \label{drift_ineq}
+ 	&&\Phi(\tau)-\Phi(\tau-1) + V\big(f_\tau(x_\tau)-f_\tau(x^\star)\big) \nonumber  \\
+ 	&\leq&  \big(V f_\tau(x_\tau) + 2Q(\tau)\psi(g_\tau(x_\tau))\big) - Vf_\tau(x^\star) \nonumber  \\
+ 	&\stackrel{(a)}{\leq} &  \big(V f_\tau(x_\tau) + 2Q(\tau)\psi(g_\tau(x_\tau))\big) - \big(Vf_\tau(x^\star) + 2Q(\tau)\psi(g_\tau(x^\star))\big)\nonumber -2\eta^\star Q(\tau) \\
+ 	&= & f_{\tau}'(x_\tau) - f_\tau'(x^\star) -2\eta^\star Q(\tau), 
+ \end{eqnarray}
+ where in (a), we have used the $\eta^\star$-feasibility of the fixed action $x^\star.$ 
+ %(\emph{i.e.,} $g_\tau(x^\star) \leq 0$ and that $\psi(z) \leq 0, \forall z\leq 0$). 
+ Summing up the inequalities \eqref{drift_ineq} above, we obtain the following bound, which relates the regret of learning the original cost functions to the regret of learning the surrogate cost functions:
+ \begin{eqnarray} \label{coco:master_eqn}
+ 	\Phi(t_2)-\Phi(t_1) + V \textrm{Regret}_{t_1:t_2}(x^\star)\leq \textrm{Regret}_{t_1:t_2}'(x^\star) - 2\eta^\star \sum_{\tau=t_1}^{t_2} Q(\tau), ~ \forall x^\star \in \mathcal{X}_{t_2}. 
+ \end{eqnarray}
+We emphasize that the regret on the RHS depends on the auxiliary variables $\{Q(t)\}_{t\geq 1},$ which are implicitly controlled by the learning policy. In particular, by setting $t_1=0, t_2=t$ and recalling that $\Phi(0)= Q(0)=0,$ we have that 
+\begin{eqnarray} \label{q-bd-eqn}
+	Q^2(t) + V\textrm{Regret}_t(x^\star) \leq \textrm{Regret}'_t(x^\star) - 2\eta^\star \sum_{\tau=1}^t Q(\tau), ~ \forall x^\star \in \mathcal{X}_t. 
+\end{eqnarray}
+\fi
+%\begin{framed}
+
+%We consider an instance of the constrained Online Linear Optimization (OLO) problem where on every round $t,$ the learner chooses an action $x_t$ from a feasible closed and bounded convex set $\mathcal{X}.$ An adversary then reveals a cost vector $c_t$ and a constraint vector and budget tuple $(a_t, b_t),$ which encodes a linear constraint of the form
+%\[\langle a_t, x \rangle \geq b_t.\]
+%\begin{framed}
+%\textbf{Note:} 
+%\begin{enumerate}
+%	\item 
+% %The regret bounds derived below holds in the general case when, instead of a linear cost function, the adversary chooses any Lipschitz continuous convex cost function $f_t$ and we set $c_t=\nabla f_t(x_t).$ Due to the Lipschitzness assumption, $||c_t||$ is bounded for all $t \geq 1$.
+%
+%\item Without any loss of generality, we assume that only one constraint is revealed at each round. In the case of multiple constraints, we construct a single constraint by summing up the coefficient vectors and pass this single aggregate constraint to our algorithm.
+%\end{enumerate}    
+%\end{framed}
+%For any round $t\geq 1,$ let $\mathcal{X}_t$ be the set of all feasible actions satisfying \emph{all} constraints up to and including time $t,$ \emph{i.e.,}
+%\[\mathcal{X}_t = \{x \in \mathcal{X} : \langle a_\tau, x \rangle \geq b_\tau,  1\leq \tau\leq T\}.\] 
+%The set $\mathcal{X} \subseteq \mathcal{X}$ is assumed to be non-empty. The regret $R_T(x^\star)$ of the online policy with respect to a fixed action $x^\star \in \mathcal{X}$ and its CCV $\mathbb{V}_\mathcal{I}$ over an interval $\mathcal{I}\equiv [a,b] \subseteq [T]$ are respectively defined as 
+%\begin{eqnarray*}
+%\textrm{Regret}_T(x^\star) &=& \sum_{t=1}^T \langle c_t, x_t-x^\star\rangle \\
+%\mathbb{V}_\mathcal{I} &=& \sum_{t \in \mathcal{I}} \left(b_t- \langle a_t, x_t\rangle\right).
+%\end{eqnarray*}
+%Our objective is to design an online learning policy that achieves a sublinear CCV uniformly over \emph{any} interval   
+%%We aim to design an online learning policy $\{x_t\}_{t\geq 1}$ that admits a sublinear maximum violation penalty 
+%$\sup_{\mathcal{I}} \mathbb{V}_{\mathcal{I}}$ and a sublinear regret with respect to any $x^\star \in \mathcal{X}.$
+
+
+%\section{An Online Learning Policy}
+%Our proposed policy transforms the constrained problem to a standard unconstrained OCO problem in a \emph{blackbox} fashion. We show that by making use of the state-of-the regret bounds for the unconstrained problem, we get a sharp performance bound for the constrained problem.
+%
+%
+%We will keep track of the constraint violations through a  variable $Q(t)$, which evolves according to a \emph{queueing} recursion as follows:
+%\begin{eqnarray} \label{q-ev}
+%    Q(t+1) = \left(Q(t)+ b_t-\langle a_t, x_t \rangle\right)^+, ~ Q(0)=0.
+%\end{eqnarray}
+%Note that, by unfolding the queueing recursion (also known as the Lindley recursion), we have $\sup_{\mathcal{I}}\mathbb{V}_{\mathcal{I}} \leq \sup_t Q(t).$ Hence, an upper bound on $\sup_t Q(t)$ gives an upper bound to the constraint violation penalty. 
+%
+%Let $V>0$ be a constant, which will be fixed later. Define a quadratic potential function
+%\begin{eqnarray*}
+%    \Phi(t) = Q^2(t).
+%\end{eqnarray*}
+%To simplify the notations, assume that $||a_t||^2+||c_t||^2+b_t^2 \leq 1, \forall t$ (this is without any loss of generality as the inequality constraint can be normalized suitably) and $||x||^2 \leq 1, \forall x \in \mathcal{X}.$
+%Hence, the change of the potential on round $t$ can be upper-bounded as 
+%\begin{eqnarray} \label{driftbound}
+%    \Phi(t+1)-\Phi(t) &\leq&  \left(Q(t)+b_t -\langle a_t, x_t \rangle\right)^2 - Q^2(t) \nonumber \\
+%    &\leq & 3 + 2Q(t)(b_t -\langle a_t, x_t \rangle),
+%\end{eqnarray}
+%%where $B$ comes from a priori bounds on the constraints.
+% Using the principle of drift-plus-penalty, we are now motivated to consider a standard online linear optimization problem whose cost vector on round $t$ is given by 
+%\begin{eqnarray} \label{reduced_cost}
+%    c_t'= Vc_t-2Q(t) a_t.
+%\end{eqnarray}
+%To solve the resulting OLO problem, we can use a projected Online Gradient descent policy with an adaptive step size. This would give a second-order regret bound, which depends on the queue variables $\{Q(t)\}_{t=1}^T.$ The final step is to control the magnitude of the queue variables using an analysis similar to \cite{sinha2023banditq}. 
+%
+\vspace{-0.1in}
+\subsubsection{Convex Cost and Convex Constraint functions}
+% Let $x^\star \in \mathcal{X}$ be any feasible action. Then from Eq.\ \ref{driftbound} we have 
+%\begin{eqnarray*}
+%	&& \Phi(\tau)-\Phi(\tau-1) + V\langle c_\tau, x_\tau - x^\star \rangle \\
+%	&\leq& 3 + 2Q(\tau)(b_\tau- \langle a_\tau, x_\tau \rangle) + V \langle c_\tau, x_\tau \rangle - V \langle c_\tau, x^\star\rangle \\
+%	&\stackrel{(a)}{=}& 3 + 2Q(\tau) b_\tau + \langle c_\tau', x_\tau \rangle - V \langle c_\tau, x^\star\rangle \\
+%	&\stackrel{(b)}{\leq} & 3 + 2Q(\tau) \langle a_\tau, x^\star \rangle  + \langle c_\tau', x_\tau \rangle - V \langle c_\tau, x^\star\rangle \\
+%	&=& 3 + \langle c_\tau', x_\tau - x^\star \rangle. 
+%\end{eqnarray*}
+%where in (a), we have used the definition of $c_\tau'$ from \ref{reduced_cost} and in (b), we have used the feasibility of the action $x^\star.$ Summing up the above inequalities from $\tau=1$ to $\tau=t$ and recalling that $\Phi(t)= Q^2(t),$ we have 
+%We first consider the case when the both the cost function $(f_t)$ and the constraint function $(g_t)$ are convex. 
+We now apply \eqref{q-bd-eqn} to the case of convex cost $f_t$ and convex constraint functions $g_t$.  
+%without making any additional assumption beyond Assumption \ref{bddness} and Assumption \ref{slater}. 
+ Let the base OCO subroutine $\Pi$ be taken to be the OGD policy with adaptive step sizes as given in part 1 of Theorem \ref{data-dep-regret}. In this case, using \eqref{q-bd-eqn}, we obtain the following bound for any feasible action $x^\star \in \mathcal{X}^\star:$
+%\textcolor{blue}{Note that OGD also offers an adaptive regret bound (starting from any point in time). It might be possible to exploit this further. }
+\begin{eqnarray}\nonumber
+	\hspace{-.15in}Q^2(t) + V \textrm{Regret}_t(x^\star) 
+	&\leq& \textrm{Regret}_t'(x^\star) 
+	\stackrel{(c)}{\leq}   D\sqrt{2\sum_{\tau=1}^t ||\nabla \hat{f}_\tau (x_\tau)||^2} 
+	 \nonumber \\  \label{main_eq}
+	&\stackrel{(d)}{\leq}&  GD \sqrt{2\sum_{\tau=1}^t (Q(\tau)+V)^2} \stackrel{(e)}{\leq} 2GD \sqrt{\sum_{\tau=1}^t Q^2(\tau)}+ 2GDV\sqrt{t},
+\end{eqnarray}
+%where $\textrm{Regret}_t'$ denotes the regret for the OLO algorithm with the cost vector sequence $\{f'_\tau\}_{\tau}.$ 
+where $(c)$ follows from the regret guarantee of the adaptive OGD policy \eqref{cvx-reg-bd}, (d) follows from Eqn.\ \eqref{grad-bd} in the Appendix, and $(e)$ follows from  the facts that $(a+b)^2 \leq 2(a^2+b^2)$ and $\sqrt{x+y} \leq \sqrt{x}+\sqrt{y}.$ 
+%The above functional inequality can be thought of as a discrete version of Gronwall's inequality.  
+%\subsection{Performance guarantees}
+%\textbf{The Slater's condition does not necessarily hold}
+%\begin{framed}
+The following theorem gives the performance bounds for the \textsc{COCO} Meta-policy. 
+%\vspace{-0.15in}
+ \begin{theorem} \label{gen-cvx-bd}
+ 	%Without making any assumption on the Slater's condition (\emph{i.e.,} $\eta^\star=0$), 
+ %	The online meta-policy described above achieves the following bounds for any convex cost and convex constraint functions 
+%Suppose Assumptions \ref{bddness} and \ref{feas} hold.
+For COCO with convex costs and convex constraint functions, choosing $V=\sqrt{T},$ the COCO Meta-policy, described in Algorithm \ref{g-oco-policy}, achieves the following regret and CCV:
+ %We have the following upper bounds to the CCV and regret achieved by the proposed meta-policy upon setting $V=\sqrt{T}$: 
+		\[\quad \textrm{Regret}_t(x^\star) = O(\sqrt{t}), ~\forall x^\star \in \mathcal{X}^\star, ~\textrm{and}~ \mathbb{V}(t) = O(T^{3/4}) , ~\forall t \in [T].\]
+		Furthermore, for any round $t \geq 1$ where the worst-case regret is non-negative \newline \emph{i.e.,} $\sup_{x^\star \in \mathcal{X}^\star}\textrm{Regret}_t(x^\star) \geq 0$,\footnote{ This is a non-trivial condition since the offline benchmark $x^\star$ is constrained to belong to the feasible set $\mathcal{X}^\star$ whereas the actions of the policy $\{x_t\}_{t\geq 1}$ belong to the larger admissible set $\mathcal{X} \supseteq \mathcal{X}^\star.$ See Section \ref{improved_rates} in the Appendix.}  we have $\mathbb{V}(t)= O(\sqrt{T}).$
+%(b) For a natural class of adversaries, called convex adversaries defined in Eqn.\ \eqref{jensenadv} in Appendix \ref{improved_rates}, we also have $\mathbb{V}(t)= O(\sqrt{T})$ under some mild assumptions. See Theorem \ref{improved_violation_bd} for a precise statement.
+	 \end{theorem}
+ %\end{framed}
+ \vspace{-0.01in}
+ See Section \ref{gen-cvx-bd-pf} for the proof of Theorem \ref{gen-cvx-bd}. The first part of the theorem proves the same best-known bound from \citet{pmlr-v70-sun17a, guo2022online}. However, our policy is simple with an elegant analysis and does not need to know $G$ or the full functions $f_t$ and $g_t$ after $x_t$ has been chosen. %and does not assume Slater's condition. 
+ The second part of the theorem states that the regret and CCV cannot be large simultaneously at any round - if the worst-case regret at a round $t$ is non-negative, then the CCV up to that round is at most $O(\sqrt{T}).$ In comparison \citet{neely2017online} get this improved result upon assuming Slater's condition.
+ For a natural class of adversaries, called convex adversaries defined in \eqref{jensenadv} in Appendix \ref{improved_rates}, we also have $\mathbb{V}(t)= O(\sqrt{T})$ under some mild assumptions. See Theorem \ref{improved_violation_bd} for a precise statement.
+ \fi
+ 
+ 
+%\subsection{Overview of the technique}
+Recall that compared to the standard OCO problem where the only objective is to minimize the Regret \citep{hazan2022introduction}, in COCO, our objective is twofold: to \emph{simultaneously} control the Regret \emph{and} the CCV. See Section \ref{prelims} in the Appendix for preliminaries on the OCO problem and some standard results which will be useful in our analysis. In the following, we 
+propose a Lyapunov function-based policy 
+%recently proposed by \citet{sinha2023playing}. While they were able to prove an $O(\sqrt{T})$ regret and $O(T^{\nicefrac{3}{4}})$ CCV with a quadratic Lyapunov function, in this paper, we show that this technique can be generalized with a power-law Lyapunov function to 
+that yields the optimal Regret and CCV bounds for the COCO problem. Although for simplicity, we assume that the horizon length $T$ is known, we can use the standard doubling trick for an unknown $T.$
+\iffalse
+\subsection{Preliminaries}
+We now briefly recall the first-order methods (\emph{a.k.a.} Projected Online Gradient Descent (OGD)) for the standard OCO problem. These methods differ among each other in the way the step sizes are chosen. For a sequence of convex cost functions $\{\hat{f}_t\}_{t \geq 1},$ a projected OGD algorithm selects the successive actions as \citep[Algorithm 2.1]{orabona2019modern}:
+\begin{eqnarray}\label{ogd-policy} 
+	x_{t+1} = \mathcal{P}_\mathcal{X}(x_t - \eta_t \nabla_t), ~~ \forall t\geq 1,
+\end{eqnarray}
+where $\nabla_t \equiv \nabla \hat{f}_t(x_t)$ is a subgradient of the function $\hat{f}_t$ at $x_t$, $\mathcal{P}_\mathcal{X}(\cdot)$ is the Euclidean projection operator on the set $\mathcal{X}$ and $\{\eta_t\}_{t \geq 1}$ is a specified step size sequence. 
+The (diagonal version of the) AdaGrad policy adaptively chooses the step size sequence as a function of the previous subgradients as  $\eta_t= \frac{\sqrt{2}D}{2\sqrt{\sum_{\tau=1}^{t} G_\tau^2}},$ where $G_t=||\nabla_t||_2, t \geq 1$ \citep{duchi2011adaptive}. \footnote{We set $\eta_t=0$ if $G_t=0.$} It enjoys the following adaptive regret bound.
+\begin{theorem}{\citep[Theorem 4.14]{orabona2019modern}}  The AdaGrad policy, with the above step size sequence, achieves the following regret bound for the standard OCO problem: 
+	\begin{eqnarray} \label{cvx-reg-bd}
+			 \textrm{Regret}_T \leq \sqrt{2}D \sqrt{\sum_{t=1}^T G_t^2}.
+	\end{eqnarray}
+	\end{theorem}
+	\fi
+%	The OGD policy with the above adaptive step-size schedule is known as (a version of) the AdaGrad policy in the literature \citep{duchi2011adaptive}. 
+
+
+\subsection{Design and Analysis of the Algorithm}
+ 
+To simplify the analysis, we pre-process the cost and constraint functions on each round as follows.
+
+\vspace{5pt}
+
+%the queue-lengths evolve as in Eqn.\ \eqref{q-ev}, where 
+\hrule
+\textbf{Pre-processing:}
+On every round, we first clip the negative part of the constraint function to zero by passing it through the standard ReLU unit. Then, we scale both the cost and constraint functions by a positive factor $\beta,$ which will be determined later. In other words, 
+ we work with the pre-processed inputs $\tilde{f}_t \gets \beta f_t, \tilde{g}_t \gets \beta (g_t)^+.$ Hence, the pre-processed functions are $\beta G$-Lipschitz and $\tilde{g}_t \geq 0, \forall t.$  
+ \vspace{5pt}
+
+\hrule 
+In the following, we derive the Regret and CCV bounds for the pre-processed functions. The bounds for the original problem are obtained upon scaling the results back by $\beta^{-1}$ in the final step.
+\subsubsection{Defining the Surrogate Cost Functions} 
+%we can obtain the optimal regret and violation bound for the COCO problem with convex cost and convex constraint functions.
+
+Let $Q(t)$ denote the CCV for the pre-processed constraints up to round $t.$ Clearly, $Q(t)$ satisfies the simple recursion $Q(t)=Q(t-1)+\tilde{g}_t(x_t), t\geq 1, $ with $Q(0)=0$. Recall that one of our objectives is to make $Q(t)$ small.
+Towards this, let $\Phi: \mathbb{R}_+ \mapsto \mathbb{R}_+$ be any non-decreasing differentiable convex potential (Lyapunov) function such that $\Phi(0)=0.$ Using the convexity of $\Phi(\cdot),$ we have
+%which generalizes Eqn.\ \eqref{dr-bd}:
+%Also, for the sake of simplicity, we assume that the maximum magnitude of the constraint violation is upper bounded by $F=1$. 
+%Since the function $ h: x \to x^n$ is convex, we have 
+%\begin{eqnarray*}
+%	\Phi(t)= Q^n(t) = \big(Q(t-1)+g_t(x_t)\big)^n \leq Q^{n}(t-1) + n Q^{n-1}(t) g_t(x_t). 
+%	\end{eqnarray*}
+%
+\begin{eqnarray} \label{dr-bd-gen}
+	\Phi(Q(t))  &\leq& \Phi(Q(t-1)) + \Phi'(Q(t))(Q(t)-Q(t-1)) \nonumber \\
+&=& \Phi(Q(t-1)) + \Phi'(Q(t)) \tilde{g}_t(x_t). 
+\end{eqnarray}
+Hence, the change (\emph{drift}) of the potential function $\Phi(Q(t))$ on round $t$ can be upper bounded as 
+\begin{eqnarray} \label{drift_ineq_new}
+	\Phi(Q(t))-\Phi(Q(t-1)) \leq \Phi'(Q(t)) \tilde{g}_t(x_t). 
+\end{eqnarray}
+Recall that, in addition to controlling the CCV, we also want to minimize the cumulative cost $\sum_{t=1}^T f_t(x_t)$ (which is equivalent to the regret minimization). Inspired by the stochastic \emph{drift-plus-penalty} framework of \citet{neely2010stochastic}, we combine these two objectives to a single objective of minimizing a sequence of surrogate cost functions $\{\hat{f}_t\}_{t=1}^T$ which are obtained by taking a positive linear combination of the drift upper bound \eqref{drift_ineq_new} and the cost function. More precisely, we define
+%Inspired by the stochastic \emph{drift-plus-penalty} framework of \citet{neely2010stochastic}, on round $t$, we attempt to minimize a surrogate cost function $\hat{f}_t : \mathcal{X} \to \mathbb{R},$ obtained by adding the scaled cost function $f_t$ to a functional form of the drift upper bound \eqref{drift_ineq_new} as defined below:
+\begin{eqnarray} \label{surrogate_new}
+	\hat{f}_t(x):= V\tilde{f}_t(x)+ \Phi'(Q(t)) \tilde{g}_t(x), ~~ t \geq 1. 
+\end{eqnarray}
+In the above, $V$ is a suitably chosen non-negative parameter to be determined later. In brief, the proposed policy for COCO, described in Algorithm \ref{coco_alg}, simply runs an adaptive OCO policy on the surrogate cost function sequence $\{\hat{f}_t\}_{t\geq 1}$, with a specific choice of the potential function $\Phi(\cdot)$, the parameter $V$, and step-size sequence $\{\eta_t\}_{t\geq 1}$, as dictated by the following analysis.
+\begin{algorithm}[tb]
+   \caption{Online Policy for COCO}
+   \label{coco_alg}
+\begin{algorithmic}[1]
+   \State {\bfseries Input:} Sequence of convex cost functions $\{f_t\}_{t=1}^T$ and constraint functions $\{g_t\}_{t=1}^T,$ $G=$ a common Lipschitz constant, $T=$ Horizon length,
+   %an upper bound $G$ to the Euclidean norm of their (sub)gradients, 
+    $D=$ Euclidean diameter of the admissible set $\mathcal{X},$ $\mathcal{P}_\mathcal{X}(\cdot)=$ Euclidean projection operator on the set $\mathcal{X}$ 
+     \State {\bfseries Parameter settings:} 
+     \begin{enumerate}
+     	\item \textbf{Convex cost functions:} $\beta = (2GD)^{-1}, V=1, \lambda = \frac{1}{2\sqrt{T}}, \Phi(x)= \exp(\lambda x)-1.$
+     
+    \item \textbf{$\alpha$-strongly convex cost functions:} $\beta =1, V=\frac{8G^2 \ln(Te)}{\alpha}, \Phi(x)= x^2.$
+    \end{enumerate}
+     %$ \alpha=\frac{1}{2GD}, n=\max(2, \lceil \ln T \rceil), V=(n-1)^{n-1}T^{\frac{n-1}{2}}, \Phi(x)=x^n.$ 
+%   \REPEAT
+  \State {\bfseries Initialization:} Set $ x_1 \in \mathcal{X}$ arbitrarily, $Q(0)=0$.
+   \ForEach{$t=1:T$}
+   \State Play $x_t,$ observe $f_t, g_t,$ incur a cost of $f_t(x_t)$ and constraint violation of $(g_t(x_t))^+$
+   \State $\tilde{f}_t \gets \beta f_t, \tilde{g}_t \gets \beta \max(0,g_t).$
+   \State $Q(t)=Q(t-1)+\tilde{g}_t(x_t).$
+   \State Compute (sub)gradient $\nabla_t = \nabla \hat{f}_t(x_t),$ where the surrogate function $\hat{f}_t$ is defined in Eqn.\ \eqref{surrogate_new}
+   \State $x_{t+1} = \mathcal{P}_\mathcal{X}(x_t - \eta_t \nabla_t)$, where 
+   \begin{eqnarray*}
+   \eta_t =\begin{cases}
+   	\frac{\sqrt{2}D}{2\sqrt{\sum_{\tau=1}^{t} ||\nabla_\tau||_2^2}}, ~&~\textrm{for convex costs (AdaGrad stepsizes)} \\
+   	\frac{1}{\sum_{s=1}^t H_s}, ~ &~ \textrm{for strongly convex costs } (H_s \textrm{= strong convexity parameter of } f_s, s\geq 1) 
+   	\end{cases}
+   	\end{eqnarray*}
+   	
+%   \IF{$x_i > x_{i+1}$}
+%   \STATE Swap $x_i$ and $x_{i+1}$
+%   \STATE $noChange = false$
+%   \ENDIF
+   \EndForEach
+%   \UNTIL{$noChange$ is $true$}
+\end{algorithmic}
+\end{algorithm}
+%\begin{framed}
+%\paragraph{Policy for COCO:} Run the AdaGrad algorithm \ref{ogd-policy} on the sequence of surrogate cost functions $\{\hat{f}_t\}_{t\geq 1}$ given by Eqn.\ \eqref{surrogate_new}.
+%\end{framed}
+
+\subsubsection{The Regret Decomposition Inequality}
+Let $x^\star \in \mathcal{X}^\star$ be any feasible action guaranteed by Assumption \eqref{feas-constr}. Plugging in the definition of surrogate costs \eqref{surrogate_new} into the drift inequality \eqref{drift_ineq_new}, and using the fact that $g_\tau(x^\star)\leq 0, \forall \tau \geq 1,$ we have
+%Working similarly as before, we have the following inequality
+\begin{eqnarray*}
+	\Phi(Q(\tau))-\Phi(Q(\tau-1)) + V(\tilde{f}_\tau(x_\tau)-\tilde{f}_\tau(x^\star)) 
+	\leq \hat{f}_\tau(x_\tau) - \hat{f}_\tau(x^\star), ~ \forall \tau \geq 1.
+\end{eqnarray*}
+Summing the above inequalities for rounds $1\leq \tau \leq t$, and using the fact that $\Phi(0)=0,$ we obtain  
+\begin{eqnarray} \label{gen-reg-decomp}
+	\Phi(Q(t)) +V \textrm{Regret}_t(x^\star) \leq \textrm{Regret}_t'(x^\star), ~ \forall x^\star \in \mathcal{X}^\star,
+\end{eqnarray}
+where $\textrm{Regret}_t$ on the LHS and $\textrm{Regret}'_t$ on the RHS of \eqref{gen-reg-decomp} refer to the regret for learning the pre-processed cost functions $\{\tilde{f}_t\}_{t\geq 1}$ and the surrogate cost functions $\{\hat{f}_t\}_{t \geq 1}$ respectively. 
+%First, 
+We will use the following upper bound on the $\ell_2$-norm of the (sub)gradients $G_t$ of the surrogate cost function $\hat{f}_t$ defined in Eqn.\ \eqref{surrogate_new}:
+\begin{eqnarray} \label{grad_bd_new}
+	%||\nabla \hat{f}_t(x_t)||_2
+	G_t \equiv ||\nabla \hat{f}_t(x_t)||
+	\stackrel{(a)}{\leq} V||\nabla \tilde{f}_t(x_t)||+ \Phi'(Q(t))||\nabla \tilde{g}_t(x_t)|| 
+	\stackrel{(b)}{\leq} \beta G\big(V+\Phi'(Q(t)\big),
+\end{eqnarray}
+where in $(a)$, we have used the triangle inequality for $\ell_2$ norms and in $(b)$, we have used the fact that all pre-processed functions are $\beta G$-Lipschitz. 
+\subsubsection{Convex Cost and Convex Constraint Functions}
+We now apply the regret decomposition inequality \eqref{gen-reg-decomp} to the case of convex cost and convex constraint functions.  
+%without making any additional assumption beyond Assumption \ref{bddness} and Assumption \ref{slater}. 
+%Since Algorithm \ref{coco_alg} uses the AdaGrad algorithm for learning the surrogate cost functions, from \eqref{cvx-reg-bd}, we need to upper bound the gradients of the surrogate functions to derive the regret bound. Towards this, 
+Let us choose the regret-minimizing OCO subroutine for the surrogate cost functions to be the OGD policy with adaptive step sizes (a.k.a. \emph{AdaGrad}) described in part 1 of Theorem \ref{data-dep-regret} in the Appendix (see Algorithm \ref{coco_alg}). 
+Plugging in the adaptive regret bound \eqref{cvx-reg-bd} on the RHS of \eqref{gen-reg-decomp}, setting $\beta=(2GD)^{-1},$ and using Eqn.\ \eqref{grad_bd_new}, we arrive at the following inequality valid for any $t \geq 1: $
+\begin{eqnarray} \label{gen-fn-ineq}
+		\Phi(Q(t)) +V \textrm{Regret}_t(x^\star) \leq \sqrt{\sum_{\tau=1}^t \big(\Phi'(Q(\tau))\big)^2} + V\sqrt{t}.
+\end{eqnarray}
+%The above inequality is obtained by first upper-bounding 
+In deriving the above result, we have utilized simple algebraic inequalities $(x+y)^2 \leq 2(x^2+y^2)$ and $\sqrt{a+b} \leq \sqrt{a} + \sqrt{b}, a, b\geq 0.$ Now recall that the sequence $\{Q(t)\}_{t\geq 1}$ is non-negative and non-decreasing as $\tilde{g}_t\geq 0.$ Furthermore, the derivative $\Phi'(\cdot)$ is non-decreasing as the function $\Phi(\cdot)$ is assumed to be convex. Hence, bounding all terms in the summation on the RHS of \eqref{gen-fn-ineq} from above by the last term, we arrive at the following inequality for any feasible $x^\star \in \mathcal{X}^\star:$ 
+\begin{eqnarray} \label{gen-fn-ineq2}
+	\Phi(Q(t)) +V \textrm{Regret}_t(x^\star) \leq \Phi'\big(Q(t)\big)\sqrt{t} + V\sqrt{t}.
+\end{eqnarray}
+The simplified regret decomposition inequality \eqref{gen-fn-ineq2} constitutes the key step for the subsequent analysis.
+%Where, to ease typing, we have assumed that the functions are scaled such that $2GD \leq 1$.
+\paragraph{$\blacksquare$ Performance Analysis}
+%~Analysis of Algorithm \ref{coco_alg}}
+\paragraph{An exponential Lyapunov function:} We now derive the Regret and CCV bounds for the proposed  policy (Algorithm \ref{coco_alg}) by choosing $\Phi(\cdot)$ to be the exponential Lyapunov function: $\Phi(x)\equiv \exp(\lambda x)-1,$ where the parameter $\lambda \geq 0$ will be fixed later. 
+%An analysis with a power-law potential function is given in Appendix \ref{power-law}, which also yields similar bounds. 
+Clearly, the function $\Phi(\cdot)$ satisfies the required conditions for a Lyapunov function - it is a non-decreasing and convex function with $\Phi(0)=0.$ 
+\paragraph{Bounding the Regret:}
+%Since the  sequence $\{Q(t)\}_{t\geq 1}$ is non-negative and non-decreasing as the pre-processed constraints are non-negative, upper-bounding all terms in the summation of the RHS of \eqref{gen-fn-ineq} by the last term, we have the following regret bound for 
+With the above choice for the Lyapunov function $\Phi(\cdot)$, Eqn.\ \eqref{gen-fn-ineq2} implies that for any feasible $x^\star \in \mathcal{X}^\star$ and for any $t \in [T],$ we have
+\begin{eqnarray*}
+	\exp(\lambda Q(t)) -1 + V \textrm{Regret}_t(x^\star) \leq \lambda \exp(\lambda Q(t)) \sqrt{t} + V\sqrt{t}.
+\end{eqnarray*}
+Transposing the first term on the above inequality to the RHS and dividing throughout by $V$, we have: 
+\begin{eqnarray} \label{reg-bd-exp}
+	\textrm{Regret}_t(x^\star ) \leq \sqrt{t}+\frac{1}{V}+ \frac{\exp(\lambda Q(t))}{V}(\lambda \sqrt{t}-1).
+\end{eqnarray}
+Choosing any $\lambda \leq  \frac{1}{\sqrt{T}},$ the last term in the above inequality becomes non-positive for any $t \in [T].$ Hence, for any $x^\star \in \mathcal{X}^\star$, we have the following regret bound
+\begin{eqnarray} \label{regret-bd1}
+	\textrm{Regret}_t(x^\star ) \leq \sqrt{t}+\frac{1}{V}. ~~ \forall t \in [T].
+\end{eqnarray}
+\paragraph{Bounding the CCV:} 
+Since all pre-processed cost functions are $\beta G=(2D)^{-1}$-Lipschitz,
+%with Lipschitz constant $\alpha G= (2D)^{-1}$, 
+we trivially have $\textrm{Regret}_t(x^\star) = \sum_{s=1}^t (\tilde{f}_s(x_s) - \tilde{f}_s(x^\star)) \geq -\frac{Dt}{2D} \geq -\frac{t}{2}.$ Hence, from Eqn.\ \eqref{reg-bd-exp}, we have that for any $\lambda < \frac{1}{\sqrt{T}}$ and any $t \in [T]:$
+\begin{eqnarray} \label{q-len-exp-bd}
+	\frac{\exp(\lambda Q(t))}{V}(1-\lambda \sqrt{t}) \leq  2t + \frac{1}{V} 
+	 \implies  Q(t) \leq  \frac{1}{\lambda}\ln\frac{1+2Vt}{1-\lambda \sqrt{t}}.
+\end{eqnarray}
+Choosing $\lambda=\frac{1}{2\sqrt{T}}, V=1,$ and scaling the bounds back by $\beta^{-1}\equiv 2GD,$ we arrive at our main result.
+%\begin{eqnarray*}
+%	\textrm{Regret}_t \leq 2GD(\sqrt{t}+1), \forall t\in [T], ~~\textrm{CCV}_T \leq 4GD\sqrt{T}\ln(2\big(1+2T)\big).
+%\end{eqnarray*}
+%\paragraph{A Power-law Lyapunov Function:}
+%We now specialize inequality \eqref{gen-fn-ineq} by considering the power-law Lyapunov function $\Phi(x)\equiv x^n$ for some integer $n \geq 2,$ to be fixed later. A similar analysis with an exponential potential function is given in Appendix \ref{exp-analysis}. Since the sequence $\{Q(t)\}_{t\geq 1}$ is non-negative and non-decreasing as the pre-processed constraints are non-negative, from \eqref{gen-fn-ineq}, we obtain 
+%\begin{eqnarray} \label{fn-ineq2}
+%	Q^n(t)+V\textrm{Regret}_t(x^\star) \leq nQ^{n-1}(t) \sqrt{t} + V\sqrt{t}.
+%\end{eqnarray} 
+%
+%\paragraph{Bounding the Regret:}
+%From Eqn.\ \eqref{fn-ineq2}, we have the following regret bound for any feasible $x^\star \in \mathcal{X}^\star:$
+%\begin{eqnarray*}
+%	\textrm{Regret}_t(x^\star) &\leq& \sqrt{t} + \frac{Q^{n-1}(t)}{V}(n\sqrt{t}-Q(t)) \\
+%	&\leq& \sqrt{t} + \frac{(n-1)^{n-1} t^{n/2}}{V},
+%\end{eqnarray*}
+%where the last step follows from the AM-GM inequality. Finally, upon taking $V=(n-1)^{n-1}T^{\frac{n-1}{2}}$ as in Algorithm \ref{coco_alg}, we obtain $\textrm{Regret}_t(x^\star) \leq 2\sqrt{t}, ~\forall 1\leq t \leq T$.
+% 
+%\paragraph{Bounding the CCV:} Since all pre-processed cost functions are $(2D)^{-1}$-Lipschitz,
+%%with Lipschitz constant $\alpha G= (2D)^{-1}$, 
+%we trivially have $\textrm{Regret}_t(x^\star)\geq -\nicefrac{Dt}{2D} \geq -\frac{t}{2}.$ Hence, from Eqn.\ \eqref{fn-ineq2}, we obtain
+%\begin{eqnarray} \label{qn-bd}
+%	Q^n(t) \leq 2Vt + nQ^{n-1}(t) \sqrt{t}.
+%\end{eqnarray}
+%Finally, to bound $Q(t)$ from the above, consider the case when $Q(t) \geq 2n\sqrt{t}$. In this case, from \eqref{qn-bd}, we have 
+%\begin{eqnarray*}
+%	Q^n(t) \leq 2Vt + \frac{1}{2}Q^n(t) \implies Q(t) \leq (4Vt)^{\frac{1}{n}}.
+%\end{eqnarray*}
+%Thus, in general, the following bound holds 
+%%the following violation bound 
+%%\begin{eqnarray*} 
+%	\[ Q(t) \leq \max(2n\sqrt{t}, (4Vt)^{\frac{1}{n}}).\]
+%%\end{eqnarray*}
+%Substituting the chosen value for the parameter $V$ and using the fact that $n\geq 2$, from the above, we have 
+%\begin{eqnarray}\label{q-bd-new2}
+%Q(t)\leq \max (2n\sqrt{T}, 2nT^{\frac{1}{2}+ \frac{1}{2n}}) = 2nT^{\frac{1}{2}+ \frac{1}{2n}}, ~ \forall t \in [T].
+%\end{eqnarray} 
+%Finally, setting $n= \max(2,\lceil\ln T \rceil)$ as in Algorithm \ref{coco_alg}, we obtain the following CCV bound:
+%%\begin{framed}
+%\begin{eqnarray*}
+%	%\textrm{Regret}_T \leq 2\sqrt{T} , \textrm{and} ~ 
+%	\textrm{CCV}_T=Q(T) \leq 3.3 (2+\ln T)\sqrt{T}, ~ \forall T \geq 1.
+%\end{eqnarray*}
+%%\end{framed}
+%%Hence, we have the following main result for the original (unscaled) cost and constraint functions:
+%%\begin{framed}
+%Recall that the above results hold for the pre-processed functions. Hence, scaling the bounds back by $\alpha^{-1} \equiv 2GD,$ we arrive at the main result of this paper:
+%We summarize the above results in the following theorem.
+%\begin{framed}
+\begin{theorem} \label{main_result}
+For the COCO problem with adversarially chosen $G$-Lipschitz cost and constraint functions, Algorithm \ref{coco_alg}, with $\beta=(2GD)^{-1}, V=1, \Phi(x)= \exp(\frac{x}{2\sqrt{T}})-1,$ yields the following Regret and CCV bounds for any horizon length $T \geq 1:$
+%for any $T \geq 1$
+\begin{eqnarray*}
+ \textrm{Regret}_t \leq 2GD(\sqrt{t}+1), ~~\forall t \in [T], ~~\textrm{CCV}_T \leq 4GD\ln(2\big(1+2T)\big)\sqrt{T}.
+ \end{eqnarray*}
+ In the above, $D$ denotes the Euclidean diameter of the closed and convex admissible set $\mathcal{X}$.
+\end{theorem}
+%\end{framed}
+
+%In the final section, we show that in addition to a small regret and CCV bounds, the proposed Algorithm \ref{coco_alg} also has a small movement cost measured in the (squared) Euclidean metric. These features make it attractive for practical applications.
+ 
+ % \vspace{-0.1in}
+% \paragraph{Remark:} The non-negative regret assumption 
+ %in the latter parts of Theorem \ref{gen-cvx-bd} and \ref{str-cvx-bd} 
+
+ %The class of convex adversaries includes the standard offline convex optimization problem with a fixed cost and a fixed constraint function.
+ 
+ %Such assumptions are necessary as otherwise, it would violate the constraint violation lower bounds given in Section \ref{lower_bound_section}.  
+ %Nevertheless, in Section \ref{improved_rates} of the Appendix, we show that the tighter constraint violation bounds can be guaranteed for certain classes of worst-case adversaries, called \emph{convex adversaries}. 
+ %This includes the standard offline convex optimization problem with a fixed cost and a fixed constraint function. See Theorem \ref{improved_violation_bd} in the Appendix for a concrete result.
+% 
+% The regret lower bound $\mathcal{X}(\sqrt{T})$ for convex cost functions without constraints is well-known \citep[Table 3.1]{hazan2016introduction}. The following result shows that any online policy must incur a CCV of $\mathcal{X}(\sqrt{T}).$ Thus the performance bound given in Theorem \ref{gen-cvx-bd} is almost optimal. 
+%	
+% 
+%%The following result is straightforward.
+%%\begin{framed}
+%\begin{theorem}[(Lower bound to the CCV)] \label{cvx-lb}
+%	Consider the constrained OCO problem with linear cost functions and affine constraints. Then any online policy will incur at least $\mathcal{X}(\sqrt{T})$ violation penalty $\mathbb{V}(T)$ over a horizon of length $T.$ 
+%\end{theorem}
+%See Section \ref{cvx-lb-pf} for the proof.
+%\end{framed}
+\iffalse
+\begin{proof}
+	Assume that on round $t$, the adversary chooses a linear cost function $g_t(x)$ and an affine constraint $g_t(x) \leq b_t,$ where the constant $b_t$ will be specified later. Let $x^\star \in \mathcal{X}$ be the best-fixed action in hindsight, which minimizes the cumulative cost $\sum_{t=1}^T g_t(x).$ We now set the constant $b_t$ to be $b_t = g_t(x^\star), t \in [T].$ Clearly, $x^\star \in \mathcal{X}_T$ is a feasible point that satisfies all constraints up to time $T$. Hence, the CCV incurred by any online policy $\pi$ over the entire horizon $T$ is given by: 
+	\begin{eqnarray*}
+	\sup_{\mathcal{I}} \mathbb{V}_{\mathcal{I}} \geq \mathbb{V}_T = \sum_{t=1}^T \big(g_t(x_t) - b_t\big) = \sum_{t=1}^T g_t(x_t) - \sum_{t=1}^T g_t(x^\star) \equiv \textrm{Regret}_T(x^\star) \geq \mathcal{X}(\sqrt{T}), 
+	\end{eqnarray*} 
+	where the last inequality follows from the lower bound on the achievable regret for adversarially chosen linear cost functions over a convex domain. 
+\end{proof}
+\fi
+
+ %In this case, we still have $\textrm{Regret}_t(x^\star) = O(t). $ Using a similar analysis as in  \cite{sinha2023banditq}, we can show that $\textrm{Regret}_t(x^\star)= \mathbb{V}_T=O(T^{3/4}).$
+ %In this case, there is nothing to prove on the regret. We only need to bound the queue length, which gives a bound on the violation penalty. 
+\iffalse 
+The following theorem shows that the additional assumption on the existence of a Slater's point implies improved bounds for both regret and CCVs. 
+\begin{framed}
+\begin{theorem} \label{cvx-slater}
+Suppose Assumptions \ref{bddness} and \ref{slater} hold. Then, upon setting $V=\sqrt{T},$ we have 
+	\begin{eqnarray*}
+		\frac{1}{t}\sum_{\tau=1}^t Q(\tau) = O(\sqrt{T}), ~ \textrm{Regret}_t(x^\star) = O(T^{5/8}), \forall x^\star \in \mathcal{X}_t, ~\forall t \in [T].
+	\end{eqnarray*}
+\end{theorem}
+\end{framed}
+See Appendix \ref{cvx-slater-pf} for the proof of the above result. 
+
+ %\begin{framed}
+%\textbf{Observation:} Note that, by choosing the same cost and constraint vectors (upon setting $b_t=0$), we can immediately see that the regret is upper bounded by the CCV, \emph{i.e.,} $\mathbb{V}_T(x^\star) \geq \textrm{Regret}_T(x^\star).$ Since it is impossible to achieve a regret better than $O(\sqrt{T}),$ the above implies that $\mathbb{V}_T = \mathcal{X}(\sqrt{T}).$ (\textbf{\textcolor{blue}{Check that the above argument works. Note that we compute the regret with respect to the feasible points only}}).
+%\end{framed}
+%Upon setting $V=\sqrt{T},$ we show that the above online policy achieves a sublinear regret and constraint violation penalty. We will consider the following two cases. 
+\iffalse 
+\textbf{Case I: $\forall t, \exists x_t^\star \in \mathcal{X}:$ $\textrm{Regret}_t(x_t^\star) \geq 0.$}
+
+In this case, from Eq.\ \ref{main_eq} we have for all $t \geq 1:$
+\begin{eqnarray} \label{q-bd}
+	Q^2(t) \leq 3t+ c_1 \sqrt{\sum_{\tau=1}^t Q^2(\tau)}+ c_2V\sqrt{t}. 
+\end{eqnarray} 
+
+From Eq. \ref{q-ev}, due to the boundedness assumption on the constraint vectors, we trivially have
+\begin{eqnarray*}
+	Q(t)= O(t), ~ \forall t\geq 1.
+\end{eqnarray*}
+Plugging the above bounds into Eq. \ref{q-bd}, we have 
+ \begin{eqnarray*}
+ 	Q^2(t) \leq O(t) + O(t^{3/2}) + O(T) = O(T^{3/2}), ~ \emph{i.e.,} ~Q(t) = O(T^{3/4}).
+ \end{eqnarray*}
+ Plugging in the improved bound on the queue length into \ref{q-bd} again, we now have that for all $t \geq 1:$
+ \begin{eqnarray*}
+ 	Q^2(t) \leq O(t)+ O(T^{5/4}) + O(T)= O(T^{5/4}). 
+ \end{eqnarray*}
+ Continuing this successive refinement process (see the proof of Proposition 5 in \cite{sinha2023banditq}), we conclude 
+ \begin{eqnarray*}
+ 	Q(t) = O(\sqrt{T}), ~\forall t \in [T]. 
+ \end{eqnarray*}
+ The above bound implies that the proposed online policy incurs a sublinear ($O(\sqrt{T})$) CCV over any interval in the entire horizon of length $T.$ 
+ Finally, plugging in the above bound in Eq. \ref{main_eq}, we have that 
+ \begin{eqnarray*}
+ 	\textrm{Regret}_t(x^\star) \leq O(\sqrt{t}), ~\forall t\geq 1. 
+ \end{eqnarray*}
+ \fi
+The following theorem shows that under a new set of assumptions, which roughly corresponds to a certain type of worst-case adversary, one can prove the optimal $O(\sqrt{T})$ regret and CCV.  
+\begin{framed}
+\begin{theorem} \label{positive-regret}
+	%Assume that there exists $x_t^\star \in \mathcal{X}_t$ such that $\textrm{Regret}_t(x_t^\star) \geq 0, \forall t \in [T].$ 
+	Suppose Assumptions \ref{bddness} and \ref{non-neg-regret} hold.
+	%However, we do not make any assumption on the validity of Slater's condition (\emph{i.e.,} we set $\eta^\star=0$). 
+	Then, upon setting $V=\sqrt{T},$ we have
+	% the following bounds for the regret and constraint violations.
+	\begin{eqnarray*}
+		Q(t)=O(\sqrt{T}), ~\textrm{Regret}_t(x^\star)= O(\sqrt{T}), ~\forall x^\star \in \mathcal{X}_t, \forall t \in [T].
+	\end{eqnarray*}
+	%This can be ensured, \emph{e.g.,} if the adversary chooses the constraints such that the current action remains feasible. 
+	% we obtain $Q(t) = O(\sqrt{t}), \forall t \geq 1$ under Assumption \ref{bddness} when. 
+\end{theorem}
+\end{framed}
+See Appendix \ref{positive-regret-proof} for the proof. 
+
+\begin{corollary}
+	Let Assumption \ref{bddness} holds and set the cost functions $f_t=0~, \forall t.$ Then $Q(t) = O(\sqrt{t}), \forall t \geq 1$.
+\end{corollary} 	
+ \fi
+ %\vspace{-0.1in}
+ \subsubsection{Strongly Convex Cost and Convex Constraint Functions} \label{str-cvx-lin-cnst}
+We now consider the setting where each of the cost functions $f_t, t\geq 1,$ is $\alpha$-strongly convex for some $\alpha>0$. The constraint functions $g_t$'s are assumed to be convex as before and not necessarily strongly convex. 
+%For this case, however, we assume that the values of the parameters $\alpha$ and $G$ are known to the policy, which will be used for setting the parameter $V.$
+%Note that the value of the strong-convexity parameter $\alpha$ needs not be known to the policy. 
+%Also we make the standard assumption that $\textrm{diam}(\mathcal{X}) \leq D.$ Our objective is to derive better regret and constraint violation penalty bound for this case by making use of the $L^\star$ regret bound given in \cite[Theorem 4.25]{orabona2019modern}. Generalizing the policy described above, we now consider a sequence of surrogate penalty functions.
+% \begin{eqnarray} \label{transformed_cost}
+% 	 c_t'(x) = Vc_t(x) - 2Q(t)\langle a_t, x\rangle,  
+% \end{eqnarray}
+% for some constant $V>0$ that will be fixed later.
+  %In Algorithm \ref{coco_alg}, 
+  In this case, we choose the regret-minimizing OCO subroutine for the surrogate cost functions to be the OGD algorithm with the step-size sequence as given in part 2 of Theorem \ref{data-dep-regret} in the Appendix (see Algorithm \ref{coco_alg}).
+  %, whose regret bound is given by Eqn.\  \eqref{str-cvx-reg-bd}.
+  \iffalse
+  following adaptive regret bound \cite[Theorem 4.1]{hazan2007adaptive}:
+ \begin{eqnarray} \label{strong-cvx-regret}
+ 	\textrm{Regret}_T \leq \frac{1}{2}\sum_{t=1}^T \frac{G_t^2}{H_{1:t}},
+ \end{eqnarray} 
+ where $H_{1:t}$ is the sum of the strong convexity parameters of the first $t$ cost functions.
+ \fi
+% Now proceeding similarly as above, we have 
+% \begin{eqnarray} \label{regret-bd}
+% 	Q^2(t) + V \textrm{Regret}_t \leq \textrm{Regret}_t'(x^\star). 
+% \end{eqnarray}
+% Note that for the transformed sequence of functions, we have 
+% \begin{eqnarray*}
+% 	||\nabla c_t'(x_t)||^2 \leq 2V^2L^2 + 8Q(t)^2.
+% \end{eqnarray*} 
+ Since the cost functions are known to be $\alpha$-strongly convex, each of the surrogate cost functions \eqref{surrogate_new} is $V\alpha$-strongly convex. Hence, using the bound from Eqn.\ \eqref{grad_bd_new}, 
+ %plugging in the upper bound of the norm of the gradient of the surrogate costs from  \eqref{grad_bd_new} into  \eqref{str-cvx-reg-bd}, 
+ choosing the scaling parameter to be $\beta=1$, and simplifying the generic regret bound given by Eqn.\ \eqref{str-cvx-reg-bd}, we obtain the following regret bound for learning the surrogate cost functions $\{\hat{f}_s\}_{s\geq 1}$:
+ %\vspace{-0.1in}
+ \begin{eqnarray}\label{adaptive_str_cvx_bd}
+ 	\textrm{Regret}'_t(x^\star) \leq \frac{VG^2}{\alpha} (1+\ln(t)) + \frac{G^2}{\alpha V} \sum_{\tau=1}^t \frac{(\Phi'(Q(\tau)))^2}{\tau}, ~ x^\star \in \mathcal{X}. 
+ \end{eqnarray}
+ %\vspace{-0.05in}
+In the above, we have used the standard bound for the Harmonic sum: $\sum_{\tau=1}^t \frac{1}{\tau} \leq 1+ \ln(t)$, as well as the fact that $(a+b)^2 \leq 2(a^2+b^2). $
+ Substituting the bound \eqref{adaptive_str_cvx_bd} into the regret decomposition inequality \eqref{gen-reg-decomp}, and using the non-decreasing property of the sequence $\{Q(\tau)\}_{\tau \geq 1}$ and the derivative $\Phi'(\cdot)$, we obtain 
+ %\vspace{-0.1in}
+ \begin{eqnarray} \label{Gronwall-ineq}
+ 	\Phi(Q(t)) + V \textrm{Regret}_t(x^\star)  \leq \frac{VG^2}{\alpha} (1+\ln(t)) + \frac{G^2}{\alpha V}(1+\ln(t)) \big(\Phi'(Q(t))\big)^2, ~ \forall x^\star \in \mathcal{X}^\star, \forall t.
+ \end{eqnarray}
+ Finally, choosing $\Phi(\cdot)$ as the quadratic Lyapunov function, \emph{i.e.,} $\Phi(x) \equiv x^2,$ we arrive at the following result for strongly convex cost and convex constraint functions. 
+ %the following theorem bounds the regret and the CCV for Algorithm \ref{coco_alg}.
+
+ \begin{theorem} \label{str-cvx-bd}
+ 	% For COCO with $\alpha$-strongly convex cost and convex constraint functions, 
+ 	 For the COCO problem with adversarially chosen $\alpha$-strongly convex, $G$-Lipschitz cost functions and $G$-Lipschitz convex constraint functions,
+ 	 Algorithm \ref{coco_alg}, with $\beta=1, V=\frac{8G^2 \ln(Te)}{\alpha}, \Phi(x)= x^2,$ yields the following Regret and CCV bounds for any horizon length $T \geq 1:$
+	%\begin{eqnarray*}
+		\[ \textrm{Regret}_t(x^\star) \leq  \frac{G^2}{\alpha}\big(1+\ln(t)\big), ~ \textrm{CCV}_t= O\big(\sqrt{\frac{t \log T}{\alpha}}\big), \forall x^\star \in \mathcal{X}^\star, ~\forall t \in [T].\]
+	%\end{eqnarray*}
+Furthermore, if the worst-case regret is non-negative in some round $t$ (\emph{i.e.,} $\sup_{x^\star \in \mathcal{X}^\star}\textrm{Regret}_t(x^\star) \geq 0$), then the CCV can be further improved to $\textrm{CCV}_T= O(\frac{\log T}{\alpha})$ while keeping the regret bound the same. 
+%(b) For a natural class of adversaries, called convex adversaries defined in Eqn.\ \eqref{jensenadv} in Appendix \ref{improved_rates}, we have $\mathbb{V}(t)= O(\frac{\log T}{\alpha})$ under some mild assumptions. See Theorem \ref{improved_violation_bd} for a precise statement.
+	%In the above, the notation $\tilde{O}(\cdot)$ hides factors logarithmic in $T$.
+ \end{theorem}
+ %\end{framed}
+ %\vspace{-0.1in}
+ Please refer to Appendix \ref{str-cvx-pf} for the proof of Theorem \ref{str-cvx-bd}. 
+ 
+ \textbf{Remarks:} The second part of the theorem is surprising because it says that when the regret is non-negative, a stronger logarithmic CCV bound holds for not necessarily strongly convex constraints. In Appendix \ref{improved_rates}, we give example of an interesting class of adversaries, called \emph{convex adversary}, for which the non-negative regret assumption holds true in the OCO setting.
+ %Hence, the strong convexity of the cost functions leads to a sharper bound for CCV when the regret is non-negative. 
+ 
+ \subsection{Lower Bounds} \label{lower_bound_section}
+We now show that under Assumptions \ref{cvx}, \ref{bddness}, and \ref{feas-constr}, the regret and the CCV of any online policy for the COCO problem for $T$ rounds are both lower bounded by $\Omega(\sqrt{T})$ provided the problem is high-dimensional.  
+Recall that if the constraint function $g_t= 0, \forall t$, then the COCO problem reduces to the standard OCO problem, and  $\Omega(\sqrt{T})$ is a well-known regret lower bound for OCO  \citep[Theorem 10]{hazan2022introduction}. In this case, we trivially have {$\textrm{CCV}= 0.$}  
+The main challenge in proving a lower bound for COCO is \emph{simultaneously} bounding both the regret and CCV. Prior work does not give any simultaneous lower bounds since the standard adversarial inputs used to derive the lower bound of \citet{hazan2022introduction} do not satisfy the feasibility assumption (Assumption 3). We derive the lower bound by constructing a sequence of cost and constraint functions that satisfy Assumption \ref{feas-constr} in a $d$-dimensional Euclidean box of unit diameter.
+
+
+
+%Note that the CCV lower bound does not follow from the corresponding regret lower bound for the OCO problem due to the additional Assumption \ref{feas-constr}, which puts an implicit constraint on the admissible constraint functions.
+
+\begin{theorem}\label{thm:lbcoco}
+Under Assumptions \ref{cvx}, \ref{bddness}, and \ref{feas-constr}, for any choice of the horizon length $T$ and online policy, there exists a problem instance with dimension $d \geq T$ where $\min (\textrm{Regret}_T, \textrm{CCV}_T) = \Omega(\sqrt{T}).$  
+%the regret and CCV as defined in \eqref{intro-regret-def} and \eqref{intro-gen-oco-goal} with $k=1$ are both $\Omega(\sqrt{T})$.
+\end{theorem}
+In high-dimensional problems where $d \gg T,$ the above lower bound matches with the upper bound given in Theorem \ref{main_result}. The proof of Theorem \ref{thm:lbcoco} can be found in Appendix \ref{app:lbcoco}.
+
+
+ %It can be verified that the regret bounds given in Theorem \ref{gen-cvx-bd} and \ref{str-cvx-bd} are optimal as they match with the corresponding lower bounds for the unconstrained OCO problem \citep[Table 3.1]{hazan2016introduction}.
+%Similar to Theorem \ref{gen-cvx-bd}, the assumption of non-negativity of regret can be relaxed for \emph{convex} adversaries. See Theorem \ref{improved_violation_bd} in the Appendix for the concrete result.
+% The non-negative regret assumption in the latter parts of Theorem \ref{gen-cvx-bd} and \ref{str-cvx-bd} is non-trivial as the offline benchmark $x^\star$ is constrained to belong to the feasible set $\mathcal{X}^\star$ whereas the actions of the policy $\{x_t\}_{t\geq 1}$ belong to the larger admissible set $\mathcal{X} \supseteq \mathcal{X}^\star.$ Such assumptions are necessary as otherwise, it would violate the constraint violation lower bounds given in Section \ref{lower_bound_section}.  Nevertheless, in Section \ref{improved_rates} of the Appendix, we show that the tighter constraint violation bounds can be guaranteed for certain classes of worst-case adversaries, called \emph{convex adversaries}. This includes the standard offline convex optimization problem with a fixed cost and a fixed constraint function. See Theorem \ref{improved_violation_bd} in the Appendix for a concrete result.
+
+ 
+ \iffalse 
+ \subsubsection{Lower bounds} 
+ The optimality of the regret bounds, given in Theorems \ref{gen-cvx-bd} and \ref{str-cvx-bd}, follows from the corresponding unconstrained regret bounds \citep[Table 3.1]{hazan2016introduction}.
+ We conclude this section by establishing lower bounds to the CCV with convex constraints. 
+ %The regret lower bound $\mathcal{X}(\sqrt{T})$ for convex cost functions without constraints is well-known \citep[Table 3.1]{hazan2016introduction}. 
+ The following result shows that, under the assumption of non-negativity of the regret, the cumulative violation bounds given in Theorems \ref{gen-cvx-bd} and \ref{str-cvx-bd} are optimal. 
+	
+ 
+%The following result is straightforward.
+%\begin{framed}
+\begin{theorem}[(Lower bound to the CCV)] \label{cvx-lb}
+1.  Consider the constrained OCO problem with convex cost functions and convex constraint functions. Then for any online policy, we have $\mathbb{V}(T) \geq \mathcal{X}(\sqrt{T})$. 
+
+2.If the cost functions are $\alpha$-strongly convex, then for any online policy, we have $\mathbb{V}(T) \geq \mathcal{X}(\frac{\log{T}}{\alpha})$. 
+
+\end{theorem}
+See Section \ref{cvx-lb-pf} in the Appendix for the proof of the above result.
+\fi
+\iffalse
+As a corollary of the above result, by setting $V=\Theta(T^{1/3}),$ we obtain $O(T^{2/3})$ bounds simultaneously for regret and CCV. Clearly, this bound improves upon the bound obtained by assuming only the convexity of the cost functions as given in Theorem \ref{gen-cvx-bd}.
+\fi
+\iffalse
+Our next result shows that by assuming that Slater's condition is true, one can obtain an \emph{exponential improvement} of the previous regret and CCV guarantee.
+
+ \begin{framed}
+\begin{theorem} \label{str-cvx-slater}
+	In addition to the convexity assumptions, assume that Slater's condition, as given in Definition \ref{slater}, holds for some $\eta^\star >0$. Then, for any strongly convex cost and convex constraint functions and for any constant $V = \mathcal{X}(\log T)$, we can obtain the following bound for the average queue length:	\begin{eqnarray*}
+		\frac{1}{t}\sum_{\tau=1}^t Q(\tau) = O(V), ~\forall t \in [T].
+	\end{eqnarray*}
+	%In particular, upon setting $V=\log T,$ we obtain logarithmic regret and average violation penalty simultaneously.
+\end{theorem}
+\end{framed}
+\fi
+
+\iffalse
+
+  \begin{algorithm}
+\caption{Online Learning with Constraints}
+\label{learning-with-constraints}
+\begin{algorithmic}[1]
+%\State \algorithmicrequire{ Target reward rate vector $\bm{\vec{\lambda}}$,} Euclidean projection oracle $\Pi_{\Delta_N}(\cdot)$ onto the simplex $\Delta_N.$
+\State $\bm{Q} \gets \bm{0}, \bm{x} \gets [1/N, 1/N, \ldots, 1/N], V\gets \sqrt{T}, \texttt{epoch}\gets 1$ \algorithmiccomment{\emph{Initialization}} \label{init} 
+\ForEach {round:}
+\State Run an appropriate OCO algorithm for the cost function $c_t'$
+\If {the cumulative regret from the last epoch is non-positive}
+\State Start a new \texttt{epoch} at round $t$ and run OCO with cost function given by the constraints
+\State Goto line \ref{init}
+\EndIf
+\EndForEach
+\end{algorithmic}
+\end{algorithm}
+
+
+Our next result shows that under the assumption that worst-case regret remains positive throughout the horizon, both the queue length and the regret can increase only logarithmically with the horizon length. 
+\begin{framed}
+\begin{theorem} \label{positive-regret-str-cvx}
+	%Assume that there exists $x_t^\star \in \mathcal{X}_t$ such that $\textrm{Regret}_t(x_t^\star) \geq 0, \forall t \in [T].$ 
+	%However, we do not make any assumption on the validity of Slater's condition (\emph{i.e.,} we set $\eta^\star=0$). 
+	Suppose Assumptions \ref{bddness} and \ref{non-neg-regret} hold. In addition, assume that each of the cost functions $f_t$'s are $\alpha$-strongly convex for some $\alpha >0.$ 
+	Then, upon setting $V \geq \mathcal{X}(\ln(T)),$, we have: %the following bounds for the regret and constraint violations.
+	\begin{eqnarray*}
+		\textrm{Regret}_t(x^\star)= O(\frac{(\ln{t})^2}{V}),~ Q(t)=O(\sqrt{V\ln{t}}), ~\forall x^\star \in \mathcal{X}_t, \forall t \in [T].
+	\end{eqnarray*}
+	%This can be ensured, \emph{e.g.,} if the adversary chooses the constraints such that the current action remains feasible.  
+\end{theorem}	
+\end{framed}
+See Appendix \ref{positive-regret-str-cvx-proof} for the proof of the above result. The above result implies that by choosing $V=\Theta(\log T)$, we can obtain both logarithmic regret and logarithmic CCV with respect to the length of the time horizon.
+\fi
+% \subsection{Improved Bounds for a Special case}
+%Consider the special case when $\forall t, \exists x_t^\star: \textrm{Regret}_t(x_t^\star) >0.$ 
+
+ \iffalse
+ \section{Strongly Convex Constraints} \label{str-cvx-cnstr}
+% We consider an online learning problem where on every round $t,$ an online policy chooses an action $x_t$ from a feasible closed and bounded convex set $\mathcal{X}.$ On the same round, the adversary chooses a cost function $f_t: \mathcal{X} \to \mathbb{R}$ and a constraint of the form $g_t(x) \leq b_t.$ 
+%%where the function $g_t: \mathcal{X} \to \mathbb{R}$ is also $\alpha$-strongly convex. Both the functions $f_t$ and $g_t$ are assumed to be $L$-Lipschitz. 
+%The policy chooses its action \emph{before} the adversary reveals its choices for round $t$. 
+%
+%
+%Define a queueing recursion:
+% \begin{eqnarray*}
+% 	Q(t) = (Q(t-1)+ g_t(x_t)-b_t)^+, ~Q(0)=0.
+% \end{eqnarray*}
+% Define the potential function $\Phi(t)\equiv Q^2(t).$ Observe that for any real number $x$, we have $((x)^+)^2=xx^+.$ Hence, 
+% \begin{eqnarray*}
+% 	Q^2(t) &=& \left(Q(t-1)+ g_t(x_t)-b_t\right)Q(t) \\
+% 	&=& Q(t-1)Q(t)+ Q(t) \left(g_t(x_t)-b_t\right)\\
+% 	&\stackrel{(a)}{\leq}& \frac{1}{2}Q^2(t)+ \frac{1}{2}Q^2(t-1) + Q(t) \left(g_t(x_t)-b_t\right). 
+% \end{eqnarray*}
+% where in (a), we have used the AM-GM inequality. Rearranging the above inequality,
+%% where $\max_{x \in \mathcal{X}} g_t^2(x)+ b_t^2 + 2|g_t(x)b_t| = \max_{x \in \mathcal{X}} (|g_t(x)|+|b_t|)^2\leq B.$ 
+% the \emph{one-step drift} of the potential function $\Phi(t)$ may be upper bounded as 
+% \begin{eqnarray*}
+% 	\Phi(t)-\Phi(t-1) = Q^2(t)-Q^2(t-1)\leq 2Q(t)\left(g_t(x_t)-b_t\right).
+% \end{eqnarray*}
+% Motivated by the above calculations, we now define a surrogate cost function $f_t':\mathcal{X} \to \mathbb{R}$ as follows:
+% \begin{eqnarray*}
+% 	f'_t(x) \equiv Vf_t(x) + 2Q(t) g_t(x),
+% \end{eqnarray*}
+% where $V>0$ is a tunable parameter to be fixed later.  Now fix any feasible $x^\star \in \mathcal{X},$ which satisfies all $T$ constraints, \emph{i.e.,} $g_t(x^\star)\leq b_t, \forall t \in [T].$ For any $\tau \in [T],$ we have 
+% \begin{eqnarray} \label{drift_ineq}
+% 	&&\Phi(\tau)-\Phi(\tau-1) + V\big(f_\tau(x_\tau)-f_\tau(x^\star)\big) \nonumber  \\
+% 	&\leq&  \left(V f_\tau(x_\tau) + 2Q(\tau)g_\tau(x_\tau)\right) - \left(Vf_\tau(x^\star) + 2Q(\tau)b_\tau\right)\nonumber  \\
+% 	&\stackrel{(a)}{\leq} &  \left(V f_\tau(x_\tau) + 2Q(\tau)g_\tau(x_\tau)\right) - \left(Vf_\tau(x^\star) + 2Q(\tau)g_\tau(x^\star)\right)\nonumber \\
+% 	&\leq & f_{\tau}'(x_\tau) - f_\tau'(x^\star), 
+% \end{eqnarray}
+% where in (a), we have used the feasibility of the static action $x^\star$ (\emph{i.e.,} $b_\tau \geq g_\tau(x^\star)$). Summing up the first $t$ inequalities \eqref{drift_ineq} above, we obtain 
+% \begin{eqnarray*}
+% 	\Phi(t)-\Phi(0) + V \textrm{Regret}_t(x^\star)\leq \textrm{Regret}_t'(x^\star). 
+% \end{eqnarray*}
+In this section, we investigate the case when each constraint function $2\psi(g_t(\cdot))$ are $\alpha$-strongly convex. To establish strong results without any extraneous assumptions, we first consider the case when the cost functions are identically equal to zero, and the only objective is to derive strong bounds for the queue length variables. 
+ %\subsection{Queue Stabilization and Constraint Satisfaction}
+%To test the limit of the proposed policy, consider the case when one is only interested in satisfying the constraints. 
+By setting $f_t=0, \forall t,$ we immediately have $\textrm{Regret}_t(x^\star)=0.$ Hence, \eqref{strong-cvx-regret} yields the following recursive bounds on the queue length process;
+\begin{eqnarray} \label{q-bd-str-cvx}
+	Q^2(t) \leq \frac{G^2}{4\alpha} \sum_{\tau=1}^t \frac{Q^2(\tau)}{\sum_{s=1}^\tau Q(s)}.
+\end{eqnarray}
+%Using the result in Proposition \ref{q-bd-prop}, we immediately obtain that $Q(t) = O(\frac{2L^2}{\alpha}\log (t)).$ 
+The following result gives a strong bound on the queue lengths as implied by the above bound. 
+\begin{framed}
+\begin{theorem}[(Upper bound on the queue length)]\label{constraint-sat-cvx}
+For $\alpha$-strongly convex constraint functions $g$'s, the queue length process is bounded as \[Q(t)=O(\frac{G^2}{4\alpha}\log (t)),~\forall t \geq 1.\]
+\end{theorem}
+\end{framed}
+See Proposition \ref{q-bd-prop} in the Appendix for the proof of the above result.
+
+\section{Strongly Convex Constraints}
+Clearly, in this case each surrogate cost function $f_t'$, defined in \eqref{surrogate-def}, is $(V+Q(t))\alpha$-strongly convex %\footnote{\textcolor{blue}{Actually, the surrogate loss function $f_t'$ is $(V\alpha + 2Q(t-1)\alpha)$-strongly convex}.} 
+ with the norm of the (sub)gradients bounded by $G_t\leq (V+Q(t))\frac{G}{2}$ \eqref{grad-bd}. Hence, using the regret bound \eqref{strong-cvx-regret}, there exists an OGD policy that achieves the following bound:
+ %we have the following bound under the action of an adaptive online gradient descent  
+ \begin{eqnarray} \label{d-str-cvx-bd}
+ 	Q^2(t) +  V \textrm{Regret}_t(x^\star) \leq \frac{G^2}{4\alpha}\sum_{\tau=1}^t \frac{V^2+ Q^2(\tau)}{V\tau+ \sum_{s=1}^\tau Q(s)}.
+ \end{eqnarray}
+ \fi
+% Lower bounding the sum in the denominator by zero, we get the same regret and violation penalty bounds as in Section \ref{str-cvx-lin-cnst}. However, potentially, one can do better using a more sophisticated analysis (\emph{e.g.,} Bihari Laselle's inequality).  
+
+
+%Although, in this special case, one can also run a no-regret policy to minimize the sum of sequence of strongly-convex functions $\{g_t\}_{t\geq 1},$ it is interesting to see that our proposed policy also yields a logarithmic violation penalty. Note that, it is by no means obvious, as our proposed policy minimizes the sum of functions $\{Q(t)g_t\}_{t\geq 1},$ where $Q(t)$ varies according to the action of the policy as in \eqref{q-ev}.

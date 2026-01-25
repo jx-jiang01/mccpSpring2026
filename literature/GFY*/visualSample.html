@@ -1,0 +1,480 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>GFYu Papers Macro-Level Structure Visualization</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 20px;
+            background-color: #f5f5f5;
+        }
+        .container {
+            max-width: 1400px;
+            margin: 0 auto;
+            background: white;
+            padding: 20px;
+            border-radius: 10px;
+            box-shadow: 0 0 10px rgba(0,0,0,0.1);
+        }
+        h1 {
+            text-align: center;
+            color: #2c3e50;
+            margin-bottom: 30px;
+        }
+        .paper-section {
+            margin-bottom: 40px;
+            padding: 20px;
+            background: #f8f9fa;
+            border-radius: 10px;
+            border-left: 5px solid #3498db;
+        }
+        .paper-title {
+            font-size: 1.5em;
+            color: #2c3e50;
+            margin-bottom: 10px;
+            font-weight: bold;
+        }
+        .paper-meta {
+            color: #7f8c8d;
+            font-size: 0.9em;
+            margin-bottom: 20px;
+        }
+        .structure-diagram {
+            display: flex;
+            flex-direction: column;
+            gap: 20px;
+        }
+        .section {
+            border: 2px solid #3498db;
+            border-radius: 8px;
+            padding: 15px;
+            background: #ecf0f1;
+            position: relative;
+        }
+        .section-header {
+            background: #3498db;
+            color: white;
+            padding: 10px;
+            margin: -15px -15px 15px -15px;
+            border-radius: 6px 6px 0 0;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        .section-title {
+            font-weight: bold;
+            font-size: 1.2em;
+        }
+        .moves {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 10px;
+            margin-top: 10px;
+        }
+        .move {
+            background: white;
+            padding: 10px;
+            border-radius: 5px;
+            border-left: 4px solid #e74c3c;
+        }
+        .move-title {
+            font-weight: bold;
+            color: #e74c3c;
+            margin-bottom: 5px;
+        }
+        .move-content {
+            font-size: 0.9em;
+            color: #555;
+        }
+        .key-excerpt {
+            background: #fff3cd;
+            border: 1px solid #ffeaa7;
+            border-radius: 5px;
+            padding: 10px;
+            margin: 10px 0;
+            font-style: italic;
+            font-size: 0.9em;
+        }
+        .analysis {
+            background: #d4edda;
+            border: 1px solid #c3e6cb;
+            border-radius: 5px;
+            padding: 10px;
+            margin: 10px 0;
+            font-size: 0.9em;
+        }
+        .flow-arrow {
+            text-align: center;
+            font-size: 2em;
+            color: #7f8c8d;
+            margin: 10px 0;
+        }
+        .comparison-table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 20px 0;
+            background: white;
+        }
+        .comparison-table th, .comparison-table td {
+            border: 1px solid #ddd;
+            padding: 8px;
+            text-align: left;
+        }
+        .comparison-table th {
+            background-color: #f2f2f2;
+            font-weight: bold;
+        }
+        .highlight {
+            background-color: #fff3cd;
+            font-weight: bold;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>GFYu Papers: Macro-Level Structure Analysis</h1>
+        
+        <!-- NeutronTP Paper -->
+        <div class="paper-section">
+            <div class="paper-title">Paper 1: NeutronTP: Load-Balanced Distributed Full-Graph GNN Training with Tensor Parallelism</div>
+            <div class="paper-meta">arXiv:2412.20379 | PVLDB 2025 | Distributed Systems / Parallel Computing</div>
+
+            <div class="structure-diagram">
+                <!-- Introduction Section -->
+                <div class="section">
+                    <div class="section-header">
+                        <span class="section-title">Section 1: Introduction</span>
+                    </div>
+
+                    <div class="moves">
+                        <div class="move">
+                            <div class="move-title">Move 1: Establishing Territory</div>
+                            <div class="move-content">
+                                <strong>Centrality Claims:</strong> GNNs have "demonstrated remarkable effectiveness"; full-graph training "has emerged as a promising method"
+                            </div>
+                            <div class="key-excerpt">
+                                "Graph Neural Networks (GNNs) have demonstrated remarkable effectiveness in machine learning tasks... Recently, full-graph GNN training, which involves training on the entire graph, has emerged as a promising GNN training method..."
+                            </div>
+                            <div class="analysis">
+                                Strong centrality claims with evaluative language. Present perfect tense for significance. Synthesizes key developments.
+                            </div>
+                        </div>
+
+                        <div class="move">
+                            <div class="move-title">Move 2: Establishing Niche</div>
+                            <div class="move-content">
+                                <strong>Gaps Identified:</strong> "unbalanced workloads," "high overhead," "cross-worker vertex dependencies" in data parallelism
+                            </div>
+                            <div class="key-excerpt">
+                                "Despite that partitioning graph data enables distributed GNN systems to handle large-scale data, it also constitutes a primary constraint on the performance of GNN data parallelism. Firstly... the irregular nature of graph data makes it challenging to ensure load balance... Secondly, the edges among data samples lead to complex cross-worker vertex dependencies..."
+                            </div>
+                            <div class="analysis">
+                                Systematic enumeration ("Firstly," "Secondly") clearly identifies multiple problem aspects. Highly specific and researchable gaps.
+                            </div>
+                        </div>
+
+                        <div class="move">
+                            <div class="move-title">Move 3: Occupying Niche</div>
+                            <div class="move-content">
+                                <strong>Solution:</strong> Tensor parallelism that partitions features instead of graph structures; NeutronTP system with decoupled training and memory-efficient scheduling
+                            </div>
+                            <div class="key-excerpt">
+                                "In this paper, we leverage tensor parallelism for distributed GNN training, eliminating cross-worker vertex dependencies by partitioning features instead of the graph structure."
+                            </div>
+                            <div class="analysis">
+                                Clear technical positioning with specific approach. Enumerated contributions provide structure. Quantitative claims (1.29×-8.72× speedup).
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="flow-arrow">↓</div>
+
+                <!-- Background Section -->
+                <div class="section">
+                    <div class="section-header">
+                        <span class="section-title">Section 2: Background and Motivation</span>
+                    </div>
+                    <div class="analysis">
+                        Establishes technical foundation: GNNs, Full-Graph Training, Data Parallelism limitations. Systematic presentation of related concepts before introducing solution.
+                    </div>
+                </div>
+
+                <div class="flow-arrow">↓</div>
+
+                <!-- Methods Sections -->
+                <div class="section">
+                    <div class="section-header">
+                        <span class="section-title">Sections 3-4: GNN Tensor Parallelism & NeutronTP System</span>
+                    </div>
+                    <div class="moves">
+                        <div class="move">
+                            <div class="move-title">Technical Contribution</div>
+                            <div class="move-content">
+                                <strong>Core Approach:</strong> Tensor parallelism with gather/split operations
+                                <br><strong>System Components:</strong> Generalized Decoupled Training, Memory-Efficient Task Scheduling
+                            </div>
+                            <div class="key-excerpt">
+                                "We further enhance the efficiency of GNN tensor parallelism by optimizing communication and memory overhead. Firstly, we employ a generalized decoupled training approach... Secondly, we employ a memory-efficient task scheduling strategy..."
+                            </div>
+                            <div class="analysis">
+                                Modular architecture with complementary techniques. High technical precision with algorithmic descriptions.
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="flow-arrow">↓</div>
+
+                <!-- Evaluation Section -->
+                <div class="section">
+                    <div class="section-header">
+                        <span class="section-title">Section 5: Evaluation</span>
+                    </div>
+                    <div class="moves">
+                        <div class="move">
+                            <div class="move-title">Empirical Validation</div>
+                            <div class="move-content">
+                                <strong>Metrics:</strong> Speedup comparisons (1.29×-8.72×)
+                                <br><strong>Baselines:</strong> DistDGL, NeutronStar, Sancus, DistDGLv2
+                                <br><strong>Scenarios:</strong> Homogeneous and heterogeneous graphs
+                            </div>
+                            <div class="analysis">
+                                Comprehensive evaluation with multiple baselines. Real-world deployment (16-node Aliyun cluster).
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="flow-arrow">↓</div>
+
+                <!-- Conclusion -->
+                <div class="section">
+                    <div class="section-header">
+                        <span class="section-title">Sections 6-7: Related Work & Conclusion</span>
+                    </div>
+                    <div class="analysis">
+                        Literature review after methods/experiments (CS convention). Standard conclusion summarizing contributions and results.
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- KVFlow Paper -->
+        <div class="paper-section">
+            <div class="paper-title">Paper 2: KVFlow: Efficient Prefix Caching for Accelerating LLM-Based Multi-Agent Workflows</div>
+            <div class="paper-meta">arXiv:2507.07400 | Distributed Systems / Multiagent Systems</div>
+
+            <div class="structure-diagram">
+                <!-- Introduction Section -->
+                <div class="section">
+                    <div class="section-header">
+                        <span class="section-title">Section 1: Introduction</span>
+                    </div>
+
+                    <div class="moves">
+                        <div class="move">
+                            <div class="move-title">Move 1: Establishing Territory</div>
+                            <div class="move-content">
+                                <strong>Centrality Claims:</strong> LLM-based agentic workflows "have become a popular paradigm"; prefix caching used "to improve serving efficiency"
+                            </div>
+                            <div class="key-excerpt">
+                                "Large language model (LLM) based agentic workflows have become a popular paradigm for coordinating multiple specialized agents to solve complex tasks. To improve serving efficiency, existing LLM systems employ prefix caching..."
+                            </div>
+                            <div class="analysis">
+                                Strong centrality claims for both paradigm (agentic workflows) and optimization technique (prefix caching). Shows comprehensive field knowledge.
+                            </div>
+                        </div>
+
+                        <div class="move">
+                            <div class="move-title">Move 2: Establishing Niche</div>
+                            <div class="move-content">
+                                <strong>Gaps Identified:</strong> LRU policy "fails to anticipate future agent usage," "often discards KV caches shortly before their reuse"
+                            </div>
+                            <div class="key-excerpt">
+                                "However, current systems typically evict KV caches using a Least Recently Used (LRU) policy, which fails to anticipate future agent usage and often discards KV caches shortly before their reuse. This leads to frequent cache misses and substantial recomputation or swapping overhead."
+                            </div>
+                            <div class="analysis">
+                                Highly specific gap identification with concrete limitation (LRU policy) in workflow context. Uses Figure 1 example to illustrate problem tangibly.
+                            </div>
+                        </div>
+
+                        <div class="move">
+                            <div class="move-title">Move 3: Occupying Niche</div>
+                            <div class="move-content">
+                                <strong>Solution:</strong> KVFlow framework with Agent Step Graph abstraction, workflow-aware eviction policy, overlapped KV prefetching
+                            </div>
+                            <div class="key-excerpt">
+                                "To address the limitations of existing LLM serving systems in agentic workflows, we present KVFlow, a workflow-aware KV cache management framework. We first introduce the Agent Step Graph, a flexible abstraction that captures execution dependencies among agents..."
+                            </div>
+                            <div class="analysis">
+                                Introduces novel concepts (Agent Step Graph) with clear definitions. Enumerated contributions with quantitative metrics (1.83×, 2.19× speedup).
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="flow-arrow">↓</div>
+
+                <!-- Background Section -->
+                <div class="section">
+                    <div class="section-header">
+                        <span class="section-title">Section 2: Background</span>
+                    </div>
+                    <div class="moves">
+                        <div class="move">
+                            <div class="move-title">Technical Foundation</div>
+                            <div class="move-content">
+                                <strong>Concepts:</strong> Prefix Caching in LLM Serving Systems, Agentic Workflow characteristics
+                            </div>
+                            <div class="analysis">
+                                Establishes foundation for both technical mechanism (prefix caching) and application domain (agentic workflows). Sets up context for understanding solution.
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="flow-arrow">↓</div>
+
+                <!-- Design Section -->
+                <div class="section">
+                    <div class="section-header">
+                        <span class="section-title">Section 3: Design of KVFlow</span>
+                    </div>
+                    <div class="moves">
+                        <div class="move">
+                            <div class="move-title">Core Techniques</div>
+                            <div class="move-content">
+                                <strong>3.1 Workflow-Aware Eviction Policy:</strong> Agent Step Graph, steps-to-execution, fine-grained eviction
+                                <br><strong>3.2 Overlapped KV Prefetching:</strong> Proactive loading, status-aware scheduling
+                                <br><strong>3.3 Implementation:</strong> SGLang-based prototype
+                            </div>
+                            <div class="key-excerpt">
+                                "In this section, we present the design of KVFlow, which enhances prefix cache management for agentic workflows through two key techniques. First, we introduce a workflow-aware eviction policy... Second, we propose an overlapped KV prefetching mechanism..."
+                            </div>
+                            <div class="analysis">
+                                Systematic presentation of complementary techniques. Novel abstraction (Agent Step Graph) with mathematical formulation. Modular design structure.
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="flow-arrow">↓</div>
+
+                <!-- Evaluation Section -->
+                <div class="section">
+                    <div class="section-header">
+                        <span class="section-title">Section 4: Evaluation</span>
+                    </div>
+                    <div class="moves">
+                        <div class="move">
+                            <div class="move-title">Empirical Validation</div>
+                            <div class="move-content">
+                                <strong>4.1 Single-Workflow Latency:</strong> Up to 1.83× speedup
+                                <br><strong>4.2 High-Concurrency Performance:</strong> Up to 2.19× speedup
+                                <br><strong>Baseline:</strong> SGLang with hierarchical radix cache
+                            </div>
+                            <div class="analysis">
+                                Comprehensive evaluation across different scenarios (single workflow, concurrent workflows). Shows system versatility and practical benefits.
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="flow-arrow">↓</div>
+
+                <!-- Conclusion -->
+                <div class="section">
+                    <div class="section-header">
+                        <span class="section-title">Sections 5-6: Related Work & Conclusion</span>
+                    </div>
+                    <div class="analysis">
+                        Literature review after methods/experiments (CS convention). Thematic organization: LLM Serving Optimizations, Agentic Workflow Frameworks. Standard conclusion structure.
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <h2>Comparative Analysis: Common Patterns</h2>
+        <table class="comparison-table">
+            <tr>
+                <th>Aspect</th>
+                <th>NeutronTP</th>
+                <th>KVFlow</th>
+                <th>Key Learning</th>
+            </tr>
+            <tr>
+                <td>Introduction Structure</td>
+                <td class="highlight">Systematic enumeration ("Firstly," "Secondly")</td>
+                <td class="highlight">Concrete example with Figure 1</td>
+                <td>Both use clear techniques: enumeration or visualization for problem clarity</td>
+            </tr>
+            <tr>
+                <td>Technical Approach</td>
+                <td class="highlight">Tensor parallelism (partition features)</td>
+                <td class="highlight">Workflow-aware caching (Agent Step Graph)</td>
+                <td>Both introduce domain-specific optimizations over general techniques</td>
+            </tr>
+            <tr>
+                <td>Solution Components</td>
+                <td class="highlight">Decoupled training + Memory-efficient scheduling</td>
+                <td class="highlight">Eviction policy + Overlapped prefetching</td>
+                <td>Both present complementary techniques integrated into coherent system</td>
+            </tr>
+            <tr>
+                <td>Evaluation Metrics</td>
+                <td class="highlight">1.29×-8.72× speedup</td>
+                <td class="highlight">1.83×-2.19× speedup</td>
+                <td>Quantitative performance metrics are crucial for systems papers</td>
+            </tr>
+            <tr>
+                <td>Literature Review</td>
+                <td class="highlight">After methods/experiments</td>
+                <td class="highlight">After methods/experiments</td>
+                <td>CS systems papers commonly place related work after technical contribution</td>
+            </tr>
+            <tr>
+                <td>Novel Concepts</td>
+                <td class="highlight">GNN tensor parallelism</td>
+                <td class="highlight">Agent Step Graph abstraction</td>
+                <td>Both introduce new concepts or apply known techniques to new domains</td>
+            </tr>
+        </table>
+
+        <h2>Shared Imitation Framework for Future Papers</h2>
+        <div class="analysis">
+            <h3>Structural Elements to Adapt:</h3>
+            <ul>
+                <li><strong>Systematic Problem Presentation:</strong> Using enumeration or examples to clearly identify problem aspects</li>
+                <li><strong>Domain-Specific Optimization:</strong> Tailoring general techniques (parallelism, caching) to specific application contexts</li>
+                <li><strong>Modular Solution Architecture:</strong> Breaking complex systems into complementary components</li>
+                <li><strong>Quantitative Evaluation:</strong> Comprehensive metrics with multiple baselines and scenarios</li>
+                <li><strong>Novel Concept Introduction:</strong> Introducing new abstractions or applying techniques in new contexts</li>
+            </ul>
+
+            <h3>Rhetorical Strategies:</h3>
+            <ul>
+                <li><strong>Technical Positioning:</strong> Clear differentiation from existing approaches through technical specificity</li>
+                <li><strong>Performance Emphasis:</strong> Connecting technical contributions to practical performance benefits</li>
+                <li><strong>Domain Integration:</strong> Deep integration of system design with application domain characteristics</li>
+                <li><strong>Quantitative Contribution Claims:</strong> Including specific performance metrics in introduction</li>
+            </ul>
+
+            <h3>Quality Indicators:</h3>
+            <ul>
+                <li><strong>Systematic Approach:</strong> Clear enumeration or structured presentation of problems and solutions</li>
+                <li><strong>Empirical Validation:</strong> Comprehensive evaluation with multiple baselines and varied scenarios</li>
+                <li><strong>Practical Relevance:</strong> Real-world deployment considerations and performance improvements</li>
+                <li><strong>Technical Rigor:</strong> Formal definitions, algorithmic descriptions, or mathematical formulations where appropriate</li>
+            </ul>
+        </div>
+
+        <div style="text-align: center; margin-top: 30px; color: #7f8c8d; font-size: 0.9em;">
+            <p>Analysis based on macro-level structure framework from academic writing pedagogy</p>
+            <p>Visualization for learning paper organization patterns in computer systems research</p>
+        </div>
+    </div>
+</body>
+</html>

@@ -1,0 +1,35 @@
+\subsection{Multi-task Binary Classification Mistake bound implied by the \textsc{OCS} Meta-policy} \label{mistake_bd}
+In this section, we consider the online multi-task binary classification problem. We derive an upper bound to the maximum number of mistakes for any task achieved by the \textsc{OCS} policy under a margin assumption.
+
+\paragraph{Problem statement:} Assume that at the beginning of each time $t \geq 1,$ an online policy first chooses a weight vector for a linear classifier $x_t \in \mathbb{R}^d, ||x_t|| \leq 1.$ After that, the policy is given a set of $k$ data points, each belonging to a separate task, with feature vectors  $(z_{t,1}, z_{t,2}, \ldots, z_{t,k}),$ where $z_{t,j} \in \mathbb{R}^d, \forall j,t.$ Without any loss of generality, we scale feature vectors so that $||z_{t,j}||\leq 1, \forall j,t.$ The linear classifier classifies the data points from each task into two classes according to the sign of the inner-product of the weight vector $x_t$ and the corresponding feature vector, \emph{i.e.,} it predicts \[\hat{y}_{t,j}= \textrm{sign}(\langle z_{t,j}, x_t\rangle), ~\forall j,t.\] Finally, the true labels of the data points $(y_{t,1}, y_{t,2}, \ldots, y_{t,j}),$ $y_{t,j} \in \{\pm 1\}$ are revealed to the online policy.
+% and then it determines the set of datapoints which has been misclassified, \emph{i.e.,} $M_t= \{j: \hat{y}_{j,t}= y_{j,t}\}.$ 
+Let $N_{\mathcal{T},j}$ denote the total number of misclassified data points from the $j$\textsuperscript{th} class up to time $\mathcal{T}, $ \emph{i.e.,}
+\[N_{\mathcal{T},j}= \sum_{t=1}^{\mathcal{T}} \mathds{1}(\hat{y}_{t,j} \neq y_{t,j}). \]
+Our goal is to upper bound $N\stackrel{\textrm{(def.)}}{=}\sup_{\mathcal{T}} \max_j N_{\mathcal{T},j}.$ We now make the following standard assumption on the data distribution.
+
+\begin{assumption}[$\gamma$-Margin assumption] \label{margin-assumption}
+	We assume that each data point can be correctly classified by a weight vector $x^\star, ||x^\star|| = 1,$ with a margin of at least $\gamma,$ i.e., $y_{t,j}\langle z_{t,j}, x^\star\rangle \geq \gamma, \forall j,t.$
+\end{assumption}
+
+\subsection{An Online Multi-task Classification Policy}
+In the following, we solve the above classification problem using the \textsc{OCS} Meta-policy. The admissible set $\mathcal{X}$ is given by the unit ball and the sequence constraint functions are defined next.
+\paragraph{Construction of an \textsc{OCS} instance:}
+On each new round, we first check whether there is a data point which has been misclassified by the current classifier. If there is none, we simply skip this round and go to the next round. Otherwise, if there is a data point which has been misclassified, we increment the round counter for the \textsc{OCS} Meta-policy by $1$ and define a set of $k$ linear constraint functions for this round $t$ as follows:
+\begin{eqnarray} \label{constr-viol}
+	 g_{t,j}(x) = \big(\gamma - y_{t,j} \langle z_{t,j}, x\rangle\big)^+, ~\forall j,t.
+\end{eqnarray} 
+Clearly, in this case, Assumption \ref{cvx} and Assumption \ref{bddness} are satisfied with $G/2=D=1.$
+Furthermore, the feasibility requirement given by Assumption \ref{feas-constr} is satisfied thanks to the $\gamma$-margin Assumption \ref{margin-assumption} above. 
+\paragraph{Analysis:} 
+Let $N$ be the maximum number of misclassifications for any task, and let $T$ be the number of times for which at least one mistake was made. In other words, $T$ denotes the number of rounds for which the \textsc{OCS} policy was run. Since there are $k$ tasks, we have $T \leq kN.$ Using the definition of the constraint function \eqref{constr-viol}, for a misclassified data point belonging to any task, the corresponding constraint is violated by at least $\gamma.$ Hence, the CCV incurred by the \textsc{OCS} Meta-policy can be lower bounded as 
+\[\mathbb{V}_T \geq \gamma N. \]
+  Furthermore, using Theorem \ref{constr-violation}, we also have for \textsc{OCS} Meta-policy that
+\[ \mathbb{V}_T \leq O(\sqrt{kT}) = O(k\sqrt{N}).\]
+Hence, combining the above two inequalities, we conclude that the number of mistakes for any task is upper bounded as $N \leq O(\frac{k^2}{\gamma^2}).$ We formally state the above result in the following theorem. 
+\begin{theorem}[Multi-task Mistake bound] \label{mistake-bd-thm}
+	Under the $\gamma$-margin assumption (Assumption \ref{margin-assumption}), \textsc{OCS} Meta-policy makes at most $O(\frac{k^2}{\gamma^2})$ mistakes for any task.
+\end{theorem}
+
+
+
+%\cmt{I think, the dependence of the above mistake bound w.r.t. $k$ can be improved. Think, e.g., running the usual Perceptron algorithm on any task that has been misclassified. Does not it imply an $O(1/\gamma^2)$ mistake bound?}

@@ -1,0 +1,44 @@
+\vspace{-1.7ex}
+%\section{\OurDATA{}}
+\section{GSM8K-AUG}
+\label{sec:data_aug}
+\vspace{-0.7ex}
+As a benchmark dataset, \textsc{GSM8K}~\citep{GSM8K} encompasses high-quality, 
+linguistically diverse grade math word problems. However, 
+we find that the original dataset poses some limitations 
+for evaluating the prompt compression methods. Specifically, it only allows compressing prompts under 
+one fix setting, \emph{i.e.,} 8-shot. This is inadequate 
+for rigorously evaluating the abilities of the prompt 
+compression systems. For instance, it makes it harder 
+to analyze and answer the questions: 
+(i) Whether prompt compression methods destroy 
+connections between individual shots? 
+(ii) Also, what impact will these connections have on 
+the end-performance for in-context-learning tasks?
+
+To address these limitations, we propose~\OurDATA{},
+an extended and more comprehensive experimental setting 
+for original GSM8K data. \OurDATA{} extends the original data set 
+to $i$-shot setting ($i\in \{1,2,4,8\}$), with 
+$i$-shot meaning $i$ example demonstrations in the prompt. 
+Note,~\OurDATA{} has a broader coverage, as it encompasses 
+the experimental settings of the current GSM8K data settings 
+(\emph{i.e.,} 8-shot).
+We argue~\OurDATA{} helps in overcoming the limitations mentioned above,
+as it provides us with the provision to find correlations between 
+different shots.
+For instance, it can help us to quickly answer the above 
+questions by analyzing the models' performance by compressing 
+two prompts at the same time, \emph{i.e.,} 2-shot settings
+compared against compressing 
+them independently, \emph{i.e.,} 1-shot settings.
+
+\eat{\li{For example, some algorithms may perform well when compressing 1-shot prompt, but perform poorly when the prompt is 8-shot. This means although the algorithm can extract the information of a single shot, it will destroy the overall structure of the prompt, impairs the ICL ability of the target LLM. Comparing prompts of different shots enables us to explore  the impact of prompt compression methods on connections between individual shots further, helping us comprehensively learn its performance on ICL tasks. In addition, for the different shot settings, we can explore the ability of prompt compression methods to find correlations between different shots.}
+\di{Why you can answer the above two question? Give more details.}}
+
+\input{Table_tex/algo_compress}
+
+
+
+
+

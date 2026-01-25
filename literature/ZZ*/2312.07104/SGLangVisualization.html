@@ -1,0 +1,248 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>SGLang Paper – Macro-Level Structure Visualization</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+  <style>
+    body {
+      font-family: Arial, Helvetica, sans-serif;
+      background: #f4f6f8;
+      margin: 0;
+      padding: 30px;
+      color: #333;
+    }
+
+    .container {
+      max-width: 1100px;
+      margin: auto;
+    }
+
+    h1 {
+      text-align: center;
+      margin-bottom: 10px;
+    }
+
+    h1 span {
+      font-size: 0.55em;
+      color: #666;
+      display: block;
+      margin-top: 6px;
+    }
+
+    .subtitle {
+      text-align: center;
+      margin-bottom: 40px;
+      color: #555;
+    }
+
+    .section {
+      background: #ffffff;
+      border-left: 8px solid #4a90e2;
+      padding: 20px 25px;
+      margin-bottom: 25px;
+      box-shadow: 0 2px 8px rgba(0,0,0,0.08);
+      border-radius: 4px;
+    }
+
+    .section.intro { border-left-color: #7b61ff; }
+    .section.abstract { border-left-color: #4caf50; }
+    .section.methods { border-left-color: #ff9800; }
+    .section.optimization { border-left-color: #e91e63; }
+    .section.evaluation { border-left-color: #009688; }
+    .section.conclusion { border-left-color: #607d8b; }
+
+    .section h2 {
+      margin-top: 0;
+      margin-bottom: 10px;
+    }
+
+    .tags {
+      margin-bottom: 12px;
+    }
+
+    .tag {
+      display: inline-block;
+      padding: 4px 9px;
+      margin-right: 6px;
+      margin-bottom: 6px;
+      font-size: 0.8em;
+      border-radius: 4px;
+      background: #e8eef7;
+      color: #2a5db0;
+    }
+
+    .excerpt {
+      background: #f9fafb;
+      border-left: 4px solid #ccc;
+      padding: 10px 14px;
+      margin: 12px 0;
+      font-style: italic;
+      color: #555;
+    }
+
+    .annotation {
+      background: #eef3ff;
+      border-radius: 4px;
+      padding: 10px 14px;
+      margin-top: 10px;
+      font-size: 0.9em;
+    }
+
+    .annotation strong {
+      color: #2a5db0;
+    }
+
+    @media (max-width: 700px) {
+      body {
+        padding: 15px;
+      }
+      .section {
+        padding: 15px;
+      }
+    }
+  </style>
+</head>
+
+<body>
+  <div class="container">
+
+    <h1>
+      SGLang: Macro-Level Paper Structure
+      <span>Visualization for Imitation & Rhetorical Analysis</span>
+    </h1>
+
+    <p class="subtitle">
+      Based on writing/activity 1.2 — macro-level structure analysis<br>
+      Paper: <em>SGLang: Efficient Execution of Structured Language Model Programs</em>
+    </p>
+
+    <!-- ABSTRACT -->
+    <div class="section abstract">
+      <h2>Abstract</h2>
+      <div class="tags">
+        <span class="tag">Context</span>
+        <span class="tag">Problem</span>
+        <span class="tag">System</span>
+        <span class="tag">Techniques</span>
+        <span class="tag">Results</span>
+      </div>
+
+      <div class="excerpt">
+        “We introduce SGLang, a system for efficient execution of complex language model programs… achieving up to 6.4× higher throughput.”
+      </div>
+
+      <div class="annotation">
+        <strong>Macro Function:</strong> A compressed contribution map.  
+        <br>
+        <strong>Imitation Note:</strong> The abstract explicitly names techniques
+        (RadixAttention, FSM decoding, speculative execution) and reports quantified gains.
+      </div>
+    </div>
+
+    <!-- INTRODUCTION -->
+    <div class="section intro">
+      <h2>Introduction (CARS Model)</h2>
+      <div class="tags">
+        <span class="tag">Territory</span>
+        <span class="tag">Niche</span>
+        <span class="tag">Occupation</span>
+      </div>
+
+      <div class="excerpt">
+        “We refer to these programs as Language Model Programs (LM Programs).”
+      </div>
+
+      <div class="annotation">
+        <strong>Macro Function:</strong> Reframe LLM usage as structured program execution.  
+        <br>
+        <strong>Key Move:</strong> Naming the abstraction legitimizes the research problem and
+        creates conceptual ownership of the space.
+      </div>
+    </div>
+
+    <!-- PROGRAMMING MODEL -->
+    <div class="section methods">
+      <h2>Programming Model (Conceptual Methods)</h2>
+      <div class="tags">
+        <span class="tag">Running Example</span>
+        <span class="tag">Language Design</span>
+        <span class="tag">Abstractions</span>
+      </div>
+
+      <div class="excerpt">
+        “SGLang is a domain-specific language embedded in Python.”
+      </div>
+
+      <div class="annotation">
+        <strong>Macro Function:</strong> Build reader intuition before optimization.  
+        <br>
+        <strong>Imitation Note:</strong> Abstractions are introduced through examples,
+        not formal definitions.
+      </div>
+    </div>
+
+    <!-- OPTIMIZATIONS -->
+    <div class="section optimization">
+      <h2>Core Runtime Optimizations</h2>
+      <div class="tags">
+        <span class="tag">RadixAttention</span>
+        <span class="tag">Compressed FSM Decoding</span>
+        <span class="tag">API Speculation</span>
+      </div>
+
+      <div class="excerpt">
+        “Unlike existing systems that discard the KV cache after a generation request finishes…”
+      </div>
+
+      <div class="annotation">
+        <strong>Macro Function:</strong> Each subsection follows the same internal template:
+        problem → limitation → new mechanism → integration.  
+        <br>
+        <strong>Rhetorical Strength:</strong> ML inefficiencies are translated into classical
+        systems concepts (trees, FSMs, speculation).
+      </div>
+    </div>
+
+    <!-- EVALUATION -->
+    <div class="section evaluation">
+      <h2>Evaluation</h2>
+      <div class="tags">
+        <span class="tag">Benchmarks</span>
+        <span class="tag">Baselines</span>
+        <span class="tag">Hardware</span>
+        <span class="tag">Models</span>
+      </div>
+
+      <div class="excerpt">
+        “Experimental results show that SGLang achieves up to 6.4× higher throughput…”
+      </div>
+
+      <div class="annotation">
+        <strong>Macro Function:</strong> Validate generality and practical impact.  
+        <br>
+        <strong>Imitation Note:</strong> Breadth of evaluation is prioritized over deep tuning
+        of a single workload.
+      </div>
+    </div>
+
+    <!-- CONCLUSION -->
+    <div class="section conclusion">
+      <h2>Macro-Level Takeaway</h2>
+      <div class="tags">
+        <span class="tag">Reframing</span>
+        <span class="tag">Language + Runtime</span>
+        <span class="tag">Systems Design</span>
+      </div>
+
+      <div class="annotation">
+        <strong>One-Sentence Summary:</strong>  
+        The paper succeeds by redefining LLM usage as program execution and aligning
+        language design, runtime architecture, and evaluation around that single reframing.
+      </div>
+    </div>
+
+  </div>
+</body>
+</html>

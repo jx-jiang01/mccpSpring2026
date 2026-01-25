@@ -1,0 +1,52 @@
+\subsection{Comparison with Previous Works}
+\label{app:comparisonpolicies}
+\subsubsection{ \cite{neely2017online}, \cite{yu2017online} and \cite{georgios-cautious}}
+%At a high-level our proposed policy is similar to  \cite{neely2017online}, \cite{yu2017online} and \cite{georgios-cautious}.  
+Policies  proposed by \cite{yu2017online} and \cite{georgios-cautious} are almost  identical to \cite{neely2017online}. The policy proposed in 
+\cite{neely2017online}, however, is highly customized, does not fully exploit 
+the best guarantees available for the standard OCO problem, and obtains sub-optimal performance bounds that depend inversely on Slater constant, which is assumed to be strictly positive. In a nutshell, \cite{neely2017online} choose the next action $x_{t+1}$ using the algorithm described below. For all rounds $t \geq 1, $ define the following evolution for $Q(t):$
+ \begin{eqnarray} \label{q-ev}
+ 	Q(t) = (Q(t-1)+ g_t(x_t) + \nabla^T g_t(x_t)(x_t-x_{t-1}))^+, ~Q(0)=0. 
+	\end{eqnarray}
+	The next action is chosen by solving the following quadratic optimization problem: 
+	$$x_{t+1} = \arg \min_{x\in {\mathcal X} } \big[\langle V \nabla^T f_{t}(x_{t}) + Q(t)\nabla g_t(x_t), x \rangle + \alpha ||x-x_{t-1}||^2\big],$$
+	where $V$ and $\alpha$ are suitably chosen parameters. 
+	
+	In comparison, we have a different and simpler update rule:
+	 \begin{eqnarray} \label{q-ev}
+ 	Q(t) = Q(t-1)+ (2GD)^{-1}(g_t(x_t))^+, ~Q(0)=0. \end{eqnarray}
+	We then construct a convex surrogate function $\hat{f}_t(x) \equiv f_t(x) + \frac{1}{4GD\sqrt{T}}e^{\frac{Q(t)}{2\sqrt{T}}}(g_t(x))^+,$ whose gradient is then passed directly to the AdaGrad subroutine.
+	\paragraph{Remarks:} We emphasize that Theorem \ref{main_result}, which shows that it is possible to simultaneously achieve $O(\sqrt{T})$ regret and $\tilde{O}(\sqrt{T})$ CCV in the convex setting without assuming Slater's condition, is highly surprising and unexpected. In fact, \citet[Section 4]{georgios-cautious} had previously commented that: 
+	
+	"\emph{$\ldots$ On the other hand, the point $O(\sqrt{T})$, $O(\sqrt{T})$ achieved by \citet{neely2017online} for $K = 1$ is not part of our achievable guarantees; we attribute this gap to the stricter Slater assumption studied by \citet{neely2017online}." }  \\\\
+	Theorem \ref{main_result} squarely falsifies the last conjecture. 
+ \subsubsection{ \cite{guo2022online}}
+The policy in \cite{guo2022online} is a slightly modified form of the policy proposed in \citep{neely2017online}. In particular, it chooses the action $x_t$ by solving the following quadratic optimization problem over $\mathcal{X}:$
+\begin{eqnarray*}
+	x_t = \arg \min_{x\in {\mathcal X}} \big[ \langle \nabla f_{t-1}(x_{t-1}), x-x_{t-1} \rangle + Q(t-1) \gamma_{t-1} g_{t-1}^+(x) + \alpha_{t-1}|| x- x_{t-1}||^2 \big],
+\end{eqnarray*} 
+where the $Q$ variables are updated as follows:
+\[ Q(t)= \max(Q(t-1)+ \gamma_{t-1} g_{t-1}^+(x_t), \eta_t).\]
+
+
+\iffalse
+based on the Lagrangian principle of solving constrained optimization problem, where the 
+Lagrangian is 
+$$ L (x,\lambda_t) = f_t(x) + \lambda_t g_t(x).$$
+%Since $f_t$ and $g_t$ are revealed after action $x_t$ is chosen, 
+The cost function $f_t$ is linearly approximated by 
+$${\hat f}_t(x)  = f_{t-1}(x_{t-1}) + \langle \nabla f_{t}(x_{t-1}), x-x_{t-1}\rangle ,$$
+and the constraint function $g_t$ is replaced by $\gamma_{t-1}g_{t-1}(x)^+$, $\lambda_t$ by $Q_t$ which is updated as  $Q(t) = \max(Q(t-1)+ \gamma_{t-1}g_{t-1}(x_{t-1})^+, \eta_t)$ and a quadratic regularization term $\alpha_{t-1} ||x-x_{t-1}||^2$ is added to the Lagrangian. 
+\fi
+
+Here $\alpha_t, \eta_t, \gamma_t$ are suitably chosen learning rate parameters. Essentially, this policy is trying to find the local optimum of an augmented Lagrangian under the online information model ($f_t$ and $g_t$ are revealed after action $x_t$ is chosen). Since their augmented Lagrangian involves the constraint function $g_{t-1},$ their policy needs to solve a full-fledged constrained convex optimization problem over the set $\mathcal{X}$ after having full access to the constraint function. In comparison, our policy, rather than using approximations to Lagrangian and adding regularizers, makes full use of the well-developed theory for OCO and uses first-order methods that need to compute only a gradient and perform one Euclidean projection on each round.
+\subsubsection{\cite{jenatton2016adaptive}}
+The policy proposed by \cite{jenatton2016adaptive} is based on the idea of primal-dual algorithm for optimizing the augmented Lagrangian 
+$$ L_t (\lambda,x) = f_t(x) + \lambda g_t(x) - \frac{\theta_t}{2} \ \lambda^2,$$ where $\frac{\theta_t}{2} \lambda^2$ is the augmentation term. The primal variable $x_t$ and the dual variable $\lambda_t$ are updated by executing projected gradient descent and gradient ascent on the Lagrangian as follows:
+$$x_{t+1} = \mathcal{P}_\mathcal{X}(x_t - \eta_t \nabla_x L_t (x_t, \lambda_t))$$ and 
+$$\lambda_{t+1} = (\lambda_t + \mu_t \nabla_\lambda L_t (x_t, \lambda_t))^+,$$
+where $\theta_t, \eta_t$, and $\mu_t$ are parameters to be chosen.
+
+
+
+

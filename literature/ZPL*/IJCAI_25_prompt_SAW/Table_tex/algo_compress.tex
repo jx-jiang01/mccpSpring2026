@@ -1,0 +1,23 @@
+\begin{algorithm}[t]
+    \caption{\scshape Compress Prompt}
+    \label{alg:compress}
+    \begin{algorithmic}[1]
+    \Require
+        \item[] { \#$\delta:$ {Compression threshold}}
+        \item[] { \#$\mathcal{G}:$ Graph structure of prompt}
+        \item[] { \#$E:$ encoder}
+        \item[] { \#$sim():$ function used to calculate similarity}
+    \Ensure subgraph $\mathcal{G}^{'}$
+        \State $\mathcal{G}^\prime=\{\}$
+        \For{$g_i \in \mathcal{G}$}
+            %\State $Sim_{max}=0$
+            %\For{$g \in \mathcal{G}^\prime$}
+            \State $sim_{max}=max\{\eat{sim_{max},}sim(E(g),E(g_i)) \;\; \forall g \in \mathcal{G}^\prime\}$
+            %\EndFor
+            \If{$sim_{max}<=\delta$}
+            \State $\mathcal{G^\prime}.insert(g_i)$
+            \EndIf
+        \EndFor
+        \State \Return $\mathcal{G}^{'}$
+    \end{algorithmic}
+\end{algorithm}

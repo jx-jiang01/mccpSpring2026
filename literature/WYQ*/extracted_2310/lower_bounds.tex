@@ -1,0 +1,51 @@
+\iffalse
+\subsection{Lower bound on regret and CCV for COCO} \label{lower_bound_section}
+In this section, we prove that under Assumptions \ref{cvx}, \ref{bddness}, and \ref{feas-constr}, the regret and the CCV achieved by any online policy for the COCO over any horizon of length $T$ are both lower bounded by $\Omega(\sqrt{T}).$ Note that the CCV lower bound does not follow from the corresponding regret lower bound for the OCO problem due to the additional Assumption \ref{feas-constr}, which puts an implicit constraint on the admissible constraint functions.
+\begin{proof}
+Using the standard lower bound proof strategy, we define an ensemble of \textsc{OCS}  problem instances with a single linear constraint function on every round. Using a Coupon collector's argument, we then argue that any online policy must incur at least $\Omega(\log T)$ cumulative constraint violation on at least one instance of the ensemble. The detailed construction is given below:
+	\paragraph{Action space $\Omega$:} The standard probability simplex $\Delta_d$ with $d$ coordinates. The time horizon $T$ is taken to be $T=\frac{1}{2}d \log d.$
+	\paragraph{Constraint functions:} 
+	On each round $t \in [T]$ let random variable $I_t$ be distributed uniformly on $\{1,2,\ldots,d\}$ independently of everything else. The constraint function on round $t$ is taken to be a random linear function with coefficients $g_{t,i}:=\mathds{1}(i=I_t), i \in [d].$ In other words, the $t$\textsuperscript{th} constraint is defined as $x_{I_t}\leq 0.$ Clearly, the diameter of the admissible set is bounded as $D \leq \sqrt{2}$ and the constraint functions are $1$-Lipschitz\footnote{To see the diameter bound, let $x,y \in \Delta_d.$ We have $||x-y||^2 = \sum_i (x_i-y_i)^2 \leq \sum_i |x_i-y_i| \leq \sum_i x_i + \sum_i y_i = 2.$}.
+	 
+%	Let $\{\epsilon_{t,i}\}_{t=1}^T, i=1,2,$ be a sequence of iid random variables each distributed uniformly on the interval $[-1,1]$. We consider an ensemble of constraint functions where the $t$\textsuperscript{th} constraint is randomly chosen to be 
+%	\begin{eqnarray} \label{constr_def_lb}
+%	 g_{t}(x_t) \equiv \epsilon_{t,1}x_{t,1} + \epsilon_{t,2}x_{t,2} \leq 0, ~ 1 \leq t \leq T.
+%	 \end{eqnarray}
+	\paragraph{Checking feasibility:} We now argue that, for a large enough horizon $T$, the above sequence of constraint functions is feasible with high probability. Using a standard result on the Coupon collector's problem \citep[Theorem 3.8]{motwani1995randomized}, we conclude that w.h.p. there exists a coordinate $I^\star \in [d]$ which does not appear in any of the constraints. We can now find a feasible action $\bm{x}^\star$ for the above $T$ constraints by choosing $x_i^\star=\mathds{1}(i=I^\star), i\in [d].$
+	\paragraph{Bounding cumulative violations:} Consider any online policy which takes action $x(t) \in \Delta_d$ on round $t$ and let $\{\mathcal{F}_t\}_{t=1}^T$ denote the natural filtration. The conditional expectation and variance of the constraint violation incurred by the policy on round $t$ is given by \[\mathbb{E}[g_t(x_t)|\mathcal{F}_{t-1}]= \frac{1}{d}\sum_{i=1}^d x_{t,i}= \frac{1}{d},~~ \textrm{Var}(g_t(x_t)) < \frac{1}{d}\sum_{i}x^2_{t,i} \leq \frac{1}{d}.  \]
+	%~ \mathbb{E}g_t^2(x_t)=\frac{1}{d}\sum_{i} x_{t,i}^2.\]
+	Hence, for any online policy, the expected cumulative violation is given by $\mathbb{E}V_T = \mathbb{E}\sum_{t=1}^T g_t(x_t)=\frac{T}{d}$ with its variance upper bounded as 
+	$\textrm{Var}(V_T) = \sum_{t=1}^T \textrm{Var}(g_t(x_t)) \leq \frac{T}{d},$ where in the last step we have used the Pythagorean formula for the zero-mean martingale sequence $\{\sum_{\tau=1}^tg_\tau(x_\tau) - \frac{t}{d}\}_{t \geq 1}$ \citep[Section 12.1, Eq. (b)]{williams1991probability}.
+	%the fact that the constraints are independently selected. 
+Hence, we have  
+	\[ \mathbb{E}V_T^2 = \textrm{Var}(V_T)+ (\mathbb{E}V_T)^2 \leq \frac{T^2}{d^2}+\frac{T}{d}.\]
+	Hence, using Paley-Zygmund inequality for the non-negative cumulative violation random variable $V_T$ \citep[Theorem 1.4.3(b)]{chandra2012borel}, we have 
+	\[ \mathbb{P}\big(V_T \geq \frac{T}{2d}\big) \geq \frac{1}{4} \frac{(\mathbb{E}V_T)^2}{\mathbb{E}V_T^2}\geq \frac{1}{4} \frac{T^2/d^2}{T^2/d^2+T/d}\geq \frac{1}{8},\]
+	where, in the last step, we have used the fact that $T=\frac{1}{2}d\log d$ and assumed $\log d \geq 2.$ Hence, from the previous steps, it follows that for any online algorithm, there exists a sequence of feasible constraint functions $\{g_t\}_{t=1}^T$ for which the algorithm incurs a cumulative violation of \[V_T \geq \frac{T}{2d}= \frac{1}{4}\log d = \frac{1}{4}(\log T - \log \log d + \log 2)=\Omega(\log T - \log \log T)=\Omega(\log T).\]	
+
+\end{proof}
+
+%\subsection*{Proof for $\Omega(\sqrt{T})$ 
+%Regret and $\Omega( \sqrt{T})$ Constraint Violation bound}
+\begin{theorem}\label{thm:lbcoco}
+Under Assumptions \ref{cvx}, \ref{bddness}, and \ref{feas-constr}, the regret and CCV as defined in \eqref{intro-regret-def} and \eqref{intro-gen-oco-goal} with $k=1$ are both $\Omega(\sqrt{T})$.
+\end{theorem}
+Proof of Theorem \ref{thm:lbcoco} can be found in Appendix \ref{app:lbcoco}.
+
+\fi
+
+
+	 
+ 
+	%	
+%	In other words, we show that almost surely for a given random sequence of $T$ constraint functions, there exists a probability vector $x$ such that we have $g_t(x) \leq 0.$ We can write 
+%	\begin{eqnarray*}
+%		g_t(x) = \epsilon_{t,1}x_{1}+ \epsilon_{t,2} (1-x_1) = \epsilon_{t,2} + (\epsilon_{t,1}-\epsilon_{t,2}) x_1. 
+%	\end{eqnarray*}
+%	Now let us choose $x_1 \sim \textsf{U}(0,1).$ Hence, we have 
+%	\begin{eqnarray*}
+%		\mathbb{P}(\cap_{t=1}^T g_t(x) \leq 0) = \int_{0}^1 \mathbb{P}(\cap_{t=1}^T g_t(x) \leq 0|x) dx = \frac{1}{2^T}>0,
+%	\end{eqnarray*}
+%	where the last line follows from the symmetry of the distribution around zero.
+	%Clearly, the above sequence is feasible by taking $x_1=x_2=1/2.$
+

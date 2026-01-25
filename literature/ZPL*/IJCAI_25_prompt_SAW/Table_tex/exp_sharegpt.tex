@@ -1,0 +1,35 @@
+% Please add the following required packages to your document preamble:
+% \usepackage{multirow}
+\renewcommand{\arraystretch}{1.5}
+
+\begin{table*}[]
+\centering
+\resizebox{0.90\linewidth}{!}{
+\begin{tabular}{clclccccccccccccccc}
+\hline
+\multicolumn{2}{c}{\multirow{4}{*}{Target LLM}}        & \multicolumn{2}{c}{\multirow{4}{*}{Method}} & \multicolumn{15}{c}{\multirow{2}{*}{ShareGPT}}                                                      \\
+\multicolumn{2}{c}{}                                   & \multicolumn{2}{c}{}                        & \multicolumn{15}{c}{}                                                                                                                                                                                  \\ \cline{5-19} 
+\multicolumn{2}{c}{}                                   & \multicolumn{2}{c}{}                        & \multicolumn{5}{c}{$\eta^{*}$ = 0.5}                                & \multicolumn{5}{c}{$\eta^{*}$ = 0.3}                                & \multicolumn{5}{c}{$\eta^{*}$ = 0.1}                                 \\ \cline{5-19} 
+\multicolumn{2}{c}{}                                   & \multicolumn{2}{c}{}                        & Rouge-1         & Rouge-2         & Rouge-L         & Tokens & 1/$\eta$  & Rouge-1         & Rouge-2         & Rouge-L         & Tokens & 1/$\eta$  & Rouge-1         & Rouge-2         & Rouge-L         & Tokens & 1/$\eta$  \\
+
+\hline
+\multicolumn{2}{c}{\multirow{3}{*}{GPT3.5-turbo}} & \multicolumn{2}{c}{Selective-Context}       & 36.41          & 16.48          & 23.17          & 312    & 1.80 & 34.41          & 14.81          & 22.04          & 217    & 2.59 & 33.32          & 11.87          & 19.66          & 95     & 5.92 \\
+
+\multicolumn{2}{c}{} & \multicolumn{2}{c}{LongLLMlingua}           & \underline{38.13(29.3\%)}          & \underline{17.07(52.6\%)}          & \underline{25.22(29.1\%)}          & 305    & 1.84 & \underline{36.13(34.9\%)}          & \underline{15.61(70.9\%)}          & \underline{23.17(38.3\%)}          & 202    & 2.78 & \underline{34.23(38.6\%)}         & \underline{12.64(87.6\%)}          & \underline{21.16(32.0\%)}          & 90     & 6.24 \\
+
+\multicolumn{2}{c}{}                                   & \multicolumn{2}{c}{\OurMODEL{}}                    & \textbf{49.31} & \textbf{26.04} & \textbf{32.57} & 176    & 3.19 & \textbf{48.75} & \textbf{26.68} & \textbf{32.04} & 146    & 3.85 & \textbf{47.44} & \textbf{23.71} & \textbf{27.93} & 61     & 9.21 \\ \hline
+
+\multicolumn{2}{c}{\multirow{3}{*}{LLaMA2-7B-chat}}    
+& \multicolumn{2}{c}{Selective-Context}       & 32.24          & 13.42          & 23.74          & 312    & 1.80 & 30.78          & 10.95          & 22.96          & 217    & 2.59 & 30.15          & 10.32          & 19.13          & 95     & 5.92 \\
+
+\multicolumn{2}{c}{}                                   
+& \multicolumn{2}{c}{LongLLMlingua}           & \underline{34.51(0.8\%)}          & \textbf{15.18} & \textbf{27.73} & 305    & 1.84 & \underline{32.97(1.1\%)}          & \textbf{13.78} & \textbf{26.01} & 202    & 2.78 & \underline{31.26(2.8\%)}          & \textbf{12.11} & \textbf{23.08} & 90     & 6.24 \\
+
+\multicolumn{2}{c}{}                                   
+& \multicolumn{2}{c}{\OurMODEL{}}                    & \textbf{34.81} & \underline{14.03(8.2\%)}          & \underline{24.88(11.4\%)}          & 176    & 3.19 & \textbf{33.34} & \underline{12.19(13.0\%)}          & \underline{24.08(8.0\%)}          & 146    & 3.85 & \textbf{32.15} & \underline{11.34(6.8\%)}          & \underline{20.35(13.4\%)}          & 61     & 9.21 \\ \hline
+\end{tabular}}
+\vspace{-1.7ex}
+\caption{Experimental results on ShareGPT. We bold-face overall best scores, and underline the existing state-of-art along with relative \%-age performance improvements.}
+\label{tab:exp_sharegpt}
+\vspace{-2.7ex}
+\end{table*}

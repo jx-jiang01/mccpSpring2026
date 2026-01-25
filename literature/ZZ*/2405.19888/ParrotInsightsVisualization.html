@@ -1,0 +1,230 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <title>Macro-Level Structure Visualization – Parrot (arXiv:2405.19888)</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+  <style>
+    :root {
+      --bg: #f9fafb;
+      --wide: #dbeafe;
+      --narrow: #bfdbfe;
+      --intro: #dcfce7;
+      --problem: #fee2e2;
+      --design: #e0e7ff;
+      --optim: #fef3c7;
+      --eval: #ede9fe;
+      --text: #1f2933;
+      --muted: #6b7280;
+    }
+
+    body {
+      font-family: Arial, Helvetica, sans-serif;
+      background: var(--bg);
+      color: var(--text);
+      margin: 0;
+      padding: 32px;
+    }
+
+    h1, h2, h3 {
+      text-align: center;
+      margin-bottom: 8px;
+    }
+
+    h1 {
+      font-size: 28px;
+    }
+
+    h2 {
+      font-size: 20px;
+      color: var(--muted);
+      font-weight: normal;
+      margin-bottom: 32px;
+    }
+
+    .container {
+      max-width: 1100px;
+      margin: 0 auto;
+    }
+
+    /* Hourglass blocks */
+    .section {
+      margin: 18px auto;
+      padding: 16px 20px;
+      border-radius: 10px;
+      text-align: center;
+      font-weight: bold;
+      line-height: 1.4;
+      box-shadow: 0 4px 10px rgba(0,0,0,0.04);
+    }
+
+    .wide { width: 80%; }
+    .medium { width: 60%; }
+    .narrow { width: 40%; }
+
+    .intro { background: var(--intro); }
+    .problem { background: var(--problem); }
+    .design { background: var(--design); }
+    .optim { background: var(--optim); }
+    .eval { background: var(--eval); }
+
+    .arrow {
+      text-align: center;
+      font-size: 26px;
+      margin: 6px 0;
+      color: var(--muted);
+    }
+
+    /* Annotation cards */
+    .annotation {
+      background: white;
+      border-radius: 10px;
+      padding: 18px;
+      margin: 20px auto;
+      width: 85%;
+      box-shadow: 0 6px 18px rgba(0,0,0,0.05);
+      text-align: left;
+    }
+
+    .annotation h3 {
+      margin-top: 0;
+      font-size: 18px;
+      text-align: left;
+    }
+
+    .excerpt {
+      font-style: italic;
+      background: #f3f4f6;
+      padding: 10px 14px;
+      border-left: 4px solid #93c5fd;
+      margin: 10px 0;
+      border-radius: 6px;
+    }
+
+    .insight {
+      color: #111827;
+      margin-top: 8px;
+    }
+
+    footer {
+      margin-top: 48px;
+      text-align: center;
+      color: var(--muted);
+      font-size: 14px;
+    }
+
+    /* Responsive adjustments */
+    @media (max-width: 768px) {
+      .wide, .medium, .narrow {
+        width: 95%;
+      }
+      body {
+        padding: 16px;
+      }
+    }
+  </style>
+</head>
+
+<body>
+  <div class="container">
+
+    <h1>Macro-Level Structure Visualization</h1>
+    <h2>Parrot: Efficient Serving of LLM-based Applications with Semantic Variable</h2>
+
+    <!-- Hourglass Visualization -->
+    <div class="section wide intro">
+      Introduction & Motivation<br/>
+      <span class="muted">LLM-based applications are becoming mainstream</span>
+    </div>
+    <div class="arrow">↓</div>
+
+    <div class="section wide problem">
+      Problem Diagnosis<br/>
+      Excessive Overhead · Misaligned Scheduling · Redundant Computation
+    </div>
+    <div class="arrow">↓</div>
+
+    <div class="section narrow design">
+      Core Abstraction (Waist of Hourglass)<br/>
+      <strong>Semantic Variable</strong>
+    </div>
+    <div class="arrow">↓</div>
+
+    <div class="section medium design">
+      System Design<br/>
+      Parrot Architecture & Runtime Analysis
+    </div>
+    <div class="arrow">↓</div>
+
+    <div class="section wide optim">
+      Optimizations Enabled by the Abstraction<br/>
+      Dependency Execution · Performance Deduction · Prompt Sharing
+    </div>
+    <div class="arrow">↓</div>
+
+    <div class="section wide eval">
+      Evaluation & Results<br/>
+      Up to 11.7× Speedup · 12× Throughput
+    </div>
+
+    <!-- Analysis Annotations -->
+
+    <div class="annotation">
+      <h3>Abstract: Compressed Macro-Story</h3>
+      <div class="excerpt">
+        “Public LLM services have to blindly optimize individual LLM requests, leading to sub-optimal end-to-end performance…”
+      </div>
+      <p class="insight">
+        <strong>Move:</strong> Problem framing via loss of application semantics.<br/>
+        <strong>Imitation Insight:</strong> Attribute inefficiency to a structural limitation, not poor engineering.
+      </p>
+    </div>
+
+    <div class="annotation">
+      <h3>Introduction (CARS Model)</h3>
+      <div class="excerpt">
+        “Public LLM services only observe tons of individual requests, without knowing any application-level information…”
+      </div>
+      <p class="insight">
+        <strong>Move:</strong> Establishing the niche through enumerated gaps.<br/>
+        <strong>Technique:</strong> Explicit numbering makes the problem feel engineered and concrete.
+      </p>
+    </div>
+
+    <div class="annotation">
+      <h3>Design Section (§4): Semantic Variable</h3>
+      <div class="excerpt">
+        “A Semantic Variable is defined as an input or output variable of a semantic function…”
+      </div>
+      <p class="insight">
+        <strong>Role:</strong> Narrow waist of the systems hourglass.<br/>
+        <strong>Pattern:</strong> Definition → Analogy → Example → Payoff.
+      </p>
+    </div>
+
+    <div class="annotation">
+      <h3>Optimization Section (§5)</h3>
+      <p class="insight">
+        <strong>Macro Function:</strong> Demonstrates generativity of the abstraction.<br/>
+        <strong>Key Insight:</strong> Optimizations are framed as inevitable consequences, not independent features.
+      </p>
+    </div>
+
+    <div class="annotation">
+      <h3>Overall Structural Insight</h3>
+      <p class="insight">
+        The paper succeeds through <strong>structural coherence</strong>: every section exists to motivate,
+        instantiate, or exploit the Semantic Variable abstraction.
+        <br/><br/>
+        <em>The real contribution is not Parrot itself, but Semantic Variable as a unifying lens.</em>
+      </p>
+    </div>
+
+    <footer>
+      Visualization generated for macro-level imitative reading & academic writing analysis.
+    </footer>
+
+  </div>
+</body>
+</html>

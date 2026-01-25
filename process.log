@@ -1,0 +1,284 @@
+[2026-01-25 18:47:39] [INFO] Starting PDF processing session
+[2026-01-25 18:47:39] [INFO] PDF directory: /Users/simonwang/Library/CloudStorage/OneDrive-HongKongBaptistUniversity/GTD/Areas/Teaching/Courses/MCCP 6020/PhDagentSpring2026/Materials/studentPDFs
+[2026-01-25 18:47:39] [INFO] Output MD directory: /Users/simonwang/Library/CloudStorage/OneDrive-HongKongBaptistUniversity/GTD/Areas/Teaching/Courses/MCCP 6020/PhDagentSpring2026/Materials/md
+[2026-01-25 18:47:39] [INFO] Output images directory: /Users/simonwang/Library/CloudStorage/OneDrive-HongKongBaptistUniversity/GTD/Areas/Teaching/Courses/MCCP 6020/PhDagentSpring2026/Materials/md/images
+[2026-01-25 18:47:39] [INFO] ✓ Found Poe API key
+[2026-01-25 18:47:39] [INFO] 
+Found 7 PDF files to process:
+[2026-01-25 18:47:39] [INFO]   1. Session 1_Handout_STUDENT version.pdf
+[2026-01-25 18:47:39] [INFO]   2. Session 2_Handout_STUDENT Version.pdf
+[2026-01-25 18:47:39] [INFO]   3. Session 3_Handout_STUDENT version.pdf
+[2026-01-25 18:47:39] [INFO]   4. Session 4_Handout_STUDENT version.pdf
+[2026-01-25 18:47:39] [INFO]   5. Session 7_Handout_STUDENT version.pdf
+[2026-01-25 18:47:39] [INFO]   6. Session 8_Handout_STUDENT version.pdf
+[2026-01-25 18:47:39] [INFO]   7. Session 9_Handout_STUDENT version.pdf
+[2026-01-25 18:47:39] [INFO] 
+######################################################################
+[2026-01-25 18:47:39] [INFO] Processing PDF 1/7
+[2026-01-25 18:47:39] [INFO] ######################################################################
+[2026-01-25 18:47:39] [INFO] 
+======================================================================
+[2026-01-25 18:47:39] [INFO] PROCESSING: Session 1_Handout_STUDENT version.pdf
+[2026-01-25 18:47:39] [INFO] ======================================================================
+[2026-01-25 18:47:39] [INFO] Session number: 1
+[2026-01-25 18:47:39] [INFO] Extracting images from: Session 1_Handout_STUDENT version.pdf
+[2026-01-25 18:47:39] [INFO]   Converting PDF pages to images (300 DPI)...
+[2026-01-25 18:47:51] [INFO]   Converted 19 pages to images
+[2026-01-25 18:47:51] [INFO]   Found 2 embedded image(s) on page 3
+[2026-01-25 18:47:51] [INFO]   Found 1 embedded image(s) on page 4
+[2026-01-25 18:47:51] [INFO]   Found 1 embedded image(s) on page 8
+[2026-01-25 18:47:51] [INFO]   Found 1 embedded image(s) on page 12
+[2026-01-25 18:47:52] [INFO]   Saved page 1 image: page_001.png (2481x3509)
+[2026-01-25 18:47:52] [INFO]   Saved page 2 image: page_002.png (2481x3509)
+[2026-01-25 18:47:53] [INFO]   Saved page 3 image: page_003.png (2481x3509)
+[2026-01-25 18:47:54] [INFO]   Saved page 4 image: page_004.png (2481x3509)
+[2026-01-25 18:47:54] [INFO]   Saved page 5 image: page_005.png (2481x3509)
+[2026-01-25 18:47:55] [INFO]   Saved page 6 image: page_006.png (2481x3509)
+[2026-01-25 18:47:55] [INFO]   Saved page 7 image: page_007.png (2481x3509)
+[2026-01-25 18:47:56] [INFO]   Saved page 8 image: page_008.png (2481x3509)
+[2026-01-25 18:47:56] [INFO]   Saved page 9 image: page_009.png (2481x3509)
+[2026-01-25 18:47:57] [INFO]   Saved page 10 image: page_010.png (2481x3509)
+[2026-01-25 18:47:57] [INFO]   Saved page 11 image: page_011.png (2481x3509)
+[2026-01-25 18:47:58] [INFO]   Saved page 12 image: page_012.png (2481x3509)
+[2026-01-25 18:47:58] [INFO]   Saved page 13 image: page_013.png (2481x3509)
+[2026-01-25 18:47:59] [INFO]   Saved page 14 image: page_014.png (2481x3509)
+[2026-01-25 18:47:59] [INFO]   Saved page 15 image: page_015.png (2481x3509)
+[2026-01-25 18:47:59] [INFO]   Saved page 16 image: page_016.png (2481x3509)
+[2026-01-25 18:48:00] [INFO]   Saved page 17 image: page_017.png (2481x3509)
+[2026-01-25 18:48:00] [INFO]   Saved page 18 image: page_018.png (2481x3509)
+[2026-01-25 18:48:01] [INFO]   Saved page 19 image: page_019.png (2481x3509)
+[2026-01-25 18:48:01] [INFO]   Note: Found 5 embedded image references (coordinates available)
+[2026-01-25 18:48:01] [INFO] ✓ Extracted 19 page images
+[2026-01-25 18:48:01] [INFO] Extracting text from: Session 1_Handout_STUDENT version.pdf
+[2026-01-25 18:48:01] [INFO]   PDF has 19 pages
+[2026-01-25 18:48:01] [INFO]   Page 1: Extracted 1865 characters
+[2026-01-25 18:48:01] [INFO]   Page 2: Extracted 1179 characters
+[2026-01-25 18:48:01] [INFO]   Page 3: Extracted 102 characters
+[2026-01-25 18:48:01] [INFO]   Page 4: Extracted 1606 characters
+[2026-01-25 18:48:01] [INFO]   Page 5: Extracted 649 characters
+[2026-01-25 18:48:01] [INFO]   Page 6: Extracted 2422 characters
+[2026-01-25 18:48:01] [INFO]   Page 7: Extracted 2739 characters
+[2026-01-25 18:48:01] [INFO]   Page 8: Extracted 2784 characters
+[2026-01-25 18:48:01] [INFO]   Page 9: Extracted 767 characters
+[2026-01-25 18:48:01] [INFO]   Page 10: Extracted 3552 characters
+[2026-01-25 18:48:01] [INFO]   Page 11: Extracted 3490 characters
+[2026-01-25 18:48:01] [INFO]   Page 12: Extracted 3122 characters
+[2026-01-25 18:48:01] [INFO]   Page 13: Extracted 2006 characters
+[2026-01-25 18:48:01] [INFO]   Page 14: Extracted 2251 characters
+[2026-01-25 18:48:02] [INFO]   Page 15: Extracted 882 characters
+[2026-01-25 18:48:02] [INFO]   Page 16: Extracted 1602 characters
+[2026-01-25 18:48:02] [INFO]   Page 17: Extracted 1388 characters
+[2026-01-25 18:48:02] [INFO]   Page 18: Extracted 1007 characters
+[2026-01-25 18:48:02] [INFO]   Page 19: Extracted 193 characters
+[2026-01-25 18:48:02] [INFO]   Total text extracted: 33606 characters from 19 pages
+[2026-01-25 18:48:02] [INFO] ✓ Extracted text from 19 pages
+[2026-01-25 18:48:02] [INFO] Formatting markdown with LLM (Session 1)...
+[2026-01-25 18:48:02] [INFO]   Prepared 33985 characters of raw content
+[2026-01-25 18:48:02] [INFO]   Content too long (33985 chars), processing page by page...
+[2026-01-25 18:48:02] [INFO]   Calling Poe API (model: Claude-3.5-Sonnet)...
+[2026-01-25 18:48:07] [INFO]   ✓ API call successful (5.1s, 1892 chars returned)
+[2026-01-25 18:48:07] [INFO]   Calling Poe API (model: Claude-3.5-Sonnet)...
+[2026-01-25 18:48:11] [INFO]   ✓ API call successful (3.8s, 1174 chars returned)
+[2026-01-25 18:48:11] [INFO]   Calling Poe API (model: Claude-3.5-Sonnet)...
+[2026-01-25 18:48:13] [INFO]   ✓ API call successful (2.4s, 553 chars returned)
+[2026-01-25 18:48:13] [INFO]   Calling Poe API (model: Claude-3.5-Sonnet)...
+[2026-01-25 18:48:17] [INFO]   ✓ API call successful (4.3s, 1573 chars returned)
+[2026-01-25 18:48:17] [INFO]   Calling Poe API (model: Claude-3.5-Sonnet)...
+[2026-01-25 18:48:20] [INFO]   ✓ API call successful (2.8s, 661 chars returned)
+[2026-01-25 18:48:20] [INFO]   Calling Poe API (model: Claude-3.5-Sonnet)...
+[2026-01-25 18:48:27] [INFO]   ✓ API call successful (7.0s, 2452 chars returned)
+[2026-01-25 18:48:27] [INFO]   Calling Poe API (model: Claude-3.5-Sonnet)...
+[2026-01-25 18:48:34] [INFO]   ✓ API call successful (7.1s, 2762 chars returned)
+[2026-01-25 18:48:34] [INFO]   Calling Poe API (model: Claude-3.5-Sonnet)...
+[2026-01-25 18:48:43] [INFO]   ✓ API call successful (8.5s, 2782 chars returned)
+[2026-01-25 18:48:43] [INFO]   Calling Poe API (model: Claude-3.5-Sonnet)...
+[2026-01-25 18:48:46] [INFO]   ✓ API call successful (3.2s, 787 chars returned)
+[2026-01-25 18:48:46] [INFO]   Calling Poe API (model: Claude-3.5-Sonnet)...
+[2026-01-25 18:48:54] [INFO]   ✓ API call successful (8.6s, 3568 chars returned)
+[2026-01-25 18:48:54] [INFO]   Calling Poe API (model: Claude-3.5-Sonnet)...
+[2026-01-25 18:49:04] [INFO]   ✓ API call successful (9.8s, 3448 chars returned)
+[2026-01-25 18:49:04] [INFO]   Calling Poe API (model: Claude-3.5-Sonnet)...
+[2026-01-25 18:49:12] [INFO]   ✓ API call successful (7.9s, 3143 chars returned)
+[2026-01-25 18:49:12] [INFO]   Calling Poe API (model: Claude-3.5-Sonnet)...
+[2026-01-25 18:49:18] [INFO]   ✓ API call successful (5.7s, 2036 chars returned)
+[2026-01-25 18:49:18] [INFO]   Calling Poe API (model: Claude-3.5-Sonnet)...
+[2026-01-25 18:49:25] [INFO]   ✓ API call successful (6.7s, 2264 chars returned)
+[2026-01-25 18:49:25] [INFO]   Calling Poe API (model: Claude-3.5-Sonnet)...
+[2026-01-25 18:49:28] [INFO]   ✓ API call successful (3.7s, 933 chars returned)
+[2026-01-25 18:49:28] [INFO]   Calling Poe API (model: Claude-3.5-Sonnet)...
+[2026-01-25 18:49:34] [INFO]   ✓ API call successful (5.6s, 1602 chars returned)
+[2026-01-25 18:49:34] [INFO]   Calling Poe API (model: Claude-3.5-Sonnet)...
+[2026-01-25 18:49:38] [INFO]   ✓ API call successful (4.6s, 1424 chars returned)
+[2026-01-25 18:49:38] [INFO]   Calling Poe API (model: Claude-3.5-Sonnet)...
+[2026-01-25 18:49:44] [INFO]   ✓ API call successful (5.7s, 1310 chars returned)
+[2026-01-25 18:49:44] [INFO]   Calling Poe API (model: Claude-3.5-Sonnet)...
+[2026-01-25 18:49:47] [INFO]   ✓ API call successful (2.4s, 266 chars returned)
+[2026-01-25 18:49:47] [INFO]   Calling Poe API (model: Claude-3.5-Sonnet)...
+[2026-01-25 18:49:48] [INFO]   ✓ API call successful (1.9s, 207 chars returned)
+[2026-01-25 18:49:48] [INFO]   ✓ LLM formatting complete (1433 characters)
+[2026-01-25 18:49:48] [INFO] Saving markdown to: Session 1_Handout_STUDENT version.md
+[2026-01-25 18:49:48] [INFO] ✓ Created markdown file: /Users/simonwang/Library/CloudStorage/OneDrive-HongKongBaptistUniversity/GTD/Areas/Teaching/Courses/MCCP 6020/PhDagentSpring2026/Materials/md/Session 1_Handout_STUDENT version.md (1433 characters)
+[2026-01-25 18:49:48] [INFO] ✓ Processed 19 images to /Users/simonwang/Library/CloudStorage/OneDrive-HongKongBaptistUniversity/GTD/Areas/Teaching/Courses/MCCP 6020/PhDagentSpring2026/Materials/md/images/Session 1_Handout
+[2026-01-25 18:49:48] [INFO] ✓ Successfully processed: Session 1_Handout_STUDENT version.pdf
+[2026-01-25 18:49:48] [INFO] Auto-continuing to next PDF (non-interactive mode)
+[2026-01-25 18:49:48] [INFO] 
+######################################################################
+[2026-01-25 18:49:48] [INFO] Processing PDF 2/7
+[2026-01-25 18:49:48] [INFO] ######################################################################
+[2026-01-25 18:49:48] [INFO] 
+======================================================================
+[2026-01-25 18:49:48] [INFO] PROCESSING: Session 2_Handout_STUDENT Version.pdf
+[2026-01-25 18:49:48] [INFO] ======================================================================
+[2026-01-25 18:49:48] [INFO] Session number: 2
+[2026-01-25 18:49:48] [INFO] Extracting images from: Session 2_Handout_STUDENT Version.pdf
+[2026-01-25 18:49:48] [INFO]   Converting PDF pages to images (300 DPI)...
+[2026-01-25 18:49:59] [INFO]   Converted 17 pages to images
+[2026-01-25 18:50:00] [INFO]   Saved page 1 image: page_001.png (2481x3509)
+[2026-01-25 18:50:01] [INFO]   Saved page 2 image: page_002.png (2481x3509)
+[2026-01-25 18:50:01] [INFO]   Saved page 3 image: page_003.png (2481x3509)
+[2026-01-25 18:50:02] [INFO]   Saved page 4 image: page_004.png (2481x3509)
+[2026-01-25 18:50:02] [INFO]   Saved page 5 image: page_005.png (2481x3509)
+[2026-01-25 18:50:03] [INFO]   Saved page 6 image: page_006.png (2481x3509)
+[2026-01-25 18:50:04] [INFO]   Saved page 7 image: page_007.png (2481x3509)
+[2026-01-25 18:50:04] [INFO]   Saved page 8 image: page_008.png (2481x3509)
+[2026-01-25 18:50:05] [INFO]   Saved page 9 image: page_009.png (2481x3509)
+[2026-01-25 18:50:05] [INFO]   Saved page 10 image: page_010.png (2481x3509)
+[2026-01-25 18:50:06] [INFO]   Saved page 11 image: page_011.png (2481x3509)
+[2026-01-25 18:50:06] [INFO]   Saved page 12 image: page_012.png (2481x3509)
+[2026-01-25 18:50:07] [INFO]   Saved page 13 image: page_013.png (2481x3509)
+[2026-01-25 18:50:07] [INFO]   Saved page 14 image: page_014.png (2481x3509)
+[2026-01-25 18:50:08] [INFO]   Saved page 15 image: page_015.png (2481x3509)
+[2026-01-25 18:50:08] [INFO]   Saved page 16 image: page_016.png (2481x3509)
+[2026-01-25 18:50:09] [INFO]   Saved page 17 image: page_017.png (2481x3509)
+[2026-01-25 18:50:09] [INFO] ✓ Extracted 17 page images
+[2026-01-25 18:50:09] [INFO] Extracting text from: Session 2_Handout_STUDENT Version.pdf
+[2026-01-25 18:50:09] [INFO]   PDF has 17 pages
+[2026-01-25 18:50:09] [INFO]   Page 1: Extracted 909 characters
+[2026-01-25 18:50:09] [INFO]   Page 2: Extracted 1433 characters
+[2026-01-25 18:50:09] [INFO]   Page 3: Extracted 1797 characters
+[2026-01-25 18:50:09] [INFO]   Page 4: Extracted 2722 characters
+[2026-01-25 18:50:09] [INFO]   Page 5: Extracted 3337 characters
+[2026-01-25 18:50:09] [INFO]   Page 6: Extracted 3108 characters
+[2026-01-25 18:50:09] [INFO]   Page 7: Extracted 2355 characters
+[2026-01-25 18:50:09] [INFO]   Page 8: Extracted 2754 characters
+[2026-01-25 18:50:10] [INFO]   Page 9: Extracted 1715 characters
+[2026-01-25 18:50:10] [INFO]   Page 10: Extracted 1603 characters
+[2026-01-25 18:50:10] [INFO]   Page 11: Extracted 1605 characters
+[2026-01-25 18:50:10] [INFO]   Page 12: Extracted 1976 characters
+[2026-01-25 18:50:10] [INFO]   Page 13: Extracted 1629 characters
+[2026-01-25 18:50:10] [INFO]   Page 14: Extracted 1786 characters
+[2026-01-25 18:50:10] [INFO]   Page 15: Extracted 2877 characters
+[2026-01-25 18:50:10] [INFO]   Page 16: Extracted 1814 characters
+[2026-01-25 18:50:10] [INFO]   Page 17: Extracted 2223 characters
+[2026-01-25 18:50:10] [INFO]   Total text extracted: 35643 characters from 17 pages
+[2026-01-25 18:50:10] [INFO] ✓ Extracted text from 17 pages
+[2026-01-25 18:50:10] [INFO] Formatting markdown with LLM (Session 2)...
+[2026-01-25 18:50:10] [INFO]   Prepared 35988 characters of raw content
+[2026-01-25 18:50:10] [INFO]   Content too long (35988 chars), processing page by page...
+[2026-01-25 18:50:10] [INFO]   Calling Poe API (model: Claude-3.5-Sonnet)...
+[2026-01-25 18:50:14] [INFO]   ✓ API call successful (3.7s, 929 chars returned)
+[2026-01-25 18:50:14] [INFO]   Calling Poe API (model: Claude-3.5-Sonnet)...
+[2026-01-25 18:50:18] [INFO]   ✓ API call successful (4.7s, 1415 chars returned)
+[2026-01-25 18:50:18] [INFO]   Calling Poe API (model: Claude-3.5-Sonnet)...
+[2026-01-25 18:50:24] [INFO]   ✓ API call successful (5.4s, 1743 chars returned)
+[2026-01-25 18:50:24] [INFO]   Calling Poe API (model: Claude-3.5-Sonnet)...
+[2026-01-25 18:50:31] [INFO]   ✓ API call successful (6.7s, 2689 chars returned)
+[2026-01-25 18:50:31] [INFO]   Calling Poe API (model: Claude-3.5-Sonnet)...
+[2026-01-25 18:50:40] [INFO]   ✓ API call successful (9.5s, 3306 chars returned)
+[2026-01-25 18:50:40] [INFO]   Calling Poe API (model: Claude-3.5-Sonnet)...
+[2026-01-25 18:50:48] [INFO]   ✓ API call successful (8.0s, 3132 chars returned)
+[2026-01-25 18:50:48] [INFO]   Calling Poe API (model: Claude-3.5-Sonnet)...
+[2026-01-25 18:50:54] [INFO]   ✓ API call successful (6.5s, 2367 chars returned)
+[2026-01-25 18:50:54] [INFO]   Calling Poe API (model: Claude-3.5-Sonnet)...
+[2026-01-25 18:51:01] [INFO]   ✓ API call successful (6.8s, 2722 chars returned)
+[2026-01-25 18:51:01] [INFO]   Calling Poe API (model: Claude-3.5-Sonnet)...
+[2026-01-25 18:51:08] [INFO]   ✓ API call successful (6.4s, 1926 chars returned)
+[2026-01-25 18:51:08] [INFO]   Calling Poe API (model: Claude-3.5-Sonnet)...
+[2026-01-25 18:51:13] [INFO]   ✓ API call successful (5.8s, 1564 chars returned)
+[2026-01-25 18:51:14] [INFO]   Calling Poe API (model: Claude-3.5-Sonnet)...
+[2026-01-25 18:51:19] [INFO]   ✓ API call successful (5.2s, 1597 chars returned)
+[2026-01-25 18:51:19] [INFO]   Calling Poe API (model: Claude-3.5-Sonnet)...
+[2026-01-25 18:51:26] [INFO]   ✓ API call successful (7.3s, 2020 chars returned)
+[2026-01-25 18:51:26] [INFO]   Calling Poe API (model: Claude-3.5-Sonnet)...
+[2026-01-25 18:51:31] [INFO]   ✓ API call successful (4.7s, 1406 chars returned)
+[2026-01-25 18:51:31] [INFO]   Calling Poe API (model: Claude-3.5-Sonnet)...
+[2026-01-25 18:51:35] [INFO]   ✓ API call successful (4.4s, 1746 chars returned)
+[2026-01-25 18:51:35] [INFO]   Calling Poe API (model: Claude-3.5-Sonnet)...
+[2026-01-25 18:51:43] [INFO]   ✓ API call successful (7.5s, 2854 chars returned)
+[2026-01-25 18:51:43] [INFO]   Calling Poe API (model: Claude-3.5-Sonnet)...
+[2026-01-25 18:51:49] [INFO]   ✓ API call successful (6.4s, 1975 chars returned)
+[2026-01-25 18:51:49] [INFO]   Calling Poe API (model: Claude-3.5-Sonnet)...
+[2026-01-25 18:51:56] [INFO]   ✓ API call successful (6.8s, 2285 chars returned)
+[2026-01-25 18:51:56] [INFO]   Calling Poe API (model: Claude-3.5-Sonnet)...
+[2026-01-25 18:52:03] [INFO]   ✓ API call successful (7.2s, 2285 chars returned)
+[2026-01-25 18:52:03] [INFO]   ✓ LLM formatting complete (3383 characters)
+[2026-01-25 18:52:03] [INFO] Saving markdown to: Session 2_Handout_STUDENT Version.md
+[2026-01-25 18:52:03] [INFO] ✓ Created markdown file: /Users/simonwang/Library/CloudStorage/OneDrive-HongKongBaptistUniversity/GTD/Areas/Teaching/Courses/MCCP 6020/PhDagentSpring2026/Materials/md/Session 2_Handout_STUDENT Version.md (3383 characters)
+[2026-01-25 18:52:03] [INFO] ✓ Processed 17 images to /Users/simonwang/Library/CloudStorage/OneDrive-HongKongBaptistUniversity/GTD/Areas/Teaching/Courses/MCCP 6020/PhDagentSpring2026/Materials/md/images/Session 2_Handout
+[2026-01-25 18:52:03] [INFO] ✓ Successfully processed: Session 2_Handout_STUDENT Version.pdf
+[2026-01-25 18:52:03] [INFO] Auto-continuing to next PDF (non-interactive mode)
+[2026-01-25 18:52:03] [INFO] 
+######################################################################
+[2026-01-25 18:52:03] [INFO] Processing PDF 3/7
+[2026-01-25 18:52:03] [INFO] ######################################################################
+[2026-01-25 18:52:03] [INFO] 
+======================================================================
+[2026-01-25 18:52:03] [INFO] PROCESSING: Session 3_Handout_STUDENT version.pdf
+[2026-01-25 18:52:03] [INFO] ======================================================================
+[2026-01-25 18:52:03] [INFO] Session number: 3
+[2026-01-25 18:52:03] [INFO] Extracting images from: Session 3_Handout_STUDENT version.pdf
+[2026-01-25 18:52:03] [INFO]   Converting PDF pages to images (300 DPI)...
+[2026-01-25 18:52:15] [INFO]   Converted 18 pages to images
+[2026-01-25 18:52:15] [INFO]   Found 1 embedded image(s) on page 4
+[2026-01-25 18:52:15] [INFO]   Found 1 embedded image(s) on page 6
+[2026-01-25 18:52:16] [INFO]   Found 1 embedded image(s) on page 18
+[2026-01-25 18:52:16] [INFO]   Saved page 1 image: page_001.png (2479x3509)
+[2026-01-25 18:52:17] [INFO]   Saved page 2 image: page_002.png (2479x3509)
+[2026-01-25 18:52:17] [INFO]   Saved page 3 image: page_003.png (2479x3509)
+[2026-01-25 18:52:18] [INFO]   Saved page 4 image: page_004.png (2479x3509)
+[2026-01-25 18:52:19] [INFO]   Saved page 5 image: page_005.png (2479x3509)
+[2026-01-25 18:52:19] [INFO]   Saved page 6 image: page_006.png (2479x3509)
+[2026-01-25 18:52:20] [INFO]   Saved page 7 image: page_007.png (2479x3509)
+[2026-01-25 18:52:20] [INFO]   Saved page 8 image: page_008.png (2479x3509)
+[2026-01-25 18:52:21] [INFO]   Saved page 9 image: page_009.png (2479x3509)
+[2026-01-25 18:52:21] [INFO]   Saved page 10 image: page_010.png (2479x3509)
+[2026-01-25 18:52:22] [INFO]   Saved page 11 image: page_011.png (2479x3509)
+[2026-01-25 18:52:22] [INFO]   Saved page 12 image: page_012.png (2479x3509)
+[2026-01-25 18:52:23] [INFO]   Saved page 13 image: page_013.png (2479x3509)
+[2026-01-25 18:52:23] [INFO]   Saved page 14 image: page_014.png (2479x3509)
+[2026-01-25 18:52:24] [INFO]   Saved page 15 image: page_015.png (2479x3509)
+[2026-01-25 18:52:24] [INFO]   Saved page 16 image: page_016.png (2479x3509)
+[2026-01-25 18:52:25] [INFO]   Saved page 17 image: page_017.png (2479x3509)
+[2026-01-25 18:52:25] [INFO]   Saved page 18 image: page_018.png (2479x3509)
+[2026-01-25 18:52:25] [INFO]   Note: Found 3 embedded image references (coordinates available)
+[2026-01-25 18:52:25] [INFO] ✓ Extracted 18 page images
+[2026-01-25 18:52:25] [INFO] Extracting text from: Session 3_Handout_STUDENT version.pdf
+[2026-01-25 18:52:25] [INFO]   PDF has 18 pages
+[2026-01-25 18:52:25] [INFO]   Page 1: Extracted 1319 characters
+[2026-01-25 18:52:25] [INFO]   Page 2: Extracted 1651 characters
+[2026-01-25 18:52:25] [INFO]   Page 3: Extracted 2085 characters
+[2026-01-25 18:52:26] [INFO]   Page 4: Extracted 1559 characters
+[2026-01-25 18:52:26] [INFO]   Page 5: Extracted 3383 characters
+[2026-01-25 18:52:26] [INFO]   Page 6: Extracted 1554 characters
+[2026-01-25 18:52:26] [INFO]   Page 7: Extracted 3452 characters
+[2026-01-25 18:52:26] [INFO]   Page 8: Extracted 2974 characters
+[2026-01-25 18:52:26] [INFO]   Page 9: Extracted 1851 characters
+[2026-01-25 18:52:26] [INFO]   Page 10: Extracted 2306 characters
+[2026-01-25 18:52:26] [INFO]   Page 11: Extracted 2028 characters
+[2026-01-25 18:52:26] [INFO]   Page 12: Extracted 2897 characters
+[2026-01-25 18:52:26] [INFO]   Page 13: Extracted 1434 characters
+[2026-01-25 18:52:26] [INFO]   Page 14: Extracted 1847 characters
+[2026-01-25 18:52:26] [INFO]   Page 15: Extracted 2110 characters
+[2026-01-25 18:52:26] [INFO]   Page 16: Extracted 1856 characters
+[2026-01-25 18:52:26] [INFO]   Page 17: Extracted 1464 characters
+[2026-01-25 18:52:26] [INFO]   Page 18: Extracted 972 characters
+[2026-01-25 18:52:26] [INFO]   Total text extracted: 36742 characters from 18 pages
+[2026-01-25 18:52:26] [INFO] ✓ Extracted text from 18 pages
+[2026-01-25 18:52:26] [INFO] Formatting markdown with LLM (Session 3)...
+[2026-01-25 18:52:26] [INFO]   Prepared 37104 characters of raw content
+[2026-01-25 18:52:26] [INFO]   Content too long (37104 chars), processing page by page...
+[2026-01-25 18:52:26] [INFO]   Calling Poe API (model: Claude-3.5-Sonnet)...
+[2026-01-25 18:52:31] [INFO]   ✓ API call successful (4.5s, 1353 chars returned)
+[2026-01-25 18:52:31] [INFO]   Calling Poe API (model: Claude-3.5-Sonnet)...
+[2026-01-25 18:52:36] [INFO]   ✓ API call successful (5.4s, 1759 chars returned)
+[2026-01-25 18:52:36] [INFO]   Calling Poe API (model: Claude-3.5-Sonnet)...

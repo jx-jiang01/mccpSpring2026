@@ -1,0 +1,77 @@
+%\section{Generalizing the \ocs ~problem with the $S$-feasibility assumption}
+%\input{fast_rates}
+
+\subsection{Proof of Theorem \ref{S-benchmark}} \label{S-benchmark-pf}
+\label{ext}
+\iffalse
+In all the previous sections, we assumed the existence of a fixed action $x^\star \in \mathcal{X}$ that satisfies each of the online constraints on \emph{each round}. In particular, we assumed that $\mathcal{X}^\star \neq \emptyset.$
+In this section, we revisit the \ocs ~problem by relaxing this assumption and only assuming that there is a feasible action $x^\star$ that satisfies the aggregate of the constraints over any consecutive $S$ rounds\footnote{This extension is meaningful only when the range of the constraint functions includes both positive and negative values. For non-negative constraints, clearly, $\mathcal{X}_S = \mathcal{X}^\star, \forall S\geq 1.$}, where the parameter $S \in [T]$ need not be known to the policy \emph{a priori}. Towards this end, we define the set of all $S$-feasible actions as below: 
+\begin{eqnarray} \label{extended-benchmark}
+\mathcal{X}_S =\{x^\star: \sum_{\tau \in |\mathcal{I}|} g_{\tau,i}(x^\star) \leq 0, \forall \textrm{sub-intervals}~ \mathcal{I} \subseteq [1,T], ~|\mathcal{I}| = S, \forall i \in [k]\}. 
+\end{eqnarray}
+We now replace Assumption \ref{feas-constr} with the following
+\begin{assumption}[$S$-feasibility] \label{s-feas-assump}
+	$\mathcal{X}_S \neq \emptyset.$
+\end{assumption}
+We now only assume that $\mathcal{X}_S \neq \emptyset$ for some $S: 1\leq S \leq T$. Clearly, Assumption \ref{s-feas-assump} is weaker than Assumption \ref{feas-constr} as $\mathcal{X}^\star \subseteq \mathcal{X}_S, \forall S \geq 1.$ 
+This problem was considered earlier by \cite{georgios-cautious} in the COCO setting with a single constraint function per round. However, since the parameter $V$ used in their algorithm is restricted as $S \leq V \leq T,$ their algorithm naturally needs to know the value of $S.$ In reality, the value of the parameter $S$ is generally not available \emph{a priori} as it depends on the online constraint functions. Fortunately, our proposed meta-policy does not need to know the value of $S$ and hence, it can automatically adapt itself to the best feasible $S$.
+\fi 
+
+%\edit{argue why our result is better}.
+
+%By extending the drift-plus-penalty methodology of \cite{neely2017online}, they proved a regret bound of $O(T^{1-\frac{\epsilon}{2}})$ and cumulative violation penalty of $O(T^{1-\frac{\epsilon}{4}})$ for $S=T^{1-\epsilon}$ \citep[Theorem 1]{georgios-cautious}. For the \texttt{OCS} problem, we show that our policy improves the latter bound to $O(T^{1-\frac{\epsilon}{2}}).$
+
+\paragraph{Generalized regret decomposition:} Fix any $S$-feasible benchmark $x^\star \in \mathcal{X}_S,$ as given by Eqn.\ \eqref{extended-benchmark}. Then, from Eqn.\ \eqref{drift-bd}, we have 
+\begin{eqnarray*}
+	\Phi(\tau)- \Phi(\tau-1) &\leq& 2 \sum_{i=1}^k Q_i(\tau)g_{\tau, i}(x_\tau) \\
+	&=& 2 \sum_{i=1}^k Q_i(\tau)\big(g_{\tau, i}(x_\tau)-g_{\tau, i}(x^\star)\big) + 2\sum_{i=1}^k Q_i(\tau)g_{\tau, i}(x^\star)\\
+	&=& \hat{f}_\tau (x_\tau) - \hat{f}_\tau(x^\star)  +  2\sum_{i=1}^k Q_i(\tau)g_{\tau, i}(x^\star). 
+\end{eqnarray*} 
+ Summing up the above inequalities from $\tau = 1$ to $\tau=t,$ we have
+ \begin{eqnarray} \label{new-reg-decomp}
+ 	\sum_{i=1}^k Q_i^2(t) =\Phi(t) \leq \textrm{Regret}'_t(x^\star) + 2 \sum_{i=1}^k\sum_{\tau=1}^t Q_i(\tau) g_{\tau, i}(x^\star),
+ \end{eqnarray}
+ where $\textrm{Regret}'(\cdot)$ refers to the regret of the surrogate costs as before. 
+ We now bound the last term by making use of the $S$-feasibility of the action $x^\star$ as given by Eqn.\ \eqref{extended-benchmark}.
+ Let us now divide the entire interval $[1,t]$ into disjoint and consecutive sub-intervals $\{\mathcal{I}_j\}_{j=1}^{\lceil t/S \rceil},$ each of length $S$ (except the last interval which could be of a smaller length). %Let $Q^\star_i(j) = \max_{\tau \in \mathcal{I}_j}Q_i(\tau)$ be the maximum queue
+ Let $Q^\star_i(j)$ be the value of the variable $Q_i(\cdot)$ at the beginning of the $j$\textsuperscript{th} interval. We have
+ \begin{eqnarray} \label{S-bd1}
+ 	\sum_{\tau=1}^t Q_i(\tau)g_{\tau, i}(x^\star) = \sum_{j=1}^{\lceil t/S \rceil} \sum_{\tau \in \mathcal{I}_j}\big(Q_i(\tau)-Q_i^\star(j)\big)g_{\tau, i}(x^\star) + \sum_{j=1}^{\lceil t/S \rceil}Q_i^\star(j) \sum_{\tau \in \mathcal{I}_j}g_{\tau, i}(x^\star) .   
+ \end{eqnarray}
+ %Let $g_{t,i}(x) \leq F, \forall x \in \mathcal{X}, t, i.$ 
+% From the Lipschitzness assumption, we have $g_{t,i}(x) \leq GD \equiv F ~(\textrm{say}), \forall x \in \mathcal{X}, t, i.$ 
+Using the boundedness assumption, let $g_{t,i}(x) \leq F, \forall x \in \mathcal{X}, t, i.$
+ Using the Lipschitzness property of the queueing dynamics \eqref{q-ev2} with respect to time, we have 
+ \begin{eqnarray*}
+ 	\max_{\tau \in \mathcal{I}_j} |Q_i(\tau)-Q_i^\star(j)| \leq F(S-1).
+ \end{eqnarray*}
+ Substituting the above bound into Eqn.\ \eqref{S-bd1}, we obtain 
+ \begin{eqnarray} \label{new-Q-S}
+ 	\sum_{\tau=1}^t Q_i(\tau)g_{\tau, i}(x^\star)  \leq \big(1+\frac{t}{S}\big) F^2S(S-1) + F(S-1)(Q_i(t)+F(S-1)), 
+ \end{eqnarray}
+ where in the last term, we have used the $S$-feasibility of the action $x^\star$ in all intervals, except possibly the last interval. 
+ %Clearly, when $S=1$, the RHS of the above bound becomes zero, and we recover Eqn.\ \eqref{q-regret-reln}. 
+ Substituting the bound \eqref{new-Q-S} into Eqn.\ \eqref{new-reg-decomp}, we arrive at the following extended regret decomposition inequality:
+ \begin{eqnarray} \label{gen-reg-decomp2}
+ 	\sum_{i=1}^k Q_i^2(t) &\leq& \textrm{Regret}'_t(x^\star) +  2kF^2S t + 2FS\sum_{i=1}^k Q_i(t) + 4F^2S^2k.
+%&\leq & \textrm{Regret}'_t(x^\star) + 6kF^2S t + 2FS \sqrt{k} \sqrt{\sum_{i=1}^k Q_i^2(t)}.
+ \end{eqnarray}
+Eqn.\ \eqref{gen-reg-decomp2} leads to the following bound on the cumulative constraint violation.
+% 
+% \begin{theorem} \label{S-benchmark}
+%Using the OGD policy with adaptive step-sizes given in part 1 of Theorem \ref{data-dep-regret} as a sub-routine, Algorithm \ref{ocs-policy} achieves the following CCV bound with the $S$-feasibility assumption (Assumption \ref{s-feas-assump}) for convex constraints: 
+% 	 \[\max_{i=1}^k\mathbb{V}_i(T)= O(\max(\sqrt{ST},S )).\]
+% \end{theorem}
+% See below for the proof of the result.
+%
+%\paragraph{Remarks:} Recall that our proof of the $O(\sqrt{T})$ regret bound for the COCO problem with the $1$-benchmark in Theorem \ref{gen-cvx-bd} crucially uses the non-negativity of the pre-processed constraint functions. However, with $S$-feasible benchmarks, pre-processing by clipping the constraints does not work as then the positive violations can not be cancelled with a strictly feasible violation on a different round. We leave the problem of obtaining an optimal $O(\sqrt{T})$ regret bound for Algorithm \ref{g-oco-policy} for the COCO problem with the $S$-feasibility assumption as an open problem. 
+%It is not clear how to  
+%which is better than $O(T^{1-\epsilon/4})$ constraint violation bound obtained by \citet{georgios-cautious}.
+
+  
+
+%\textbf{Note:} This extension is meaningful only for the convex case. Any strongly-convex function 
+%\vspace{5pt}
+%\hrule 
+%\textbf{Note:} \footnote{This extension is meaningful only when the range of the constraint functions includes both positive and negative values. For non-negative constraints, clearly $\mathcal{X}_S = \mathcal{X}_1 \forall S\geq 1.$}\\
+%\hrule

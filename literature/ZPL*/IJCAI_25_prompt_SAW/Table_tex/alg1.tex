@@ -1,0 +1,52 @@
+
+\begin{minipage}{0.46\textwidth}
+\begin{algorithm}[H]
+    \caption{\scshape Subgraph Extraction }
+    \label{alg:alg1}
+    \begin{algorithmic}[1]
+    \Require
+        \item[] { \#$\eta^{*}:$ {Target compression rate}}
+        \item[] { \#$\mathcal{G}:$ Graph structure of prompt}
+        \item[] { \#$len():$ Compute the length of graph structure, as the sum of individual tokens.}
+    \Ensure subgraph $\mathcal{G}_{subset}$
+        \State $\mathcal{G}_{subset}=\{\}$
+        \For{$i \in Index_{\text{ranked}}$}
+        \State $\mathcal{G}_{subset}.insert(g_i)$
+        \State { \#compute compression rate}
+        \State $Rate= len(\mathcal{G}_{subset})/len(\mathcal{G})$
+        \State { \#break if meet the constraint}
+        \State $\mathbf{If}$ $Rate> \eta^*$ \textbf{then}
+        \State $ \qquad Break$
+        \State \textbf{end If}
+        \EndFor
+        \State \Return $\mathcal{G}_{subset}$
+    \end{algorithmic}
+\end{algorithm}
+\end{minipage}
+   \hfill
+\begin{minipage}{0.46\textwidth}
+\begin{algorithm}[H]
+    \caption{\scshape Binary Search}
+    \label{alg:alg2}
+    \begin{algorithmic}[1]
+    \Require
+        \item[] { \#$\eta^{*}:$ {Target compression rate}}
+        \item[] { \#$\mathcal{G}:$ Graph structure of prompt}
+        \item[] { \#$\gamma:$ interval threshold}
+    \Ensure subgraph $\mathcal{G}_{subset}$
+        \State double $l=0,r=1$
+        \While{$r-l > \gamma$}
+        \State double $mid=(l+r)/2$
+        \State $\mathcal{G}_{subset} = Compress(\mathcal{G},mid)$
+        \State $Rate= len(\mathcal{G}_{subset})/len(\mathcal{G})$
+        \State $\mathbf{If}$ $Rate > \eta^{*}$ \textbf{then}
+        \State $ \qquad r=mid$
+        \State \textbf{Else} 
+        \State $ \qquad l=mid$
+        \EndWhile
+        \State $\delta=(l+r)/2$  \# compression threshold
+        \State $\mathcal{G}_{subset} = Compress(\mathcal{G},\delta)$
+        \State \Return $\mathcal{G}_{subset}$
+    \end{algorithmic}
+\end{algorithm}
+\end{minipage}

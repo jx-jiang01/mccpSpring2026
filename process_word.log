@@ -1,0 +1,235 @@
+[2026-01-25 21:29:50] [INFO] Starting Word document processing session
+[2026-01-25 21:29:50] [INFO] Word directory: /Users/simonwang/Library/CloudStorage/OneDrive-HongKongBaptistUniversity/GTD/Areas/Teaching/Courses/MCCP 6020/PhDagentSpring2026/Materials/word
+[2026-01-25 21:29:50] [INFO] Output MD directory: /Users/simonwang/Library/CloudStorage/OneDrive-HongKongBaptistUniversity/GTD/Areas/Teaching/Courses/MCCP 6020/PhDagentSpring2026/Materials/md
+[2026-01-25 21:29:50] [INFO] Output images directory: /Users/simonwang/Library/CloudStorage/OneDrive-HongKongBaptistUniversity/GTD/Areas/Teaching/Courses/MCCP 6020/PhDagentSpring2026/Materials/md/images
+[2026-01-25 21:29:50] [INFO] CSV index: /Users/simonwang/Library/CloudStorage/OneDrive-HongKongBaptistUniversity/GTD/Areas/Teaching/Courses/MCCP 6020/PhDagentSpring2026/Materials/word/processing_index.csv
+[2026-01-25 21:29:50] [WARNING] ⚠ No Poe API key found - will use basic formatting
+[2026-01-25 21:29:50] [INFO] 
+Found 7 Word documents to process:
+[2026-01-25 21:29:50] [INFO]   1. Session 1_Handout_TEACHER version.docx
+[2026-01-25 21:29:50] [INFO]   2. Session 2_Handout_TEACHER Version.docx
+[2026-01-25 21:29:50] [INFO]   3. Session 3_Handout_TEACHER version.docx
+[2026-01-25 21:29:50] [INFO]   4. Session 4_Handout_TEACHER version.docx
+[2026-01-25 21:29:50] [INFO]   5. Session 7_Handout_TEACHER version.docx
+[2026-01-25 21:29:50] [INFO]   6. Session 8_Handout_TEACHER version.docx
+[2026-01-25 21:29:50] [INFO]   7. Session 9_Handout_TEACHER version.docx
+[2026-01-25 21:29:50] [INFO] 
+######################################################################
+[2026-01-25 21:29:50] [INFO] Processing Word document 1/7
+[2026-01-25 21:29:50] [INFO] ######################################################################
+[2026-01-25 21:29:50] [INFO] 
+======================================================================
+[2026-01-25 21:29:50] [INFO] PROCESSING: Session 1_Handout_TEACHER version.docx
+[2026-01-25 21:29:50] [INFO] ======================================================================
+[2026-01-25 21:29:50] [INFO]   Updated CSV index: Session 1_Handout_TEACHER version.docx -> in_progress
+[2026-01-25 21:29:50] [INFO] Extracting images from: Session 1_Handout_TEACHER version.docx
+[2026-01-25 21:29:50] [INFO]   Saved image 1: image_001.png (483x509)
+[2026-01-25 21:29:50] [INFO]   Saved image 2: image_002.png (1740x2057)
+[2026-01-25 21:29:50] [INFO]   Saved image 3: image_003.png (1740x2057)
+[2026-01-25 21:29:50] [INFO]   Saved image 4: image_004.png (924x473)
+[2026-01-25 21:29:50] [INFO]   Saved image 5: image_005.png (1437x945)
+[2026-01-25 21:29:50] [INFO]   ✓ Extracted 5 images
+[2026-01-25 21:29:50] [INFO] ✓ Extracted 5 images
+[2026-01-25 21:29:50] [INFO] Extracting text from: Session 1_Handout_TEACHER version.docx
+[2026-01-25 21:29:50] [INFO]   Extracted 22784 characters from 165 paragraphs and 22 tables
+[2026-01-25 21:29:50] [INFO] ✓ Extracted 22784 characters
+[2026-01-25 21:29:50] [INFO]   Updated CSV index: Session 1_Handout_TEACHER version.docx -> in_progress
+[2026-01-25 21:29:50] [INFO] Formatting markdown with LLM...
+[2026-01-25 21:29:50] [WARNING] No Poe API key found. Skipping LLM processing.
+[2026-01-25 21:29:50] [WARNING]   Using fallback formatting (no LLM)
+[2026-01-25 21:29:50] [INFO] Saving markdown to: Session 1_Handout_TEACHER version_word.md
+[2026-01-25 21:29:50] [INFO] ✓ Created markdown file: /Users/simonwang/Library/CloudStorage/OneDrive-HongKongBaptistUniversity/GTD/Areas/Teaching/Courses/MCCP 6020/PhDagentSpring2026/Materials/md/Session 1_Handout_TEACHER version_word.md (40210 characters)
+[2026-01-25 21:29:50] [INFO] ✓ Processed 5 images to /Users/simonwang/Library/CloudStorage/OneDrive-HongKongBaptistUniversity/GTD/Areas/Teaching/Courses/MCCP 6020/PhDagentSpring2026/Materials/md/images/Session 1_Handout_word
+[2026-01-25 21:29:50] [INFO]   Updated CSV index: Session 1_Handout_TEACHER version.docx -> completed
+[2026-01-25 21:29:50] [INFO] ✓ Successfully processed: Session 1_Handout_TEACHER version.docx
+[2026-01-25 21:29:50] [INFO] Auto-continuing to next document (non-interactive mode)
+[2026-01-25 21:29:50] [INFO] 
+######################################################################
+[2026-01-25 21:29:50] [INFO] Processing Word document 2/7
+[2026-01-25 21:29:50] [INFO] ######################################################################
+[2026-01-25 21:29:50] [INFO] 
+======================================================================
+[2026-01-25 21:29:50] [INFO] PROCESSING: Session 2_Handout_TEACHER Version.docx
+[2026-01-25 21:29:50] [INFO] ======================================================================
+[2026-01-25 21:29:50] [INFO]   Updated CSV index: Session 2_Handout_TEACHER Version.docx -> in_progress
+[2026-01-25 21:29:50] [INFO] Extracting images from: Session 2_Handout_TEACHER Version.docx
+[2026-01-25 21:29:50] [INFO]   No images found in document
+[2026-01-25 21:29:50] [INFO] ✓ Extracted 0 images
+[2026-01-25 21:29:50] [INFO] Extracting text from: Session 2_Handout_TEACHER Version.docx
+[2026-01-25 21:29:51] [INFO]   Extracted 17835 characters from 142 paragraphs and 32 tables
+[2026-01-25 21:29:51] [INFO] ✓ Extracted 17835 characters
+[2026-01-25 21:29:51] [INFO]   Updated CSV index: Session 2_Handout_TEACHER Version.docx -> in_progress
+[2026-01-25 21:29:51] [INFO] Formatting markdown with LLM...
+[2026-01-25 21:29:51] [WARNING] No Poe API key found. Skipping LLM processing.
+[2026-01-25 21:29:51] [WARNING]   Using fallback formatting (no LLM)
+[2026-01-25 21:29:51] [INFO] Saving markdown to: Session 2_Handout_TEACHER Version_word.md
+[2026-01-25 21:29:51] [INFO] ✓ Created markdown file: /Users/simonwang/Library/CloudStorage/OneDrive-HongKongBaptistUniversity/GTD/Areas/Teaching/Courses/MCCP 6020/PhDagentSpring2026/Materials/md/Session 2_Handout_TEACHER Version_word.md (39501 characters)
+[2026-01-25 21:29:51] [INFO] ✓ Processed 0 images to /Users/simonwang/Library/CloudStorage/OneDrive-HongKongBaptistUniversity/GTD/Areas/Teaching/Courses/MCCP 6020/PhDagentSpring2026/Materials/md/images/Session 2_Handout_word
+[2026-01-25 21:29:51] [INFO]   Updated CSV index: Session 2_Handout_TEACHER Version.docx -> completed
+[2026-01-25 21:29:51] [INFO] ✓ Successfully processed: Session 2_Handout_TEACHER Version.docx
+[2026-01-25 21:29:51] [INFO] Auto-continuing to next document (non-interactive mode)
+[2026-01-25 21:29:51] [INFO] 
+######################################################################
+[2026-01-25 21:29:51] [INFO] Processing Word document 3/7
+[2026-01-25 21:29:51] [INFO] ######################################################################
+[2026-01-25 21:29:51] [INFO] 
+======================================================================
+[2026-01-25 21:29:51] [INFO] PROCESSING: Session 3_Handout_TEACHER version.docx
+[2026-01-25 21:29:51] [INFO] ======================================================================
+[2026-01-25 21:29:51] [INFO]   Updated CSV index: Session 3_Handout_TEACHER version.docx -> in_progress
+[2026-01-25 21:29:51] [INFO] Extracting images from: Session 3_Handout_TEACHER version.docx
+[2026-01-25 21:29:51] [INFO]   Saved image 1: image_001.png (674x545)
+[2026-01-25 21:29:51] [INFO]   Saved image 2: image_002.png (1740x2057)
+[2026-01-25 21:29:51] [INFO]   Saved image 3: image_003.png (1740x2057)
+[2026-01-25 21:29:51] [INFO]   ✓ Extracted 3 images
+[2026-01-25 21:29:51] [INFO] ✓ Extracted 3 images
+[2026-01-25 21:29:51] [INFO] Extracting text from: Session 3_Handout_TEACHER version.docx
+[2026-01-25 21:29:51] [INFO]   Extracted 17801 characters from 152 paragraphs and 28 tables
+[2026-01-25 21:29:51] [INFO] ✓ Extracted 17801 characters
+[2026-01-25 21:29:51] [INFO]   Updated CSV index: Session 3_Handout_TEACHER version.docx -> in_progress
+[2026-01-25 21:29:51] [INFO] Formatting markdown with LLM...
+[2026-01-25 21:29:51] [WARNING] No Poe API key found. Skipping LLM processing.
+[2026-01-25 21:29:51] [WARNING]   Using fallback formatting (no LLM)
+[2026-01-25 21:29:51] [INFO] Saving markdown to: Session 3_Handout_TEACHER version_word.md
+[2026-01-25 21:29:51] [INFO] ✓ Created markdown file: /Users/simonwang/Library/CloudStorage/OneDrive-HongKongBaptistUniversity/GTD/Areas/Teaching/Courses/MCCP 6020/PhDagentSpring2026/Materials/md/Session 3_Handout_TEACHER version_word.md (47340 characters)
+[2026-01-25 21:29:51] [INFO] ✓ Processed 3 images to /Users/simonwang/Library/CloudStorage/OneDrive-HongKongBaptistUniversity/GTD/Areas/Teaching/Courses/MCCP 6020/PhDagentSpring2026/Materials/md/images/Session 3_Handout_word
+[2026-01-25 21:29:51] [INFO]   Updated CSV index: Session 3_Handout_TEACHER version.docx -> completed
+[2026-01-25 21:29:51] [INFO] ✓ Successfully processed: Session 3_Handout_TEACHER version.docx
+[2026-01-25 21:29:51] [INFO] Auto-continuing to next document (non-interactive mode)
+[2026-01-25 21:29:51] [INFO] 
+######################################################################
+[2026-01-25 21:29:51] [INFO] Processing Word document 4/7
+[2026-01-25 21:29:51] [INFO] ######################################################################
+[2026-01-25 21:29:51] [INFO] 
+======================================================================
+[2026-01-25 21:29:51] [INFO] PROCESSING: Session 4_Handout_TEACHER version.docx
+[2026-01-25 21:29:51] [INFO] ======================================================================
+[2026-01-25 21:29:51] [INFO]   Updated CSV index: Session 4_Handout_TEACHER version.docx -> in_progress
+[2026-01-25 21:29:51] [INFO] Extracting images from: Session 4_Handout_TEACHER version.docx
+[2026-01-25 21:29:51] [INFO]   Saved image 1: image_001.png (1740x2057)
+[2026-01-25 21:29:51] [INFO]   Saved image 2: image_002.png (1740x2057)
+[2026-01-25 21:29:51] [INFO]   ✓ Extracted 2 images
+[2026-01-25 21:29:51] [INFO] ✓ Extracted 2 images
+[2026-01-25 21:29:51] [INFO] Extracting text from: Session 4_Handout_TEACHER version.docx
+[2026-01-25 21:29:51] [INFO]   Extracted 16680 characters from 142 paragraphs and 20 tables
+[2026-01-25 21:29:51] [INFO] ✓ Extracted 16680 characters
+[2026-01-25 21:29:51] [INFO]   Updated CSV index: Session 4_Handout_TEACHER version.docx -> in_progress
+[2026-01-25 21:29:51] [INFO] Formatting markdown with LLM...
+[2026-01-25 21:29:51] [WARNING] No Poe API key found. Skipping LLM processing.
+[2026-01-25 21:29:51] [WARNING]   Using fallback formatting (no LLM)
+[2026-01-25 21:29:51] [INFO] Saving markdown to: Session 4_Handout_TEACHER version_word.md
+[2026-01-25 21:29:51] [INFO] ✓ Created markdown file: /Users/simonwang/Library/CloudStorage/OneDrive-HongKongBaptistUniversity/GTD/Areas/Teaching/Courses/MCCP 6020/PhDagentSpring2026/Materials/md/Session 4_Handout_TEACHER version_word.md (26976 characters)
+[2026-01-25 21:29:51] [INFO] ✓ Processed 2 images to /Users/simonwang/Library/CloudStorage/OneDrive-HongKongBaptistUniversity/GTD/Areas/Teaching/Courses/MCCP 6020/PhDagentSpring2026/Materials/md/images/Session 4_Handout_word
+[2026-01-25 21:29:51] [INFO]   Updated CSV index: Session 4_Handout_TEACHER version.docx -> completed
+[2026-01-25 21:29:51] [INFO] ✓ Successfully processed: Session 4_Handout_TEACHER version.docx
+[2026-01-25 21:29:51] [INFO] Auto-continuing to next document (non-interactive mode)
+[2026-01-25 21:29:51] [INFO] 
+######################################################################
+[2026-01-25 21:29:51] [INFO] Processing Word document 5/7
+[2026-01-25 21:29:51] [INFO] ######################################################################
+[2026-01-25 21:29:51] [INFO] 
+======================================================================
+[2026-01-25 21:29:51] [INFO] PROCESSING: Session 7_Handout_TEACHER version.docx
+[2026-01-25 21:29:51] [INFO] ======================================================================
+[2026-01-25 21:29:51] [INFO]   Updated CSV index: Session 7_Handout_TEACHER version.docx -> in_progress
+[2026-01-25 21:29:51] [INFO] Extracting images from: Session 7_Handout_TEACHER version.docx
+[2026-01-25 21:29:51] [INFO]   Saved image 1: image_001.png (1074x287)
+[2026-01-25 21:29:51] [INFO]   Saved image 2: image_002.jpeg (1038x1471)
+[2026-01-25 21:29:51] [INFO]   Saved image 3: image_003.png (974x566)
+[2026-01-25 21:29:51] [INFO]   Saved image 4: image_004.png (830x216)
+[2026-01-25 21:29:51] [INFO]   Saved image 5: image_005.png (768x590)
+[2026-01-25 21:29:51] [INFO]   Saved image 6: image_006.png (802x369)
+[2026-01-25 21:29:51] [INFO]   Saved image 7: image_007.png (694x532)
+[2026-01-25 21:29:51] [INFO]   Saved image 8: image_008.png (966x217)
+[2026-01-25 21:29:51] [INFO]   Saved image 9: image_009.png (1485x820)
+[2026-01-25 21:29:51] [INFO]   Saved image 10: image_010.png (1740x2057)
+[2026-01-25 21:29:51] [INFO]   Saved image 11: image_011.jpeg (1122x841)
+[2026-01-25 21:29:51] [INFO]   Saved image 12: image_012.png (764x447)
+[2026-01-25 21:29:51] [INFO]   Saved image 13: image_013.png (1488x1468)
+[2026-01-25 21:29:51] [INFO]   Saved image 14: image_014.png (798x359)
+[2026-01-25 21:29:51] [INFO]   Saved image 15: image_015.png (1246x770)
+[2026-01-25 21:29:51] [INFO]   Saved image 16: image_016.png (1740x2057)
+[2026-01-25 21:29:51] [INFO]   Saved image 17: image_017.jpeg (1016x1016)
+[2026-01-25 21:29:51] [INFO]   Saved image 18: image_018.png (804x364)
+[2026-01-25 21:29:51] [INFO]   Saved image 19: image_019.png (1037x523)
+[2026-01-25 21:29:51] [INFO]   Saved image 20: image_020.png (914x261)
+[2026-01-25 21:29:51] [INFO]   Saved image 21: image_021.png (838x453)
+[2026-01-25 21:29:51] [INFO]   Saved image 22: image_022.png (960x640)
+[2026-01-25 21:29:51] [INFO]   Saved image 23: image_023.png (1142x856)
+[2026-01-25 21:29:51] [INFO]   Saved image 24: image_024.png (772x523)
+[2026-01-25 21:29:51] [INFO]   Saved image 25: image_025.png (695x527)
+[2026-01-25 21:29:51] [INFO]   Saved image 26: image_026.png (709x170)
+[2026-01-25 21:29:51] [INFO]   Saved image 27: image_027.png (853x216)
+[2026-01-25 21:29:51] [INFO]   ✓ Extracted 27 images
+[2026-01-25 21:29:51] [INFO] ✓ Extracted 27 images
+[2026-01-25 21:29:51] [INFO] Extracting text from: Session 7_Handout_TEACHER version.docx
+[2026-01-25 21:29:51] [INFO]   Extracted 17933 characters from 155 paragraphs and 22 tables
+[2026-01-25 21:29:51] [INFO] ✓ Extracted 17933 characters
+[2026-01-25 21:29:51] [INFO]   Updated CSV index: Session 7_Handout_TEACHER version.docx -> in_progress
+[2026-01-25 21:29:51] [INFO] Formatting markdown with LLM...
+[2026-01-25 21:29:51] [WARNING] No Poe API key found. Skipping LLM processing.
+[2026-01-25 21:29:51] [WARNING]   Using fallback formatting (no LLM)
+[2026-01-25 21:29:51] [INFO] Saving markdown to: Session 7_Handout_TEACHER version_word.md
+[2026-01-25 21:29:51] [INFO] ✓ Created markdown file: /Users/simonwang/Library/CloudStorage/OneDrive-HongKongBaptistUniversity/GTD/Areas/Teaching/Courses/MCCP 6020/PhDagentSpring2026/Materials/md/Session 7_Handout_TEACHER version_word.md (36332 characters)
+[2026-01-25 21:29:51] [INFO] ✓ Processed 27 images to /Users/simonwang/Library/CloudStorage/OneDrive-HongKongBaptistUniversity/GTD/Areas/Teaching/Courses/MCCP 6020/PhDagentSpring2026/Materials/md/images/Session 7_Handout_word
+[2026-01-25 21:29:51] [INFO]   Updated CSV index: Session 7_Handout_TEACHER version.docx -> completed
+[2026-01-25 21:29:51] [INFO] ✓ Successfully processed: Session 7_Handout_TEACHER version.docx
+[2026-01-25 21:29:51] [INFO] Auto-continuing to next document (non-interactive mode)
+[2026-01-25 21:29:51] [INFO] 
+######################################################################
+[2026-01-25 21:29:51] [INFO] Processing Word document 6/7
+[2026-01-25 21:29:51] [INFO] ######################################################################
+[2026-01-25 21:29:51] [INFO] 
+======================================================================
+[2026-01-25 21:29:51] [INFO] PROCESSING: Session 8_Handout_TEACHER version.docx
+[2026-01-25 21:29:51] [INFO] ======================================================================
+[2026-01-25 21:29:51] [INFO]   Updated CSV index: Session 8_Handout_TEACHER version.docx -> in_progress
+[2026-01-25 21:29:51] [INFO] Extracting images from: Session 8_Handout_TEACHER version.docx
+[2026-01-25 21:29:51] [INFO]   Saved image 1: image_001.png (552x41)
+[2026-01-25 21:29:51] [INFO]   Saved image 2: image_002.png (1740x2057)
+[2026-01-25 21:29:51] [INFO]   Saved image 3: image_003.png (1740x2057)
+[2026-01-25 21:29:51] [INFO]   Saved image 4: image_004.png (560x85)
+[2026-01-25 21:29:51] [INFO]   ✓ Extracted 4 images
+[2026-01-25 21:29:51] [INFO] ✓ Extracted 4 images
+[2026-01-25 21:29:51] [INFO] Extracting text from: Session 8_Handout_TEACHER version.docx
+[2026-01-25 21:29:51] [INFO]   Extracted 24583 characters from 197 paragraphs and 26 tables
+[2026-01-25 21:29:51] [INFO] ✓ Extracted 24583 characters
+[2026-01-25 21:29:51] [INFO]   Updated CSV index: Session 8_Handout_TEACHER version.docx -> in_progress
+[2026-01-25 21:29:51] [INFO] Formatting markdown with LLM...
+[2026-01-25 21:29:51] [WARNING] No Poe API key found. Skipping LLM processing.
+[2026-01-25 21:29:51] [WARNING]   Using fallback formatting (no LLM)
+[2026-01-25 21:29:51] [INFO] Saving markdown to: Session 8_Handout_TEACHER version_word.md
+[2026-01-25 21:29:51] [INFO] ✓ Created markdown file: /Users/simonwang/Library/CloudStorage/OneDrive-HongKongBaptistUniversity/GTD/Areas/Teaching/Courses/MCCP 6020/PhDagentSpring2026/Materials/md/Session 8_Handout_TEACHER version_word.md (42070 characters)
+[2026-01-25 21:29:51] [INFO] ✓ Processed 4 images to /Users/simonwang/Library/CloudStorage/OneDrive-HongKongBaptistUniversity/GTD/Areas/Teaching/Courses/MCCP 6020/PhDagentSpring2026/Materials/md/images/Session 8_Handout_word
+[2026-01-25 21:29:51] [INFO]   Updated CSV index: Session 8_Handout_TEACHER version.docx -> completed
+[2026-01-25 21:29:51] [INFO] ✓ Successfully processed: Session 8_Handout_TEACHER version.docx
+[2026-01-25 21:29:51] [INFO] Auto-continuing to next document (non-interactive mode)
+[2026-01-25 21:29:51] [INFO] 
+######################################################################
+[2026-01-25 21:29:51] [INFO] Processing Word document 7/7
+[2026-01-25 21:29:51] [INFO] ######################################################################
+[2026-01-25 21:29:51] [INFO] 
+======================================================================
+[2026-01-25 21:29:51] [INFO] PROCESSING: Session 9_Handout_TEACHER version.docx
+[2026-01-25 21:29:51] [INFO] ======================================================================
+[2026-01-25 21:29:51] [INFO]   Updated CSV index: Session 9_Handout_TEACHER version.docx -> in_progress
+[2026-01-25 21:29:51] [INFO] Extracting images from: Session 9_Handout_TEACHER version.docx
+[2026-01-25 21:29:51] [INFO]   No images found in document
+[2026-01-25 21:29:51] [INFO] ✓ Extracted 0 images
+[2026-01-25 21:29:51] [INFO] Extracting text from: Session 9_Handout_TEACHER version.docx
+[2026-01-25 21:29:51] [INFO]   Extracted 10988 characters from 76 paragraphs and 8 tables
+[2026-01-25 21:29:51] [INFO] ✓ Extracted 10988 characters
+[2026-01-25 21:29:51] [INFO]   Updated CSV index: Session 9_Handout_TEACHER version.docx -> in_progress
+[2026-01-25 21:29:51] [INFO] Formatting markdown with LLM...
+[2026-01-25 21:29:51] [WARNING] No Poe API key found. Skipping LLM processing.
+[2026-01-25 21:29:51] [WARNING]   Using fallback formatting (no LLM)
+[2026-01-25 21:29:51] [INFO] Saving markdown to: Session 9_Handout_TEACHER version_word.md
+[2026-01-25 21:29:51] [INFO] ✓ Created markdown file: /Users/simonwang/Library/CloudStorage/OneDrive-HongKongBaptistUniversity/GTD/Areas/Teaching/Courses/MCCP 6020/PhDagentSpring2026/Materials/md/Session 9_Handout_TEACHER version_word.md (11610 characters)
+[2026-01-25 21:29:51] [INFO] ✓ Processed 0 images to /Users/simonwang/Library/CloudStorage/OneDrive-HongKongBaptistUniversity/GTD/Areas/Teaching/Courses/MCCP 6020/PhDagentSpring2026/Materials/md/images/Session 9_Handout_word
+[2026-01-25 21:29:51] [INFO]   Updated CSV index: Session 9_Handout_TEACHER version.docx -> completed
+[2026-01-25 21:29:51] [INFO] ✓ Successfully processed: Session 9_Handout_TEACHER version.docx
+[2026-01-25 21:29:51] [INFO] 
+======================================================================
+[2026-01-25 21:29:51] [INFO] Processing session complete
+[2026-01-25 21:29:51] [INFO] Processed: 7/7 Word documents
+[2026-01-25 21:29:51] [INFO] ======================================================================
