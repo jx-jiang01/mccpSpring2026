@@ -1,0 +1,244 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Paper Structure: Interconnections - {{TITLE}}</title>
+    <script src="https://d3js.org/d3.v7.min.js"></script>
+    <style>
+        * { box-sizing: border-box; margin: 0; padding: 0; }
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: #1a1a2e;
+            min-height: 100vh;
+            color: #eee;
+        }
+        .header {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            padding: 20px;
+            text-align: center;
+        }
+        .header h1 { font-size: 1.4em; margin-bottom: 8px; }
+        .header p { opacity: 0.9; font-size: 0.9em; }
+        
+        .main-container {
+            display: flex;
+            min-height: calc(100vh - 100px);
+        }
+        
+        .network-panel {
+            flex: 1;
+            padding: 20px;
+            position: relative;
+            overflow: auto;
+        }
+        
+        .network-svg {
+            width: 100%;
+            height: 600px;
+        }
+        
+        .detail-panel {
+            width: 380px;
+            background: #16213e;
+            padding: 20px;
+            border-left: 1px solid #333;
+            overflow-y: auto;
+            max-height: calc(100vh - 100px);
+        }
+        .detail-title {
+            font-size: 1.2em;
+            margin-bottom: 15px;
+            color: #667eea;
+            border-bottom: 2px solid #667eea;
+            padding-bottom: 10px;
+        }
+        .detail-content {
+            margin-top: 15px;
+        }
+        .detail-text {
+            background: #0f1629;
+            padding: 15px;
+            border-radius: 8px;
+            margin-top: 10px;
+            line-height: 1.6;
+            font-size: 0.9em;
+        }
+        .node {
+            cursor: pointer;
+        }
+        .link {
+            stroke: #667eea;
+            stroke-opacity: 0.6;
+            stroke-width: 2;
+        }
+        .node-label {
+            font-size: 12px;
+            fill: #eee;
+            pointer-events: none;
+        }
+    </style>
+</head>
+<body>
+    <div class="header">
+        <h1>{{TITLE}}</h1>
+        <p>Interactive Network Visualization - Click nodes to explore connections</p>
+    </div>
+    <div class="main-container">
+        <div class="network-panel">
+            <svg class="network-svg" id="network-svg"></svg>
+        </div>
+        <div class="detail-panel">
+            <div class="detail-title">Section Details</div>
+            <div class="detail-content" id="details">
+                <p style="color: #888;">Click on a node in the network to see details</p>
+            </div>
+        </div>
+    </div>
+    <script>
+        const sections = {{SECTIONS_DATA}};
+        const connections = {{CONNECTIONS_DATA}};
+        
+        const width = document.querySelector('.network-panel').clientWidth;
+        const height = 600;
+        
+        const svg = d3.select("#network-svg")
+            .attr("width", width)
+            .attr("height", height);
+        
+        // Create force simulation
+        const simulation = d3.forceSimulation(sections)
+            .force("link", d3.forceLink(connections).id(d => d.name || d.id))
+            .force("charge", d3.forceManyBody().strength(-300))
+            .force("center", d3.forceCenter(width / 2, height / 2))
+            .force("collision", d3.forceCollide().radius(d => 15 + (d.level || 1) * 3));
+        
+        // Create links
+        const link = svg.append("g")
+            .selectAll("line")
+            .data(connections)
+            .enter().append("line")
+            .attr("class", "link")
+            .attr("stroke-width", d => {
+                if (d.type === "hierarchical") return 3;
+                if (d.type === "sequential") return 2.5;
+                if (d.type === "semantic") return 2;
+                return 1.5;
+            })
+            .attr("stroke", d => {
+                if (d.type === "hierarchical") return "#48bb78";
+                if (d.type === "sequential") return "#667eea";
+                if (d.type === "semantic") return "#ed8936";
+                return "#667eea";
+            });
+        
+        // Create nodes
+        const node = svg.append("g")
+            .selectAll("circle")
+            .data(sections)
+            .enter().append("circle")
+            .attr("class", "node")
+            .attr("r", d => 8 + d.level * 2)
+            .attr("fill", d => {
+                const colors = ["#667eea", "#48bb78", "#ed8936", "#f56565"];
+                return colors[d.level - 1] || "#667eea";
+            })
+            .call(d3.drag()
+                .on("start", dragstarted)
+                .on("drag", dragged)
+                .on("end", dragended))
+            .on("click", function(event, d) {
+                showDetails(d);
+            });
+        
+        // Add labels
+        const label = svg.append("g")
+            .selectAll("text")
+            .data(sections)
+            .enter().append("text")
+            .attr("class", "node-label")
+            .text(d => d.name)
+            .attr("dx", 12)
+            .attr("dy", 4);
+        
+        // Update positions on simulation tick
+        simulation.on("tick", () => {
+            if (connections.length > 0) {
+                link
+                    .attr("x1", d => d.source.x || d.source)
+                    .attr("y1", d => d.source.y || d.source)
+                    .attr("x2", d => d.target.x || d.target)
+                    .attr("y2", d => d.target.y || d.target);
+            }
+            
+            node
+                .attr("cx", d => d.x || width / 2)
+                .attr("cy", d => d.y || height / 2);
+            
+            label
+                .attr("x", d => (d.x || width / 2) + 12)
+                .attr("y", d => (d.y || height / 2) + 4);
+        });
+        
+        // If no connections, arrange nodes in a circle
+        if (connections.length === 0) {
+            const angleStep = (2 * Math.PI) / sections.length;
+            sections.forEach((d, i) => {
+                const angle = i * angleStep;
+                d.x = width / 2 + Math.cos(angle) * (width / 3);
+                d.y = height / 2 + Math.sin(angle) * (height / 3);
+                d.fx = d.x;
+                d.fy = d.y;
+            });
+            simulation.alpha(0).restart();
+        }
+        
+        function dragstarted(event, d) {
+            if (!event.active) simulation.alphaTarget(0.3).restart();
+            d.fx = d.x;
+            d.fy = d.y;
+        }
+        
+        function dragged(event, d) {
+            d.fx = event.x;
+            d.fy = event.y;
+        }
+        
+        function dragended(event, d) {
+            if (!event.active) simulation.alphaTarget(0);
+            d.fx = null;
+            d.fy = null;
+        }
+        
+        function showDetails(d) {
+            const detailsDiv = document.getElementById("details");
+            const relatedConnections = connections.filter(c => 
+                c.source === d.name || c.target === d.name
+            );
+            
+            let html = `
+                <h3 style="color: #667eea; margin-bottom: 10px;">${d.name}</h3>
+                <p style="color: #aaa; font-size: 0.85em; margin-bottom: 15px;">Level ${d.level} Section</p>
+                <div class="detail-text">
+                    <strong>Text Excerpt:</strong><br>
+                    ${d.text || "No text excerpt available"}
+                </div>
+            `;
+            
+            if (relatedConnections.length > 0) {
+                html += `<div style="margin-top: 15px;">
+                    <strong style="color: #667eea;">Connections (${relatedConnections.length}):</strong>
+                    <ul style="margin-top: 10px; padding-left: 20px;">
+                `;
+                relatedConnections.forEach(conn => {
+                    const other = conn.source === d.name ? conn.target : conn.source;
+                    html += `<li style="margin: 5px 0; color: #ccc;">${conn.type}: ${other}</li>`;
+                });
+                html += `</ul></div>`;
+            }
+            
+            detailsDiv.innerHTML = html;
+        }
+    </script>
+</body>
+</html>
