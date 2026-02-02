@@ -1,0 +1,138 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Paper Structure: Title</title>
+    <style>
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+            padding: 20px;
+        }
+        .container {
+            max-width: 900px;
+            margin: 0 auto;
+        }
+        .paper-title {
+            background: white;
+            border-radius: 16px;
+            padding: 25px;
+            margin-bottom: 20px;
+            text-align: center;
+            box-shadow: 0 10px 40px rgba(0,0,0,0.2);
+        }
+        .paper-title h1 {
+            color: #2d3748;
+            font-size: 1.6em;
+            margin-bottom: 10px;
+        }
+        .paper-title .author {
+            color: #718096;
+            font-size: 0.95em;
+        }
+        .section {
+            background: white;
+            border-radius: 12px;
+            padding: 20px;
+            margin-bottom: 15px;
+            box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+            border-left: 5px solid #667eea;
+        }
+        .section.level-1 {
+            border-left-color: #667eea;
+        }
+        .section.level-2 {
+            border-left-color: #48bb78;
+        }
+        .section.level-3 {
+            border-left-color: #ed8936;
+        }
+        .section-heading {
+            color: #2d3748;
+            font-size: 1.3em;
+            margin-bottom: 10px;
+            font-weight: 600;
+        }
+        .section-excerpt {
+            color: #4a5568;
+            font-size: 0.95em;
+            line-height: 1.6;
+            margin-top: 8px;
+        }
+        .subsection {
+            margin-left: 30px;
+            margin-top: 15px;
+            padding: 15px;
+            background: #f7fafc;
+            border-radius: 8px;
+            border-left: 3px solid #cbd5e0;
+        }
+        .subsection-heading {
+            color: #2d3748;
+            font-size: 1.1em;
+            margin-bottom: 8px;
+            font-weight: 500;
+        }
+        .subsection-excerpt {
+            color: #718096;
+            font-size: 0.9em;
+            line-height: 1.5;
+        }
+        .subsubsection {
+            margin-left: 50px;
+            margin-top: 10px;
+            padding: 12px;
+            background: #edf2f7;
+            border-radius: 6px;
+            border-left: 2px solid #a0aec0;
+        }
+        .subsubsection-heading {
+            color: #2d3748;
+            font-size: 1.0em;
+            margin-bottom: 6px;
+            font-weight: 500;
+        }
+        .subsubsection-excerpt {
+            color: #718096;
+            font-size: 0.85em;
+            line-height: 1.4;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="paper-title">
+            <h1>Title</h1>
+            <p class="author">Name</p>
+        </div>
+        
+        <div class="section level-1">
+            <h1 class="section-heading">Introduction</h1>
+            <p class="section-excerpt">Due to perfect theoretical behaviors in theory [citation: caponnetto2007optimal], kernel ridge regression (KRR) has been widely used for the regression purpose. Numerous provable variants such as Nyst...</p>
+        </div>
+        <div class="section level-1">
+            <h1 class="section-heading">Kernel Ridge Regression and Parameter Selection</h1>
+            <p class="section-excerpt">Let [(H_K, _K)] be the RKHS induced by a Mercer kernel [K] on a compact metric space [X]. Let [D:=(x_i,y_i)_i=1^|D|XY] with [YR] be the set of data. Kernel ridge regression (KRR) [citation: smale2005s...</p>
+        </div>
+        <div class="section level-1">
+            <h1 class="section-heading">Adaptive Parameter Selection for KRR</h1>
+            <p class="section-excerpt">In this section, we propose an early-stopping type realization of LP to remove the recurrently pairwise comparisons and prove that the corresponding KRR succeeds in achieving the optimal learning rate...</p>
+        </div>
+        <div class="section level-1">
+            <h1 class="section-heading">Optimal Parameter Selection via LP for KRR</h1>
+            <p class="section-excerpt">% In this section, we are concerned with removing the logarithmic term in Theorem [ref: Theorem:ASLS] via slightly modifying ASLS. % The following proposition based on special spectral property quanti...</p>
+        </div>
+        <div class="section level-1">
+            <h1 class="section-heading">Proofs</h1>
+            <p class="section-excerpt">We adopt the widely used integral operator approach [citation: smale2004shannon,smale2005shannon,smale2007learning] to prove our main results. Write the sampling operator [S_D:H_KR^|D|] as $[ S_Df:=\f...</p>
+        </div>
+    </div>
+</body>
+</html>
