@@ -19,7 +19,7 @@ async def generate_hierarchical_html(
     
     # Load template
     if base_dir:
-        template_path = base_dir / "templates" / "hierarchical.html"
+        template_path = Path(base_dir) / "templates" / "hierarchical.html"
     else:
         template_path = Path(__file__).parent.parent / "templates" / "hierarchical.html"
     

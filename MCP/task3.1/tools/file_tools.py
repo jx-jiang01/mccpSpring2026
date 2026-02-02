@@ -6,8 +6,12 @@ import os
 import re
 import urllib.request
 import urllib.parse
+import ssl
 from pathlib import Path
 from typing import Dict, List, Optional
+
+# Create SSL context that doesn't verify certificates
+ssl._create_default_https_context = ssl._create_unverified_context
 
 
 async def extract_archive(archive_path: str) -> Dict:
