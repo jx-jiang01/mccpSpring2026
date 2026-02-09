@@ -1,0 +1,108 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Two-Phase System Overview (Generic)</title>
+  <style>
+    * { box-sizing: border-box; }
+    body { font-family: system-ui, sans-serif; padding: 24px; background: #fafafa; }
+    .diagram { max-width: 900px; margin: 0 auto; }
+    .phase-label { font-weight: bold; margin-bottom: 8px; color: #333; }
+    .phase { margin-bottom: 24px; }
+    .phase-offline .block { background: #e3f2fd; border: 1px solid #90caf9; }
+    .phase-online .block { background: #e8f5e9; border: 1px solid #81c784; }
+    .divider { border: none; border-top: 2px dashed #999; margin: 20px 0; }
+    .row { display: flex; align-items: center; gap: 12px; flex-wrap: wrap; margin-bottom: 12px; }
+    .block { padding: 10px 16px; border-radius: 6px; font-size: 14px; }
+    .input-grid { display: flex; gap: 4px; flex-wrap: wrap; }
+    .input-cell { width: 24px; height: 24px; border-radius: 2px; background: #ffeb3b; border: 1px solid #f9a825; }
+    .input-cell.grey { background: #9e9e9e; border-color: #757575; }
+    .input-cell.green { background: #8bc34a; border-color: #689f38; }
+    .processing-box { padding: 12px 20px; border-radius: 8px; background: #e3f2fd; border: 1px solid #90caf9; }
+    .step { display: inline-flex; align-items: center; gap: 6px; margin-right: 12px; }
+    .step-num { background: #333; color: #fff; width: 22px; height: 22px; border-radius: 50%; display: inline-flex; align-items: center; justify-content: center; font-size: 12px; }
+    .arrow { color: #666; font-size: 18px; }
+    .units { display: flex; gap: 8px; flex-wrap: wrap; }
+    .unit { padding: 8px 12px; background: #fff; border: 1px solid #90caf9; border-radius: 4px; font-size: 13px; }
+    .caption { font-size: 12px; color: #666; margin-top: 4px; }
+  </style>
+</head>
+<body>
+  <div class="diagram">
+    <!-- OFFLINE PHASE -->
+    <div class="phase phase-offline">
+      <div class="phase-label">Offline</div>
+      <div class="row">
+        <span class="block">[Encoded points]</span>
+        <span class="arrow">→</span>
+        <div class="input-grid">
+          <span class="input-cell" title="Vector 0"></span>
+          <span class="input-cell grey"></span>
+          <span class="input-cell"></span>
+          <span class="input-cell green"></span>
+          <span class="input-cell"></span>
+          <span class="input-cell grey"></span>
+          <span class="input-cell"></span>
+          <span class="input-cell"></span>
+          <span class="input-cell grey"></span>
+          <span class="input-cell"></span>
+        </div>
+        <span class="caption">[Caption: grey = high frequency co-occurrences]</span>
+      </div>
+      <div class="row">
+        <span class="arrow"></span>
+        <div class="processing-box">
+          <strong>[Processing name]</strong><br>
+          [High Frequent Co-occurrence] → [Encode] → [Data stores]
+        </div>
+      </div>
+      <div class="row">
+        <span class="block">Copy & Distribute</span>
+        <span class="arrow">→</span>
+        <div class="units">
+          <span class="unit">[Unit 0]</span>
+          <span class="unit">[Unit 1]</span>
+          <span class="unit">[Unit 2]</span>
+          <span class="unit">…</span>
+          <span class="unit">[Unit n]</span>
+        </div>
+      </div>
+    </div>
+
+    <hr class="divider">
+
+    <!-- ONLINE PHASE -->
+    <div class="phase phase-online">
+      <div class="phase-label">Online</div>
+      <div class="row">
+        <span class="block">[Query Batch]</span>
+        <span class="arrow">→</span>
+        <span class="step"><span class="step-num">1</span> [Cluster Filtering]</span>
+        <span class="arrow">→</span>
+        <span class="step"><span class="step-num">2</span> [Query Scheduling]</span>
+        <span class="arrow">→</span>
+        <span class="block">[Unit × n]</span>
+      </div>
+      <div class="row">
+        <div class="processing-box" style="width: 100%;">
+          <strong>[Unit pipeline]</strong><br>
+          <span class="step"><span class="step-num">3</span> [LUT Construction]</span>
+          <span class="arrow">→</span>
+          <span class="step"><span class="step-num">4</span> [Distance Calculation]</span>
+          <span class="arrow">→</span>
+          <span class="step"><span class="step-num">5</span> [TOP-K Pruning]</span>
+          <span class="arrow">→</span>
+          <span class="step"><span class="step-num">6</span> [Identifying Top-k]</span>
+        </div>
+      </div>
+      <div class="row">
+        <div class="block" style="background: #f5f5f5; border-color: #9e9e9e;">
+          <strong>[Efficient Resource Management]</strong><br>
+          [Thread Scheduling] & [Memory Management]
+        </div>
+      </div>
+    </div>
+  </div>
+</body>
+</html>
