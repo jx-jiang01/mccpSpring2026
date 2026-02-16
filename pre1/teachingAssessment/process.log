@@ -1,0 +1,39 @@
+============================================================
+PROCESS LOG - Presentation 1 Teaching Assessment Setup
+============================================================
+Date: 2026-02-16
+Working directory: mccpSpring2026/pre1/teachingAssessment/
+============================================================
+
+[2026-02-16 Step 1] READ genPlan.md
+  - Reviewed the master plan document outlining all deliverables
+  - Key deliverables: plan4pre1.md, pre1work folder, genOutline.md, feedback.md, process.log
+
+[2026-02-16 Step 2] READ all reference materials
+  - pre1/materials/pre1AssessmentRubrics.md — rubric with 4 criteria (Content/Structure/Interaction, Delivery/Body Language/Timing, Visual Aids, Language Range/Accuracy), each scored Excellent/Satisfactory/Unsatisfactory, total out of 40
+  - pre1/materials/Presentation_1_Brief.md — 8-minute presentation on empirical journal article for non-specialist audience; 4 required sections; peer review required; no reading from scripts
+  - pre1/materials/Session 4_Handout_STUDENT Version_LLM_Formatted.md — detailed guidance on structuring presentations, audience analysis, delivery skills, body language, Q&A handling
+  - pre1/materials/Session 4_Giving an Academic Presentation_Part 1_LLM_Formatted.md — lecture slides covering same content with answers/examples
+  - pre1/teachingAssessment/ideaPlan.md — instructor's plan: AI generates outline from paper, student reviews, AI generates HTML slides, practice delivery in class, peer review with AI assistance
+  - pre2/materials/whyHTMLslides.md — rationale for using HTML slides: AI generates code precisely, web-based, editable in browser
+
+[2026-02-16 Step 3] CREATE process.log (this file)
+
+[2026-02-16 Step 4] CREATE plan4pre1.md
+  - Outlines before-class, in-class, and after-class activities
+  - Separate roles for speaker and reviewer
+  - Integrates HTML slide workflow via pre1work folder
+
+[2026-02-16 Step 5] CREATE pre1work/ folder and files
+  - pre1work/papers/ — folder for sharing the journal article
+  - pre1work/sample_slides/ — sample HTML presentation slides
+  - pre1work/genOutline.md — AI agent instructions for generating outline and slide plan
+  - pre1work/feedback.md — speaker feedback placeholders on AI-generated outline
+
+[2026-02-16 Step 6] UPDATE plan4pre1.md
+  - Added section explaining how students use the pre1work folder
+  - Added explanation of why HTML slides are used (from whyHTMLslides.md)
+
+============================================================
+END OF LOG
+============================================================

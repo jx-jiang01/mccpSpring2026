@@ -1,0 +1,271 @@
+# Page 1
+
+---
+
+## MCCP6020 Assessment Information and Assessment Rubrics
+
+---
+
+## Oral Presentation Assessment 2 – Poster Presentation
+
+**Date:** Session 10
+**Weighting:** 20%
+
+---
+
+### INSTRUCTIONS
+
+#### Overview
+
+In this speaking assessment, you will design and present your own research poster, potentially to be used in a real conference. This task will provide you with the opportunity to practise communicating your research effectively to both specialist and non-specialist audiences in a poster presentation format, which is commonly used at international conferences.
+
+#### Objectives
+
+- To develop your ability to present research clearly and concisely.
+- To engage in academic discourse by answering questions from your peers and the assessors.
+- To enhance your visual communication skills through poster design.
+
+#### Requirements
+
+1. **Poster Design**
+
+   - Create a research poster that summarizes your research topic, objectives, methodologies, hypotheses, key/preliminary/anticipated findings, and conclusions.
+   - The poster must be printed in A1 or A3 size. **A4 size is not acceptable.**
+   - Use clear headings, bullet points, visuals (graphs, charts, images), and concise text to convey your messages effectively.
+   - Make sure that the font size is appropriate and that the texts are readable.
+2. **Presentation**
+
+   - You will present your poster to your peers and teacher(s), explaining your research and key findings.
+   - Your presentation should last **2-3 minutes**, with your poster as a visual aid, followed by a Q&A session. Prepare to answer questions from both specialist and non-specialist audiences.
+3. **Evaluation**
+
+   - Your performance will be assessed by both your peers and the class teacher.
+   - Evaluation criteria will include clarity of content, poster design effectiveness, presentation skills, and ability to answer questions and engage the audience through appropriate use of body language.
+
+---
+
+#### Submission
+
+- Posters must be printed and ready for presentation before the assessment.
+- Ensure you bring both a hard copy and a soft copy of your poster to the presentation session.
+- You should upload the poster to a folder shared by the class teacher at least two hours before the assessment.
+
+---
+
+#### Rundown
+
+| Activity                                                                                                                                                                                 | Duration      | Notes                               |
+| ---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- | ------------- | ----------------------------------- |
+| Introduction, Instructions and Getting Ready                                                                                                                                             | 10 minutes    | Putting up the posters              |
+| Group A (student 1-10) presentations                                                                                                                                                     | 30 minutes    | 2-3 minutes each                    |
+| Q&A session for Group A:`<br>`- Group B (student 11-20) asks Group A (student 1-10) questions.`<br>`- Each student in Group B evaluates at least 5 students’ performance in Group A | 35-40 minutes | Teachers will assign peer reviewers |
+| Break                                                                                                                                                                                    | 10 minutes    |                                     |
+| Group B (student 11-20) presentations                                                                                                                                                    | 30 minutes    | 2-3 minutes each                    |
+| Q&A session for Group B:`<br>`- Group A (student 1-10) asks Group B (student 11-20) questions.`<br>`- Each student in Group A evaluates at least 5 students’ performance in Group B | 35-40 minutes | Teachers will assign peer reviewers |
+
+---
+
+#### Tips for Success
+
+- Practise your presentation to ensure smooth delivery and confidence.
+- Anticipate possible questions and prepare your responses.
+- Engage with your audience, make eye contact and make effective use of the visual aid.
+
+---
+
+# Page 5
+
+---
+
+(See previous page for schedule continuation.)
+
+---
+
+# Page 6
+
+---
+
+## Oral Presentation Assessment 3 – Three-minute Thesis (3MT) Presentation
+
+**Date:** Session 13
+**Weighting:** 20%
+
+---
+
+### INSTRUCTIONS
+
+Within **3 minutes maximum**, you need to explain the aims, the results, and/or the significance of your research* to a non-specialist audience (e.g. prospective employers, grant review panels, the public community). You should only use **one static PowerPoint slide**. The presentation should be intelligible to laymen who have no/little knowledge of your field. Hence, technical terms should be strictly avoided.
+
+A key requirement of a 3MT presentation is to **simplify your research effectively** using strategies such as metaphors, similes, and daily life examples in order to engage the public audience. The presentation should be interactive using hooks and attention-getters.
+
+You should upload the presentation slide to a folder shared by the class lecturer at least **two hours before the assessment**.
+
+To prepare for your presentation, you may watch some award-winning examples of the Three-Minute Thesis Competition organised by the University of Queensland:
+[https://threeminutethesis.uq.edu.au/watch-3mt](https://threeminutethesis.uq.edu.au/watch-3mt)
+
+---
+
+**NOTE:**
+
+- You will need to evaluate two to four of your classmates’ presentations and provide peer feedback using a peer evaluation form. Your lecturer will tell you about the arrangements.
+- The reviewers should:
+  1. Raise questions during the Q&A session
+  2. Complete the evaluation forms
+
+\*The methodologies could be briefly mentioned.
+
+---
+
+# Page 7
+
+---
+
+## Assessment Rubric for Writing Assignment – Writing an Introduction and a Literature Review of Your Research (40%)
+
+| Criteria                                                                                                                                                                                                                                                                                                                                                                         | Excellent (9-10)                                                                                                                                                                                                                                                                                                                                                   | Satisfactory (6-8)                                                                                                                                                                                                                                                                                                                                                                                        | Unsatisfactory (1-5)                                                                                                                                                                                                                                                                                                                                                                                                                                | Your marks |
+| -------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------ | --------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- | --------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- | ---------- |
+| **Task Achievement** `<br>`Provision of background information of the research topic `<br>`Description of research focus and objectives `<br>`Synthesis and evaluation of the relevant literature `<br>`Discussion on the significance of the research `<br>`Use of sources, citations and referencing `<br>`Annotations of the techniques or concepts applied | Extremely clear explanation of the research background, focus and objectives.`<br>`Skilfully paraphrase, synthesise and critically evaluate the relevant literature.`<br>`The research gap is clearly delineated and the significance of the research is succinctly highlighted.`<br>`Adequate and effective use of sources, proper citations & referencing. | Generally clear explanation of the research background, focus and objectives.`<br>`Appropriately paraphrase and synthesise the relevant literature and some critical evaluation is evident.`<br>`The research gap is identified and the significance of the research is clearly stated.`<br>`Generally adequate and effective use of sources. There may be a few errors in citations & referencing. | Insufficient explanation of the research background, and the focus and objectives of the research are not clearly explained.`<br>`Limited attempt to synthesise and evaluate the relevant literature. There may be some instances of direct copying from the sources.`<br>`The research gap and the significance of the research are rather vague.`<br>`Ineffective use of sources. Inconsistent and/or inaccurate citations and referencing. |            |
+| **Organisation** `<br>`Topic development, paragraph structure, linkage between sentences and paragraphs                                                                                                                                                                                                                                                                  | The text demonstrates very clear logical flow of ideas and effective use of cohesive devices throughout the text. The research story is presented with exceptional clarity, creating a cohesive narrative.                                                                                                                                                         | The text demonstrates a generally clear logical flow and effective use of cohesive devices, although the research narrative could be organized more logically.                                                                                                                                                                                                                                            | The flow of ideas is not easy to follow due to the lack of cohesive devices and logical flaws. The research narrative is not presented logically.                                                                                                                                                                                                                                                                                                   |            |
+| **Language Range and Accuracy** `<br>`Grammar (sentence & word level), spelling, punctuation, word forms and choice                                                                                                                                                                                                                                                      | Effective use of advanced grammatical structures and precise lexical resources.                                                                                                                                                                                                                                                                                    | Adequate and generally accurate use of complex grammatical structures and appropriate lexical resources with some errors.                                                                                                                                                                                                                                                                                 | Limited use of complex grammatical structures and numerous errors causing difficulties of understanding in a number of places.                                                                                                                                                                                                                                                                                                                      |            |
+
+**Total:** ________ out of 30
+
+---
+
+# Page 8
+
+---
+
+## Assessment Rubric for Oral Presentation Assessment 1 – Research Story-telling by Experienced Writers (20%)
+
+| Criteria                                               | Excellent (9-10)                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                    | Satisfactory (6-8)                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                             | Unsatisfactory (1-5)                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                     | Your marks |
+| ------------------------------------------------------ | --------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- | -------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- | ---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- | ---------- |
+| **Content, Structure and Effective Interaction** | Content is entirely appropriate to the non-specialist audience. Effective use of strategies to explain disciplinary knowledge and concepts.`<br>`In-depth reflection is well-integrated into the analysis of the journal article.`<br>`The presentation is very well-structured and the logical flow of ideas is extremely clear. Transition statements are used effectively throughout.`<br>`Give excellent answers to the questions.`<br>`Critically evaluate peers’ presentations and give clear and convincing justification/comments. | Content is generally appropriate to the non-specialist audience. Some use of strategies to explain disciplinary knowledge and concepts.`<br>`Some critical reflection is integrated into the analysis of the journal article.`<br>`The presentation is generally well-structured and the logical flow of ideas is generally easy to follow. Transition statements are used but one or two might not be effective.`<br>`Answer the questions satisfactorily.`<br>`Adequately evaluate peers’ presentations and give reasonable justification/comments. | Content is not appropriate to the non-specialist audience probably because there is an overuse of technical terms, and disciplinary knowledge and concepts are not clearly explained.`<br>`Little or superficial reflection is integrated into the analysis of the journal article.`<br>`Frequent flaws are identified in terms of structure. Very few transition statements are used.`<br>`Answer the questions to a minimal extent.`<br>`Superficially evaluate peers’ presentations and give limited justification/comments. |            |
+| **Delivery, Body Language and Timing**           | Demonstrate a high level of clarity.`<br>`Effective use of intonation, volume, stress and register to convey meaning.`<br>`Non-verbal skills (e.g. posture, facial expression, body language and eye contact) are effectively used. No reading aloud from scripts.`<br>`Excellent timing.                                                                                                                                                                                                                                                     | Demonstrate a satisfactory level of clarity.`<br>`Reasonable use of intonation, volume, stress and register to convey meaning.`<br>`Appropriate use of non-verbal skills is evident, although rather inconsistently used. A few instances of reading aloud from scripts.`<br>`Good timing.                                                                                                                                                                                                                                                               | Demonstrate an inadequate level of clarity.`<br>`Limited or ineffective use of intonation, volume, stress and register to convey meaning.`<br>`Rarely use non-verbal skills. Always read aloud from scripts.`<br>`Poor timing.                                                                                                                                                                                                                                                                                                     |            |
+| **Use of Visual Aids**                           | Excellent design and use of PowerPoint or other visual aids to supplement the speech.                                                                                                                                                                                                                                                                                                                                                                                                                                                               | The PowerPoint or other visual aids are used mostly effectively to supplement the speech, but some parts are not well-designed.                                                                                                                                                                                                                                                                                                                                                                                                                                | The PowerPoint or other visual aids are poorly-designed and they are not used well to supplement the speech.                                                                                                                                                                                                                                                                                                                                                                                                                             |            |
+| **Language Range and Accuracy**                  | Demonstrate a very high level of communicative effectiveness in terms of language range and accuracy.`<br>`Only a few ‘slips’.                                                                                                                                                                                                                                                                                                                                                                                                                  | Demonstrate a satisfactory level of communicative effectiveness in terms of language range and accuracy.`<br>`A number of errors mainly in complex language but errors do not impede communication.                                                                                                                                                                                                                                                                                                                                                          | Demonstrate a limited level of communicative effectiveness in terms of language range and accuracy.`<br>`Frequent grammatical errors impede communication.                                                                                                                                                                                                                                                                                                                                                                             |            |
+
+**Total:** _________ out of 40
+
+---
+
+# Page 9
+
+---
+
+(Continuation of previous rubric.)
+
+---
+
+# Page 10
+
+---
+
+## Assessment Rubric for Oral Presentation Assessment 2 – Poster Presentation (20%: Class lecturer’s evaluation: 10%; Peers’ evaluation: 10%)
+
+| Criteria                                       | Excellent (9-10)                                                                                                                                                                     | Satisfactory (6-8)                                                                                                                                                      | Unsatisfactory (1-5)                                                                                                                             | Your marks |
+| ---------------------------------------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------ | ----------------------------------------------------------------------------------------------------------------------------------------------------------------------- | ------------------------------------------------------------------------------------------------------------------------------------------------ | ---------- |
+| **Content, Clarity & Relevance**         | Clear, concise, and well-organized; fully covers research topic, objectives, methodology, key findings, and conclusions; accessible to both specialist and non-specialist audiences. | Covers main elements with some clarity issues or minor gaps; mostly understandable to most audiences.                                                                   | Content incomplete, unclear, or inaccurate; difficult for audience to follow; lacks key information.                                             |            |
+| **Poster Design & Visual Communication** | Visually appealing and professional; effective use of headings, bullet points, visuals; font size readable; layout supports easy understanding.                                      | Acceptable design but may have some readability or layout issues; visuals somewhat helpful but could be clearer.                                                        | Poorly designed poster; hard to read or follow; visuals missing or irrelevant.                                                                   |            |
+| **Oral Delivery**                        | Confident, fluent, well-paced presentation; excellent use of poster as visual aid; clear explanation of research aims, findings and contributions.                                   | Understandable presentation with some hesitations or pacing issues; sometimes ineffective use of poster as aid.                                                         | Presentation is unclear, rushed, or too slow; minimal connection to poster; confusing or incomplete explanation.                                 |            |
+| **Engagement & Interaction (Q&A)**       | Actively engage the audience with eye contact and body language; confidently answer questions from both specialist and non-specialist audiences.                                     | Some audience engagement; answer questions adequately but with some uncertainty. Some explanations are not easily comprehensible to those without specialist knowledge. | Little to no audience engagement; responses to questions are unclear, inadequate or hardly comprehensible to those without specialist knowledge. |            |
+
+**Total:** _________ out of 40
+
+---
+
+# Page 11
+
+---
+
+## Assessment Rubric for Oral Presentation Assessment 3 – Three-minute Thesis (3MT) Presentation (20%)
+
+| Criteria                                                | Excellent (9-10)                                                                                                                                                                                                                                                                                                                                                                                                   | Satisfactory (6-8)                                                                                                                                                                                                                                                                                                                                                                                                 | Unsatisfactory (1-5)                                                                                                                                                                                                                                                                                                                                                                 | Your marks |
+| ------------------------------------------------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------ | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------ | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------ | ---------- |
+| **Content**                                       | Research aims are clearly and succinctly stated; key findings and significance are communicated clearly and engagingly, with no jargon.`<br>`Effective strategies are used to simplify the research.                                                                                                                                                                                                             | Research aims are mostly clear; key findings and significance are sufficiently explained, with minimal technical terms.`<br>`Some strategies are used to simplify the research.                                                                                                                                                                                                                                  | Research aims are unclear or missing; key findings and significance are not communicated effectively; excessive technical jargon used.`<br>`Few or ineffective strategies are used to simplify the research.                                                                                                                                                                       |            |
+| **Storytelling and Organisation**                 | Presentation is very well-structured with a compelling research story that engages audience.                                                                                                                                                                                                                                                                                                                       | Presentation generally follows a logical flow; some effort to structure research as a story with clear moves.                                                                                                                                                                                                                                                                                                      | Presentation lacks logical flow; ideas disjointed; no clear research story structure.                                                                                                                                                                                                                                                                                                |            |
+| **Audience Awareness, Engagement and Enthusiasm** | Language is consistently tailored to lay audience, making complex ideas accessible without distortion or jargon.`<br>`Presenter conveys strong enthusiasm and passion, maintaining audience interest with a range of strategies and relatable examples.`<br>`A variety of 3MT features are used to make the presentation lively and engaging.                                                                  | Language is mostly appropriate for non-specialist audience; occasional lapses in clarity.`<br>`Some enthusiasm and engagement evident; presenter occasionally connects with audience through different strategies.`<br>`Some 3MT features are used to make the presentation engaging.                                                                                                                          | Language is too technical; little adaptation to lay audience.`<br>`Monotone delivery; little effort to connect with audience or show passion for research.`<br>`Limited 3MT features are used, causing the presentation to resemble a standard academic presentation format.                                                                                                     |            |
+| **Delivery and Timing**                           | Clear, articulate pronunciation with varied pitch, tone, and pace; confident stage presence, excellent eye contact and body language.`<br>`No reading aloud from scripts.`<br>`Presentation strictly adheres to 3 minutes, well-paced with all key points covered concisely and clearly.`<br>`Slide is visually appealing, simple, clear, and effectively supports audience’s comprehension of the content. | Generally clear pronunciation; some use of vocal variety and body language; occasional eye contact with audience.`<br>`A few instances of reading aloud from scripts.`<br>`Presentation fits within 3 minutes, minor fluctuations that do not affect clarity.`<br>`Slide is somewhat clear and appealing, with a few minor issues in design or content clarity. Reasonable reading demand from the audience. | Frequent mispronunciations or unclear speech; flat tone; poor eye contact or closed body language.`<br>`Always read aloud from scripts.`<br>`Presentation exceeds or falls short of the 3-minute limit by more than 30 seconds, affecting clarity.`<br>`Slide is cluttered, overly technical, or poorly designed. Too much reading demands from the audience within 3 minutes. |            |
+
+**Total:** ______________________ out of 50
+
+---
+
+# Page 13
+
+---
+
+## MCCP6020 Oral Presentation Assessment 1 (Presentation on a Research Article) Peer Review Form
+
+- **Name of the Presenter:** _________________
+- **Name of the Reviewer:** _________________
+
+Rate your classmate’s performance on a scale of 1 (lowest) to 10 (highest). Please refer to the assessment rubrics.
+
+| Criteria                                                                                                 | Please add comments here to justify your evaluation |
+| -------------------------------------------------------------------------------------------------------- | --------------------------------------------------- |
+| Content and Structure                                                                                    |                                                     |
+| Is the content appropriate to the non-specialist audience?`<br>` 1-10 marks: _________                 |                                                     |
+| Are disciplinary knowledge and concepts clearly explained to the audience?`<br>` 1-10 marks: _________ |                                                     |
+| Is the presentation well-structured?`<br>` 1-10 marks: _________                                       |                                                     |
+| Are transition statements used effectively?`<br>` 1-10 marks: _________                                |                                                     |
+| Delivery and Body Language                                                                               |                                                     |
+| Is the pronunciation clear and accurate?`<br>` 1-10 marks: _________                                   |                                                     |
+| Is the pace appropriate?`<br>` 1-10 marks: _________                                                   |                                                     |
+| Are stress and intonation used effectively to convey meaning?`<br>` 1-10 marks: _________              |                                                     |
+| Does the speaker maintain eye contact with the audience?`<br>` 1-10 marks: _________                   |                                                     |
+| Overall, does the speaker use body language effectively?`<br>` 1-10 marks: _________                   |                                                     |
+| Use of Visual Aids                                                                                       |                                                     |
+| Are the slides well-designed?`<br>` 1-10 marks: _________                                              |                                                     |
+| Are the visual aids used effectively to supplement the speech?`<br>` 1-10 marks: _________             |                                                     |
+| Language Range and Accuracy                                                                              |                                                     |
+| Is language use accurate?`<br>` 1-10 marks: _________                                                  |                                                     |
+| Is a wide range of grammatical features used?`<br>` 1-10 marks: _________                              |                                                     |
+
+---
+
+# Page 14
+
+---
+
+## MCCP6020 Oral Presentation Assessment 2 (Poster Presentation) Peer Review Form
+
+- **Name of the Presenter:** _________________
+- **Name of the Reviewer:** _________________
+
+**The questions you raised:**
+
+Rate your classmate’s performance on a scale of 1 (lowest) to 10 (highest). Please refer to the assessment rubrics.
+
+| Criteria                                       | Guiding Questions                                                                                                                                                                                                                                                                       | Rating (1-10) | Comments |
+| ---------------------------------------------- | --------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- | ------------- | -------- |
+| **Content, Clarity & Relevance**         | 1. Did the presenter clearly explain the research topic, objectives, methodology, key findings, and conclusions?`<br>`2. Was the information organized logically and easy to follow?`<br>`3. Could both specialist and non-specialist audience members understand the presentation? |               |          |
+| **Poster Design & Visual Communication** | 1. Is the poster visually appealing, professional, and easy to read?`<br>`2. Are headings, bullet points, and visuals (charts, graphs, images) used effectively to support the content?`<br>`3. Was the font size appropriate for easy viewing?                                     |               |          |
+| **Delivery**                             | 1. Was the presenter confident, fluent, and well-paced in their delivery?`<br>`2. Did the presenter effectively use the poster as a visual aid during the presentation?`<br>`3. Were the research aims, findings, and contributions explained clearly?                              |               |          |
+| **Engagement & Interaction (Q&A)**       | 1. Did the presenter engage the audience with effective eye contact and body language?`<br>`2. Did the presenter confidently answer questions from both specialist and non-specialist audience members?`<br>`3. Were explanations clear and understandable to all audience members? |               |          |
+
+**Total Marks:** _________ out of 40
+
+---
+
+# Page 15
+
+---
+
+## MCCP6020 Oral Presentation Assessment 3 (3MT Presentation) Peer Review Form
+
+- **Name of the Presenter:** _________________
+- **Name of the Reviewer:** _________________
+
+Rate your classmate’s performance on a scale of 1 (lowest) to 10 (highest). Please refer to the assessment rubrics.
+
+| Criteria                                                | Guiding Questions                                                                                                                                                                                                                                                                                                           | Rating (1-10) | Comments |
+| ------------------------------------------------------- | --------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- | ------------- | -------- |
+| **Content**                                       | 1. Are the research aims/questions clearly and succinctly stated?`<br>`2. Are key findings and their significance communicated clearly and engagingly without jargon?`<br>`3. Does the presenter use a variety of 3MT features to make the presentation lively and engaging?                                            |               |          |
+| **Organisation & Storytelling**                   | 1. Is the presentation well structured with a clear and compelling research story?`<br>`2. Does the presentation follow a logical flow with clear storytelling moves?`<br>`3. Are ideas connected smoothly?                                                                                                             |               |          |
+| **Audience Awareness, Engagement and Enthusiasm** | 1. Is the language tailored for a lay audience, making complex ideas accessible without distortion or jargon?`<br>`2. Does the presenter show enthusiasm and passion throughout?`<br>`3. Does the presenter effectively engage the audience using varied techniques or relatable examples?                              |               |          |
+| **Delivery and Timing**                           | 1. Is the pronunciation clear, with varied pitch, tone, and pace?`<br>`2. Does the presenter maintain confident stage presence with good eye contact and body language?`<br>`3. Is the presentation delivered without reading from scripts?`<br>`4. Does the presentation fit closely within the 3-minute time limit? |               |          |
+
+**Total Marks:** _________ out of 40
+
+---
