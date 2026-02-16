@@ -1,0 +1,463 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>MCCP6020 — Presentation 1: Preparation Session Instructions</title>
+<style>
+@import url('https://fonts.googleapis.com/css2?family=Open+Sans:wght@400;600;700&family=Poppins:wght@600;700;800&display=swap');
+
+:root {
+  --teal: #1B4942;
+  --teal-light: #E8F0ED;
+  --teal-bg: #F8FAF4;
+  --orange: #E76F51;
+  --gold: #E9C46A;
+  --navy: #264653;
+  --text: #1a1a2e;
+  --border: #ddd;
+}
+
+* { margin: 0; padding: 0; box-sizing: border-box; }
+
+body {
+  font-family: 'Open Sans', sans-serif;
+  color: var(--text);
+  background: #f5f5f5;
+  line-height: 1.7;
+}
+
+.page {
+  max-width: 860px;
+  margin: 2rem auto;
+  background: white;
+  border-radius: 12px;
+  box-shadow: 0 2px 20px rgba(0,0,0,0.08);
+  padding: 3rem;
+}
+
+h1 {
+  font-family: 'Poppins', sans-serif;
+  font-size: 2rem;
+  color: var(--teal);
+  margin-bottom: 0.3rem;
+  line-height: 1.2;
+}
+
+.course-tag {
+  display: inline-block;
+  background: var(--teal);
+  color: white;
+  font-size: 0.8rem;
+  font-weight: 700;
+  padding: 3px 10px;
+  border-radius: 4px;
+  margin-bottom: 1.5rem;
+  font-family: 'Poppins', sans-serif;
+}
+
+h2 {
+  font-family: 'Poppins', sans-serif;
+  font-size: 1.4rem;
+  color: var(--teal);
+  margin: 2rem 0 0.8rem;
+  padding-bottom: 0.4rem;
+  border-bottom: 2px solid var(--teal-light);
+}
+
+h3 {
+  font-family: 'Poppins', sans-serif;
+  font-size: 1.1rem;
+  color: var(--navy);
+  margin: 1.2rem 0 0.5rem;
+}
+
+p { margin-bottom: 0.8rem; font-size: 1rem; }
+
+ul, ol { margin: 0.5rem 0 1rem 1.5rem; }
+li { margin-bottom: 0.4rem; font-size: 1rem; }
+
+a { color: var(--teal); text-decoration: underline; }
+a:hover { color: var(--orange); }
+
+strong { color: var(--text); }
+
+code {
+  background: var(--teal-light);
+  padding: 2px 6px;
+  border-radius: 3px;
+  font-size: 0.92em;
+  font-family: 'Menlo', 'Consolas', monospace;
+}
+
+.callout {
+  background: var(--teal-light);
+  border-left: 4px solid var(--teal);
+  padding: 1rem 1.3rem;
+  border-radius: 0 8px 8px 0;
+  margin: 1rem 0;
+  font-size: 0.98rem;
+}
+
+.callout.warning {
+  background: #FFF3E0;
+  border-left-color: var(--orange);
+}
+
+.callout.tip {
+  background: #FFFDE7;
+  border-left-color: var(--gold);
+}
+
+/* Timeline */
+.timeline {
+  margin: 1.5rem 0;
+  border-left: 3px solid var(--teal);
+  padding-left: 1.5rem;
+}
+
+.timeline-item {
+  position: relative;
+  margin-bottom: 1.5rem;
+}
+
+.timeline-item::before {
+  content: '';
+  position: absolute;
+  left: -1.75rem;
+  top: 0.35rem;
+  width: 14px;
+  height: 14px;
+  border-radius: 50%;
+  background: var(--teal);
+  border: 3px solid white;
+  box-shadow: 0 0 0 2px var(--teal);
+}
+
+.timeline-time {
+  font-family: 'Poppins', sans-serif;
+  font-weight: 700;
+  color: var(--teal);
+  font-size: 0.95rem;
+}
+
+.timeline-title {
+  font-weight: 700;
+  font-size: 1.05rem;
+  margin: 0.2rem 0;
+}
+
+.timeline-desc {
+  font-size: 0.95rem;
+  color: #444;
+}
+
+/* Checklist */
+.checklist {
+  list-style: none;
+  margin-left: 0;
+  padding: 0;
+}
+
+.checklist li {
+  padding-left: 2rem;
+  position: relative;
+  margin-bottom: 0.5rem;
+}
+
+.checklist li::before {
+  content: '☐';
+  position: absolute;
+  left: 0;
+  font-size: 1.1rem;
+  color: var(--teal);
+}
+
+/* Table */
+table {
+  width: 100%;
+  border-collapse: collapse;
+  margin: 1rem 0;
+  font-size: 0.95rem;
+}
+
+th {
+  background: var(--teal);
+  color: white;
+  font-family: 'Poppins', sans-serif;
+  font-weight: 600;
+  padding: 0.6rem 1rem;
+  text-align: left;
+}
+
+td {
+  padding: 0.6rem 1rem;
+  border-bottom: 1px solid #eee;
+}
+
+tr:nth-child(even) { background: var(--teal-bg); }
+
+/* Footer */
+.footer {
+  margin-top: 2rem;
+  padding-top: 1rem;
+  border-top: 1px solid #ddd;
+  font-size: 0.85rem;
+  color: #999;
+  text-align: center;
+}
+
+@media print {
+  body { background: white; }
+  .page { box-shadow: none; margin: 0; padding: 1.5rem; }
+}
+</style>
+</head>
+<body>
+<div class="page">
+
+<span class="course-tag">MCCP6020</span>
+<h1>Presentation 1: Preparation Session Instructions</h1>
+<p style="color:#666; margin-bottom:1.5rem;">Oral Presentation Assessment 1 — Research Story-telling by Experienced Writers (20%)</p>
+
+<!-- ============================================ -->
+<h2>Overview</h2>
+<p>This document gives you everything you need to prepare for <strong>Oral Presentation 1</strong>. You will present an empirical journal article from your field for <strong>8 minutes</strong> to a non-specialist audience. Your talk must cover four areas: (1) introduction, (2) key findings, (3) significance, and (4) impact on your own research design and writing lessons learned.</p>
+
+<div class="callout warning">
+  <strong>Important:</strong> Reading from a script is <strong>not permitted</strong> and will result in a failing grade. Note cards with key points are allowed.
+</div>
+
+<!-- ============================================ -->
+<h2>What to Prepare in Advance (Before the Session)</h2>
+
+<p>You should have completed these steps <strong>before</strong> coming to the preparation session. Please update your forked version of the repository and post a brief update to the course forum.</p>
+
+<h3>Step 1: Fork and Clone the Repository</h3>
+<ol>
+  <li>Fork the course repository: <a href="https://github.com/tesolchina/mccpSpring2026" target="_blank">https://github.com/tesolchina/mccpSpring2026</a></li>
+  <li>Clone your fork to your local machine (see <code>cursor_cloning_mccpspring2026_repositor.md</code> in <code>pre1/materials/</code> for a walkthrough)</li>
+  <li>Navigate to <code>pre1/teachingAssessment/pre1work/</code> — this is your workspace</li>
+</ol>
+
+<h3>Step 2: Select Your Paper</h3>
+<ul>
+  <li>Choose an <strong>empirical journal article</strong> in your field</li>
+  <li>The paper should be in a machine-readable format (PDF, HTML, or text)</li>
+  <li>Place a copy in <code>pre1work/papers/</code></li>
+</ul>
+
+<h3>Step 3: Generate Your Outline with AI</h3>
+<ol>
+  <li>Open <code>pre1work/genOutline.md</code> — this contains instructions for the AI agent</li>
+  <li>The AI will read your paper + the assessment requirements and generate:
+    <ul>
+      <li>A <strong>presentation outline</strong> covering the 4 required sections</li>
+      <li><strong>Presenter notes</strong> aligned with each rubric criterion</li>
+      <li>A <strong>plan for HTML slides</strong></li>
+    </ul>
+  </li>
+  <li>Review the outline and write your feedback in <code>pre1work/feedback.md</code></li>
+  <li>The AI will revise and generate <strong>HTML slides</strong> (see <code>genHTMLguide.md</code> for design principles)</li>
+</ol>
+
+<div class="callout tip">
+  <strong>Tip:</strong> Study the demo in <code>pre1workDemo/</code> to see a complete example — from paper to finished HTML slides — using the KVFlow paper.
+</div>
+
+<h3>Step 4: Practice Your Delivery</h3>
+<ul>
+  <li>Practice out loud (not in your head) — at least 3 times</li>
+  <li>Time yourself — aim for exactly 8 minutes</li>
+  <li>Record yourself speaking and listen back for filler words, pacing issues</li>
+  <li>Focus on speaking <strong>from key points</strong>, not reading sentences</li>
+</ul>
+
+<h3>Step 5: Post to the Forum</h3>
+<ul>
+  <li>Update your forked repository with your outline and slides</li>
+  <li>Post a brief reply to the course forum with:
+    <ul>
+      <li>Your paper title and why you chose it</li>
+      <li>A link to your forked repo (or the generated HTML slides if published)</li>
+      <li>One question or challenge you encountered during preparation</li>
+    </ul>
+  </li>
+</ul>
+
+<!-- ============================================ -->
+<h2>3-Hour Session Timeline</h2>
+
+<div class="timeline">
+
+  <div class="timeline-item">
+    <div class="timeline-time">0:00 — 0:15 (15 min)</div>
+    <div class="timeline-title">Welcome &amp; Check-In</div>
+    <div class="timeline-desc">
+      Quick overview of today's goals. Students confirm: (a) paper selected, (b) outline generated, (c) slides drafted. Instructor addresses common issues from forum posts.
+    </div>
+  </div>
+
+  <div class="timeline-item">
+    <div class="timeline-time">0:15 — 0:45 (30 min)</div>
+    <div class="timeline-title">Peer Review of Outlines &amp; Slides</div>
+    <div class="timeline-desc">
+      In pairs or groups of 3, share your outline and slides. Compare notes on: (a) Is the content accessible to non-specialists? (b) Are the 4 required sections clear? (c) Do the slides support (not duplicate) the speech? Give each other written feedback.
+    </div>
+  </div>
+
+  <div class="timeline-item">
+    <div class="timeline-time">0:45 — 1:00 (15 min)</div>
+    <div class="timeline-title">Delivery Tips Briefing</div>
+    <div class="timeline-desc">
+      Instructor-led walkthrough of key delivery skills: body language, eye contact, voice modulation, and the 5-second mini-conversation technique. See <a href="https://tesolchina.github.io/mccpSpring2026/pre1/teachingAssessment/deliveryTips.html" target="_blank">Delivery Tips (interactive)</a> and the <code>deliveryTips.md</code> reference guide.
+    </div>
+  </div>
+
+  <div class="timeline-item" style="margin-top:2rem;">
+    <div class="timeline-time">1:00 — 1:10 (10 min)</div>
+    <div class="timeline-title">Break</div>
+    <div class="timeline-desc">
+      Take a break. Review your notes and mentally rehearse your opening.
+    </div>
+  </div>
+
+  <div class="timeline-item">
+    <div class="timeline-time">1:10 — 2:30 (80 min)</div>
+    <div class="timeline-title">3-Minute Delivery Practice (All Students)</div>
+    <div class="timeline-desc">
+      Each student delivers the <strong>first 3 minutes</strong> of their presentation. This is NOT about content completeness — focus entirely on <strong>delivery</strong>:
+      <ul style="margin-top:0.5rem;">
+        <li><strong>Body language:</strong> Posture, stance, hand gestures</li>
+        <li><strong>Eye contact:</strong> Looking at people, not slides or notes</li>
+        <li><strong>Voice:</strong> Volume, pace, tone variation, pausing</li>
+        <li><strong>Interaction:</strong> Speaking TO the audience, not AT them</li>
+      </ul>
+      <p style="margin-top:0.5rem;">After each student: <strong>1-2 minutes</strong> of peer feedback using the criteria above. Instructor provides brief targeted comments.</p>
+      <p style="margin-top:0.3rem; color:#666;"><em>With ~15 students: 3 min talk + 2 min feedback = 5 min per student = 75 min. Adjust as needed.</em></p>
+    </div>
+  </div>
+
+  <div class="timeline-item" style="margin-top:2rem;">
+    <div class="timeline-time">2:30 — 2:45 (15 min)</div>
+    <div class="timeline-title">Reflection &amp; Revision Planning</div>
+    <div class="timeline-desc">
+      Based on feedback received, write down 3 specific things to improve. Update your slides or outline if needed. Commit changes to your forked repo.
+    </div>
+  </div>
+
+  <div class="timeline-item">
+    <div class="timeline-time">2:45 — 3:00 (15 min)</div>
+    <div class="timeline-title">Wrap-Up &amp; Next Steps</div>
+    <div class="timeline-desc">
+      Instructor reminds students of: (a) assessment date and time, (b) upload slides 2 hours before, (c) peer review responsibilities. Quick Q&amp;A on any remaining concerns.
+    </div>
+  </div>
+
+</div>
+
+<!-- ============================================ -->
+<h2>Assessment Rubric Summary</h2>
+
+<table>
+  <tr>
+    <th>Criterion</th>
+    <th>Focus Areas</th>
+    <th>Weight</th>
+  </tr>
+  <tr>
+    <td><strong>Content, Structure &amp; Interaction</strong></td>
+    <td>Non-specialist audience, reflection integrated into analysis, logical flow, transitions, Q&amp;A, peer evaluation</td>
+    <td>/10</td>
+  </tr>
+  <tr>
+    <td><strong>Delivery, Body Language &amp; Timing</strong></td>
+    <td>Clarity, intonation/volume/stress, eye contact, posture, gestures, no script-reading, timing</td>
+    <td>/10</td>
+  </tr>
+  <tr>
+    <td><strong>Use of Visual Aids</strong></td>
+    <td>Slide design quality, slides supplement (not duplicate) the speech</td>
+    <td>/10</td>
+  </tr>
+  <tr>
+    <td><strong>Language Range &amp; Accuracy</strong></td>
+    <td>Communicative effectiveness, grammatical accuracy, vocabulary range</td>
+    <td>/10</td>
+  </tr>
+</table>
+
+<p style="text-align:center; font-weight:700; color:var(--teal);">Total: /40</p>
+
+<!-- ============================================ -->
+<h2>Pre-Session Checklist</h2>
+
+<ul class="checklist">
+  <li>Forked and cloned the course repository</li>
+  <li>Placed my journal article in <code>pre1work/papers/</code></li>
+  <li>Generated an outline using <code>genOutline.md</code></li>
+  <li>Reviewed the outline and written feedback in <code>feedback.md</code></li>
+  <li>Generated HTML slides (or have a slide plan ready)</li>
+  <li>Practiced speaking aloud at least once</li>
+  <li>Timed my presentation (targeting 8 minutes)</li>
+  <li>Updated my forked repo and posted to the forum</li>
+</ul>
+
+<!-- ============================================ -->
+<h2>Useful Links</h2>
+
+<table>
+  <tr>
+    <th>Resource</th>
+    <th>Location</th>
+  </tr>
+  <tr>
+    <td>Course Repository</td>
+    <td><a href="https://github.com/tesolchina/mccpSpring2026" target="_blank">github.com/tesolchina/mccpSpring2026</a></td>
+  </tr>
+  <tr>
+    <td>Assessment Brief</td>
+    <td><code>pre1/materials/Presentation_1_Brief.md</code></td>
+  </tr>
+  <tr>
+    <td>Assessment Rubric</td>
+    <td><code>pre1/materials/pre1AssessmentRubrics.md</code></td>
+  </tr>
+  <tr>
+    <td>Session 4 Handout (Presentation Skills)</td>
+    <td><code>pre1/materials/Session 4_Handout_STUDENT Version_LLM_Formatted.md</code></td>
+  </tr>
+  <tr>
+    <td>AI Outline Instructions</td>
+    <td><code>pre1/teachingAssessment/pre1work/genOutline.md</code></td>
+  </tr>
+  <tr>
+    <td>HTML Slide Design Guide</td>
+    <td><code>pre1/teachingAssessment/pre1work/genHTMLguide.md</code></td>
+  </tr>
+  <tr>
+    <td>Demo Example (KVFlow)</td>
+    <td><code>pre1/teachingAssessment/pre1workDemo/</code></td>
+  </tr>
+  <tr>
+    <td>Demo Slides (live)</td>
+    <td><a href="https://tesolchina.github.io/mccpSpring2026/pre1/teachingAssessment/pre1workDemo/slidesV3.html" target="_blank">slidesV3.html on GitHub Pages</a></td>
+  </tr>
+  <tr>
+    <td>Delivery Tips (interactive)</td>
+    <td><a href="https://tesolchina.github.io/mccpSpring2026/pre1/teachingAssessment/deliveryTips.html" target="_blank">deliveryTips.html on GitHub Pages</a></td>
+  </tr>
+  <tr>
+    <td>Cloning Guide</td>
+    <td><code>pre1/materials/cursor_cloning_mccpspring2026_repositor.md</code></td>
+  </tr>
+</table>
+
+<div class="footer">
+  MCCP6020 — Presentation 1 Preparation Session<br>
+  Last updated: February 2026
+</div>
+
+</div>
+</body>
+</html>

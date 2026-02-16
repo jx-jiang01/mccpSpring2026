@@ -1,0 +1,733 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Delivery Tips — Master Your Academic Presentation</title>
+<style>
+@import url('https://fonts.googleapis.com/css2?family=Open+Sans:wght@400;600;700&family=Poppins:wght@600;700;800&display=swap');
+
+:root {
+  --teal: #1B4942;
+  --teal-light: #E8F0ED;
+  --teal-bg: #F8FAF4;
+  --orange: #E76F51;
+  --gold: #E9C46A;
+  --navy: #264653;
+  --green: #2A9D8F;
+  --text: #1a1a2e;
+  --bg: #f0f4f3;
+}
+
+* { margin: 0; padding: 0; box-sizing: border-box; }
+
+body {
+  font-family: 'Open Sans', sans-serif;
+  color: var(--text);
+  background: var(--bg);
+  line-height: 1.7;
+}
+
+/* ===== HERO ===== */
+.hero {
+  background: linear-gradient(135deg, var(--teal) 0%, var(--navy) 100%);
+  color: white;
+  text-align: center;
+  padding: 4rem 2rem 3rem;
+  position: relative;
+  overflow: hidden;
+}
+
+.hero::after {
+  content: '';
+  position: absolute;
+  bottom: -2px;
+  left: 0; right: 0;
+  height: 40px;
+  background: var(--bg);
+  border-radius: 50% 50% 0 0 / 100% 100% 0 0;
+}
+
+.hero h1 {
+  font-family: 'Poppins', sans-serif;
+  font-size: clamp(2rem, 4vw, 3rem);
+  font-weight: 800;
+  margin-bottom: 0.5rem;
+}
+
+.hero p {
+  font-size: 1.15rem;
+  opacity: 0.9;
+  max-width: 600px;
+  margin: 0 auto;
+}
+
+/* ===== XP BAR ===== */
+.xp-bar-container {
+  max-width: 800px;
+  margin: -1rem auto 2rem;
+  padding: 0 1.5rem;
+  position: relative;
+  z-index: 5;
+}
+
+.xp-card {
+  background: white;
+  border-radius: 12px;
+  padding: 1.2rem 1.5rem;
+  box-shadow: 0 4px 20px rgba(0,0,0,0.1);
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+}
+
+.xp-label {
+  font-family: 'Poppins', sans-serif;
+  font-weight: 700;
+  color: var(--teal);
+  font-size: 0.95rem;
+  white-space: nowrap;
+}
+
+.xp-track {
+  flex: 1;
+  height: 16px;
+  background: #eee;
+  border-radius: 8px;
+  overflow: hidden;
+}
+
+.xp-fill {
+  height: 100%;
+  background: linear-gradient(90deg, var(--green), var(--teal));
+  border-radius: 8px;
+  width: 0%;
+  transition: width 0.6s ease;
+}
+
+.xp-text {
+  font-family: 'Poppins', sans-serif;
+  font-weight: 700;
+  font-size: 0.9rem;
+  color: var(--teal);
+  min-width: 80px;
+  text-align: right;
+}
+
+/* ===== CONTENT ===== */
+.content {
+  max-width: 800px;
+  margin: 0 auto;
+  padding: 0 1.5rem 3rem;
+}
+
+/* ===== SKILL CARD ===== */
+.skill-card {
+  background: white;
+  border-radius: 12px;
+  padding: 2rem;
+  margin-bottom: 1.5rem;
+  box-shadow: 0 2px 12px rgba(0,0,0,0.05);
+  border-left: 5px solid var(--teal);
+  position: relative;
+}
+
+.skill-card.locked { opacity: 0.5; pointer-events: none; }
+.skill-card.completed { border-left-color: var(--green); }
+.skill-card.completed .skill-badge { background: var(--green); }
+
+.skill-badge {
+  position: absolute;
+  top: 1.5rem;
+  right: 1.5rem;
+  background: var(--teal);
+  color: white;
+  font-family: 'Poppins', sans-serif;
+  font-weight: 700;
+  font-size: 0.75rem;
+  padding: 4px 10px;
+  border-radius: 20px;
+}
+
+.skill-icon {
+  font-size: 2rem;
+  margin-bottom: 0.5rem;
+}
+
+.skill-title {
+  font-family: 'Poppins', sans-serif;
+  font-size: 1.35rem;
+  font-weight: 700;
+  color: var(--teal);
+  margin-bottom: 0.5rem;
+}
+
+.skill-desc {
+  font-size: 1rem;
+  margin-bottom: 1rem;
+  color: #444;
+}
+
+/* Tips inside cards */
+.tip-list {
+  list-style: none;
+  padding: 0;
+  margin: 0.8rem 0;
+}
+
+.tip-list li {
+  padding: 0.6rem 0 0.6rem 2.2rem;
+  position: relative;
+  font-size: 0.98rem;
+  border-bottom: 1px solid #f5f5f5;
+}
+
+.tip-list li:last-child { border-bottom: none; }
+
+.tip-list li .tip-icon {
+  position: absolute;
+  left: 0;
+  top: 0.6rem;
+  font-size: 1.2rem;
+}
+
+.tip-list li strong { color: var(--text); }
+
+/* ===== CHALLENGE ===== */
+.challenge {
+  background: var(--teal-bg);
+  border: 2px dashed var(--teal);
+  border-radius: 10px;
+  padding: 1.2rem 1.5rem;
+  margin-top: 1rem;
+}
+
+.challenge-header {
+  font-family: 'Poppins', sans-serif;
+  font-weight: 700;
+  font-size: 0.95rem;
+  color: var(--orange);
+  margin-bottom: 0.4rem;
+}
+
+.challenge-text {
+  font-size: 0.95rem;
+  margin-bottom: 0.8rem;
+}
+
+.challenge button {
+  background: var(--teal);
+  color: white;
+  border: none;
+  padding: 8px 20px;
+  border-radius: 6px;
+  font-family: 'Poppins', sans-serif;
+  font-weight: 600;
+  font-size: 0.9rem;
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+
+.challenge button:hover { background: var(--navy); transform: translateY(-1px); }
+.challenge button.done { background: var(--green); }
+
+/* ===== QUIZ ===== */
+.quiz-options {
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+  margin: 0.8rem 0;
+}
+
+.quiz-option {
+  background: white;
+  border: 2px solid #ddd;
+  border-radius: 8px;
+  padding: 0.7rem 1rem;
+  cursor: pointer;
+  font-size: 0.95rem;
+  transition: all 0.2s ease;
+}
+
+.quiz-option:hover { border-color: var(--teal); background: var(--teal-light); }
+.quiz-option.correct { border-color: var(--green); background: #e8f5e9; }
+.quiz-option.wrong { border-color: var(--orange); background: #fff3e0; }
+.quiz-option.selected { pointer-events: none; }
+
+.quiz-feedback {
+  margin-top: 0.5rem;
+  font-weight: 600;
+  font-size: 0.95rem;
+  display: none;
+}
+
+/* ===== SOURCE LINK ===== */
+.source-link {
+  display: inline-block;
+  margin-top: 0.8rem;
+  font-size: 0.85rem;
+  color: var(--teal);
+  text-decoration: none;
+  border-bottom: 1px dashed var(--teal);
+}
+
+.source-link:hover { color: var(--orange); border-color: var(--orange); }
+
+/* ===== PROGRESS SUMMARY ===== */
+.summary-card {
+  background: linear-gradient(135deg, var(--teal), var(--navy));
+  color: white;
+  border-radius: 12px;
+  padding: 2rem;
+  text-align: center;
+  margin-top: 2rem;
+}
+
+.summary-card h2 {
+  font-family: 'Poppins', sans-serif;
+  font-size: 1.8rem;
+  color: white;
+  border: none;
+  margin: 0 0 0.5rem;
+}
+
+.summary-stats {
+  display: flex;
+  justify-content: center;
+  gap: 2rem;
+  margin: 1.5rem 0;
+  flex-wrap: wrap;
+}
+
+.summary-stat {
+  text-align: center;
+}
+
+.summary-stat .stat-num {
+  font-family: 'Poppins', sans-serif;
+  font-size: 2.5rem;
+  font-weight: 800;
+}
+
+.summary-stat .stat-label {
+  font-size: 0.9rem;
+  opacity: 0.8;
+}
+
+/* ===== FURTHER READING ===== */
+.reading-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 1rem;
+  margin: 1rem 0;
+}
+
+.reading-card {
+  background: white;
+  border-radius: 8px;
+  padding: 1rem 1.2rem;
+  box-shadow: 0 1px 6px rgba(0,0,0,0.05);
+}
+
+.reading-card .reading-source {
+  font-size: 0.75rem;
+  font-weight: 700;
+  color: var(--green);
+  text-transform: uppercase;
+  margin-bottom: 0.2rem;
+  font-family: 'Poppins', sans-serif;
+}
+
+.reading-card .reading-title {
+  font-weight: 700;
+  font-size: 0.95rem;
+  margin-bottom: 0.3rem;
+}
+
+.reading-card .reading-desc {
+  font-size: 0.85rem;
+  color: #666;
+  margin-bottom: 0.5rem;
+}
+
+.reading-card a {
+  font-size: 0.85rem;
+  color: var(--teal);
+  font-weight: 600;
+}
+
+@media (max-width: 600px) {
+  .reading-grid { grid-template-columns: 1fr; }
+  .summary-stats { gap: 1rem; }
+}
+</style>
+</head>
+<body>
+
+<!-- HERO -->
+<div class="hero">
+  <h1>Master Your Delivery</h1>
+  <p>An interactive guide to engaging your audience, owning the stage, and delivering a presentation they'll remember.</p>
+</div>
+
+<!-- XP BAR -->
+<div class="xp-bar-container">
+  <div class="xp-card">
+    <span class="xp-label">Presentation XP</span>
+    <div class="xp-track"><div class="xp-fill" id="xpFill"></div></div>
+    <span class="xp-text" id="xpText">0 / 700 XP</span>
+  </div>
+</div>
+
+<!-- CONTENT -->
+<div class="content">
+
+<!-- ===================== SKILL 1 ===================== -->
+<div class="skill-card" id="skill1">
+  <span class="skill-badge" id="badge1">+100 XP</span>
+  <div class="skill-icon">🧍</div>
+  <div class="skill-title">Level 1: Body Language &amp; Presence</div>
+  <div class="skill-desc">Your body speaks before your mouth does. A confident stance tells the audience you're in control.</div>
+
+  <ul class="tip-list">
+    <li><span class="tip-icon">🦶</span> <strong>Plant your feet</strong> shoulder-width apart. Avoid swaying, bouncing, or shifting weight.</li>
+    <li><span class="tip-icon">🤲</span> <strong>Use purposeful gestures</strong> to emphasize points, then bring hands down. No fidgeting with pens, hair, or clothes.</li>
+    <li><span class="tip-icon">🚶</span> <strong>Move with purpose.</strong> Step forward during a key insight; step sideways to signal a topic shift. Never pace aimlessly.</li>
+    <li><span class="tip-icon">💪</span> <strong>Open posture.</strong> Shoulders back, arms uncrossed, chest open. Closed body language says "I'm nervous."</li>
+  </ul>
+
+  <a class="source-link" href="https://www.aaas.org/resources/communication-toolkit/strategies-person-engagements-nonverbal-communication" target="_blank">Source: AAAS Communication Toolkit</a>
+
+  <div class="challenge">
+    <div class="challenge-header">CHALLENGE: The Statue Test</div>
+    <div class="challenge-text">Stand up. Plant your feet. Deliver your opening sentence to an imaginary audience without moving your feet at all. Can you hold a stable, confident stance for 30 seconds?</div>
+    <button onclick="completeChallenge(1, this)">I did it! (+100 XP)</button>
+  </div>
+</div>
+
+<!-- ===================== SKILL 2 ===================== -->
+<div class="skill-card" id="skill2">
+  <span class="skill-badge" id="badge2">+100 XP</span>
+  <div class="skill-icon">👁️</div>
+  <div class="skill-title">Level 2: Eye Contact</div>
+  <div class="skill-desc">Eye contact is the single most powerful tool for connecting with your audience. It builds trust and credibility.</div>
+
+  <ul class="tip-list">
+    <li><span class="tip-icon">💬</span> <strong>5-second mini-conversations.</strong> Hold eye contact with one person for a full thought (about 5 seconds), then naturally shift to someone else.</li>
+    <li><span class="tip-icon">🗺️</span> <strong>Cover the room.</strong> Pick "anchor people" in the left, center, and right sections. Rotate between them.</li>
+    <li><span class="tip-icon">🚫</span> <strong>Never stare at your slides.</strong> Glance briefly for reference, then turn back to the audience. Your slides are for them, not for you.</li>
+    <li><span class="tip-icon">❓</span> <strong>During Q&amp;A,</strong> maintain eye contact with the questioner. Shifting your eyes away suggests avoidance.</li>
+  </ul>
+
+  <a class="source-link" href="https://learningessentials.auckland.ac.nz/presenting-your-work/delivering-great-presentation" target="_blank">Source: University of Auckland</a>
+
+  <div class="challenge">
+    <div class="challenge-header">CHALLENGE: The Triangle</div>
+    <div class="challenge-text">Place 3 objects around your room (left, center, right). Practice delivering 3 sentences — one to each "audience member." Hold eye contact with each object for the full sentence before moving on.</div>
+    <button onclick="completeChallenge(2, this)">Done! (+100 XP)</button>
+  </div>
+</div>
+
+<!-- ===================== SKILL 3 ===================== -->
+<div class="skill-card" id="skill3">
+  <span class="skill-badge" id="badge3">+100 XP</span>
+  <div class="skill-icon">🎙️</div>
+  <div class="skill-title">Level 3: Voice &amp; Pacing</div>
+  <div class="skill-desc">A monotone voice loses audiences faster than bad content. Variation in speed, volume, and pitch keeps people listening.</div>
+
+  <ul class="tip-list">
+    <li><span class="tip-icon">⏩</span> <strong>Slightly quickened pace</strong> signals competence — but don't rush. Watch faces: confused looks = slow down.</li>
+    <li><span class="tip-icon">🔊</span> <strong>Vary your volume.</strong> Raise it for key findings. Lower it for "aside" moments — this creates intimacy and draws people in.</li>
+    <li><span class="tip-icon">⏸️</span> <strong>Pause strategically.</strong> After a key insight: 2-3 seconds of silence. Before a transition: pause to signal a new section. Use pauses INSTEAD of "um" and "uh."</li>
+    <li><span class="tip-icon">🎵</span> <strong>Avoid monotone and upspeak.</strong> Don't end declarative sentences with a questioning lilt — it undermines authority.</li>
+  </ul>
+
+  <a class="source-link" href="https://www.nature.com/scitable/topicpage/effective-oral-presentations-13906743/" target="_blank">Source: Nature Scitable</a>
+
+  <div class="challenge">
+    <div class="challenge-header">CHALLENGE: The Volume Rollercoaster</div>
+    <div class="challenge-text">Say this sentence three times — first at normal volume, then loudly for the bold part, then softly:<br><em>"This system achieved a <strong>2.91 times speedup</strong> — and that changes everything."</em></div>
+    <button onclick="completeChallenge(3, this)">Nailed it! (+100 XP)</button>
+  </div>
+</div>
+
+<!-- ===================== SKILL 4 ===================== -->
+<div class="skill-card" id="skill4">
+  <span class="skill-badge" id="badge4">+100 XP</span>
+  <div class="skill-icon">🎯</div>
+  <div class="skill-title">Level 4: Opening Strong</div>
+  <div class="skill-desc">The first 60 seconds determine whether your audience listens or zones out. Never start with "Today I'm going to talk about..."</div>
+
+  <ul class="tip-list">
+    <li><span class="tip-icon">❓</span> <strong>Start with a question:</strong> "What would happen if your AI assistant forgot everything every 30 seconds?"</li>
+    <li><span class="tip-icon">📊</span> <strong>Start with a surprising fact:</strong> "47% of GPU compute time is wasted on redundant work in multi-agent systems."</li>
+    <li><span class="tip-icon">📖</span> <strong>Start with a story:</strong> "Imagine you're in a hospital, and every new doctor starts your diagnosis from scratch..."</li>
+    <li><span class="tip-icon">🧠</span> <strong>Structure around questions,</strong> not statements. You become conversational — and the audience retains more.</li>
+  </ul>
+
+  <a class="source-link" href="https://www.gsb.stanford.edu/insights/matt-abrahams-tips-techniques-more-confident-compelling-presentations" target="_blank">Source: Stanford GSB / Matt Abrahams</a>
+
+  <div class="challenge">
+    <div class="challenge-header">QUIZ: Which opening is strongest?</div>
+    <div class="quiz-options" id="quiz1">
+      <div class="quiz-option" onclick="checkQuiz(this, false, 'quiz1fb')">A) "Today I'm going to talk about KVFlow and prefix caching."</div>
+      <div class="quiz-option" onclick="checkQuiz(this, false, 'quiz1fb')">B) "KVFlow is a framework for efficient prefix caching in LLM-based workflows."</div>
+      <div class="quiz-option" onclick="checkQuiz(this, true, 'quiz1fb')">C) "What if every time your colleague finished a task, the next person had to start completely from scratch?"</div>
+      <div class="quiz-option" onclick="checkQuiz(this, false, 'quiz1fb')">D) "Thank you for coming. My name is... and my paper is about..."</div>
+    </div>
+    <div class="quiz-feedback" id="quiz1fb"></div>
+    <button onclick="completeChallenge(4, this)" style="margin-top:0.5rem;">Claim XP (+100)</button>
+  </div>
+</div>
+
+<!-- ===================== SKILL 5 ===================== -->
+<div class="skill-card" id="skill5">
+  <span class="skill-badge" id="badge5">+100 XP</span>
+  <div class="skill-icon">🤝</div>
+  <div class="skill-title">Level 5: Audience Interaction</div>
+  <div class="skill-desc">Research shows audiences lose focus within 10 minutes unless you make them active participants. Active participation doubles retention.</div>
+
+  <ul class="tip-list">
+    <li><span class="tip-icon">🙋</span> <strong>Rhetorical questions:</strong> "So why does this matter?" — makes the audience mentally engage.</li>
+    <li><span class="tip-icon">✋</span> <strong>Show-of-hands polls:</strong> "How many of you have used ChatGPT this week?" — instant participation.</li>
+    <li><span class="tip-icon">👥</span> <strong>Brief partner check:</strong> "Turn to your neighbor and predict what the result was." (30 seconds)</li>
+    <li><span class="tip-icon">😊</span> <strong>Smile.</strong> It conveys warmth and competence, and it relaxes both you and the audience.</li>
+  </ul>
+
+  <a class="source-link" href="https://presengage.com/blog/10-interactive-presentation-ideas-that-actually-work/" target="_blank">Source: PresenGage (Science-Backed)</a>
+
+  <div class="challenge">
+    <div class="challenge-header">CHALLENGE: The Engagement Trifecta</div>
+    <div class="challenge-text">Write down one specific place in your presentation where you will: (1) ask a rhetorical question, (2) use a show-of-hands poll, and (3) invite the audience to predict something. Three engagement moments = unstoppable.</div>
+    <button onclick="completeChallenge(5, this)">I planned all three! (+100 XP)</button>
+  </div>
+</div>
+
+<!-- ===================== SKILL 6 ===================== -->
+<div class="skill-card" id="skill6">
+  <span class="skill-badge" id="badge6">+100 XP</span>
+  <div class="skill-icon">🧘</div>
+  <div class="skill-title">Level 6: Managing Nerves</div>
+  <div class="skill-desc">Everyone gets nervous. The difference is what you do with it. Preparation and technique turn anxiety into energy.</div>
+
+  <ul class="tip-list">
+    <li><span class="tip-icon">🔄</span> <strong>Rehearse 5+ times</strong> — out loud, standing up, with slides. Not in your head.</li>
+    <li><span class="tip-icon">🏠</span> <strong>Visit the room</strong> beforehand if possible. Familiarity reduces anxiety by ~40%.</li>
+    <li><span class="tip-icon">🫁</span> <strong>Box breathing:</strong> Inhale 4 seconds → Hold 4 → Exhale 4 → Hold 4. Repeat 3 times before you start.</li>
+    <li><span class="tip-icon">🦸</span> <strong>Power pose</strong> for 2 minutes before presenting (hands on hips, chest open). It physiologically reduces cortisol.</li>
+    <li><span class="tip-icon">😄</span> <strong>If you lose your place,</strong> pause, breathe, smile. The audience won't notice a 3-second silence. They'll just think you're dramatic.</li>
+  </ul>
+
+  <a class="source-link" href="https://scholarlywanderlust.com/resources/conference-and-presentations/live-conference-presentation/" target="_blank">Source: Scholarly Wanderlust</a>
+
+  <div class="challenge">
+    <div class="challenge-header">CHALLENGE: The Pre-Flight Routine</div>
+    <div class="challenge-text">Create your own 2-minute pre-presentation routine. Combine at least 3 of: power pose, box breathing, voice warm-up, visualization, and a motivational phrase. Practice it now.</div>
+    <button onclick="completeChallenge(6, this)">Routine created! (+100 XP)</button>
+  </div>
+</div>
+
+<!-- ===================== SKILL 7 ===================== -->
+<div class="skill-card" id="skill7">
+  <span class="skill-badge" id="badge7">+100 XP</span>
+  <div class="skill-icon">💬</div>
+  <div class="skill-title">Level 7: Handling Q&amp;A Like a Pro</div>
+  <div class="skill-desc">The Q&amp;A is where you prove you really understand your topic — not just your script. It's also part of the assessment rubric.</div>
+
+  <ul class="tip-list">
+    <li><span class="tip-icon">👂</span> <strong>Listen to the full question</strong> before answering. Don't start formulating your response mid-question.</li>
+    <li><span class="tip-icon">⏸️</span> <strong>Pause 2-3 seconds</strong> after the question. This makes you appear thoughtful, not flustered.</li>
+    <li><span class="tip-icon">🔁</span> <strong>Paraphrase the question</strong> back: "So you're asking about..." — ensures everyone heard it and buys you time.</li>
+    <li><span class="tip-icon">⏱️</span> <strong>Keep answers brief</strong> — 30-60 seconds max. Long answers lose the audience.</li>
+    <li><span class="tip-icon">🤷</span> <strong>It's OK to say "I don't know."</strong> Follow with: "That's a great question — I'd approach it by..." Honesty builds credibility.</li>
+  </ul>
+
+  <a class="source-link" href="https://www.cell.com/molecular-cell/fulltext/S1097-2765(09)00742-4" target="_blank">Source: Molecular Cell — How to Give a Good Talk</a>
+
+  <div class="challenge">
+    <div class="challenge-header">QUIZ: Best Q&amp;A response?</div>
+    <div class="quiz-options" id="quiz2">
+      <div class="quiz-option" onclick="checkQuiz(this, false, 'quiz2fb')">A) Immediately jump into a detailed 3-minute explanation</div>
+      <div class="quiz-option" onclick="checkQuiz(this, true, 'quiz2fb')">B) Pause, paraphrase the question, give a 30-second focused answer, then check: "Does that address your question?"</div>
+      <div class="quiz-option" onclick="checkQuiz(this, false, 'quiz2fb')">C) Say "That's a good question" and then change the topic</div>
+      <div class="quiz-option" onclick="checkQuiz(this, false, 'quiz2fb')">D) Look away and mumble "I think... maybe... it's complicated..."</div>
+    </div>
+    <div class="quiz-feedback" id="quiz2fb"></div>
+    <button onclick="completeChallenge(7, this)" style="margin-top:0.5rem;">Claim XP (+100)</button>
+  </div>
+</div>
+
+<!-- ===================== PROGRESS SUMMARY ===================== -->
+<div class="summary-card" id="summaryCard">
+  <h2>Your Progress</h2>
+  <p>Complete all 7 skills to become a Presentation Master!</p>
+  <div class="summary-stats">
+    <div class="summary-stat">
+      <div class="stat-num" id="totalXP">0</div>
+      <div class="stat-label">Total XP</div>
+    </div>
+    <div class="summary-stat">
+      <div class="stat-num" id="skillsDone">0 / 7</div>
+      <div class="stat-label">Skills Completed</div>
+    </div>
+    <div class="summary-stat">
+      <div class="stat-num" id="rankText">Novice</div>
+      <div class="stat-label">Rank</div>
+    </div>
+  </div>
+</div>
+
+<!-- ===================== FURTHER READING ===================== -->
+<h2 style="font-family:'Poppins',sans-serif;font-size:1.4rem;color:var(--teal);margin:2rem 0 1rem;border-bottom:2px solid var(--teal-light);padding-bottom:0.3rem;">Further Reading</h2>
+
+<div class="reading-grid">
+  <div class="reading-card">
+    <div class="reading-source">SAGE Journals</div>
+    <div class="reading-title">Audience Engagement Techniques in Oral Presentations</div>
+    <div class="reading-desc">Research on active vs. passive audience techniques in academic settings.</div>
+    <a href="https://journals.sagepub.com/doi/10.1177/23294906231190575" target="_blank">Read article</a>
+  </div>
+  <div class="reading-card">
+    <div class="reading-source">Scholarly Wanderlust</div>
+    <div class="reading-title">Mastering Your First Live Presentation</div>
+    <div class="reading-desc">Practical guide for first-time conference presenters, covering nerves and preparation.</div>
+    <a href="https://scholarlywanderlust.com/resources/conference-and-presentations/live-conference-presentation/" target="_blank">Read article</a>
+  </div>
+  <div class="reading-card">
+    <div class="reading-source">AAAS</div>
+    <div class="reading-title">Strategies for In-Person Engagements: Nonverbal Communication</div>
+    <div class="reading-desc">Comprehensive guide to body language, gestures, eye contact, and tone for scientists.</div>
+    <a href="https://www.aaas.org/resources/communication-toolkit/strategies-person-engagements-nonverbal-communication" target="_blank">Read article</a>
+  </div>
+  <div class="reading-card">
+    <div class="reading-source">Taylor &amp; Francis</div>
+    <div class="reading-title">Ten Tips for Delivering Excellent Scientific Presentations</div>
+    <div class="reading-desc">Evidence-based tips covering structure, delivery, visuals, and audience engagement.</div>
+    <a href="https://www.tandfonline.com/doi/full/10.1080/08164622.2022.2139593" target="_blank">Read article</a>
+  </div>
+  <div class="reading-card">
+    <div class="reading-source">Stanford GSB</div>
+    <div class="reading-title">Tips and Techniques for More Confident Presentations</div>
+    <div class="reading-desc">Matt Abrahams on structuring talks around questions and managing anxiety.</div>
+    <a href="https://www.gsb.stanford.edu/insights/matt-abrahams-tips-techniques-more-confident-compelling-presentations" target="_blank">Read article</a>
+  </div>
+  <div class="reading-card">
+    <div class="reading-source">PresenGage</div>
+    <div class="reading-title">10 Interactive Presentation Ideas — Backed by Science</div>
+    <div class="reading-desc">Science-backed interaction techniques: polls, quizzes, partner discussions, and more.</div>
+    <a href="https://presengage.com/blog/10-interactive-presentation-ideas-that-actually-work/" target="_blank">Read article</a>
+  </div>
+  <div class="reading-card">
+    <div class="reading-source">Nature Scitable</div>
+    <div class="reading-title">Effective Oral Presentations</div>
+    <div class="reading-desc">Classic guide to voice projection, pacing, visual aids, and audience engagement.</div>
+    <a href="https://www.nature.com/scitable/topicpage/effective-oral-presentations-13906743/" target="_blank">Read article</a>
+  </div>
+  <div class="reading-card">
+    <div class="reading-source">Molecular Cell</div>
+    <div class="reading-title">How to Give a Good Talk</div>
+    <div class="reading-desc">Advice from leading researchers on clarity, slides, Q&amp;A, and storytelling.</div>
+    <a href="https://www.cell.com/molecular-cell/fulltext/S1097-2765(09)00742-4" target="_blank">Read article</a>
+  </div>
+  <div class="reading-card">
+    <div class="reading-source">University of Melbourne</div>
+    <div class="reading-title">Presenting Effectively</div>
+    <div class="reading-desc">Student-focused guide on structure, practice techniques, and managing nerves.</div>
+    <a href="https://students.unimelb.edu.au/academic-skills/resources/communicating-in-class/presentations/presenting-effectively" target="_blank">Read article</a>
+  </div>
+  <div class="reading-card">
+    <div class="reading-source">Jack W. Baker</div>
+    <div class="reading-title">Presenting at a Conference</div>
+    <div class="reading-desc">Practical tips focusing on storytelling and big-picture thinking for conference talks.</div>
+    <a href="https://www.jackwbaker.com/advice/Presenting_at_a_conference.html" target="_blank">Read article</a>
+  </div>
+</div>
+
+<p style="text-align:center;margin-top:2rem;color:#999;font-size:0.85rem;">
+  MCCP6020 — Delivery Tips for Oral Presentation 1<br>
+  Sources compiled from AAAS, Nature, Stanford GSB, SAGE, and others. February 2026.
+</p>
+
+</div><!-- end .content -->
+
+<!-- ==================== JAVASCRIPT ==================== -->
+<script>
+let xp = 0;
+const maxXP = 700;
+const completed = new Set();
+
+function updateXP() {
+  const fill = document.getElementById('xpFill');
+  const text = document.getElementById('xpText');
+  const totalXP = document.getElementById('totalXP');
+  const skillsDone = document.getElementById('skillsDone');
+  const rankText = document.getElementById('rankText');
+
+  fill.style.width = (xp / maxXP * 100) + '%';
+  text.textContent = xp + ' / ' + maxXP + ' XP';
+  totalXP.textContent = xp;
+  skillsDone.textContent = completed.size + ' / 7';
+
+  let rank = 'Novice';
+  if (completed.size >= 7) rank = 'Presentation Master';
+  else if (completed.size >= 5) rank = 'Confident Speaker';
+  else if (completed.size >= 3) rank = 'Rising Star';
+  else if (completed.size >= 1) rank = 'Apprentice';
+  rankText.textContent = rank;
+}
+
+function completeChallenge(id, btn) {
+  if (completed.has(id)) return;
+  completed.add(id);
+  xp += 100;
+  btn.textContent = 'Completed!';
+  btn.classList.add('done');
+  btn.disabled = true;
+
+  const card = document.getElementById('skill' + id);
+  card.classList.add('completed');
+
+  const badge = document.getElementById('badge' + id);
+  badge.textContent = 'DONE';
+
+  updateXP();
+
+  if (completed.size === 7) {
+    const summary = document.getElementById('summaryCard');
+    summary.querySelector('p').textContent = 'You\'ve completed all skills! You\'re ready to deliver an outstanding presentation.';
+  }
+}
+
+function checkQuiz(option, isCorrect, feedbackId) {
+  const parent = option.parentElement;
+  const options = parent.querySelectorAll('.quiz-option');
+  const feedback = document.getElementById(feedbackId);
+
+  options.forEach(o => {
+    o.classList.add('selected');
+    o.style.pointerEvents = 'none';
+  });
+
+  if (isCorrect) {
+    option.classList.add('correct');
+    feedback.textContent = 'Correct! A question-based opening immediately engages the audience\'s curiosity.';
+    feedback.style.color = 'var(--green)';
+  } else {
+    option.classList.add('wrong');
+    const correctOpt = Array.from(options).find((_, i) => {
+      if (feedbackId === 'quiz1fb') return i === 2;
+      if (feedbackId === 'quiz2fb') return i === 1;
+      return false;
+    });
+    if (correctOpt) correctOpt.classList.add('correct');
+    feedback.textContent = 'Not quite! The highlighted option shows the strongest approach.';
+    feedback.style.color = 'var(--orange)';
+  }
+  feedback.style.display = 'block';
+}
+
+updateXP();
+</script>
+
+</body>
+</html>
