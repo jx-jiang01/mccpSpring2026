@@ -1,0 +1,848 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>CHASE-SQL: Multi-Path Reasoning in Text-to-SQL</title>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&family=JetBrains+Mono:wght@400;600&display=swap');
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        :root {
+            --color-primary: #1B4942;
+            --color-secondary: #2563eb;
+            --color-accent: #f97316;
+            --color-text: #1a1a2e;
+            --color-bg: #FFFFFF;
+            --color-bg-alt: #F8FAF4;
+            --color-accent-light: #E8F0ED;
+            --color-border: #e5e7eb;
+            --color-success: #10b981;
+            --color-warning: #f59e0b;
+        }
+
+        body {
+            font-family: 'Inter', sans-serif;
+            background: #000;
+            color: var(--color-text);
+            overflow: hidden;
+        }
+
+        /* Slide Container */
+        .slide {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100vw;
+            height: 100vh;
+            background: var(--color-bg);
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            padding: 5vh 10vw;
+            visibility: hidden;
+            opacity: 0;
+            transition: opacity 0.5s ease-in-out;
+            overflow-y: auto;
+        }
+
+        .slide.active {
+            visibility: visible;
+            opacity: 1;
+        }
+
+        /* Slide Number */
+        .slide-number {
+            position: absolute;
+            bottom: 1.2rem;
+            right: 2rem;
+            color: #ccc;
+            font-size: 0.9rem;
+            font-family: 'JetBrains Mono', monospace;
+        }
+
+        /* Title Slides */
+        .slide.title-slide {
+            justify-content: center;
+            text-align: center;
+        }
+
+        h1 {
+            font-size: clamp(2.8rem, 5vw, 4rem);
+            color: var(--color-primary);
+            font-weight: 700;
+            margin-bottom: 1.5rem;
+            line-height: 1.2;
+        }
+
+        h2 {
+            font-size: clamp(2.4rem, 4.2vw, 3.6rem);
+            color: var(--color-primary);
+            font-weight: 700;
+            margin-bottom: 2rem;
+            line-height: 1.3;
+        }
+
+        p {
+            font-size: clamp(1.25rem, 1.8vw, 1.55rem);
+            line-height: 1.6;
+            margin-bottom: 1.5rem;
+            color: var(--color-text);
+        }
+
+        .subtitle {
+            font-size: clamp(1.4rem, 2.2vw, 2rem);
+            color: var(--color-secondary);
+            font-weight: 600;
+            margin-bottom: 0.8rem;
+        }
+
+        /* Rubric Tags */
+        .rubric-tag {
+            display: inline-block;
+            padding: 0.35rem 0.75rem;
+            border-radius: 0.3rem;
+            font-size: 0.78rem;
+            font-weight: 600;
+            margin-right: 0.5rem;
+            margin-bottom: 1rem;
+            text-transform: uppercase;
+            letter-spacing: 0.05em;
+        }
+
+        .rubric-tag.content {
+            background: #dbeafe;
+            color: #0c4a6e;
+        }
+
+        .rubric-tag.delivery {
+            background: #fce7f3;
+            color: #831843;
+        }
+
+        .rubric-tag.visual {
+            background: #dcfce7;
+            color: #166534;
+        }
+
+        /* Transition Cue */
+        .transition-cue {
+            margin-top: auto;
+            padding-top: 1.5rem;
+            border-top: 2px solid var(--color-border);
+            font-size: clamp(1.05rem, 1.4vw, 1.25rem);
+            color: var(--color-secondary);
+            font-style: italic;
+        }
+
+        .transition-cue::before {
+            content: "→ ";
+            font-weight: 700;
+        }
+
+        /* Content Lists */
+        ul {
+            list-style: none;
+            margin: 1.5rem 0;
+        }
+
+        li {
+            font-size: clamp(1.25rem, 1.8vw, 1.55rem);
+            line-height: 1.7;
+            margin-bottom: 1.2rem;
+            padding-left: 3rem;
+            position: relative;
+            color: var(--color-text);
+        }
+
+        li::before {
+            content: "•";
+            position: absolute;
+            left: 0;
+            color: var(--color-secondary);
+            font-weight: 700;
+            font-size: 1.3em;
+        }
+
+        /* Emphasis Boxes */
+        .highlight-box {
+            background: var(--color-accent-light);
+            border-left: 4px solid var(--color-primary);
+            padding: 1.5rem;
+            margin: 1.5rem 0;
+            border-radius: 0.3rem;
+        }
+
+        .highlight-box p {
+            margin-bottom: 0.5rem;
+        }
+
+        .highlight-box strong {
+            color: var(--color-primary);
+            font-weight: 700;
+        }
+
+        /* Stats/Big Numbers */
+        .stat-box {
+            display: flex;
+            align-items: center;
+            justify-content: space-around;
+            margin: 2rem 0;
+            gap: 2rem;
+            flex-wrap: wrap;
+        }
+
+        .stat {
+            text-align: center;
+        }
+
+        .stat-number {
+            font-size: clamp(2.8rem, 5vw, 4.2rem);
+            font-weight: 700;
+            color: var(--color-secondary);
+            font-family: 'JetBrains Mono', monospace;
+        }
+
+        .stat-label {
+            font-size: clamp(1.15rem, 1.6vw, 1.4rem);
+            color: var(--color-text);
+            margin-top: 0.5rem;
+        }
+
+        /* Diagram Styles */
+        .diagram {
+            display: flex;
+            justify-content: center;
+            gap: 1.5rem;
+            margin: 2rem 0;
+            flex-wrap: wrap;
+            align-items: center;
+        }
+
+        .diagram-box {
+            background: var(--color-bg-alt);
+            border: 2px solid var(--color-border);
+            border-radius: 0.5rem;
+            padding: 1.5rem;
+            min-width: 150px;
+            text-align: center;
+            flex: 1;
+            min-height: 120px;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+        }
+
+        .diagram-icon {
+            font-size: 2.5rem;
+            margin-bottom: 0.8rem;
+        }
+
+        .diagram-label {
+            font-size: clamp(1rem, 1.3vw, 1.15rem);
+            font-weight: 600;
+            color: var(--color-primary);
+        }
+
+        .diagram-arrow {
+            font-size: 2rem;
+            color: var(--color-secondary);
+        }
+
+        /* Comparison Chart */
+        .comparison-container {
+            display: flex;
+            justify-content: space-around;
+            align-items: flex-end;
+            height: 300px;
+            margin: 2rem 0;
+            gap: 2rem;
+        }
+
+        .comparison-bar {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            flex: 1;
+        }
+
+        .bar {
+            width: 100%;
+            background: var(--color-border);
+            border-radius: 0.3rem 0.3rem 0 0;
+            position: relative;
+            min-width: 80px;
+        }
+
+        .bar.primary {
+            background: linear-gradient(180deg, var(--color-secondary), #1e40af);
+        }
+
+        .bar.success {
+            background: linear-gradient(180deg, var(--color-success), #059669);
+        }
+
+        .bar-label {
+            font-size: clamp(1.15rem, 1.6vw, 1.4rem);
+            font-weight: 600;
+            margin-top: 1rem;
+            color: var(--color-primary);
+        }
+
+        .bar-value {
+            position: absolute;
+            top: -2.5rem;
+            left: 50%;
+            transform: translateX(-50%);
+            font-size: clamp(1.15rem, 1.6vw, 1.4rem);
+            font-weight: 700;
+            color: var(--color-primary);
+            font-family: 'JetBrains Mono', monospace;
+        }
+
+        /* Icon Grid */
+        .icon-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+            gap: 1.5rem;
+            margin: 2rem 0;
+        }
+
+        .icon-card {
+            background: var(--color-bg-alt);
+            border: 2px solid var(--color-border);
+            border-radius: 0.5rem;
+            padding: 1.5rem;
+            text-align: center;
+            transition: transform 0.3s ease;
+        }
+
+        .icon-card:hover {
+            transform: translateY(-5px);
+            border-color: var(--color-secondary);
+        }
+
+        .icon-card-icon {
+            font-size: 3rem;
+            margin-bottom: 1rem;
+        }
+
+        .icon-card-title {
+            font-size: clamp(1rem, 1.3vw, 1.15rem);
+            font-weight: 600;
+            color: var(--color-primary);
+        }
+
+        /* Two-Column Layout */
+        .two-column {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 2rem;
+            margin: 1.5rem 0;
+        }
+
+        .column {
+            display: flex;
+            flex-direction: column;
+        }
+
+        .column h3 {
+            font-size: clamp(1.4rem, 2vw, 1.7rem);
+            color: var(--color-primary);
+            margin-bottom: 1rem;
+            font-weight: 700;
+        }
+
+        /* Progress Bar */
+        .progress-bar {
+            position: fixed;
+            bottom: 0;
+            left: 0;
+            height: 4px;
+            background: var(--color-secondary);
+            transition: width 0.3s ease;
+            z-index: 1000;
+        }
+
+        /* Navigation */
+        .nav-hint {
+            position: fixed;
+            bottom: 1.5rem;
+            left: 50%;
+            transform: translateX(-50%);
+            font-size: 0.85rem;
+            color: #999;
+            z-index: 999;
+        }
+
+        /* Edit Mode Toolbar */
+        .edit-toolbar {
+            position: fixed;
+            top: 0;
+            right: 0;
+            background: rgba(0, 0, 0, 0.9);
+            padding: 1rem;
+            z-index: 2000;
+            display: none;
+            flex-direction: column;
+            gap: 0.5rem;
+        }
+
+        .edit-toolbar.active {
+            display: flex;
+        }
+
+        .edit-toolbar button {
+            padding: 0.5rem 1rem;
+            background: var(--color-secondary);
+            color: white;
+            border: none;
+            border-radius: 0.3rem;
+            cursor: pointer;
+            font-size: 0.9rem;
+            font-weight: 600;
+            transition: background 0.2s ease;
+        }
+
+        .edit-toolbar button:hover {
+            background: #1d4ed8;
+        }
+
+        /* Responsive adjustments */
+        @media (max-width: 768px) {
+            .two-column {
+                grid-template-columns: 1fr;
+            }
+
+            .diagram {
+                flex-direction: column;
+            }
+
+            .comparison-container {
+                height: 250px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Slide 1: Title -->
+    <div class="slide title-slide active">
+        <h1>CHASE-SQL</h1>
+        <p class="subtitle">Multi-Path Reasoning and Preference Optimized Candidate Selection in Text-to-SQL</p>
+        <p style="margin-top: 3rem; font-size: clamp(1.1rem, 1.5vw, 1.35rem); color: #666;">
+            Google Cloud & Stanford University
+        </p>
+        <div class="slide-number">1</div>
+    </div>
+
+    <!-- Slide 2: The Problem -->
+    <div class="slide">
+        <span class="rubric-tag content">CONTENT & STRUCTURE</span>
+        <h2>The Challenge: AI Struggles with Database Queries</h2>
+        <div class="highlight-box">
+            <p><strong>The Problem:</strong> Converting natural language questions into SQL commands is surprisingly difficult, even for advanced AI systems.</p>
+        </div>
+        <div class="stat-box">
+            <div class="stat">
+                <div class="stat-number">63%</div>
+                <div class="stat-label">Current AI Accuracy</div>
+            </div>
+            <div style="font-size: 2rem; color: var(--color-text);">→</div>
+            <div class="stat">
+                <div class="stat-number">37%</div>
+                <div class="stat-label">Incorrect Queries</div>
+            </div>
+        </div>
+        <p>Right now, only 63% of naturally-phrased database questions get translated into the correct search command. That means nearly 4 out of 10 user queries fail.</p>
+        <div class="transition-cue">Let me introduce a helpful metaphor to explain the solution...</div>
+        <div class="slide-number">2</div>
+    </div>
+
+    <!-- Slide 3: The Librarian Metaphor -->
+    <div class="slide">
+        <span class="rubric-tag content">CONTENT & STRUCTURE</span>
+        <h2>Think of It This Way: The Librarian Analogy</h2>
+        <div class="two-column">
+            <div class="column">
+                <p style="font-size: clamp(1.15rem, 1.6vw, 1.4rem);">
+                    <strong>The Problem:</strong> You ask a librarian to find books on a topic, but the librarian doesn't understand your language perfectly. Sometimes they misinterpret your request or search the wrong catalog section.
+                </p>
+            </div>
+            <div class="column">
+                <p style="font-size: clamp(1.15rem, 1.6vw, 1.4rem);">
+                    <strong>The Solution:</strong> Ask the librarian to suggest <em>multiple possible searches</em>, then have an expert reviewer pick the best one.
+                </p>
+            </div>
+        </div>
+        <div class="highlight-box" style="margin-top: 2rem;">
+            <p><strong>CHASE-SQL's Innovation:</strong> Generate multiple SQL query candidates using different strategies, then use a trained AI "selector" to pick the best one.</p>
+        </div>
+        <div class="transition-cue">Let me show the three distinct strategies used to generate candidates...</div>
+        <div class="slide-number">3</div>
+    </div>
+
+    <!-- Slide 4: Three Generation Strategies -->
+    <div class="slide">
+        <span class="rubric-tag content">KEY FINDINGS</span>
+        <h2>Three Generation Strategies</h2>
+        <div class="icon-grid">
+            <div class="icon-card">
+                <div class="icon-card-icon">🧩</div>
+                <div class="icon-card-title">Divide-and-Conquer</div>
+                <p style="font-size: clamp(1rem, 1.3vw, 1.15rem); margin-top: 0.5rem;">Break complex queries into simpler parts</p>
+            </div>
+            <div class="icon-card">
+                <div class="icon-card-icon">⛓️</div>
+                <div class="icon-card-title">Chain-of-Thought</div>
+                <p style="font-size: clamp(1rem, 1.3vw, 1.15rem); margin-top: 0.5rem;">Think through the problem step-by-step</p>
+            </div>
+            <div class="icon-card">
+                <div class="icon-card-icon">📚</div>
+                <div class="icon-card-title">Synthetic Examples</div>
+                <p style="font-size: clamp(1rem, 1.3vw, 1.15rem); margin-top: 0.5rem;">Learn from the specific database being queried</p>
+            </div>
+        </div>
+        <p style="margin-top: 2rem;">Each method produces diverse candidates, ensuring high-quality options for the selector to choose from.</p>
+        <div class="transition-cue">Now let me explain how the selection system works...</div>
+        <div class="slide-number">4</div>
+    </div>
+
+    <!-- Slide 5: The Selector System -->
+    <div class="slide">
+        <span class="rubric-tag content">KEY FINDINGS</span>
+        <h2>The Selector: An Expert Ranker</h2>
+        <div class="diagram">
+            <div class="diagram-box">
+                <div class="diagram-icon">📝</div>
+                <div class="diagram-label">Multiple<br>SQL Options</div>
+            </div>
+            <div class="diagram-arrow">→</div>
+            <div class="diagram-box" style="border: 3px solid var(--color-secondary); background: #dbeafe;">
+                <div class="diagram-icon">⚖️</div>
+                <div class="diagram-label"><strong>AI Selector</strong><br>(Trained Ranker)</div>
+            </div>
+            <div class="diagram-arrow">→</div>
+            <div class="diagram-box" style="border: 3px solid var(--color-success); background: #dcfce7;">
+                <div class="diagram-icon">✓</div>
+                <div class="diagram-label">Best<br>Candidate</div>
+            </div>
+        </div>
+        <p style="margin-top: 2rem;">The selector uses pairwise comparisons—comparing candidates in pairs to score each one. It's like having an expert database engineer reviewing all options and picking the winner.</p>
+        <div class="transition-cue">Let me share the headline results...</div>
+        <div class="slide-number">5</div>
+    </div>
+
+    <!-- Slide 6: The Results -->
+    <div class="slide">
+        <span class="rubric-tag content">KEY FINDINGS</span>
+        <h2>State-of-the-Art Results: 73% Accuracy</h2>
+        <div class="comparison-container">
+            <div class="comparison-bar">
+                <div class="bar primary" style="height: 210px; max-width: 100px;">
+                    <div class="bar-value">63%</div>
+                </div>
+                <div class="bar-label">Previous Best</div>
+            </div>
+            <div class="comparison-bar">
+                <div class="bar success" style="height: 255px; max-width: 100px;">
+                    <div class="bar-value">73%</div>
+                </div>
+                <div class="bar-label">CHASE-SQL</div>
+            </div>
+        </div>
+        <div class="highlight-box" style="text-align: center;">
+            <strong style="font-size: clamp(1.4rem, 2vw, 1.7rem);">+10 Percentage Point Improvement</strong><br>
+            <p style="margin-top: 0.5rem;">State-of-the-art on the BIRD Text-to-SQL benchmark</p>
+        </div>
+        <div class="transition-cue">Now let me explain why this matters in the real world...</div>
+        <div class="slide-number">6</div>
+    </div>
+
+    <!-- Slide 7: Real-World Applications -->
+    <div class="slide">
+        <span class="rubric-tag content">SIGNIFICANCE</span>
+        <h2>Real-World Applications</h2>
+        <div class="icon-grid">
+            <div class="icon-card">
+                <div class="icon-card-icon">🏥</div>
+                <div class="icon-card-title">Healthcare</div>
+                <p style="font-size: clamp(1rem, 1.3vw, 1.15rem); margin-top: 0.5rem;">Query patient records without SQL knowledge</p>
+            </div>
+            <div class="icon-card">
+                <div class="icon-card-icon">🏪</div>
+                <div class="icon-card-title">Retail</div>
+                <p style="font-size: clamp(1rem, 1.3vw, 1.15rem); margin-top: 0.5rem;">Analyze sales patterns and trends instantly</p>
+            </div>
+            <div class="icon-card">
+                <div class="icon-card-icon">💰</div>
+                <div class="icon-card-title">Finance</div>
+                <p style="font-size: clamp(1rem, 1.3vw, 1.15rem); margin-top: 0.5rem;">Extract insights from complex financial data</p>
+            </div>
+        </div>
+        <p style="margin-top: 2rem;"><strong>Impact:</strong> From 63% to 73% accuracy means non-technical users can now trust the AI to query databases independently. This democratizes access to data.</p>
+        <div class="transition-cue">Let me discuss the broader impact of this research approach...</div>
+        <div class="slide-number">7</div>
+    </div>
+
+    <!-- Slide 8: Broader Impact -->
+    <div class="slide">
+        <span class="rubric-tag content">SIGNIFICANCE</span>
+        <h2>Broader Impact: Multi-Domain Relevance</h2>
+        <p>The key insight — combining multiple approaches with a trained selector — applies far beyond SQL generation:</p>
+        <div class="icon-grid" style="grid-template-columns: 1fr 1fr;">
+            <div class="icon-card">
+                <div class="icon-card-icon">🌐</div>
+                <div class="icon-card-title">Language Translation</div>
+            </div>
+            <div class="icon-card">
+                <div class="icon-card-icon">💻</div>
+                <div class="icon-card-title">Code Generation</div>
+            </div>
+            <div class="icon-card">
+                <div class="icon-card-icon">📝</div>
+                <div class="icon-card-title">Scientific Writing</div>
+            </div>
+            <div class="icon-card">
+                <div class="icon-card-icon">🤖</div>
+                <div class="icon-card-title">Other AI Tasks</div>
+            </div>
+        </div>
+        <p style="margin-top: 2rem;">This is a <strong>methodological contribution</strong> that researchers across disciplines can adapt and apply to their own problems.</p>
+        <div class="transition-cue">Let me explain the openness and accessibility of this approach...</div>
+        <div class="slide-number">8</div>
+    </div>
+
+    <!-- Slide 9: Open Innovation -->
+    <div class="slide">
+        <span class="rubric-tag content">SIGNIFICANCE</span>
+        <h2>Open Innovation & Accessibility</h2>
+        <div class="highlight-box">
+            <p><strong>No Proprietary Requirement:</strong> The researchers achieved 70.3% accuracy using open-source models (Mistral Large, Qwen 2.5), not expensive proprietary systems.</p>
+        </div>
+        <ul>
+            <li>Published at ICLR — a top-tier conference</li>
+            <li>Methodology is reproducible and adaptable</li>
+            <li>Organizations of all sizes can implement this approach</li>
+            <li>Accelerates innovation across the field</li>
+        </ul>
+        <p style="margin-top: 2rem;">This democratizes innovation. You don't need a big company's resources to benefit from this breakthrough.</p>
+        <div class="transition-cue">Now let me bring this back to my own research and learning...</div>
+        <div class="slide-number">9</div>
+    </div>
+
+    <!-- Slide 10: Impact on My Research -->
+    <div class="slide">
+        <span class="rubric-tag content">WRITING SKILLS</span>
+        <h2>Key Takeaways for My Own Work</h2>
+        <div class="highlight-box">
+            <p><strong>On Research Design:</strong> For complex problems, a multi-strategy approach outperforms single attempts. I should explore multiple pathways and apply thoughtful selection mechanisms in my own research.</p>
+        </div>
+        <div class="highlight-box">
+            <p><strong>On Academic Writing:</strong> The authors structure their paper brilliantly—they start with impact, explain without jargon, show concrete results, and discuss real-world implications. I'm adopting this structure for my own papers.</p>
+        </div>
+        <div class="highlight-box">
+            <p><strong>On Evidence-Based Reasoning:</strong> Notice how they justify every claim with data (Table 1 compares methods rigorously). I'm committed to supporting my arguments with evidence, not assumptions.</p>
+        </div>
+        <div class="transition-cue">Let me summarize the key insight...</div>
+        <div class="slide-number">10</div>
+    </div>
+
+    <!-- Slide 11: Summary & Takeaway -->
+    <div class="slide">
+        <span class="rubric-tag content">CONTENT & STRUCTURE</span>
+        <h2>Key Takeaway</h2>
+        <div class="highlight-box" style="text-align: center; margin-top: 3rem;">
+            <p style="font-size: clamp(1.4rem, 2.2vw, 2rem); line-height: 1.8;">
+                <strong>Diverse approaches + thoughtful selection = breakthrough performance</strong>
+            </p>
+            <p style="margin-top: 1.5rem; font-size: clamp(1.15rem, 1.6vw, 1.4rem);">
+                This work improves how non-technical users interact with data, and teaches us a powerful lesson about effective research strategy and clear communication.
+            </p>
+        </div>
+        <div class="transition-cue">Let me close with thanks and an invitation for discussion...</div>
+        <div class="slide-number">11</div>
+    </div>
+
+    <!-- Slide 12: Thank You & Q&A -->
+    <div class="slide title-slide">
+        <h2 style="color: var(--color-primary);">Thank You</h2>
+        <p style="font-size: clamp(1.25rem, 1.8vw, 1.55rem); margin-top: 2rem;">
+            Paper: "CHASE-SQL: Multi-Path Reasoning and Preference Optimized Candidate Selection in Text-to-SQL"
+        </p>
+        <p style="font-size: clamp(1.25rem, 1.8vw, 1.55rem); margin-top: 3rem; color: var(--color-secondary);">
+            <strong>I'm happy to answer your questions</strong>
+        </p>
+        <div class="slide-number">12</div>
+    </div>
+
+    <!-- Progress Bar -->
+    <div class="progress-bar"></div>
+
+    <!-- Edit Toolbar -->
+    <div class="edit-toolbar">
+        <button onclick="toggleEditMode()">Exit Edit Mode (Esc)</button>
+        <button onclick="saveToCache()">Save to Cache</button>
+        <button onclick="loadFromCache()">Load from Cache</button>
+        <button onclick="downloadHTML()">Download HTML</button>
+        <button onclick="clearCache()">Clear Cache</button>
+    </div>
+
+    <!-- Navigation Hint -->
+    <div class="nav-hint">Use arrow keys to navigate | Press E to edit</div>
+
+    <script>
+        let currentSlide = 0;
+        const slides = document.querySelectorAll('.slide');
+        const totalSlides = slides.length;
+        let editMode = false;
+
+        // Initialize
+        updateSlide();
+
+        // Keyboard Navigation
+        document.addEventListener('keydown', (e) => {
+            if (editMode) {
+                if (e.key === 'Escape') {
+                    toggleEditMode();
+                }
+                return;
+            }
+
+            switch(e.key) {
+                case 'ArrowRight':
+                case ' ':
+                    nextSlide();
+                    e.preventDefault();
+                    break;
+                case 'ArrowLeft':
+                    previousSlide();
+                    e.preventDefault();
+                    break;
+                case 'Home':
+                    currentSlide = 0;
+                    updateSlide();
+                    e.preventDefault();
+                    break;
+                case 'End':
+                    currentSlide = totalSlides - 1;
+                    updateSlide();
+                    e.preventDefault();
+                    break;
+                case 'e':
+                case 'E':
+                    toggleEditMode();
+                    break;
+                case 't':
+                case 'T':
+                    toggleToolbar();
+                    break;
+            }
+        });
+
+        // Click Navigation
+        document.addEventListener('click', (e) => {
+            if (editMode) return;
+            if (e.target === document.querySelector('.nav-hint')) return;
+            
+            const x = e.clientX;
+            const width = window.innerWidth;
+            
+            if (x > width * 0.6) {
+                nextSlide();
+            } else if (x < width * 0.4) {
+                previousSlide();
+            }
+        });
+
+        function nextSlide() {
+            if (currentSlide < totalSlides - 1) {
+                currentSlide++;
+                updateSlide();
+            }
+        }
+
+        function previousSlide() {
+            if (currentSlide > 0) {
+                currentSlide--;
+                updateSlide();
+            }
+        }
+
+        function updateSlide() {
+            slides.forEach((slide, idx) => {
+                slide.classList.remove('active');
+                if (idx === currentSlide) {
+                    slide.classList.add('active');
+                }
+            });
+
+            // Update progress bar
+            const progress = ((currentSlide + 1) / totalSlides) * 100;
+            document.querySelector('.progress-bar').style.width = progress + '%';
+        }
+
+        function toggleEditMode() {
+            editMode = !editMode;
+            document.querySelector('.edit-toolbar').classList.toggle('active');
+            
+            slides.forEach(slide => {
+                const editables = slide.querySelectorAll('h1, h2, p, li, .stat-label');
+                editables.forEach(elem => {
+                    if (!elem.classList.contains('slide-number')) {
+                        elem.contentEditable = editMode ? 'true' : 'false';
+                    }
+                });
+            });
+
+            const hint = document.querySelector('.nav-hint');
+            hint.textContent = editMode 
+                ? 'Edit mode active | Press Esc to exit' 
+                : 'Use arrow keys to navigate | Press E to edit';
+        }
+
+        function toggleToolbar() {
+            document.querySelector('.edit-toolbar').classList.toggle('active');
+        }
+
+        function saveToCache() {
+            const html = document.documentElement.outerHTML;
+            localStorage.setItem('presentation-cache', html);
+            alert('Presentation saved to browser cache!');
+        }
+
+        function loadFromCache() {
+            const cached = localStorage.getItem('presentation-cache');
+            if (cached) {
+                document.open();
+                document.write(cached);
+                document.close();
+            } else {
+                alert('No cached presentation found.');
+            }
+        }
+
+        function downloadHTML() {
+            const html = document.documentElement.outerHTML;
+            const blob = new Blob([html], { type: 'text/html' });
+            const url = URL.createObjectURL(blob);
+            const a = document.createElement('a');
+            a.href = url;
+            a.download = 'CHASE-SQL-Presentation.html';
+            document.body.appendChild(a);
+            a.click();
+            document.body.removeChild(a);
+            URL.revokeObjectURL(url);
+        }
+
+        function clearCache() {
+            localStorage.removeItem('presentation-cache');
+            alert('Cache cleared.');
+        }
+    </script>
+</body>
+</html>

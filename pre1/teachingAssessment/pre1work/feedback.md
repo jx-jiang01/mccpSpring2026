@@ -10,10 +10,10 @@ After the AI agent generates your presentation outline (via `genOutline.md`), re
 
 <!-- Rate the overall quality of the generated outline (1-5 stars) and explain briefly -->
 
-Rating: ___/5
+Rating: __4_/5
 
 Comments:
-
+In the main content section, "If I asked you to explain a complex database question in plain English, your computer could help – but can it understand you well enough to write the perfect search command?" is not accurate. Because the objective of text-to-sql task is to translate texts to SQL queries, is not to translate SQL queries to texts.
 
 ---
 
