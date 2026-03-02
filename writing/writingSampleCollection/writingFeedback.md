@@ -115,7 +115,7 @@ Your reflection is honest and shows good self-awareness — you want to write mo
 1. Write the structural outline first (moves for Introduction and Literature Review)
 2. Fill in each move with content, focusing on one move at a time
 3. Add citations as you write, not after
-4. Use AI only for grammar checking at the end, not for content generation
+4. You are encouraged to use AI tools throughout your writing process — for brainstorming, drafting, restructuring, and polishing. However, AI-generated text cannot be submitted directly; always substantially revise and rewrite AI output in your own voice
 
 ---
 
