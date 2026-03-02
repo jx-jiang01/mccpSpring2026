@@ -1,111 +1,143 @@
 # Writing Feedback — JIANG Junxiang (蔣俊翔)
 
-JIANG Junxiang (蔣俊翔) Student ID: 25482440 Email: 25482440@life.hkbu.edu.hk Programme: PHD COMP | Group: week6 GitHub: https://github.com/jx-jiang01/mccpSpring2026/tree/main/writing/writingSampleCollection
+## Feedback on JIANG Junxiang's First Draft: Introduction and Literature Review
 
---- firstDraft.md ---
-My First Draft
-Source Information
-Date written: Feb 23rd, 2026
+**Student:** JIANG Junxiang (蔣俊翔)
+**Topic:** RAG-Enhanced Text-to-SQL with Large Language Models
+**Date:** 2 March 2026
+**Reviewer:** Simon Wang (with AI-assisted analysis)
 
-Context: For the course assignment and my research
+**Your draft:** writing/writingSampleCollection/firstDraft.md
+**Your reflection:** writing/writingSampleCollection/firstDraft.md (reflection section)
+**Assessment rubric:** writing/assessment/writing_instructions_formatted.md
 
-Status: Partial draft
+---
 
+## Overall Assessment
 
-Introduction
-The objective of Text-to-SQL is to translate Natural Language (NL) queries to SQL queries. This technique holds significant importance for business intelligence, as it represents one of the field’s fundamental challenges. On the one hand, it enables non-technical users to explore insights from data, just as professional database engineers do. On the other hand, it boosts work efficiency for specialists like data analysts. According to the 2023 Stack Overflow survey, SQL ranks among the most widely used programming languages: over half (51.52%) of professional developers utilize it in their work, yet only around one-third (35.29%) have received systematic training in it.
+Your draft shows clear technical understanding of the Text-to-SQL domain and a genuine enthusiasm for the topic. You have the core ingredients: a well-defined research area (RAG-enhanced Text-to-SQL), concrete evidence of progress (execution accuracy from 7.06 to 81.67 on the BIRD benchmark), and a clear motivation for why RAG is needed (cost reduction, performance enhancement). However, the draft needs substantial work in three areas: (1) the Introduction lacks clear move boundaries — it reads as a continuous technical explanation rather than a structured argument; (2) the Literature Review is purely descriptive, listing three prompting strategies without comparing or critiquing them; and (3) there are several grammar and expression issues that weaken the academic tone.
 
-Recently, Large Language Models (LLMs) have brought about transformative changes to the research and application of Text-to-SQL. A user first inputs his questions or requirements into the Text-to-SQL system. Then, the Text-to-SQL system loads database schema and feeds it with the question to LLMs. Thirdly, the system obtains the generated SQL query from LLMs. Finally, return the generated SQL query to the user. In some cases, the system further executes the generated SQL query to retrieve data from the database and returns a corresponding data analysis report to the user. LLM-based Text-to-SQL methods achieve significant improvement. Benefit from the development of LLM, the performance of Text-to-SQL has remarkable improvement. On a well-known benchmark BIRD test set, the execution accuracy has improved from 7.06 to 81.67 within just two to three years. However, only relying on LLMs to solve Text-to-SQL task is expensive and inefficient. For example, some research reveal that feeding all database schema into LLMs could help Text-to-SQL approaches perform better, but it is unacceptable for both users and companies that a few casual words maybe cost more than 100 thousand tokens, because it is cost too much. Furthermore, LLM cannot directly utilize additional information (e.g., knowledge graphs) and instant information.
+**Estimated current level:** Developing (5–6 range) — The technical content is relevant, but the draft needs significant structural, analytical, and language improvements to reach Satisfactory or above.
 
-To alleviate aforementioned weaknesses, Retrieval-Augmented Generation (RAG) is adopted to Text-to-SQL. RAG is a technique that enhances the quality and relevance of generated content by integrating a retrieval component within the generation process. Therefore, the core of RAG is the retrieval model which is used to search useful information and integrate with information with the prompt. In general, the usage of RAG in three aspects within Text-to-SQL system. The first one is to explicitly choose the related database schema from full database schema. In contrast to inputting full schema to LLMs, this method saves a lot of token consumption. The second one is to choose correlated information for the question from additional information, which enhances the performance of Text-to-SQL. The last one is to retrieve examples to teach LLMs to accurately generate SQL. An example usually contains a question, a SQL query and other related information. By doing so, RAG based Text-to-SQL not only deepens the contextual richness of the responses but also guarantees a greater level of factual accuracy and specificity.
+---
 
+## Part 1: Introduction Feedback
 
-Literature Review
-We divide research work of Text-to-SQL into three types according to the prompt strategy. These types are vanilla prompting, decomposition prompting and chain-of-thought prompting. Vanilla prompting means prompt only uses zero-shot and few-shot strategies. Zero-shot learning in Text-to-SQL focuses on investigating the impact of prompt representation styles and benchmarking the baseline performance of various LLMs. Few-shot strategy is to integrate several examples with the prompt. Obviously, RAG methods in SQL generation belong to this type. Decomposition prompting refers to a strategy that addresses complex tasks or questions by breaking them down into manageable components, thereby transforming a challenging task or query into a set of simpler sub-tasks or sub-questions. DIN-SQL decomposes the task of natural language text to SQL into multiple sub-tasks and finally achieves competitive performance. Chain-of-Thought (COT) prompting is used to handle the task by making LLMs generate intermediate reasoning steps before predicting SQLs, ensuring that the generated SQL queries are more aligned with human expectations. CHASE-SQL designs three strategies (divide-and-conquer COT, query plan COT and online synthetic example generation) to generate several SQL queries and designing a pair-wise comparison to select the final SQL. CHESS  and OpenSearch-SQL uses chain-of-thought to transform natural language questions into SQL queries and finally achieve good performance.
+### What Works Well
 
-Although the in-context learning paradigm achieves promising accuracy, from the perspective of computational efficiency, well-designed methods that adopt a multi-stage framework or expand context to increase the number of API calls for performance enhancement have simultaneously led to a substantial rise in costs. The techniques of in-context learning could be incorporated with RAG techniques for Text-to-SQL. For example, the chain-of-thought prompting technique for SQL generation is widely used in RAG based Text-to-SQL, for example, OpenSearch-SQL.
+- The opening effectively establishes the practical importance of Text-to-SQL with a concrete statistic (Stack Overflow survey: 51.52% use SQL, only 35.29% trained)
+- The performance improvement data (7.06 to 81.67 on BIRD) gives readers a tangible sense of progress
+- The three uses of RAG in Text-to-SQL (schema selection, additional information retrieval, example retrieval) are clearly enumerated
+- The overall argument flow — from problem (NL to SQL) to solution (LLMs) to limitation (cost, no external info) to enhancement (RAG) — is logical
 
+### Issue 1: No Clear Move Structure
 
-Notes
-[Any additional notes about your draft, challenges you faced, questions you have, etc.]
+Your Introduction reads as a single continuous explanation. The three required moves (Establishing Territory → Identifying the Niche → Occupying the Niche) are present in content but not separated structurally.
 
---- pre1_papers.md ---
-JIANG Junxiang — Model Papers for Pre1
-Literature Folder
-JXJ* | GitHub: (not yet linked)
-Paper 1
-Title: CHASE-SQL: Multi-Path Reasoning and Preference Optimized Candidate Selection in Text-to-SQL Authors: Pourreza et al. (2025) Venue: ICLR 2025 Field: Natural Language Processing / Database Systems / Text-to-SQL Repo files: Insights | Visualization | Paper MD
-Paper 2
-Title: OpenSearch-SQL: Enhancing Text-to-SQL with Dynamic Few-shot and Consistency Alignment Authors: Xie et al. (2025) Venue: (Submitted) Field: NLP / Database Systems / Text-to-SQL Repo files: Insights | Visualization | Paper MD
-Notes
-Both papers focus on Text-to-SQL — a unified research area
-CHASE-SQL is a strong choice for pre1: ICLR 2025, clear methodology, impressive results (73% execution accuracy)
-Novelty type: novel combination (multi-path reasoning + preference optimization)
+**Current structure:** One block covering everything from "what is Text-to-SQL" to "why RAG helps."
 
---- reflection.md ---
-My Reflection on Writing
-Writing Challenges and Difficulties
-What aspects of academic writing do you find most challenging?
+**Suggested restructure:**
 
-One of the most challenging aspects of academic writing for me is expressing my ideas in a clear and logical manner. I often struggle to organize my thoughts coherently, which sometimes makes my arguments difficult to follow. Additionally, I find it hard to use precise vocabulary and appropriate transitions to connect my points smoothly, resulting in my writing lacking clarity and flow.
+- **Move 1 (paragraph 1–2):** Establish Text-to-SQL as an important problem. Include the Stack Overflow statistic, the LLM revolution, and the performance gains. Add citations.
+- **Move 2 (paragraph 3):** Identify limitations — cost of full schema input (>100K tokens), inability to use external knowledge, lack of real-time information. Frame this as a gap: "Despite these advances, LLM-based Text-to-SQL remains impractical for production deployment because..."
+- **Move 3 (paragraph 4):** State your research purpose — how you will use RAG to address these gaps, what specific aspect you focus on, and what contribution your work makes.
 
-What specific difficulties do you face when writing Introduction/Literature Review?
+Currently, Move 2 and Move 3 are blurred together in the RAG description.
 
-Sometimes, I find it difficult to summarize the background from a broad, high-level perspective. I tend to focus too much on specific details instead of providing an overall context, which makes it challenging to present a clear and comprehensive introduction or literature review.
+### Issue 2: No Citations in the Introduction
 
-What do you struggle with most?
+Your Introduction references the "2023 Stack Overflow survey" and "BIRD test set" but provides no formal citations. These are crucial — readers need to verify your claims.
 
-When I write a long paper, I find it difficult to manage all the content effectively. For example, I sometimes forget what I have written in earlier sections while working on the current part, which can make my paper less logical and coherent as a whole.
+**Action:** Add proper citations for:
+- The Stack Overflow survey data
+- The BIRD benchmark and the execution accuracy numbers
+- The specific research showing that full schema input costs >100K tokens
+- The foundational RAG paper or concept
 
+### Issue 3: Grammar and Expression Issues
 
-My Writing Process
-How do you approach writing Introduction and Literature Review?
+Several sentences have grammar problems that weaken the academic tone:
 
-My approach to writing the Introduction and Literature Review consists of several steps. First, I think carefully about the main content I want to include. Next, I create a detailed outline to organize my ideas and structure the section. Then, I fill in the outline by writing the actual content, making sure to cover all the key points. Finally, I revise the draft several times to improve clarity, coherence, and academic quality.
+- "Benefit from the development of LLM, the performance of Text-to-SQL has remarkable improvement" → "Benefiting from the development of LLMs, Text-to-SQL performance has improved remarkably"
+- "it is cost too much" → "it is too costly"
+- "some research reveal" → "some studies reveal"
+- "In general, the usage of RAG in three aspects" → "In general, RAG is used in three aspects"
+- "Furthermore, LLM cannot directly utilize" → "Furthermore, LLMs cannot directly utilize"
 
-What steps do you take?
+**Action:** Do a careful grammar review. Read each sentence aloud — if it sounds awkward, rewrite it. Pay attention to subject-verb agreement and article usage.
 
-Develop an outline to organize my main ideas.
-Write and expand on each section according to the outline.
-Revise and edit the manuscript multiple times to improve clarity and coherence.
+### Issue 4: Move 3 Is Missing
 
-Do you have a particular method or strategy?
+Your Introduction describes what RAG does in Text-to-SQL but does not state your specific research question or contribution. The reader finishes the Introduction thinking "this is a nice overview of RAG for Text-to-SQL" but not "this is what this paper specifically contributes."
 
-I do not use any specific methods.
+**Action:** Add a clear Move 3 paragraph: "In this paper, we [investigate/propose/analyze] [specific contribution]. Specifically, we focus on [specific aspect of RAG for Text-to-SQL]. Our work makes the following contributions: (1)... (2)... (3)..."
 
+---
 
-How I Use AI for Help
-Do you use AI tools (ChatGPT, Claude, etc.) to help with writing?
+## Part 2: Literature Review Feedback
 
-yes, gpt.
+### What Works Well
 
-How do you use them?
+- The three-category organization (vanilla prompting, decomposition prompting, chain-of-thought prompting) provides a useful framework
+- You name specific systems (DIN-SQL, CHASE-SQL, CHESS, OpenSearch-SQL) which shows engagement with the literature
 
-editing, checking grammar, improving sentences
+### Issue 5: Description Without Critical Analysis
 
-What prompts do you typically use?
+This is your most significant Literature Review weakness. You describe what each prompting strategy does but do not evaluate how well they work, what their limitations are, or how they compare to each other.
 
-please help me refine / polish the content "...".
+**Your sentence (description only):** "DIN-SQL decomposes the task of natural language text to SQL into multiple sub-tasks and finally achieves competitive performance."
 
-what do you think about the content "..."
+**With critical analysis:** "DIN-SQL decomposes the Text-to-SQL task into sub-tasks including schema linking, query classification, and SQL generation, achieving competitive performance on the Spider benchmark [citation]. However, this decomposition introduces additional LLM calls at each stage, increasing both latency and token cost. Compared to vanilla prompting approaches, decomposition methods trade computational efficiency for accuracy — a tradeoff that may not be acceptable in production environments with strict latency requirements."
 
-What do you find helpful or not helpful about AI assistance?
+### Issue 6: Literature Review Is Too Brief
 
-I find AI assistance very helpful for editing, grammar checking, and improving sentence structure. However, it is less effective when it comes to providing suggestions or feedback on the main ideas or content of my paper.
+Your Literature Review is only one paragraph covering three categories of prompting strategies. For a 1000–1500 word assignment, the Literature Review should be substantially longer and more developed than the Introduction.
 
+**Action:**
+- Expand each prompting category into its own paragraph with 3–4 papers analyzed
+- Add a RAG-specific section — since your topic is RAG for Text-to-SQL, the Literature Review should have a dedicated section reviewing RAG approaches
+- Include a comparison across categories: which approach works best under what conditions?
 
-My Goals
-What do you hope to improve in your writing?
+### Issue 7: Missing Moves 3 and 4
 
-I hope to make my writing more professional. Specifically, I want to learn how to use concise language to clearly express my key ideas.
+Your Literature Review only covers Move 2 (Critical Analysis). You need:
+- **Move 1 (Thematic Overview):** Set up the categories and explain why you organized the literature this way
+- **Move 3 (Research Gaps):** What remains unaddressed? Which RAG approaches need improvement?
+- **Move 4 (Conclusion):** Summarize key insights and connect to your research
 
-What specific skills do you want to develop?
+---
 
-I want to develop the skill of using concise language to clearly express my key ideas.
+## Part 3: Reflection and Goals
 
+Your reflection is honest and shows good self-awareness — you want to write more concisely and professionally. Your note that AI is "less effective when it comes to providing suggestions or feedback on the main ideas" is an important insight.
 
-Additional Notes
-[Any other thoughts about your writing, concerns, questions, etc.]
+**Suggestion for your revision process:**
+1. Write the structural outline first (moves for Introduction and Literature Review)
+2. Fill in each move with content, focusing on one move at a time
+3. Add citations as you write, not after
+4. Use AI only for grammar checking at the end, not for content generation
 
+---
 
+## Summary of Priority Actions
 
+| Priority | Action | Impact |
+|----------|--------|--------|
+| 🔴 High | Restructure Introduction into clear Move 1, 2, 3 paragraphs | Makes argument visible |
+| 🔴 High | Add a clear Move 3 stating your specific research contribution | Tells readers what your paper does |
+| 🔴 High | Add citations throughout | Makes claims verifiable |
+| 🔴 High | Fix grammar issues (subject-verb agreement, articles, expression) | Improves academic tone |
+| 🟡 Medium | Expand Literature Review to multiple paragraphs with critical analysis | Demonstrates engagement with the field |
+| 🟡 Medium | Add Moves 1, 3, 4 to the Literature Review | Completes the required structure |
+| 🟡 Medium | Add a RAG-specific review section | Aligns literature with your topic |
+| 🟢 Lower | Improve conciseness (your stated goal) | Sharpens writing quality |
+
+---
+
+## Next Steps
+
+1. Read the [full writing instructions](https://github.com/tesolchina/mccpSpring2026/blob/main/writing/assessment/writing_instructions_formatted.md) carefully
+2. Restructure your Introduction into clearly separated moves
+3. Expand the Literature Review with critical analysis and all four moves
+4. Fix grammar issues throughout
+5. Submit by **15 March 2026** via Moodle forum and Turnitin
